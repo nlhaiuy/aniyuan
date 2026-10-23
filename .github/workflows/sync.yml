@@ -1,0 +1,75 @@
+name: sync-subscription
+
+on:
+  schedule:
+    - cron: "17 1 * * *"      # 每天 UTC 01:17（北京时间 09:17）
+  workflow_dispatch:           # 也可以在 Actions 页面手动运行
+  push:
+    paths:
+      - "*.py"
+      - "config.json"
+      - "overrides/**"
+      - "baseline/**"
+      - ".github/workflows/sync.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-subscription
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: 拉取最新的 KazumiRules 和 AniBakaRule（完整历史，用来取每个规则的最后修改时间）
+        run: |
+          git clone https://github.com/Predidit/KazumiRules.git "$RUNNER_TEMP/KazumiRules"
+          git clone https://github.com/AniBakaBaka/AniBakaRule.git "$RUNNER_TEMP/AniBakaRule"
+
+      - name: 自测（翻译器 + 整条流水线）
+        run: |
+          KAZUMI_RULES="$RUNNER_TEMP/KazumiRules" python tests/test_xpath2css.py
+          python tests/test_anx.py
+          python tests/test_pipeline.py
+
+      - name: 转换并做联网冒烟测试
+        run: python build.py --kazumi "$RUNNER_TEMP/KazumiRules" --anibaka "$RUNNER_TEMP/AniBakaRule" --out dist.new --smoke
+
+      - name: 安全检查（避免上游异常时把订阅清空）
+        run: |
+          python - <<'PY'
+          import json, os, sys
+          new = json.load(open("dist.new/all.json"))["mediaSources"]
+          old = json.load(open("dist/all.json"))["mediaSources"] if os.path.exists("dist/all.json") else []
+          print("旧 %d 条 -> 新 %d 条" % (len(old), len(new)))
+          if not new or (old and len(new) < len(old) * 0.5):
+              sys.exit("新订阅条目数异常偏少，已中止，不覆盖旧文件")
+          PY
+
+      - name: 报告写入任务摘要
+        run: cat dist.new/report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 提交变更
+        run: |
+          rm -rf dist && mv dist.new dist
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist
+          if git diff --cached --quiet; then
+            echo "订阅没有变化"
+          else
+            git commit -m "chore: 同步 Kazumi + AniBaka 规则并重新生成订阅"
+            git push
+          fi

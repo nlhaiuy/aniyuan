@@ -1,0 +1,51 @@
+{
+  "id": "kazumi-sorani",
+  "factoryId": "json-api",
+  "version": 1,
+  "arguments": {
+    "name": "青空次元 (Sorani)",
+    "description": "青空次元 (Sorani)，支持番剧搜索、分集列表和公开播放接口。",
+    "iconUrl": "https://www.sorani.net/favicon.ico",
+    "searchConfig": {
+      "baseUrl": "https://api.sorani.cc",
+      "requestInterval": 1000,
+      "search": {
+        "request": {
+          "url": "/sorani-cms/api/video?page=1&size={pageSize}&keyword={keyword}&enabled=true&sortMode=relevance_popular",
+          "method": "GET"
+        },
+        "pageSize": 100,
+        "selectItems": "$.data.records[*]",
+        "selectName": "$.title",
+        "selectId": "$.id",
+        "subjectUrlTemplate": "https://www.sorani.net/anime/mal/{id}"
+      },
+      "subject": {
+        "request": {
+          "url": "/sorani-cms/api/video/{id}",
+          "method": "GET"
+        },
+        "episodes": {
+          "selectEpisodes": "$.data.episodes[*]",
+          "selectName": "$.title",
+          "selectId": "$.episodeId",
+          "selectSort": "$.episodeOrder",
+          "selectType": "",
+          "episodeUrlTemplate": "https://api.sorani.cc/sorani-cms/api/video/episode/{id}/play"
+        },
+        "channelFormatId": "no-channel"
+      },
+      "play": {
+        "request": {
+          "url": "/sorani-cms/api/video/episode/{id}/play",
+          "method": "GET",
+          "headers": "Referer: https://www.sorani.net/\nOrigin: https://www.sorani.net"
+        },
+        "selectVideoUrl": "$.data.playUrl",
+        "referer": "https://www.sorani.net/"
+      }
+    },
+    "tier": 4
+  },
+  "_kazumiVersion": "1.0"
+}

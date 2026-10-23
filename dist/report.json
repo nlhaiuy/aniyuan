@@ -1,0 +1,932 @@
+{
+  "decisions": [
+    {
+      "site": "2kdm.com",
+      "winner": "kazumi:mutefun",
+      "id": "anibaka-2kdm",
+      "reason": "更新（2026-10-15）",
+      "members": [
+        "kazumi:mutefun(2026-10-15)",
+        "anibaka:2kdm(2026-09-30)"
+      ]
+    },
+    {
+      "site": "5dm.dev",
+      "winner": "anibaka:5dm",
+      "id": "anibaka-5dm",
+      "reason": "只有这一个来源",
+      "members": [
+        "anibaka:5dm(2026-10-07)"
+      ]
+    },
+    {
+      "site": "7sefun.top",
+      "winner": "baseline:7sefun",
+      "id": "anibaka-7sefun",
+      "reason": "更新（2026-09-30）",
+      "members": [
+        "baseline:7sefun(2026-09-30)",
+        "kazumi:7sefun(2026-08-10)"
+      ]
+    },
+    {
+      "site": "agedm.io",
+      "winner": "anibaka:age",
+      "id": "anibaka-age",
+      "reason": "更新（2026-09-30）",
+      "members": [
+        "anibaka:age(2026-09-30)",
+        "kazumi:AGE(2025-09-17)"
+      ]
+    },
+    {
+      "site": "akianime.cc",
+      "winner": "anibaka:akianime",
+      "id": "anibaka-akianime",
+      "reason": "更新（2026-09-30）",
+      "members": [
+        "anibaka:akianime(2026-09-30)",
+        "kazumi:akianime(2026-08-17)"
+      ]
+    },
+    {
+      "site": "ani.girigirilove.com",
+      "winner": "kazumi:giriGiriLove",
+      "id": "anibaka-girigirilove",
+      "reason": "更新（2026-10-22）",
+      "members": [
+        "kazumi:giriGiriLove(2026-10-22)",
+        "anibaka:girigirilove(2026-09-30)"
+      ]
+    },
+    {
+      "site": "ani.pekolove.net",
+      "winner": "baseline:ani_pekolove",
+      "id": "anibaka-ani-pekolove",
+      "reason": "只有这一个来源",
+      "members": [
+        "baseline:ani_pekolove(2026-10-07)"
+      ]
+    },
+    {
+      "site": "anime7.top",
+      "winner": "anibaka:anime7",
+      "id": "anibaka-anime7",
+      "reason": "只有这一个来源",
+      "members": [
+        "anibaka:anime7(2026-10-07)"
+      ]
+    },
+    {
+      "site": "animoe.org",
+      "winner": "anibaka:animoe",
+      "id": "anibaka-animoe",
+      "reason": "只有这一个来源",
+      "members": [
+        "anibaka:animoe(2026-09-30)"
+      ]
+    },
+    {
+      "site": "baimaodm.com",
+      "winner": "kazumi:baimao",
+      "id": "kazumi-baimao",
+      "reason": "只有这一个来源",
+      "members": [
+        "kazumi:baimao(2026-01-28)"
+      ]
+    },
+    {
+      "site": "cn.agekkkk.com",
+      "winner": "baseline:agekkkk",
+      "id": "anibaka-agekkkk",
+      "reason": "只有这一个来源",
+      "members": [
+        "baseline:agekkkk(2026-07-18)"
+      ]
+    },
+    {
+      "site": "cyfz.top",
+      "winner": "baseline:cyfz",
+      "id": "anibaka-cyfz",
+      "reason": "只有这一个来源",
+      "members": [
+        "baseline:cyfz(2026-09-30)"
+      ]
+    },
+    {
+      "site": "dcc3.com",
+      "winner": "kazumi:MXdm",
+      "id": "kazumi-mxdm",
+      "reason": "只有这一个来源",
+      "members": [
+        "kazumi:MXdm(2026-10-01)"
+      ]
+    },
+    {
+      "site": "didahd.pro",
+      "winner": "baseline:didahd",
+      "id": "anibaka-didahd",
+      "reason": "只有这一个来源",
+      "members": [
+        "baseline:didahd(2026-09-30)"
+      ]
+    },
+    {
+      "site": "dm1.xfdm.pro",
+      "winner": "kazumi:xfdmneo",
+      "id": "kazumi-xfdmneo",
+      "reason": "只有这一个来源",
+      "members": [
+        "kazumi:xfdmneo(2026-03-08)"
+      ]
+    },
+    {
+      "site": "dmbus.cc",
+      "winner": "anibaka:dm84",
+      "id": "anibaka-dm84",
+      "reason": "更新（2026-09-14）",
+      "members": [
+        "anibaka:dm84(2026-09-14)",
+        "kazumi:DM84(2026-02-02)"
+      ]
+    },
+    {
+      "site": "ezdmw.org",
+      "winner": "baseline:ezdmw",
+      "id": "anibaka-ezdmw",
+      "reason": "更新（2026-10-07）",
+      "members": [
+        "baseline:ezdmw(2026-10-07)",
+        "kazumi:ezdmw(2026-08-16)"
+      ]
+    },
+    {
+      "site": "gugu3.com",
+      "winner": "anibaka:gugu",
+      "id": "anibaka-gugu",
+      "reason": "只有这一个来源",
+      "members": [
+        "anibaka:gugu(2026-09-30)"
+      ]
+    },
+    {
+      "site": "ios.mifun.org",
+      "winner": "baseline:ios_mifun",
+      "id": "anibaka-ios-mifun",
+      "reason": "只有这一个来源",
+      "members": [
+        "baseline:ios_mifun(2026-09-30)"
+      ]
+    },
+    {
+      "site": "lm6.net",
+      "winner": "anibaka:lm6",
+      "id": "anibaka-lm6",
+      "reason": "只有这一个来源",
+      "members": [
+        "anibaka:lm6(2026-08-06)"
+      ]
+    },
+    {
+      "site": "lmm85.com",
+      "winner": "kazumi:LMM",
+      "id": "kazumi-lmm",
+      "reason": "只有这一个来源",
+      "members": [
+        "kazumi:LMM(2026-10-15)"
+      ]
+    },
+    {
+      "site": "mgnacg.com",
+      "winner": "kazumi:mgnacg",
+      "id": "anibaka-mgnacg",
+      "reason": "更新（2026-10-15）",
+      "members": [
+        "kazumi:mgnacg(2026-10-15)",
+        "baseline:mgnacg(2026-07-18)"
+      ]
+    },
+    {
+      "site": "moonci.com",
+      "winner": "kazumi:moonci",
+      "id": "anibaka-moonci",
+      "reason": "更新（2026-10-19）",
+      "members": [
+        "kazumi:moonci(2026-10-19)",
+        "anibaka:moonci(2026-09-30)",
+        "kazumi:aafun(2026-08-21)"
+      ]
+    },
+    {
+      "site": "next.xifanacg.com",
+      "winner": "kazumi:xfdmnext",
+      "id": "kazumi-xfdmnext",
+      "reason": "只有这一个来源",
+      "members": [
+        "kazumi:xfdmnext(2026-10-01)"
+      ]
+    },
+    {
+      "site": "sbdl.cc",
+      "winner": "kazumi:dalvdm",
+      "id": "anibaka-dalvdm",
+      "reason": "更新（2026-10-15）",
+      "members": [
+        "kazumi:dalvdm(2026-10-15)",
+        "baseline:dalvdm(2026-10-07)"
+      ]
+    },
+    {
+      "site": "silisilifun.com",
+      "winner": "anibaka:silisili",
+      "id": "anibaka-silisili",
+      "reason": "只有这一个来源",
+      "members": [
+        "anibaka:silisili(2026-09-30)"
+      ]
+    },
+    {
+      "site": "sorani.net",
+      "winner": "baseline:sorani",
+      "id": "anibaka-sorani",
+      "reason": "更新（2026-10-07）",
+      "members": [
+        "baseline:sorani(2026-10-07)",
+        "kazumi:sorani(2026-07-13)"
+      ]
+    },
+    {
+      "site": "xgcartoon.com",
+      "winner": "baseline:xigua",
+      "id": "anibaka-xigua",
+      "reason": "只有这一个来源",
+      "members": [
+        "baseline:xigua(2026-09-30)"
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "origin": "kazumi",
+      "key": "7sefun",
+      "version": "1.3",
+      "status": "partial",
+      "notes": [
+        "末尾 text() 已改为取元素全部文本"
+      ],
+      "info": [
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1786362131,
+      "site": "7sefun.top"
+    },
+    {
+      "origin": "kazumi",
+      "key": "aafun",
+      "version": "1.2",
+      "status": "ok",
+      "notes": [],
+      "info": [
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1787289623,
+      "site": "moonci.com"
+    },
+    {
+      "origin": "kazumi",
+      "key": "AGE",
+      "version": "1.5",
+      "status": "ok",
+      "notes": [],
+      "info": [
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1758092260,
+      "site": "agedm.io"
+    },
+    {
+      "origin": "kazumi",
+      "key": "akianime",
+      "version": "1.4",
+      "status": "ok",
+      "notes": [],
+      "info": [
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1786942825,
+      "site": "akianime.cc"
+    },
+    {
+      "origin": "kazumi",
+      "key": "baimao",
+      "version": "1.0",
+      "status": "ok",
+      "notes": [],
+      "info": [
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1769573721,
+      "site": "baimaodm.com",
+      "chosen": true
+    },
+    {
+      "origin": "kazumi",
+      "key": "dalvdm",
+      "version": "1.2",
+      "status": "ok",
+      "notes": [],
+      "info": [
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1792049112,
+      "site": "sbdl.cc",
+      "chosen": true
+    },
+    {
+      "origin": "kazumi",
+      "key": "DM84",
+      "version": "1.4",
+      "status": "ok",
+      "notes": [],
+      "info": [
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1770015787,
+      "site": "dmbus.cc"
+    },
+    {
+      "origin": "kazumi",
+      "key": "ezdmw",
+      "version": "1.2",
+      "status": "override",
+      "notes": [],
+      "info": [
+        "使用 overrides/ezdmw.json 手写配置"
+      ],
+      "guess": false,
+      "date": 1786883419,
+      "site": "ezdmw.org"
+    },
+    {
+      "origin": "kazumi",
+      "key": "giriGiriLove",
+      "version": "2.6",
+      "status": "override",
+      "notes": [],
+      "info": [
+        "使用 overrides/giriGiriLove.json 手写配置"
+      ],
+      "guess": false,
+      "date": 1792645277,
+      "site": "ani.girigirilove.com",
+      "chosen": true
+    },
+    {
+      "origin": "kazumi",
+      "key": "LMM",
+      "version": "2.3",
+      "status": "ok",
+      "notes": [],
+      "info": [
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1792049112,
+      "site": "lmm85.com",
+      "chosen": true
+    },
+    {
+      "origin": "kazumi",
+      "key": "mgnacg",
+      "version": "1.2",
+      "status": "ok",
+      "notes": [],
+      "info": [
+        "规则没有 sourceTemplate，条目链接按 /media/{value}.html 猜测，冒烟测试会尝试其他写法",
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1792059072,
+      "site": "mgnacg.com",
+      "chosen": true
+    },
+    {
+      "origin": "kazumi",
+      "key": "moonci",
+      "version": "1.1",
+      "status": "ok",
+      "notes": [],
+      "info": [
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1792401354,
+      "site": "moonci.com",
+      "chosen": true
+    },
+    {
+      "origin": "kazumi",
+      "key": "mutefun",
+      "version": "1.4",
+      "status": "ok",
+      "notes": [],
+      "info": [
+        "规则没有 sourceTemplate，条目链接按 /voddetail/{value}.html 猜测，冒烟测试会尝试其他写法",
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1792059072,
+      "site": "2kdm.com",
+      "chosen": true
+    },
+    {
+      "origin": "kazumi",
+      "key": "MXdm",
+      "version": "2.4",
+      "status": "ok",
+      "notes": [],
+      "info": [
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1790853597,
+      "site": "dcc3.com",
+      "chosen": true
+    },
+    {
+      "origin": "kazumi",
+      "key": "sorani",
+      "version": "1.0",
+      "status": "override",
+      "notes": [],
+      "info": [
+        "使用 overrides/sorani.json 手写配置"
+      ],
+      "guess": false,
+      "date": 1783910492,
+      "site": "sorani.net"
+    },
+    {
+      "origin": "kazumi",
+      "key": "xfdmneo",
+      "version": "1.1",
+      "status": "ok",
+      "notes": [],
+      "info": [
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1772964002,
+      "site": "dm1.xfdm.pro",
+      "chosen": true
+    },
+    {
+      "origin": "kazumi",
+      "key": "xfdmnext",
+      "version": "1.1",
+      "status": "override",
+      "notes": [],
+      "info": [
+        "使用 overrides/xfdmnext.json 手写配置"
+      ],
+      "guess": false,
+      "date": 1790868808,
+      "site": "next.xifanacg.com",
+      "chosen": true
+    },
+    {
+      "origin": "baseline",
+      "key": "7sefun",
+      "version": "rev 8",
+      "status": "baseline",
+      "notes": [
+        "回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等））"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1790775080,
+      "site": "7sefun.top",
+      "chosen": true
+    },
+    {
+      "origin": "baseline",
+      "key": "cyfz",
+      "version": "rev 6",
+      "status": "baseline",
+      "notes": [
+        "回退到 baseline/anibaka.json：自动转换的搜索地址是推测的"
+      ],
+      "info": [],
+      "guess": true,
+      "date": 1790775080,
+      "site": "cyfz.top",
+      "chosen": true
+    },
+    {
+      "origin": "anibaka",
+      "key": "5dm",
+      "version": "rev 1",
+      "status": "ok",
+      "notes": [],
+      "info": [],
+      "guess": false,
+      "date": 1791361738,
+      "site": "5dm.dev",
+      "chosen": true
+    },
+    {
+      "origin": "baseline",
+      "key": "ani_pekolove",
+      "version": "rev 9",
+      "status": "baseline",
+      "notes": [
+        "回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等））"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1791361738,
+      "site": "ani.pekolove.net",
+      "chosen": true
+    },
+    {
+      "origin": "anibaka",
+      "key": "lm6",
+      "version": "rev 5",
+      "status": "partial",
+      "notes": [
+        "AniBaka 播放步骤用了 crypto 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1786032045,
+      "site": "lm6.net",
+      "chosen": true
+    },
+    {
+      "origin": "anibaka",
+      "key": "aniwatch",
+      "version": "rev 4",
+      "status": "unsupported",
+      "notes": [
+        "章节步骤无法转换（需要 episodes 操作，实际是：fetch, jsonEpisodes, regex, select, sniff）",
+        "baseline 里也没有这个源，已跳过"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1790775080,
+      "site": null
+    },
+    {
+      "origin": "anibaka",
+      "key": "akianime",
+      "version": "rev 6",
+      "status": "ok",
+      "notes": [],
+      "info": [],
+      "guess": false,
+      "date": 1790775080,
+      "site": "akianime.cc",
+      "chosen": true
+    },
+    {
+      "origin": "anibaka",
+      "key": "animoe",
+      "version": "rev 4",
+      "status": "partial",
+      "notes": [
+        "AniBaka 播放步骤不是嗅探（playerAaaa/regex），已改成 WebView 嗅探，请在 Animeko 里试播确认"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1790775080,
+      "site": "animoe.org",
+      "chosen": true
+    },
+    {
+      "origin": "anibaka",
+      "key": "tvtfun",
+      "version": "rev 12",
+      "status": "unsupported",
+      "notes": [
+        "章节步骤无法转换（需要 episodes 操作，实际是：json, jsonEpisodes, setVar, template）",
+        "baseline 里也没有这个源，已跳过"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1790775080,
+      "site": null
+    },
+    {
+      "origin": "baseline",
+      "key": "ios_mifun",
+      "version": "rev 6",
+      "status": "baseline",
+      "notes": [
+        "回退到 baseline/anibaka.json：自动转换的搜索地址是推测的"
+      ],
+      "info": [],
+      "guess": true,
+      "date": 1790775080,
+      "site": "ios.mifun.org",
+      "chosen": true
+    },
+    {
+      "origin": "baseline",
+      "key": "agekkkk",
+      "version": "rev 2",
+      "status": "baseline",
+      "notes": [
+        "回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等））"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1784350043,
+      "site": "cn.agekkkk.com",
+      "chosen": true
+    },
+    {
+      "origin": "baseline",
+      "key": "didahd",
+      "version": "rev 6",
+      "status": "baseline",
+      "notes": [
+        "回退到 baseline/anibaka.json：自动转换的搜索地址是推测的"
+      ],
+      "info": [],
+      "guess": true,
+      "date": 1790775080,
+      "site": "didahd.pro",
+      "chosen": true
+    },
+    {
+      "origin": "anibaka",
+      "key": "anime7",
+      "version": "rev 5",
+      "status": "ok",
+      "notes": [],
+      "info": [],
+      "guess": false,
+      "date": 1791361738,
+      "site": "anime7.top",
+      "chosen": true
+    },
+    {
+      "origin": "anibaka",
+      "key": "hanimeone",
+      "version": "rev 6",
+      "status": "unsupported",
+      "notes": [
+        "搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）",
+        "baseline 里也没有这个源，已跳过"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1790775080,
+      "site": null
+    },
+    {
+      "origin": "anibaka",
+      "key": "girigirilove",
+      "version": "rev 4",
+      "status": "ok",
+      "notes": [],
+      "info": [],
+      "guess": false,
+      "date": 1790775080,
+      "site": "ani.girigirilove.com"
+    },
+    {
+      "origin": "anibaka",
+      "key": "girigirilove_beta",
+      "version": "rev 1",
+      "status": "unsupported",
+      "notes": [
+        "章节步骤无法转换（需要 episodes 操作，实际是：fetch, maccmsApiEpisodes, regex, template）",
+        "baseline 里也没有这个源，已跳过"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1791361738,
+      "site": null
+    },
+    {
+      "origin": "anibaka",
+      "key": "xifanacg",
+      "version": "rev 5",
+      "status": "unsupported",
+      "notes": [
+        "搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）",
+        "baseline 里也没有这个源，已跳过"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1790775080,
+      "site": null
+    },
+    {
+      "origin": "anibaka",
+      "key": "age",
+      "version": "rev 6",
+      "status": "ok",
+      "notes": [],
+      "info": [],
+      "guess": false,
+      "date": 1790775080,
+      "site": "agedm.io",
+      "chosen": true
+    },
+    {
+      "origin": "baseline",
+      "key": "xigua",
+      "version": "rev 8",
+      "status": "baseline",
+      "notes": [
+        "回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等））"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1790779316,
+      "site": "xgcartoon.com",
+      "chosen": true
+    },
+    {
+      "origin": "anibaka",
+      "key": "2kdm",
+      "version": "rev 5",
+      "status": "ok",
+      "notes": [],
+      "info": [],
+      "guess": false,
+      "date": 1790775080,
+      "site": "2kdm.com"
+    },
+    {
+      "origin": "anibaka",
+      "key": "gugu",
+      "version": "rev 4",
+      "status": "ok",
+      "notes": [],
+      "info": [],
+      "guess": false,
+      "date": 1790775080,
+      "site": "gugu3.com",
+      "chosen": true
+    },
+    {
+      "origin": "anibaka",
+      "key": "anime1",
+      "version": "rev 2",
+      "status": "unsupported",
+      "notes": [
+        "搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）",
+        "baseline 里也没有这个源，已跳过"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1789394769,
+      "site": null
+    },
+    {
+      "origin": "anibaka",
+      "key": "dmhy",
+      "version": "rev 4",
+      "status": "unsupported",
+      "notes": [
+        "搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）",
+        "baseline 里也没有这个源，已跳过"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1790775080,
+      "site": null
+    },
+    {
+      "origin": "anibaka",
+      "key": "mikan",
+      "version": "rev 5",
+      "status": "unsupported",
+      "notes": [
+        "搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）",
+        "baseline 里也没有这个源，已跳过"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1790775080,
+      "site": null
+    },
+    {
+      "origin": "anibaka",
+      "key": "dm84",
+      "version": "rev 2",
+      "status": "partial",
+      "notes": [
+        "AniBaka 播放步骤不是嗅探（fetch/json/regex/replace/select/setVar/template），已改成 WebView 嗅探，请在 Animeko 里试播确认"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1789394769,
+      "site": "dmbus.cc",
+      "chosen": true
+    },
+    {
+      "origin": "anibaka",
+      "key": "fsdm02",
+      "version": "rev 3",
+      "status": "unsupported",
+      "notes": [
+        "搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）",
+        "baseline 里也没有这个源，已跳过"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1790775080,
+      "site": null
+    },
+    {
+      "origin": "baseline",
+      "key": "mgnacg",
+      "version": "rev 1",
+      "status": "baseline",
+      "notes": [
+        "回退到 baseline/anibaka.json：自动转换的搜索地址是推测的"
+      ],
+      "info": [],
+      "guess": true,
+      "date": 1784350043,
+      "site": "mgnacg.com"
+    },
+    {
+      "origin": "anibaka",
+      "key": "moonci",
+      "version": "rev 3",
+      "status": "ok",
+      "notes": [],
+      "info": [],
+      "guess": false,
+      "date": 1790775080,
+      "site": "moonci.com"
+    },
+    {
+      "origin": "anibaka",
+      "key": "silisili",
+      "version": "rev 1",
+      "status": "partial",
+      "notes": [
+        "AniBaka 播放步骤用了 crypto 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1790775080,
+      "site": "silisilifun.com",
+      "chosen": true
+    },
+    {
+      "origin": "baseline",
+      "key": "ezdmw",
+      "version": "rev 4",
+      "status": "baseline",
+      "notes": [
+        "回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等））"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1791361738,
+      "site": "ezdmw.org",
+      "chosen": true
+    },
+    {
+      "origin": "baseline",
+      "key": "dalvdm",
+      "version": "rev 9",
+      "status": "baseline",
+      "notes": [
+        "回退到 baseline/anibaka.json：自动转换的搜索地址是推测的"
+      ],
+      "info": [],
+      "guess": true,
+      "date": 1791361738,
+      "site": "sbdl.cc"
+    },
+    {
+      "origin": "baseline",
+      "key": "sorani",
+      "version": "rev 1",
+      "status": "baseline",
+      "notes": [
+        "回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等））"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1791361738,
+      "site": "sorani.net",
+      "chosen": true
+    }
+  ]
+}

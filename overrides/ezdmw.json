@@ -1,0 +1,30 @@
+{
+  "id": "kazumi-ezdmw",
+  "factoryId": "web-selector",
+  "version": 2,
+  "arguments": {
+    "name": "E站弹幕网",
+    "description": "E站弹幕网提供动漫搜索、分集观看和弹幕播放器。",
+    "iconUrl": "https://www.ezdmw.org/Public/images/icon.png",
+    "searchConfig": {
+      "searchUrl": "https://www.ezdmw.org/Index/search.html?searchText={keyword}",
+      "rawBaseUrl": "https://www.ezdmw.org",
+      "subjectFormatId": "indexed",
+      "selectorSubjectFormatIndexed": {
+        "selectNames": "#some_drama > div p > span",
+        "selectLinks": "#some_drama > div a"
+      },
+      "channelFormatId": "no-channel",
+      "selectorChannelFormatNoChannel": {
+        "selectEpisodes": "section[class*=\"anthology\"] a[class*=\"circuit_switch1\"]"
+      },
+      "matchVideo": {
+        "addHeadersToVideo": {
+          "referer": "https://www.ezdmw.org/"
+        }
+      }
+    },
+    "tier": 4
+  },
+  "_kazumiVersion": "1.2"
+}
