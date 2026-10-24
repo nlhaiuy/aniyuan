@@ -21,10 +21,11 @@
     },
     {
       "site": "7sefun.top",
-      "winner": "baseline:7sefun",
+      "winner": "easybangumi:kazumi-7sefun",
       "id": "anibaka-7sefun",
-      "reason": "更新（2026-09-30）",
+      "reason": "更新（2026-10-20）",
       "members": [
+        "easybangumi:kazumi-7sefun(2026-10-20)",
         "baseline:7sefun(2026-09-30)",
         "kazumi:7sefun(2026-08-10)"
       ]
@@ -89,10 +90,11 @@
     },
     {
       "site": "baimaodm.com",
-      "winner": "kazumi:baimao",
+      "winner": "easybangumi:kazumi-baimao",
       "id": "kazumi-baimao",
-      "reason": "只有这一个来源",
+      "reason": "更新（2026-10-20）",
       "members": [
+        "easybangumi:kazumi-baimao(2026-10-20)",
         "kazumi:baimao(2026-01-28)"
       ]
     },
@@ -116,10 +118,11 @@
     },
     {
       "site": "dcc3.com",
-      "winner": "kazumi:MXdm",
+      "winner": "easybangumi:kazumi-mxdm",
       "id": "kazumi-mxdm",
-      "reason": "只有这一个来源",
+      "reason": "更新（2026-10-20）",
       "members": [
+        "easybangumi:kazumi-mxdm(2026-10-20)",
         "kazumi:MXdm(2026-10-01)"
       ]
     },
@@ -316,10 +319,6 @@
       ],
       "guess": false,
       "date": 1786362131,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 20 个剧集链接"
-      },
       "site": "7sefun.top"
     },
     {
@@ -333,10 +332,6 @@
       ],
       "guess": false,
       "date": 1787289623,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 4 个条目，详情页选出 10 个剧集链接"
-      },
       "site": "moonci.com"
     },
     {
@@ -350,10 +345,6 @@
       ],
       "guess": false,
       "date": 1758092260,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "agedm.io"
     },
     {
@@ -367,10 +358,6 @@
       ],
       "guess": false,
       "date": 1786942825,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 84 个剧集链接"
-      },
       "site": "akianime.cc"
     },
     {
@@ -384,12 +371,7 @@
       ],
       "guess": false,
       "date": 1769573721,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 168 个剧集链接"
-      },
-      "site": "baimaodm.com",
-      "chosen": true
+      "site": "baimaodm.com"
     },
     {
       "origin": "kazumi",
@@ -402,10 +384,6 @@
       ],
       "guess": false,
       "date": 1792049112,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "sbdl.cc",
       "chosen": true
     },
@@ -420,10 +398,6 @@
       ],
       "guess": false,
       "date": 1770015787,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 30 个剧集链接"
-      },
       "site": "dmbus.cc"
     },
     {
@@ -437,10 +411,6 @@
       ],
       "guess": false,
       "date": 1786883419,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 1 个条目，详情页选出 38 个剧集链接"
-      },
       "site": "ezdmw.org"
     },
     {
@@ -454,10 +424,6 @@
       ],
       "guess": false,
       "date": 1792645277,
-      "smoke": {
-        "status": "fail",
-        "reason": "搜索页能打开，但选择器没有选中任何结果"
-      },
       "site": "ani.girigirilove.com",
       "chosen": true
     },
@@ -472,10 +438,6 @@
       ],
       "guess": false,
       "date": 1792049112,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "lmm85.com",
       "chosen": true
     },
@@ -491,11 +453,6 @@
       ],
       "guess": false,
       "date": 1792059072,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 50 个剧集链接",
-        "template": "/media/{value}.html"
-      },
       "site": "mgnacg.com",
       "chosen": true
     },
@@ -510,10 +467,6 @@
       ],
       "guess": false,
       "date": 1792401354,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 30 个剧集链接"
-      },
       "site": "moonci.com",
       "chosen": true
     },
@@ -529,11 +482,6 @@
       ],
       "guess": false,
       "date": 1792059072,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 20 个剧集链接",
-        "template": "/voddetail/{value}.html"
-      },
       "site": "2kdm.com",
       "chosen": true
     },
@@ -548,12 +496,7 @@
       ],
       "guess": false,
       "date": 1790853597,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 40 个剧集链接"
-      },
-      "site": "dcc3.com",
-      "chosen": true
+      "site": "dcc3.com"
     },
     {
       "origin": "kazumi",
@@ -566,10 +509,6 @@
       ],
       "guess": false,
       "date": 1783910492,
-      "smoke": {
-        "status": "skipped",
-        "reason": "手写配置，不做自动检测"
-      },
       "site": "sorani.net"
     },
     {
@@ -583,10 +522,6 @@
       ],
       "guess": false,
       "date": 1772964002,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 56 个剧集链接"
-      },
       "site": "dm1.xfdm.pro",
       "chosen": true
     },
@@ -601,10 +536,6 @@
       ],
       "guess": false,
       "date": 1790868808,
-      "smoke": {
-        "status": "skipped",
-        "reason": "手写配置，不做自动检测"
-      },
       "site": "next.xifanacg.com",
       "chosen": true
     },
@@ -619,12 +550,7 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "skipped",
-        "reason": "非 no-channel 章节格式，只验证了搜索"
-      },
-      "site": "7sefun.top",
-      "chosen": true
+      "site": "7sefun.top"
     },
     {
       "origin": "baseline",
@@ -637,10 +563,6 @@
       "info": [],
       "guess": true,
       "date": 1790775080,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "cyfz.top",
       "chosen": true
     },
@@ -653,10 +575,6 @@
       "info": [],
       "guess": false,
       "date": 1791361738,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "5dm.dev",
       "chosen": true
     },
@@ -671,10 +589,6 @@
       "info": [],
       "guess": false,
       "date": 1791361738,
-      "smoke": {
-        "status": "blocked",
-        "reason": "搜索页出现验证码/环境检查"
-      },
       "site": "ani.pekolove.net",
       "chosen": true
     },
@@ -689,10 +603,6 @@
       "info": [],
       "guess": false,
       "date": 1786032045,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "lm6.net",
       "chosen": true
     },
@@ -719,10 +629,6 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "skipped",
-        "reason": "非 no-channel 章节格式，只验证了搜索"
-      },
       "site": "akianime.cc",
       "chosen": true
     },
@@ -737,10 +643,6 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "animoe.org",
       "chosen": true
     },
@@ -769,10 +671,6 @@
       "info": [],
       "guess": true,
       "date": 1790775080,
-      "smoke": {
-        "status": "skipped",
-        "reason": "非 no-channel 章节格式，只验证了搜索"
-      },
       "site": "ios.mifun.org",
       "chosen": true
     },
@@ -787,10 +685,6 @@
       "info": [],
       "guess": false,
       "date": 1784350043,
-      "smoke": {
-        "status": "blocked",
-        "reason": "搜索页出现验证码/环境检查"
-      },
       "site": "cn.agekkkk.com",
       "chosen": true
     },
@@ -805,10 +699,6 @@
       "info": [],
       "guess": true,
       "date": 1790775080,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "didahd.pro",
       "chosen": true
     },
@@ -821,10 +711,6 @@
       "info": [],
       "guess": false,
       "date": 1791361738,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "anime7.top"
     },
     {
@@ -850,10 +736,6 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "fail",
-        "reason": "搜索页能打开，但选择器没有选中任何结果"
-      },
       "site": "ani.girigirilove.com"
     },
     {
@@ -893,10 +775,6 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "agedm.io",
       "chosen": true
     },
@@ -911,10 +789,6 @@
       "info": [],
       "guess": false,
       "date": 1790779316,
-      "smoke": {
-        "status": "fail",
-        "reason": "详情页 HTTP 404（https://www.xgcartoon.com/detail/zangsongdefulilianzangsongzhefulilianriyu-shantianzhongren）"
-      },
       "site": "xgcartoon.com",
       "chosen": true
     },
@@ -927,10 +801,6 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "blocked",
-        "reason": "搜索页出现验证码/环境检查"
-      },
       "site": "2kdm.com"
     },
     {
@@ -942,10 +812,6 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "fail",
-        "reason": "HTTP 404"
-      },
       "site": "gugu3.com",
       "chosen": true
     },
@@ -1002,10 +868,6 @@
       "info": [],
       "guess": false,
       "date": 1789394769,
-      "smoke": {
-        "status": "skipped",
-        "reason": "非 no-channel 章节格式，只验证了搜索"
-      },
       "site": "dmbus.cc",
       "chosen": true
     },
@@ -1034,10 +896,6 @@
       "info": [],
       "guess": true,
       "date": 1784350043,
-      "smoke": {
-        "status": "fail",
-        "reason": "搜索页能打开，但选择器没有选中任何结果"
-      },
       "site": "mgnacg.com"
     },
     {
@@ -1049,10 +907,6 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "skipped",
-        "reason": "非 no-channel 章节格式，只验证了搜索"
-      },
       "site": "moonci.com"
     },
     {
@@ -1066,10 +920,6 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "fail",
-        "reason": "搜索页能打开，但选择器没有选中任何结果"
-      },
       "site": "silisilifun.com",
       "chosen": true
     },
@@ -1084,10 +934,6 @@
       "info": [],
       "guess": false,
       "date": 1791361738,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 1 个条目，详情页选出 38 个剧集链接"
-      },
       "site": "ezdmw.org",
       "chosen": true
     },
@@ -1102,10 +948,6 @@
       "info": [],
       "guess": true,
       "date": 1791361738,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "sbdl.cc"
     },
     {
@@ -1119,10 +961,6 @@
       "info": [],
       "guess": false,
       "date": 1791361738,
-      "smoke": {
-        "status": "skipped",
-        "reason": "手写配置，不做自动检测"
-      },
       "site": "sorani.net",
       "chosen": true
     },
@@ -1192,8 +1030,7 @@
       "version": "1.2.1",
       "status": "partial",
       "notes": [
-        "末尾 text() 已改为取元素全部文本",
-        "版本 1.2.1 不高于 Kazumi 里的同站规则（发布提交的日期不代表规则更新），不参与取新"
+        "末尾 text() 已改为取元素全部文本"
       ],
       "info": [
         "纯纯看番 release 通道",
@@ -1201,12 +1038,8 @@
       ],
       "guess": false,
       "date": 1792471432,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 10 个剧集链接"
-      },
       "site": "7sefun.top",
-      "redundant": true
+      "chosen": true
     },
     {
       "origin": "easybangumi",
@@ -1220,10 +1053,6 @@
       ],
       "guess": false,
       "date": 1792471432,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "jcydm1.com",
       "chosen": true
     },
@@ -1239,10 +1068,6 @@
       ],
       "guess": false,
       "date": 1792471432,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "anime7.top",
       "chosen": true
     },
@@ -1258,10 +1083,6 @@
       ],
       "guess": false,
       "date": 1792471432,
-      "smoke": {
-        "status": "unreachable",
-        "reason": "请求失败：ConnectionError"
-      },
       "site": "mayi520.org",
       "chosen": true
     },
@@ -1270,21 +1091,15 @@
       "key": "kazumi-baimao",
       "version": "1.0.1",
       "status": "ok",
-      "notes": [
-        "转换结果与 Kazumi 里同站规则完全相同，不参与取新"
-      ],
+      "notes": [],
       "info": [
         "纯纯看番 release 通道",
         "Kazumi 规则没有线路名，所有线路合并为一条"
       ],
       "guess": false,
       "date": 1792471432,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 168 个剧集链接"
-      },
       "site": "baimaodm.com",
-      "redundant": true
+      "chosen": true
     },
     {
       "origin": "easybangumi",
@@ -1336,21 +1151,15 @@
       "key": "kazumi-mxdm",
       "version": "2.3.1",
       "status": "ok",
-      "notes": [
-        "版本 2.3.1 不高于 Kazumi 里的同站规则（发布提交的日期不代表规则更新），不参与取新"
-      ],
+      "notes": [],
       "info": [
         "纯纯看番 release 通道",
         "Kazumi 规则没有线路名，所有线路合并为一条"
       ],
       "guess": false,
       "date": 1792471432,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 40 个剧集链接"
-      },
       "site": "dcc3.com",
-      "redundant": true
+      "chosen": true
     },
     {
       "origin": "easybangumi",
@@ -1364,10 +1173,6 @@
       ],
       "guess": false,
       "date": 1785171844,
-      "smoke": {
-        "status": "unreachable",
-        "reason": "请求失败：SSLError"
-      },
       "site": "omofun03.top",
       "chosen": true
     },
@@ -1413,10 +1218,6 @@
       ],
       "guess": false,
       "date": 1785171844,
-      "smoke": {
-        "status": "unreachable",
-        "reason": "请求失败：ReadTimeout"
-      },
       "site": "ylys.cc",
       "chosen": true
     },

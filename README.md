@@ -18,7 +18,7 @@
 
 读取 [CommunityJsExtensionEasyBangumi](https://github.com/easybangumiorg/CommunityJsExtensionEasyBangumi)。其中 `kazumi-*.js` 的文件头把 Kazumi 规则字段写成了常量，会还原成规则再转换；自己手写逻辑的（age、omofun、xifandm、yhw、Jellyfin、lmm、mifun、sorani、tvtfun 等）没有可提取的配置，转不了，报告里会列出。
 默认只收 release 通道（`extensions/`，作者真机验证过）；`dev-extensions/` 约 70 个未验证，要的话在 `config.json` 里把 `easybangumi_channels` 改成 `["release","dev"]`。
-这些 JS 文件的 git 日期是“发布提交”的日期，不代表规则更新，所以同站有 Kazumi 规则时按**版本号**比：配置相同或版本不高于 Kazumi 的不参与取新。
+不同来源之间只比较规则文件的最后修改时间，不看版本号（各来源版本号不可比）。
 
 ## 同站点取新
 

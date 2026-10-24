@@ -181,29 +181,6 @@ def merge(cands, config):
         c["site"] = host
         groups.setdefault(host, []).append(c)
 
-    # 纯纯看番的 kazumi-*.js 只是 Kazumi 规则的外壳，它的 git 日期反映的是“发布提交”而不是规则改动，
-    # 不能直接拿来和 Kazumi 比新旧。同站有 Kazumi 规则时改按版本号比：
-    # 配置完全相同，或版本号不高于 Kazumi 的，不参与取新；版本号更高的才参与。
-    def vt(v):
-        nums = re.findall(r"\d+", str(v))
-        return tuple(int(n) for n in nums) if nums else None
-
-    for host, members in groups.items():
-        kz = [c for c in members if c["origin"] == "kazumi"]
-        for c in list(members):
-            if c["origin"] != "easybangumi" or not kz:
-                continue
-            sc = c["source"]["arguments"]["searchConfig"]
-            if any(k["source"]["arguments"]["searchConfig"] == sc for k in kz):
-                why = "转换结果与 Kazumi 里同站规则完全相同"
-            elif vt(c["version"]) and any(vt(k["version"]) and vt(c["version"]) <= vt(k["version"]) for k in kz):
-                why = "版本 %s 不高于 Kazumi 里的同站规则（发布提交的日期不代表规则更新）" % c["version"]
-            else:
-                continue
-            members.remove(c)
-            c["redundant"] = True
-            c["notes"].append(why + "，不参与取新")
-
     chosen, decisions = [], []
     for host, members in sorted(groups.items()):
         rank = {"kazumi": 2, "easybangumi": 1}   # 时间相同：Kazumi > 纯纯看番 > AniBaka

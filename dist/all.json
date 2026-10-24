@@ -59,7 +59,7 @@
       "version": 2,
       "arguments": {
         "name": "五弹幕 (5DM)",
-        "description": "[自动检测未通过：HTTP 403] 五弹幕动漫源，支持番剧搜索、多线路分集与播放解析。搜索遇到站点验证时使用 WebView。 （AniBaka 规则 5dm rev 1 自动转换）",
+        "description": "五弹幕动漫源，支持番剧搜索、多线路分集与播放解析。搜索遇到站点验证时使用 WebView。 （AniBaka 规则 5dm rev 1 自动转换）",
         "iconUrl": "https://www.5dm.dev/wp-content/themes/5dm-next/assets/brand/mascot-face-32.png",
         "searchConfig": {
           "searchUrl": "https://www.5dm.dev/?s={keyword}&cat=-1%2C4%2C3%2C11",
@@ -109,61 +109,50 @@
       "factoryId": "web-selector",
       "version": 2,
       "arguments": {
-        "name": "七色番",
-        "description": "七色番提供最新番剧TV、剧场版在线高速播放，每日及时更新，是动漫迷的不二选择！",
-        "iconUrl": "https://www.7sefun.top/pc/img/favicon.ico",
+        "name": "7sefun",
+        "description": "由纯纯看番社区 JS 源 kazumi.7sefun v1.2.1 自动转换",
+        "iconUrl": "https://www.7sefun.top/favicon.ico",
         "searchConfig": {
-          "searchUrl": "https://www.7sefun.top/vodsearch/-------------.html?wd={keyword}",
           "searchUseOnlyFirstWord": true,
           "searchRemoveSpecial": true,
           "searchUseSubjectNamesCount": 1,
           "rawBaseUrl": "",
           "requestInterval": 3000,
-          "searchCacheTtl": 7200000,
-          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+          "searchUrl": "https://www.7sefun.top/vodsearch/-------------.html?wd={keyword}",
           "subjectFormatId": "indexed",
           "selectorSubjectFormatIndexed": {
-            "selectNames": "div.video.anim > div.video-by",
-            "selectLinks": "div.video.anim > a",
-            "linkTemplate": null,
+            "selectNames": "div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div div:nth-of-type(2)",
+            "selectLinks": "div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div a",
             "preferShorterName": true
           },
-          "channelFormatId": "index-grouped",
-          "selectorChannelFormatFlattened": {
-            "selectChannelNames": "div.chat-header.anim > span",
-            "matchChannelName": "",
-            "selectEpisodeLists": "div.message-container.vod-play-list-container",
-            "selectEpisodesFromList": "span > a",
-            "selectEpisodeLinksFromList": "",
-            "matchEpisodeSortFromName": "第\\s*(?<ep>.+)\\s*[话集]"
+          "channelFormatId": "no-channel",
+          "selectorChannelFormatNoChannel": {
+            "selectEpisodes": "div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) a",
+            "selectEpisodeLinks": "",
+            "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
           },
           "defaultResolution": "1080P",
           "defaultSubtitleLanguage": "CHS",
           "onlySupportsPlayers": [],
           "filterByEpisodeSort": true,
+          "filterBySubjectName": true,
           "selectMedia": {
             "distinguishSubjectName": true,
-            "distinguishChannelName": true
+            "distinguishChannelName": false
           },
           "matchVideo": {
-            "enableNestedUrl": true,
+            "enableNestedUrl": false,
             "matchNestedUrl": "$^",
-            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http)(?!.*jxdunrui\\.top).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/(?!.*jxdunrui\\.top).+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/)|(\\/video\\/.*mime_type=video)",
+            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
             "cookies": "quality=1080",
             "addHeadersToVideo": {
-              "referer": "https://www.7sefun.top/"
-            }
-          },
-          "autoMatch": {
-            "enabled": true,
-            "searchUseOnlyFirstWord": true,
-            "searchRemoveSpecial": true,
-            "searchUseSubjectNamesCount": 1,
-            "preferShorterName": true,
-            "filterByEpisodeSort": true
+              "referer": ""
+            },
+            "scanDomMediaUrls": true
           }
         },
-        "tier": 4
+        "tier": 4,
+        "channelTiers": {}
       }
     },
     {
@@ -172,7 +161,7 @@
       "version": 2,
       "arguments": {
         "name": "AGE动漫",
-        "description": "[自动检测未通过：HTTP 403] AGE动漫视频源，源网址www.agedm.io （AniBaka 规则 age rev 6 自动转换）",
+        "description": "AGE动漫视频源，源网址www.agedm.io （AniBaka 规则 age rev 6 自动转换）",
         "iconUrl": "https://www.agedm.io/favicon.ico",
         "searchConfig": {
           "searchUrl": "https://www.agedm.io/search?query={keyword}",
@@ -223,7 +212,7 @@
       "version": 2,
       "arguments": {
         "name": "4K动漫",
-        "description": "[自动检测未通过：搜索页出现验证码/环境检查] 4K动漫，提供日漫、国漫、美漫和剧场版等在线资源。",
+        "description": "4K动漫，提供日漫、国漫、美漫和剧场版等在线资源。",
         "iconUrl": "https://cn.agekkkk.com/template/the4/statics/img/favicon.ico",
         "searchConfig": {
           "searchUrl": "https://cn.agekkkk.com/search/{keyword}-------------.html",
@@ -304,7 +293,7 @@
       "version": 2,
       "arguments": {
         "name": "佩可爱动漫 (peko.love)",
-        "description": "[自动检测未通过：搜索页出现验证码/环境检查] 佩可爱动漫 (peko.love)，为您提供优质的动漫在线播放与分享。",
+        "description": "佩可爱动漫 (peko.love)，为您提供优质的动漫在线播放与分享。",
         "iconUrl": "https://ani.pekolove.net/wp-content/uploads/cropped-acglogo2-2-32x32.png",
         "searchConfig": {
           "searchUrl": "https://ani.pekolove.net/?s={keyword}",
@@ -372,7 +361,7 @@
       "version": 2,
       "arguments": {
         "name": "anime7",
-        "description": "[自动检测未通过：HTTP 403] 由纯纯看番社区 JS 源 kazumi.anime7 v1.0.1 自动转换",
+        "description": "由纯纯看番社区 JS 源 kazumi.anime7 v1.0.1 自动转换",
         "iconUrl": "https://ani7.b-cdn.net/upload/logo/icon.png",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -423,7 +412,7 @@
       "version": 2,
       "arguments": {
         "name": "Animoe动漫",
-        "description": "[自动检测未通过：HTTP 403] Animoe动漫，提供最新番剧、经典动漫全集免费高清在线观看。 （AniBaka 规则 animoe rev 4 自动转换）",
+        "description": "Animoe动漫，提供最新番剧、经典动漫全集免费高清在线观看。 （AniBaka 规则 animoe rev 4 自动转换）",
         "iconUrl": "https://github.elemecdn.com/mstatic616/images/logo/favicon.png",
         "searchConfig": {
           "searchUrl": "https://animoe.org/search.html?wd={keyword}",
@@ -473,7 +462,7 @@
       "version": 2,
       "arguments": {
         "name": "次元番",
-        "description": "[自动检测未通过：HTTP 403] 次元番，提供高清动漫资源在线搜索与免费观看。",
+        "description": "次元番，提供高清动漫资源在线搜索与免费观看。",
         "iconUrl": "https://hec-community-online.cdn.bcebos.com/COMMENT/98d18b1002eb5dd3dd1faf88162b7045/1781019621344.png",
         "searchConfig": {
           "searchUrl": "https://cyfz.top/searched.html?wd={keyword}",
@@ -504,7 +493,7 @@
       "version": 2,
       "arguments": {
         "name": "dalvdm",
-        "description": "[自动检测未通过：HTTP 403] 由 Kazumi 规则 dalvdm v1.2 自动转换",
+        "description": "由 Kazumi 规则 dalvdm v1.2 自动转换",
         "iconUrl": "https://www.sbdl.cc/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -556,7 +545,7 @@
       "version": 2,
       "arguments": {
         "name": "嘀嗒影视 (Dida HD)",
-        "description": "[自动检测未通过：HTTP 403] 专注高分电影，高清HD在线，极速秒播不卡顿！",
+        "description": "专注高分电影，高清HD在线，极速秒播不卡顿！",
         "iconUrl": "https://www.didahd.xyz/template/mytheme/statics/img/newfavicon.png",
         "searchConfig": {
           "searchUrl": "https://www.didahd.pro/search/-------------.html?wd={keyword}&submit=",
@@ -675,7 +664,7 @@
       "version": 2,
       "arguments": {
         "name": "GirigiriLove",
-        "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果] GirigiriLove动漫视频源，源网址ani.girigirilove.com",
+        "description": "GirigiriLove动漫视频源，源网址ani.girigirilove.com",
         "iconUrl": "https://ani.girigirilove.com/upload/anime.girigirilove.com_.png",
         "searchConfig": {
           "searchUrl": "https://ani.girigirilove.com/search/-------------/?wd={keyword}",
@@ -743,7 +732,7 @@
       "version": 2,
       "arguments": {
         "name": "咕咕番",
-        "description": "[自动检测未通过：HTTP 404] 咕咕番视频源，源网址gugu3.com，提供大量日漫番剧资源。 （AniBaka 规则 gugu rev 4 自动转换）",
+        "description": "咕咕番视频源，源网址gugu3.com，提供大量日漫番剧资源。 （AniBaka 规则 gugu rev 4 自动转换）",
         "iconUrl": "https://www.gugu3.com/upload/site/20260506-1/a0799f74e4bced939fbbc0b79cb27671.png",
         "searchConfig": {
           "searchUrl": "https://www.gugu3.com/index.php/vod/search/wd/{keyword}.html",
@@ -832,7 +821,7 @@
       "version": 2,
       "arguments": {
         "name": "路漫漫动漫",
-        "description": "[自动检测未通过：HTTP 403] 路漫漫在线动漫提供日本动漫、国产动漫、动画电影等免费在线观看。 （AniBaka 规则 lm6 rev 5 自动转换）",
+        "description": "路漫漫在线动漫提供日本动漫、国产动漫、动画电影等免费在线观看。 （AniBaka 规则 lm6 rev 5 自动转换）",
         "iconUrl": "https://m.lm6.net/template/jable/statics/icon/favicon-32x32.png",
         "searchConfig": {
           "searchUrl": "https://m.lm6.net/index.php/ajax/suggest?mid=1&wd={keyword}",
@@ -988,7 +977,7 @@
       "version": 2,
       "arguments": {
         "name": "嘶哩嘶哩",
-        "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果] 嘶哩嘶哩动漫源。保留站点访问会话 Cookie，优先通过本站播放接口解密直链，WebView 作为后备。 （AniBaka 规则 silisili rev 1 自动转换）",
+        "description": "嘶哩嘶哩动漫源。保留站点访问会话 Cookie，优先通过本站播放接口解密直链，WebView 作为后备。 （AniBaka 规则 silisili rev 1 自动转换）",
         "iconUrl": "https://www.silisilifun.com/favicon.ico?20190911",
         "searchConfig": {
           "searchUrl": "https://www.silisilifun.com/vodsearch/?wd={keyword}",
@@ -1089,7 +1078,7 @@
       "version": 2,
       "arguments": {
         "name": "西瓜卡通",
-        "description": "[自动检测未通过：详情页 HTTP 404（https://www.xgcartoon.com/detail/zangsongdefulilianzangsongzhefulilianriyu-shantianzhongren）] 西瓜卡通视频源，源网址www.xgcartoon.com",
+        "description": "西瓜卡通视频源，源网址www.xgcartoon.com",
         "iconUrl": "https://www.xgcartoon.com/xgct/icon/favicon-32x32.png",
         "searchConfig": {
           "searchUrl": "https://www.xgcartoon.com/search?q={keyword}",
@@ -1118,7 +1107,7 @@
       "version": 2,
       "arguments": {
         "name": "9ciyuan",
-        "description": "[自动检测未通过：HTTP 403] 由纯纯看番社区 JS 源 kazumi.9ciyuan v1.3.1 自动转换",
+        "description": "由纯纯看番社区 JS 源 kazumi.9ciyuan v1.3.1 自动转换",
         "iconUrl": "https://www.jcydm1.com/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1169,7 +1158,7 @@
       "version": 2,
       "arguments": {
         "name": "ant",
-        "description": "[自动检测未通过：请求失败：ConnectionError] 由纯纯看番社区 JS 源 kazumi.ant v0.0.3 自动转换",
+        "description": "由纯纯看番社区 JS 源 kazumi.ant v0.0.3 自动转换",
         "iconUrl": "https://www.mayi520.org/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1220,8 +1209,8 @@
       "version": 2,
       "arguments": {
         "name": "baimao",
-        "description": "由 Kazumi 规则 baimao v1.0 自动转换",
-        "iconUrl": "https://www.baimaodm.com/favicon.ico",
+        "description": "由纯纯看番社区 JS 源 kazumi.baimao v1.0.1 自动转换",
+        "iconUrl": "https://www.bmmdm.com/hdst/hm_pic/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
           "searchRemoveSpecial": true,
@@ -1270,7 +1259,7 @@
       "version": 2,
       "arguments": {
         "name": "LMM",
-        "description": "[自动检测未通过：HTTP 403] 由 Kazumi 规则 LMM v2.3 自动转换",
+        "description": "由 Kazumi 规则 LMM v2.3 自动转换",
         "iconUrl": "https://www.lmm85.com/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1322,7 +1311,7 @@
       "version": 2,
       "arguments": {
         "name": "MXdm",
-        "description": "由 Kazumi 规则 MXdm v2.4 自动转换",
+        "description": "由纯纯看番社区 JS 源 kazumi.mxdm v2.3.1 自动转换",
         "iconUrl": "https://www.dcc3.com/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1333,12 +1322,12 @@
           "searchUrl": "https://www.dcc3.com/search/?wd={keyword}",
           "subjectFormatId": "a",
           "selectorSubjectFormatA": {
-            "selectLists": "div[class*=\"search\"] > ul > li h3 > a",
+            "selectLists": "div:nth-of-type(3) > ul > li h3 > a",
             "preferShorterName": true
           },
           "channelFormatId": "no-channel",
           "selectorChannelFormatNoChannel": {
-            "selectEpisodes": "div[class=\"playlist\"] > div[class=\"row\"] > ul li > a",
+            "selectEpisodes": "div:nth-of-type(4) > div > div > ul li > a",
             "selectEpisodeLinks": "",
             "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
           },
@@ -1372,7 +1361,7 @@
       "version": 2,
       "arguments": {
         "name": "omofun03",
-        "description": "[自动检测未通过：请求失败：SSLError] 由纯纯看番社区 JS 源 kazumi.omofun03 v1.1 自动转换",
+        "description": "由纯纯看番社区 JS 源 kazumi.omofun03 v1.1 自动转换",
         "iconUrl": "https://omofun03.top/template/mxpro/mxtheme/images/favicon.png",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1546,7 +1535,7 @@
       "version": 2,
       "arguments": {
         "name": "ylsp",
-        "description": "[自动检测未通过：请求失败：ReadTimeout] 由纯纯看番社区 JS 源 kazumi.ylsp v1.1 自动转换",
+        "description": "由纯纯看番社区 JS 源 kazumi.ylsp v1.1 自动转换",
         "iconUrl": "https://www.ylys.cc/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1652,7 +1641,7 @@
         "version": 2,
         "arguments": {
           "name": "五弹幕 (5DM)",
-          "description": "[自动检测未通过：HTTP 403] 五弹幕动漫源，支持番剧搜索、多线路分集与播放解析。搜索遇到站点验证时使用 WebView。 （AniBaka 规则 5dm rev 1 自动转换）",
+          "description": "五弹幕动漫源，支持番剧搜索、多线路分集与播放解析。搜索遇到站点验证时使用 WebView。 （AniBaka 规则 5dm rev 1 自动转换）",
           "iconUrl": "https://www.5dm.dev/wp-content/themes/5dm-next/assets/brand/mascot-face-32.png",
           "searchConfig": {
             "searchUrl": "https://www.5dm.dev/?s={keyword}&cat=-1%2C4%2C3%2C11",
@@ -1702,61 +1691,50 @@
         "factoryId": "web-selector",
         "version": 2,
         "arguments": {
-          "name": "七色番",
-          "description": "七色番提供最新番剧TV、剧场版在线高速播放，每日及时更新，是动漫迷的不二选择！",
-          "iconUrl": "https://www.7sefun.top/pc/img/favicon.ico",
+          "name": "7sefun",
+          "description": "由纯纯看番社区 JS 源 kazumi.7sefun v1.2.1 自动转换",
+          "iconUrl": "https://www.7sefun.top/favicon.ico",
           "searchConfig": {
-            "searchUrl": "https://www.7sefun.top/vodsearch/-------------.html?wd={keyword}",
             "searchUseOnlyFirstWord": true,
             "searchRemoveSpecial": true,
             "searchUseSubjectNamesCount": 1,
             "rawBaseUrl": "",
             "requestInterval": 3000,
-            "searchCacheTtl": 7200000,
-            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "searchUrl": "https://www.7sefun.top/vodsearch/-------------.html?wd={keyword}",
             "subjectFormatId": "indexed",
             "selectorSubjectFormatIndexed": {
-              "selectNames": "div.video.anim > div.video-by",
-              "selectLinks": "div.video.anim > a",
-              "linkTemplate": null,
+              "selectNames": "div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div div:nth-of-type(2)",
+              "selectLinks": "div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div a",
               "preferShorterName": true
             },
-            "channelFormatId": "index-grouped",
-            "selectorChannelFormatFlattened": {
-              "selectChannelNames": "div.chat-header.anim > span",
-              "matchChannelName": "",
-              "selectEpisodeLists": "div.message-container.vod-play-list-container",
-              "selectEpisodesFromList": "span > a",
-              "selectEpisodeLinksFromList": "",
-              "matchEpisodeSortFromName": "第\\s*(?<ep>.+)\\s*[话集]"
+            "channelFormatId": "no-channel",
+            "selectorChannelFormatNoChannel": {
+              "selectEpisodes": "div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) a",
+              "selectEpisodeLinks": "",
+              "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
             },
             "defaultResolution": "1080P",
             "defaultSubtitleLanguage": "CHS",
             "onlySupportsPlayers": [],
             "filterByEpisodeSort": true,
+            "filterBySubjectName": true,
             "selectMedia": {
               "distinguishSubjectName": true,
-              "distinguishChannelName": true
+              "distinguishChannelName": false
             },
             "matchVideo": {
-              "enableNestedUrl": true,
+              "enableNestedUrl": false,
               "matchNestedUrl": "$^",
-              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http)(?!.*jxdunrui\\.top).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/(?!.*jxdunrui\\.top).+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/)|(\\/video\\/.*mime_type=video)",
+              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
               "cookies": "quality=1080",
               "addHeadersToVideo": {
-                "referer": "https://www.7sefun.top/"
-              }
-            },
-            "autoMatch": {
-              "enabled": true,
-              "searchUseOnlyFirstWord": true,
-              "searchRemoveSpecial": true,
-              "searchUseSubjectNamesCount": 1,
-              "preferShorterName": true,
-              "filterByEpisodeSort": true
+                "referer": ""
+              },
+              "scanDomMediaUrls": true
             }
           },
-          "tier": 4
+          "tier": 4,
+          "channelTiers": {}
         }
       },
       {
@@ -1765,7 +1743,7 @@
         "version": 2,
         "arguments": {
           "name": "AGE动漫",
-          "description": "[自动检测未通过：HTTP 403] AGE动漫视频源，源网址www.agedm.io （AniBaka 规则 age rev 6 自动转换）",
+          "description": "AGE动漫视频源，源网址www.agedm.io （AniBaka 规则 age rev 6 自动转换）",
           "iconUrl": "https://www.agedm.io/favicon.ico",
           "searchConfig": {
             "searchUrl": "https://www.agedm.io/search?query={keyword}",
@@ -1816,7 +1794,7 @@
         "version": 2,
         "arguments": {
           "name": "4K动漫",
-          "description": "[自动检测未通过：搜索页出现验证码/环境检查] 4K动漫，提供日漫、国漫、美漫和剧场版等在线资源。",
+          "description": "4K动漫，提供日漫、国漫、美漫和剧场版等在线资源。",
           "iconUrl": "https://cn.agekkkk.com/template/the4/statics/img/favicon.ico",
           "searchConfig": {
             "searchUrl": "https://cn.agekkkk.com/search/{keyword}-------------.html",
@@ -1897,7 +1875,7 @@
         "version": 2,
         "arguments": {
           "name": "佩可爱动漫 (peko.love)",
-          "description": "[自动检测未通过：搜索页出现验证码/环境检查] 佩可爱动漫 (peko.love)，为您提供优质的动漫在线播放与分享。",
+          "description": "佩可爱动漫 (peko.love)，为您提供优质的动漫在线播放与分享。",
           "iconUrl": "https://ani.pekolove.net/wp-content/uploads/cropped-acglogo2-2-32x32.png",
           "searchConfig": {
             "searchUrl": "https://ani.pekolove.net/?s={keyword}",
@@ -1965,7 +1943,7 @@
         "version": 2,
         "arguments": {
           "name": "anime7",
-          "description": "[自动检测未通过：HTTP 403] 由纯纯看番社区 JS 源 kazumi.anime7 v1.0.1 自动转换",
+          "description": "由纯纯看番社区 JS 源 kazumi.anime7 v1.0.1 自动转换",
           "iconUrl": "https://ani7.b-cdn.net/upload/logo/icon.png",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -2016,7 +1994,7 @@
         "version": 2,
         "arguments": {
           "name": "Animoe动漫",
-          "description": "[自动检测未通过：HTTP 403] Animoe动漫，提供最新番剧、经典动漫全集免费高清在线观看。 （AniBaka 规则 animoe rev 4 自动转换）",
+          "description": "Animoe动漫，提供最新番剧、经典动漫全集免费高清在线观看。 （AniBaka 规则 animoe rev 4 自动转换）",
           "iconUrl": "https://github.elemecdn.com/mstatic616/images/logo/favicon.png",
           "searchConfig": {
             "searchUrl": "https://animoe.org/search.html?wd={keyword}",
@@ -2066,7 +2044,7 @@
         "version": 2,
         "arguments": {
           "name": "次元番",
-          "description": "[自动检测未通过：HTTP 403] 次元番，提供高清动漫资源在线搜索与免费观看。",
+          "description": "次元番，提供高清动漫资源在线搜索与免费观看。",
           "iconUrl": "https://hec-community-online.cdn.bcebos.com/COMMENT/98d18b1002eb5dd3dd1faf88162b7045/1781019621344.png",
           "searchConfig": {
             "searchUrl": "https://cyfz.top/searched.html?wd={keyword}",
@@ -2097,7 +2075,7 @@
         "version": 2,
         "arguments": {
           "name": "dalvdm",
-          "description": "[自动检测未通过：HTTP 403] 由 Kazumi 规则 dalvdm v1.2 自动转换",
+          "description": "由 Kazumi 规则 dalvdm v1.2 自动转换",
           "iconUrl": "https://www.sbdl.cc/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -2149,7 +2127,7 @@
         "version": 2,
         "arguments": {
           "name": "嘀嗒影视 (Dida HD)",
-          "description": "[自动检测未通过：HTTP 403] 专注高分电影，高清HD在线，极速秒播不卡顿！",
+          "description": "专注高分电影，高清HD在线，极速秒播不卡顿！",
           "iconUrl": "https://www.didahd.xyz/template/mytheme/statics/img/newfavicon.png",
           "searchConfig": {
             "searchUrl": "https://www.didahd.pro/search/-------------.html?wd={keyword}&submit=",
@@ -2268,7 +2246,7 @@
         "version": 2,
         "arguments": {
           "name": "GirigiriLove",
-          "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果] GirigiriLove动漫视频源，源网址ani.girigirilove.com",
+          "description": "GirigiriLove动漫视频源，源网址ani.girigirilove.com",
           "iconUrl": "https://ani.girigirilove.com/upload/anime.girigirilove.com_.png",
           "searchConfig": {
             "searchUrl": "https://ani.girigirilove.com/search/-------------/?wd={keyword}",
@@ -2336,7 +2314,7 @@
         "version": 2,
         "arguments": {
           "name": "咕咕番",
-          "description": "[自动检测未通过：HTTP 404] 咕咕番视频源，源网址gugu3.com，提供大量日漫番剧资源。 （AniBaka 规则 gugu rev 4 自动转换）",
+          "description": "咕咕番视频源，源网址gugu3.com，提供大量日漫番剧资源。 （AniBaka 规则 gugu rev 4 自动转换）",
           "iconUrl": "https://www.gugu3.com/upload/site/20260506-1/a0799f74e4bced939fbbc0b79cb27671.png",
           "searchConfig": {
             "searchUrl": "https://www.gugu3.com/index.php/vod/search/wd/{keyword}.html",
@@ -2425,7 +2403,7 @@
         "version": 2,
         "arguments": {
           "name": "路漫漫动漫",
-          "description": "[自动检测未通过：HTTP 403] 路漫漫在线动漫提供日本动漫、国产动漫、动画电影等免费在线观看。 （AniBaka 规则 lm6 rev 5 自动转换）",
+          "description": "路漫漫在线动漫提供日本动漫、国产动漫、动画电影等免费在线观看。 （AniBaka 规则 lm6 rev 5 自动转换）",
           "iconUrl": "https://m.lm6.net/template/jable/statics/icon/favicon-32x32.png",
           "searchConfig": {
             "searchUrl": "https://m.lm6.net/index.php/ajax/suggest?mid=1&wd={keyword}",
@@ -2581,7 +2559,7 @@
         "version": 2,
         "arguments": {
           "name": "嘶哩嘶哩",
-          "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果] 嘶哩嘶哩动漫源。保留站点访问会话 Cookie，优先通过本站播放接口解密直链，WebView 作为后备。 （AniBaka 规则 silisili rev 1 自动转换）",
+          "description": "嘶哩嘶哩动漫源。保留站点访问会话 Cookie，优先通过本站播放接口解密直链，WebView 作为后备。 （AniBaka 规则 silisili rev 1 自动转换）",
           "iconUrl": "https://www.silisilifun.com/favicon.ico?20190911",
           "searchConfig": {
             "searchUrl": "https://www.silisilifun.com/vodsearch/?wd={keyword}",
@@ -2682,7 +2660,7 @@
         "version": 2,
         "arguments": {
           "name": "西瓜卡通",
-          "description": "[自动检测未通过：详情页 HTTP 404（https://www.xgcartoon.com/detail/zangsongdefulilianzangsongzhefulilianriyu-shantianzhongren）] 西瓜卡通视频源，源网址www.xgcartoon.com",
+          "description": "西瓜卡通视频源，源网址www.xgcartoon.com",
           "iconUrl": "https://www.xgcartoon.com/xgct/icon/favicon-32x32.png",
           "searchConfig": {
             "searchUrl": "https://www.xgcartoon.com/search?q={keyword}",
@@ -2711,7 +2689,7 @@
         "version": 2,
         "arguments": {
           "name": "9ciyuan",
-          "description": "[自动检测未通过：HTTP 403] 由纯纯看番社区 JS 源 kazumi.9ciyuan v1.3.1 自动转换",
+          "description": "由纯纯看番社区 JS 源 kazumi.9ciyuan v1.3.1 自动转换",
           "iconUrl": "https://www.jcydm1.com/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -2762,7 +2740,7 @@
         "version": 2,
         "arguments": {
           "name": "ant",
-          "description": "[自动检测未通过：请求失败：ConnectionError] 由纯纯看番社区 JS 源 kazumi.ant v0.0.3 自动转换",
+          "description": "由纯纯看番社区 JS 源 kazumi.ant v0.0.3 自动转换",
           "iconUrl": "https://www.mayi520.org/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -2813,8 +2791,8 @@
         "version": 2,
         "arguments": {
           "name": "baimao",
-          "description": "由 Kazumi 规则 baimao v1.0 自动转换",
-          "iconUrl": "https://www.baimaodm.com/favicon.ico",
+          "description": "由纯纯看番社区 JS 源 kazumi.baimao v1.0.1 自动转换",
+          "iconUrl": "https://www.bmmdm.com/hdst/hm_pic/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
             "searchRemoveSpecial": true,
@@ -2863,7 +2841,7 @@
         "version": 2,
         "arguments": {
           "name": "LMM",
-          "description": "[自动检测未通过：HTTP 403] 由 Kazumi 规则 LMM v2.3 自动转换",
+          "description": "由 Kazumi 规则 LMM v2.3 自动转换",
           "iconUrl": "https://www.lmm85.com/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -2915,7 +2893,7 @@
         "version": 2,
         "arguments": {
           "name": "MXdm",
-          "description": "由 Kazumi 规则 MXdm v2.4 自动转换",
+          "description": "由纯纯看番社区 JS 源 kazumi.mxdm v2.3.1 自动转换",
           "iconUrl": "https://www.dcc3.com/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -2926,12 +2904,12 @@
             "searchUrl": "https://www.dcc3.com/search/?wd={keyword}",
             "subjectFormatId": "a",
             "selectorSubjectFormatA": {
-              "selectLists": "div[class*=\"search\"] > ul > li h3 > a",
+              "selectLists": "div:nth-of-type(3) > ul > li h3 > a",
               "preferShorterName": true
             },
             "channelFormatId": "no-channel",
             "selectorChannelFormatNoChannel": {
-              "selectEpisodes": "div[class=\"playlist\"] > div[class=\"row\"] > ul li > a",
+              "selectEpisodes": "div:nth-of-type(4) > div > div > ul li > a",
               "selectEpisodeLinks": "",
               "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
             },
@@ -2965,7 +2943,7 @@
         "version": 2,
         "arguments": {
           "name": "omofun03",
-          "description": "[自动检测未通过：请求失败：SSLError] 由纯纯看番社区 JS 源 kazumi.omofun03 v1.1 自动转换",
+          "description": "由纯纯看番社区 JS 源 kazumi.omofun03 v1.1 自动转换",
           "iconUrl": "https://omofun03.top/template/mxpro/mxtheme/images/favicon.png",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -3139,7 +3117,7 @@
         "version": 2,
         "arguments": {
           "name": "ylsp",
-          "description": "[自动检测未通过：请求失败：ReadTimeout] 由纯纯看番社区 JS 源 kazumi.ylsp v1.1 自动转换",
+          "description": "由纯纯看番社区 JS 源 kazumi.ylsp v1.1 自动转换",
           "iconUrl": "https://www.ylys.cc/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
