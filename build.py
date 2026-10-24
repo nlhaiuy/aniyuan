@@ -190,7 +190,7 @@ def merge(cands, config):
             reason = "只有这一个来源"
         p = prefer.get(host)
         if p:
-            forced = [c for c in members if (c["origin"] == "kazumi") == (p == "kazumi")]
+            forced = [c for c in members if (("anibaka" if c["origin"] == "baseline" else c["origin"]) == p)]
             if forced:
                 winner, reason = forced[0], "config.prefer 指定 %s" % p
         smoke_of = lambda c: (c.get("smoke") or {}).get("status")  # noqa: E731
