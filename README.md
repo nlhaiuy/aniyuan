@@ -1,4 +1,4 @@
-# Kazumi + AniBaka → Animeko 订阅自动同步
+# Kazumi + AniBaka + 纯纯看番社区源 → Animeko 订阅自动同步
 
 每天自动读取 [KazumiRules](https://github.com/Predidit/KazumiRules) 的 `index.json`（也就是 Kazumi 应用里“规则仓库”列出的那批规则），
 和 [AniBakaRule](https://github.com/AniBakaBaka/AniBakaRule) 的全部规则，合并、转换成 Animeko 能用的数据源订阅，放到 `dist/all.json`。Kazumi 的规则更新后，订阅会自动跟着更新。
@@ -14,9 +14,15 @@
 
 之后每天北京时间 09:17 自动同步；每次运行的转换报告在 Actions 任务页的 Summary 里，也保存在 `dist/report.md`。
 
+## 纯纯看番社区 JS 源
+
+读取 [CommunityJsExtensionEasyBangumi](https://github.com/easybangumiorg/CommunityJsExtensionEasyBangumi)。其中 `kazumi-*.js` 的文件头把 Kazumi 规则字段写成了常量，会还原成规则再转换；自己手写逻辑的（age、omofun、xifandm、yhw、Jellyfin、lmm、mifun、sorani、tvtfun 等）没有可提取的配置，转不了，报告里会列出。
+默认只收 release 通道（`extensions/`，作者真机验证过）；`dev-extensions/` 约 70 个未验证，要的话在 `config.json` 里把 `easybangumi_channels` 改成 `["release","dev"]`。
+这些 JS 文件的 git 日期是“发布提交”的日期，不代表规则更新，所以同站有 Kazumi 规则时按**版本号**比：配置相同或版本不高于 Kazumi 的不参与取新。
+
 ## 同站点取新
 
-- 按站点主机名（去掉 `www.`/`m.`）分组；同一个站在多个来源里都有时，取**规则文件最后修改时间更新**的那个（用 git 提交时间，并列取 Kazumi）。
+- 按站点主机名（去掉 `www.`/`m.`）分组；同一个站在多个来源里都有时，取**规则文件最后修改时间更新**的那个（用 git 提交时间，并列时 Kazumi > 纯纯看番 > AniBaka）。
 - 订阅里的 `id` 固定：站点在 AniBaka 里有就用 `anibaka-<key>`（和你原来的订阅一致），否则 `kazumi-<名字>`。谁赢了不影响 id，Animeko 里的启用状态不会丢。
 - AniBaka 规则转不了（POST/JSON 站、磁力站、anime1、用 jsonEpisodes 取章节的等）时，回退到 `baseline/anibaka.json` 里同 id 的现成配置；搜索地址只能靠推测的（MacCMS suggest）也优先用 baseline 里手调过的。baseline 里也没有的会在报告里列为“已跳过”。
 - “更新的那个”自动检测没过、旧的却过了：默认仍取新的，并在报告里提示；想自动换用旧的就把 `prefer_working` 设为 `true`，或用 `prefer` 指定。
@@ -54,7 +60,8 @@
 pip install -r requirements.txt
 git clone https://github.com/Predidit/KazumiRules.git ../KazumiRules
 git clone https://github.com/AniBakaBaka/AniBakaRule.git ../AniBakaRule
-python build.py --kazumi ../KazumiRules --anibaka ../AniBakaRule --out dist --smoke
+git clone https://github.com/easybangumiorg/CommunityJsExtensionEasyBangumi.git ../EasyBangumi
+python build.py --kazumi ../KazumiRules --anibaka ../AniBakaRule --easybangumi ../EasyBangumi --out dist --smoke
 python tests/test_xpath2css.py   # 翻译器自测（可选：KAZUMI_RULES=../KazumiRules）
 python tests/test_anx.py         # AniBaka 转换 + 同站取新自测
 python tests/test_pipeline.py    # 流水线自测（本地模拟站点）
@@ -62,7 +69,7 @@ python tests/test_pipeline.py    # 流水线自测（本地模拟站点）
 
 ## 文件
 
-- `anx2animeko.py`：AniBaka 规则转换　`baseline/anibaka.json`：转不了时的回退配置
+- `ebjs.py`：纯纯看番 JS 源转换　`anx2animeko.py`：AniBaka 规则转换　`baseline/anibaka.json`：转不了时的回退配置
 - `xpath2css.py`：XPath → CSS 翻译器　`convert.py`：规则转换　`smoke.py`：冒烟测试　`build.py`：总控
 - `config.json`、`overrides/`、`tests/`、`.github/workflows/sync.yml`
 

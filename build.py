@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""KazumiRules + AniBakaRule -> 一个 Animeko 订阅。
+"""KazumiRules + AniBakaRule + 纯纯看番社区 JS 源 -> 一个 Animeko 订阅。
 
 用法:
   python build.py --kazumi ./KazumiRules --anibaka ./AniBakaRule --out dist
@@ -10,7 +10,7 @@
 
 合并规则：
   1. 按“站点主机名”（去掉 www./m.，可在 config.json 的 site_aliases 里手动并站）分组；
-  2. 同一站点在多个来源里都有，取最后修改时间更新的那个（并列时取 Kazumi）；
+  2. 同一站点在多个来源里都有，取最后修改时间更新的那个（并列时 Kazumi > 纯纯看番 > AniBaka）；
   3. 站点在 AniBaka 里有时，订阅里的 id 固定为 anibaka-<key>，否则为 kazumi-<name>；
      id 不随“谁赢了”变化，Animeko 里用户的启用状态才不会丢；
   4. AniBaka 规则转不了时，回退到 baseline/anibaka.json 里同 id 的现成配置。
@@ -18,6 +18,7 @@
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -26,6 +27,7 @@ from datetime import datetime, timezone
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from anx2animeko import convert_anx, site_host, source_id  # noqa: E402
 from convert import convert_rule  # noqa: E402
+from ebjs import convert_extension  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -140,6 +142,30 @@ def collect_anibaka(repo, baseline, config):
     return out
 
 
+def collect_easybangumi(repo, config):
+    """纯纯看番社区 JS 源：release 里是真机验证过的，dev 是未验证的（默认不收）。"""
+    out, seen = [], set()
+    exclude = set(config.get("exclude_easybangumi", []))
+    for channel, sub in (("release", "extensions"), ("dev", "dev-extensions")):
+        if channel not in config.get("easybangumi_channels", ["release"]):
+            continue
+        d = os.path.join(repo, sub)
+        for fn in sorted(os.listdir(d)) if os.path.isdir(d) else []:
+            if not fn.endswith(".js") or fn in seen:
+                continue
+            seen.add(fn)
+            key = fn[:-3]
+            if key in exclude:
+                continue
+            res, meta = convert_extension(os.path.join(d, fn), config)
+            c = dict(origin="easybangumi", key=key, version=meta.get("versionName", ""), source=res.source,
+                     status=res.status, notes=list(res.notes), info=res.info, guess=False,
+                     date=git_date(repo, "%s/%s" % (sub, fn)))
+            c["info"] = ["纯纯看番 %s 通道" % channel] + list(c["info"])
+            out.append(c)
+    return out
+
+
 # ---------------------------------------------------------------- 合并
 def merge(cands, config):
     aliases = config.get("site_aliases", {})
@@ -155,9 +181,33 @@ def merge(cands, config):
         c["site"] = host
         groups.setdefault(host, []).append(c)
 
+    # 纯纯看番的 kazumi-*.js 只是 Kazumi 规则的外壳，它的 git 日期反映的是“发布提交”而不是规则改动，
+    # 不能直接拿来和 Kazumi 比新旧。同站有 Kazumi 规则时改按版本号比：
+    # 配置完全相同，或版本号不高于 Kazumi 的，不参与取新；版本号更高的才参与。
+    def vt(v):
+        nums = re.findall(r"\d+", str(v))
+        return tuple(int(n) for n in nums) if nums else None
+
+    for host, members in groups.items():
+        kz = [c for c in members if c["origin"] == "kazumi"]
+        for c in list(members):
+            if c["origin"] != "easybangumi" or not kz:
+                continue
+            sc = c["source"]["arguments"]["searchConfig"]
+            if any(k["source"]["arguments"]["searchConfig"] == sc for k in kz):
+                why = "转换结果与 Kazumi 里同站规则完全相同"
+            elif vt(c["version"]) and any(vt(k["version"]) and vt(c["version"]) <= vt(k["version"]) for k in kz):
+                why = "版本 %s 不高于 Kazumi 里的同站规则（发布提交的日期不代表规则更新）" % c["version"]
+            else:
+                continue
+            members.remove(c)
+            c["redundant"] = True
+            c["notes"].append(why + "，不参与取新")
+
     chosen, decisions = [], []
     for host, members in sorted(groups.items()):
-        members.sort(key=lambda c: (c["date"] or 0, c["origin"] == "kazumi"), reverse=True)
+        rank = {"kazumi": 2, "easybangumi": 1}   # 时间相同：Kazumi > 纯纯看番 > AniBaka
+        members.sort(key=lambda c: (c["date"] or 0, rank.get(c["origin"], 0)), reverse=True)
         winner, reason = members[0], "更新（%s）" % fmt_date(members[0]["date"])
         if len(members) == 1:
             reason = "只有这一个来源"
@@ -177,7 +227,8 @@ def merge(cands, config):
                         "更新的来源自动检测未通过，而 %s 的通过了；如想换用，在 config.json 的 prefer 里设置 %s" % (
                             ok[0]["origin"], host))
         ab = [c for c in members if c["origin"] in ("anibaka", "baseline")]
-        stable_id = source_id(ab[0]["key"]) if ab else winner["source"]["id"]
+        kz = [c for c in members if c["origin"] == "kazumi"]
+        stable_id = source_id(ab[0]["key"]) if ab else (kz[0]["source"]["id"] if kz else winner["source"]["id"])
         winner["source"]["id"] = stable_id
         winner["chosen"] = True
         chosen.append(winner)
@@ -190,14 +241,15 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--kazumi", help="KazumiRules 仓库目录")
     ap.add_argument("--anibaka", help="AniBakaRule 仓库目录")
+    ap.add_argument("--easybangumi", help="CommunityJsExtensionEasyBangumi 仓库目录")
     ap.add_argument("--out", default="dist")
     ap.add_argument("--config", default=os.path.join(HERE, "config.json"))
     ap.add_argument("--overrides", default=os.path.join(HERE, "overrides"))
     ap.add_argument("--baseline", default=os.path.join(HERE, "baseline", "anibaka.json"))
     ap.add_argument("--smoke", action="store_true")
     args = ap.parse_args()
-    if not args.kazumi and not args.anibaka:
-        ap.error("至少给一个 --kazumi 或 --anibaka")
+    if not (args.kazumi or args.anibaka or args.easybangumi):
+        ap.error("至少给一个 --kazumi / --anibaka / --easybangumi")
 
     config = load_json(args.config) if os.path.exists(args.config) else {}
     baseline = {}
@@ -209,6 +261,8 @@ def main():
         cands += collect_kazumi(args.kazumi, config, args.overrides)
     if args.anibaka:
         cands += collect_anibaka(args.anibaka, baseline, config)
+    if args.easybangumi:
+        cands += collect_easybangumi(args.easybangumi, config)
 
     if args.smoke:
         import requests

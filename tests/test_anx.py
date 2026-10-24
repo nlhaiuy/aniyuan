@@ -79,4 +79,38 @@ ch, _ = merge([z], {})
 check("只有 Kazumi 的站点沿用 kazumi-<name>", ch[0]["source"]["id"] == "kazumi-zed")
 ch, _ = merge([cand("kazumi", "A", "a1.com", 1, "i1"), cand("anibaka", "B", "b1.com", 1, "anibaka-b")], {"site_aliases": {"a1.com": "b1.com"}})
 check("site_aliases 手动并站", len(ch) == 1)
+
+# ---- 纯纯看番 JS 源 ----
+import tempfile
+from ebjs import convert_extension
+js = ('// @key kazumi.demo\n// @label demo\n// @versionName 1.2.1\n// @cover https://d.example.com/f.ico\n\n'
+      'var DEFAULT_BASE_URL = "https://d.example.com/";\nvar SEARCH_URL = "https://d.example.com/s?wd=@keyword";\n'
+      'var SEARCH_LIST_XPATH = "//ul/li";\nvar SEARCH_NAME_XPATH = "//h3/a";\nvar SEARCH_RESULT_XPATH = "//h3/a";\n'
+      'var CHAPTER_ROADS_XPATH = "//div[@id=\\"p\\"]";\nvar CHAPTER_RESULT_XPATH = "//li/a";\nvar USER_AGENT = "";\nvar REFERER = "";\n'
+      'var USE_POST = false;\nvar USE_LEGACY_PARSER = false;\n')
+d = tempfile.mkdtemp(); p = os.path.join(d, "kazumi-demo.js"); open(p, "w", encoding="utf-8").write(js)
+re_, meta = convert_extension(p)
+check("JS 外壳还原成 Kazumi 规则并转换", re_.source is not None and re_.source["arguments"]["iconUrl"] == "https://d.example.com/f.ico"
+      and re_.source["arguments"]["searchConfig"]["searchUrl"] == "https://d.example.com/s?wd={keyword}" and re_.source["id"] == "kazumi-demo")
+p2 = os.path.join(d, "custom.js"); open(p2, "w").write("// @key a\n// @label A\nfunction x(){}\n")
+check("手写 JS 逻辑 -> unsupported", convert_extension(p2)[0].source is None)
+open(os.path.join(d, "post.js"), "w").write(js.replace("USE_POST = false", "USE_POST = true"))
+check("POST 的 JS 外壳 -> unsupported", convert_extension(os.path.join(d, "post.js"))[0].source is None)
+
+def eb(key, host, date, ver, sid, origin="easybangumi", conf="x"):
+    c = cand(origin, key, host, date, sid); c["version"] = ver
+    c["source"]["arguments"]["searchConfig"]["sel"] = conf
+    return c
+kz = eb("K", "s.com", 100, "1.3", "kazumi-s", "kazumi", "new"); ex = eb("e", "s.com", 999, "1.2.1", "kazumi-s", "easybangumi", "old")
+ch, _ = merge([kz, ex], {})
+check("纯纯看番版本更旧：不因发布日期更新而覆盖 Kazumi", ch[0]["origin"] == "kazumi" and ex.get("redundant"))
+kz = eb("K", "s.com", 100, "1.3", "kazumi-s", "kazumi", "new"); ex = eb("e", "s.com", 999, "1.4", "kazumi-s", "easybangumi", "old")
+ch, _ = merge([kz, ex], {})
+check("纯纯看番版本更高：参与取新", ch[0]["origin"] == "easybangumi")
+kz = eb("K", "s.com", 100, "1.3", "kazumi-s", "kazumi", "same"); ex = eb("e", "s.com", 999, "1.4", "kazumi-s", "easybangumi", "same")
+ch, _ = merge([kz, ex], {})
+check("配置相同的外壳不参与取新", ch[0]["origin"] == "kazumi")
+ab = cand("anibaka", "s", "s.com", 100, "anibaka-s"); ex = eb("e", "s.com", 100, "1.0", "kazumi-s", "easybangumi")
+ch, _ = merge([ab, ex], {})
+check("日期相同：纯纯看番 > AniBaka，id 仍为 anibaka-s", ch[0]["origin"] == "easybangumi" and ch[0]["source"]["id"] == "anibaka-s")
 sys.exit(1 if bad else 0)

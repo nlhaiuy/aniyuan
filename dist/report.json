@@ -70,10 +70,11 @@
     },
     {
       "site": "anime7.top",
-      "winner": "anibaka:anime7",
+      "winner": "easybangumi:kazumi-anime7",
       "id": "anibaka-anime7",
-      "reason": "只有这一个来源",
+      "reason": "更新（2026-10-20）",
       "members": [
+        "easybangumi:kazumi-anime7(2026-10-20)",
         "anibaka:anime7(2026-10-07)"
       ]
     },
@@ -179,6 +180,15 @@
       ]
     },
     {
+      "site": "jcydm1.com",
+      "winner": "easybangumi:kazumi-9ciyuan",
+      "id": "kazumi-9ciyuan",
+      "reason": "只有这一个来源",
+      "members": [
+        "easybangumi:kazumi-9ciyuan(2026-10-20)"
+      ]
+    },
+    {
       "site": "lm6.net",
       "winner": "anibaka:lm6",
       "id": "anibaka-lm6",
@@ -194,6 +204,15 @@
       "reason": "只有这一个来源",
       "members": [
         "kazumi:LMM(2026-10-15)"
+      ]
+    },
+    {
+      "site": "mayi520.org",
+      "winner": "easybangumi:kazumi-ant",
+      "id": "kazumi-ant",
+      "reason": "只有这一个来源",
+      "members": [
+        "easybangumi:kazumi-ant(2026-10-20)"
       ]
     },
     {
@@ -224,6 +243,15 @@
       "reason": "只有这一个来源",
       "members": [
         "kazumi:xfdmnext(2026-10-01)"
+      ]
+    },
+    {
+      "site": "omofun03.top",
+      "winner": "easybangumi:kazumi-omofun03",
+      "id": "kazumi-omofun03",
+      "reason": "只有这一个来源",
+      "members": [
+        "easybangumi:kazumi-omofun03(2026-07-27)"
       ]
     },
     {
@@ -263,6 +291,15 @@
       "members": [
         "baseline:xigua(2026-09-30)"
       ]
+    },
+    {
+      "site": "ylys.cc",
+      "winner": "easybangumi:kazumi-ylsp",
+      "id": "kazumi-ylsp",
+      "reason": "只有这一个来源",
+      "members": [
+        "easybangumi:kazumi-ylsp(2026-07-27)"
+      ]
     }
   ],
   "candidates": [
@@ -279,10 +316,6 @@
       ],
       "guess": false,
       "date": 1786362131,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 20 个剧集链接"
-      },
       "site": "7sefun.top"
     },
     {
@@ -296,10 +329,6 @@
       ],
       "guess": false,
       "date": 1787289623,
-      "smoke": {
-        "status": "unreachable",
-        "reason": "请求失败：SSLError"
-      },
       "site": "moonci.com"
     },
     {
@@ -313,10 +342,6 @@
       ],
       "guess": false,
       "date": 1758092260,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "agedm.io"
     },
     {
@@ -330,10 +355,6 @@
       ],
       "guess": false,
       "date": 1786942825,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 84 个剧集链接"
-      },
       "site": "akianime.cc"
     },
     {
@@ -347,10 +368,6 @@
       ],
       "guess": false,
       "date": 1769573721,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 168 个剧集链接"
-      },
       "site": "baimaodm.com",
       "chosen": true
     },
@@ -365,10 +382,6 @@
       ],
       "guess": false,
       "date": 1792049112,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "sbdl.cc",
       "chosen": true
     },
@@ -383,10 +396,6 @@
       ],
       "guess": false,
       "date": 1770015787,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 30 个剧集链接"
-      },
       "site": "dmbus.cc"
     },
     {
@@ -400,10 +409,6 @@
       ],
       "guess": false,
       "date": 1786883419,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 1 个条目，详情页选出 38 个剧集链接"
-      },
       "site": "ezdmw.org"
     },
     {
@@ -417,10 +422,6 @@
       ],
       "guess": false,
       "date": 1792645277,
-      "smoke": {
-        "status": "fail",
-        "reason": "搜索页能打开，但选择器没有选中任何结果"
-      },
       "site": "ani.girigirilove.com",
       "chosen": true
     },
@@ -435,10 +436,6 @@
       ],
       "guess": false,
       "date": 1792049112,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "lmm85.com",
       "chosen": true
     },
@@ -454,11 +451,6 @@
       ],
       "guess": false,
       "date": 1792059072,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 50 个剧集链接",
-        "template": "/media/{value}.html"
-      },
       "site": "mgnacg.com",
       "chosen": true
     },
@@ -473,10 +465,6 @@
       ],
       "guess": false,
       "date": 1792401354,
-      "smoke": {
-        "status": "unreachable",
-        "reason": "请求失败：SSLError"
-      },
       "site": "moonci.com",
       "chosen": true
     },
@@ -492,11 +480,6 @@
       ],
       "guess": false,
       "date": 1792059072,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 20 个剧集链接",
-        "template": "/voddetail/{value}.html"
-      },
       "site": "2kdm.com",
       "chosen": true
     },
@@ -511,10 +494,6 @@
       ],
       "guess": false,
       "date": 1790853597,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 40 个剧集链接"
-      },
       "site": "dcc3.com",
       "chosen": true
     },
@@ -529,10 +508,6 @@
       ],
       "guess": false,
       "date": 1783910492,
-      "smoke": {
-        "status": "skipped",
-        "reason": "手写配置，不做自动检测"
-      },
       "site": "sorani.net"
     },
     {
@@ -546,10 +521,6 @@
       ],
       "guess": false,
       "date": 1772964002,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 56 个剧集链接"
-      },
       "site": "dm1.xfdm.pro",
       "chosen": true
     },
@@ -564,10 +535,6 @@
       ],
       "guess": false,
       "date": 1790868808,
-      "smoke": {
-        "status": "skipped",
-        "reason": "手写配置，不做自动检测"
-      },
       "site": "next.xifanacg.com",
       "chosen": true
     },
@@ -582,10 +549,6 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "skipped",
-        "reason": "非 no-channel 章节格式，只验证了搜索"
-      },
       "site": "7sefun.top",
       "chosen": true
     },
@@ -600,10 +563,6 @@
       "info": [],
       "guess": true,
       "date": 1790775080,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "cyfz.top",
       "chosen": true
     },
@@ -616,10 +575,6 @@
       "info": [],
       "guess": false,
       "date": 1791361738,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "5dm.dev",
       "chosen": true
     },
@@ -634,10 +589,6 @@
       "info": [],
       "guess": false,
       "date": 1791361738,
-      "smoke": {
-        "status": "blocked",
-        "reason": "搜索页出现验证码/环境检查"
-      },
       "site": "ani.pekolove.net",
       "chosen": true
     },
@@ -652,10 +603,6 @@
       "info": [],
       "guess": false,
       "date": 1786032045,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "lm6.net",
       "chosen": true
     },
@@ -682,10 +629,6 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "skipped",
-        "reason": "非 no-channel 章节格式，只验证了搜索"
-      },
       "site": "akianime.cc",
       "chosen": true
     },
@@ -700,10 +643,6 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "animoe.org",
       "chosen": true
     },
@@ -732,10 +671,6 @@
       "info": [],
       "guess": true,
       "date": 1790775080,
-      "smoke": {
-        "status": "skipped",
-        "reason": "非 no-channel 章节格式，只验证了搜索"
-      },
       "site": "ios.mifun.org",
       "chosen": true
     },
@@ -750,10 +685,6 @@
       "info": [],
       "guess": false,
       "date": 1784350043,
-      "smoke": {
-        "status": "blocked",
-        "reason": "搜索页出现验证码/环境检查"
-      },
       "site": "cn.agekkkk.com",
       "chosen": true
     },
@@ -768,10 +699,6 @@
       "info": [],
       "guess": true,
       "date": 1790775080,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "didahd.pro",
       "chosen": true
     },
@@ -784,12 +711,7 @@
       "info": [],
       "guess": false,
       "date": 1791361738,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
-      "site": "anime7.top",
-      "chosen": true
+      "site": "anime7.top"
     },
     {
       "origin": "anibaka",
@@ -814,10 +736,6 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "fail",
-        "reason": "搜索页能打开，但选择器没有选中任何结果"
-      },
       "site": "ani.girigirilove.com"
     },
     {
@@ -857,10 +775,6 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "agedm.io",
       "chosen": true
     },
@@ -875,10 +789,6 @@
       "info": [],
       "guess": false,
       "date": 1790779316,
-      "smoke": {
-        "status": "fail",
-        "reason": "详情页 HTTP 404（https://www.xgcartoon.com/detail/zangsongdefulilianzangsongzhefulilianriyu-shantianzhongren）"
-      },
       "site": "xgcartoon.com",
       "chosen": true
     },
@@ -891,10 +801,6 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "blocked",
-        "reason": "搜索页出现验证码/环境检查"
-      },
       "site": "2kdm.com"
     },
     {
@@ -906,10 +812,6 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "fail",
-        "reason": "HTTP 404"
-      },
       "site": "gugu3.com",
       "chosen": true
     },
@@ -966,10 +868,6 @@
       "info": [],
       "guess": false,
       "date": 1789394769,
-      "smoke": {
-        "status": "skipped",
-        "reason": "非 no-channel 章节格式，只验证了搜索"
-      },
       "site": "dmbus.cc",
       "chosen": true
     },
@@ -998,10 +896,6 @@
       "info": [],
       "guess": true,
       "date": 1784350043,
-      "smoke": {
-        "status": "fail",
-        "reason": "搜索页能打开，但选择器没有选中任何结果"
-      },
       "site": "mgnacg.com"
     },
     {
@@ -1013,10 +907,6 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "unreachable",
-        "reason": "请求失败：SSLError"
-      },
       "site": "moonci.com"
     },
     {
@@ -1030,10 +920,6 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "fail",
-        "reason": "搜索页能打开，但选择器没有选中任何结果"
-      },
       "site": "silisilifun.com",
       "chosen": true
     },
@@ -1048,10 +934,6 @@
       "info": [],
       "guess": false,
       "date": 1791361738,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 1 个条目，详情页选出 38 个剧集链接"
-      },
       "site": "ezdmw.org",
       "chosen": true
     },
@@ -1066,10 +948,6 @@
       "info": [],
       "guess": true,
       "date": 1791361738,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "sbdl.cc"
     },
     {
@@ -1083,12 +961,330 @@
       "info": [],
       "guess": false,
       "date": 1791361738,
-      "smoke": {
-        "status": "skipped",
-        "reason": "手写配置，不做自动检测"
-      },
       "site": "sorani.net",
       "chosen": true
+    },
+    {
+      "origin": "easybangumi",
+      "key": "Jellyfin_v1.8_lib7",
+      "version": "1.7",
+      "status": "unsupported",
+      "notes": [
+        "手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH）"
+      ],
+      "info": [
+        "纯纯看番 release 通道"
+      ],
+      "guess": false,
+      "date": 1760253322,
+      "site": null
+    },
+    {
+      "origin": "easybangumi",
+      "key": "age",
+      "version": "1.0",
+      "status": "unsupported",
+      "notes": [
+        "手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH）"
+      ],
+      "info": [
+        "纯纯看番 release 通道"
+      ],
+      "guess": false,
+      "date": 1784138284,
+      "site": null
+    },
+    {
+      "origin": "easybangumi",
+      "key": "girigirilove-beta",
+      "version": "1.0",
+      "status": "unsupported",
+      "notes": [
+        "手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH）"
+      ],
+      "info": [
+        "纯纯看番 release 通道"
+      ],
+      "guess": false,
+      "date": 1791975314,
+      "site": null
+    },
+    {
+      "origin": "easybangumi",
+      "key": "girigirilove",
+      "version": "1.5",
+      "status": "unsupported",
+      "notes": [
+        "手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH）"
+      ],
+      "info": [
+        "纯纯看番 release 通道"
+      ],
+      "guess": false,
+      "date": 1784138284,
+      "site": null
+    },
+    {
+      "origin": "easybangumi",
+      "key": "kazumi-7sefun",
+      "version": "1.2.1",
+      "status": "partial",
+      "notes": [
+        "末尾 text() 已改为取元素全部文本",
+        "版本 1.2.1 不高于 Kazumi 里的同站规则（发布提交的日期不代表规则更新），不参与取新"
+      ],
+      "info": [
+        "纯纯看番 release 通道",
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1792471432,
+      "site": "7sefun.top",
+      "redundant": true
+    },
+    {
+      "origin": "easybangumi",
+      "key": "kazumi-9ciyuan",
+      "version": "1.3.1",
+      "status": "ok",
+      "notes": [],
+      "info": [
+        "纯纯看番 release 通道",
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1792471432,
+      "site": "jcydm1.com",
+      "chosen": true
+    },
+    {
+      "origin": "easybangumi",
+      "key": "kazumi-anime7",
+      "version": "1.0.1",
+      "status": "ok",
+      "notes": [],
+      "info": [
+        "纯纯看番 release 通道",
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1792471432,
+      "site": "anime7.top",
+      "chosen": true
+    },
+    {
+      "origin": "easybangumi",
+      "key": "kazumi-ant",
+      "version": "0.0.3",
+      "status": "ok",
+      "notes": [],
+      "info": [
+        "纯纯看番 release 通道",
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1792471432,
+      "site": "mayi520.org",
+      "chosen": true
+    },
+    {
+      "origin": "easybangumi",
+      "key": "kazumi-baimao",
+      "version": "1.0.1",
+      "status": "ok",
+      "notes": [
+        "转换结果与 Kazumi 里同站规则完全相同，不参与取新"
+      ],
+      "info": [
+        "纯纯看番 release 通道",
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1792471432,
+      "site": "baimaodm.com",
+      "redundant": true
+    },
+    {
+      "origin": "easybangumi",
+      "key": "kazumi-gpjda",
+      "version": "1.0",
+      "status": "unsupported",
+      "notes": [
+        "规则使用 POST 搜索，Animeko 的 Web 数据源不支持"
+      ],
+      "info": [
+        "纯纯看番 release 通道"
+      ],
+      "guess": false,
+      "date": 1783706169,
+      "site": null
+    },
+    {
+      "origin": "easybangumi",
+      "key": "kazumi-lmm",
+      "version": "2.2",
+      "status": "unsupported",
+      "notes": [
+        "手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH）"
+      ],
+      "info": [
+        "纯纯看番 release 通道"
+      ],
+      "guess": false,
+      "date": 1791975314,
+      "site": null
+    },
+    {
+      "origin": "easybangumi",
+      "key": "kazumi-mifun",
+      "version": "1.1.1",
+      "status": "unsupported",
+      "notes": [
+        "手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH）"
+      ],
+      "info": [
+        "纯纯看番 release 通道"
+      ],
+      "guess": false,
+      "date": 1792471432,
+      "site": null
+    },
+    {
+      "origin": "easybangumi",
+      "key": "kazumi-mxdm",
+      "version": "2.3.1",
+      "status": "ok",
+      "notes": [
+        "版本 2.3.1 不高于 Kazumi 里的同站规则（发布提交的日期不代表规则更新），不参与取新"
+      ],
+      "info": [
+        "纯纯看番 release 通道",
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1792471432,
+      "site": "dcc3.com",
+      "redundant": true
+    },
+    {
+      "origin": "easybangumi",
+      "key": "kazumi-omofun03",
+      "version": "1.1",
+      "status": "ok",
+      "notes": [],
+      "info": [
+        "纯纯看番 release 通道",
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1785171844,
+      "site": "omofun03.top",
+      "chosen": true
+    },
+    {
+      "origin": "easybangumi",
+      "key": "kazumi-sorani",
+      "version": "1.0",
+      "status": "unsupported",
+      "notes": [
+        "接口型，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH）"
+      ],
+      "info": [
+        "纯纯看番 release 通道"
+      ],
+      "guess": false,
+      "date": 1785171844,
+      "site": null
+    },
+    {
+      "origin": "easybangumi",
+      "key": "kazumi-tvtfun",
+      "version": "1.1",
+      "status": "unsupported",
+      "notes": [
+        "接口型，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH）"
+      ],
+      "info": [
+        "纯纯看番 release 通道"
+      ],
+      "guess": false,
+      "date": 1785171844,
+      "site": null
+    },
+    {
+      "origin": "easybangumi",
+      "key": "kazumi-ylsp",
+      "version": "1.1",
+      "status": "ok",
+      "notes": [],
+      "info": [
+        "纯纯看番 release 通道",
+        "Kazumi 规则没有线路名，所有线路合并为一条"
+      ],
+      "guess": false,
+      "date": 1785171844,
+      "site": "ylys.cc",
+      "chosen": true
+    },
+    {
+      "origin": "easybangumi",
+      "key": "le",
+      "version": "1.0",
+      "status": "unsupported",
+      "notes": [
+        "手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH）"
+      ],
+      "info": [
+        "纯纯看番 release 通道"
+      ],
+      "guess": false,
+      "date": 1760862920,
+      "site": null
+    },
+    {
+      "origin": "easybangumi",
+      "key": "omofun",
+      "version": "1.3",
+      "status": "unsupported",
+      "notes": [
+        "手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH）"
+      ],
+      "info": [
+        "纯纯看番 release 通道"
+      ],
+      "guess": false,
+      "date": 1760862920,
+      "site": null
+    },
+    {
+      "origin": "easybangumi",
+      "key": "xifandm",
+      "version": "1.1",
+      "status": "unsupported",
+      "notes": [
+        "手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH）"
+      ],
+      "info": [
+        "纯纯看番 release 通道"
+      ],
+      "guess": false,
+      "date": 1784138284,
+      "site": null
+    },
+    {
+      "origin": "easybangumi",
+      "key": "yhw",
+      "version": "1.0",
+      "status": "unsupported",
+      "notes": [
+        "手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH）"
+      ],
+      "info": [
+        "纯纯看番 release 通道"
+      ],
+      "guess": false,
+      "date": 1760193357,
+      "site": null
     }
   ]
 }

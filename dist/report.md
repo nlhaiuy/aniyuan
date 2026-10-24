@@ -1,6 +1,6 @@
 # 订阅转换报告
 
-写入订阅 **28** 个数据源（候选 49 个，同站点合并后）。
+写入订阅 **32** 个数据源（候选 70 个，同站点合并后）。
 
 ## 同站点取舍
 
@@ -13,7 +13,7 @@
 | akianime.cc | anibaka-akianime | anibaka:akianime | 更新（2026-09-30） | anibaka:akianime(2026-09-30)<br>kazumi:akianime(2026-08-17) |
 | ani.girigirilove.com | anibaka-girigirilove | kazumi:giriGiriLove | 更新（2026-10-22） | kazumi:giriGiriLove(2026-10-22)<br>anibaka:girigirilove(2026-09-30) |
 | ani.pekolove.net | anibaka-ani-pekolove | baseline:ani_pekolove | 只有这一个来源 | baseline:ani_pekolove(2026-10-07) |
-| anime7.top | anibaka-anime7 | anibaka:anime7 | 只有这一个来源 | anibaka:anime7(2026-10-07) |
+| anime7.top | anibaka-anime7 | easybangumi:kazumi-anime7 | 更新（2026-10-20） | easybangumi:kazumi-anime7(2026-10-20)<br>anibaka:anime7(2026-10-07) |
 | animoe.org | anibaka-animoe | anibaka:animoe | 只有这一个来源 | anibaka:animoe(2026-09-30) |
 | baimaodm.com | kazumi-baimao | kazumi:baimao | 只有这一个来源 | kazumi:baimao(2026-01-28) |
 | cn.agekkkk.com | anibaka-agekkkk | baseline:agekkkk | 只有这一个来源 | baseline:agekkkk(2026-07-18) |
@@ -25,66 +25,91 @@
 | ezdmw.org | anibaka-ezdmw | baseline:ezdmw | 更新（2026-10-07） | baseline:ezdmw(2026-10-07)<br>kazumi:ezdmw(2026-08-16) |
 | gugu3.com | anibaka-gugu | anibaka:gugu | 只有这一个来源 | anibaka:gugu(2026-09-30) |
 | ios.mifun.org | anibaka-ios-mifun | baseline:ios_mifun | 只有这一个来源 | baseline:ios_mifun(2026-09-30) |
+| jcydm1.com | kazumi-9ciyuan | easybangumi:kazumi-9ciyuan | 只有这一个来源 | easybangumi:kazumi-9ciyuan(2026-10-20) |
 | lm6.net | anibaka-lm6 | anibaka:lm6 | 只有这一个来源 | anibaka:lm6(2026-08-06) |
 | lmm85.com | kazumi-lmm | kazumi:LMM | 只有这一个来源 | kazumi:LMM(2026-10-15) |
+| mayi520.org | kazumi-ant | easybangumi:kazumi-ant | 只有这一个来源 | easybangumi:kazumi-ant(2026-10-20) |
 | mgnacg.com | anibaka-mgnacg | kazumi:mgnacg | 更新（2026-10-15） | kazumi:mgnacg(2026-10-15)<br>baseline:mgnacg(2026-07-18) |
 | moonci.com | anibaka-moonci | kazumi:moonci | 更新（2026-10-19） | kazumi:moonci(2026-10-19)<br>anibaka:moonci(2026-09-30)<br>kazumi:aafun(2026-08-21) |
 | next.xifanacg.com | kazumi-xfdmnext | kazumi:xfdmnext | 只有这一个来源 | kazumi:xfdmnext(2026-10-01) |
+| omofun03.top | kazumi-omofun03 | easybangumi:kazumi-omofun03 | 只有这一个来源 | easybangumi:kazumi-omofun03(2026-07-27) |
 | sbdl.cc | anibaka-dalvdm | kazumi:dalvdm | 更新（2026-10-15） | kazumi:dalvdm(2026-10-15)<br>baseline:dalvdm(2026-10-07) |
 | silisilifun.com | anibaka-silisili | anibaka:silisili | 只有这一个来源 | anibaka:silisili(2026-09-30) |
 | sorani.net | anibaka-sorani | baseline:sorani | 更新（2026-10-07） | baseline:sorani(2026-10-07)<br>kazumi:sorani(2026-07-13) |
 | xgcartoon.com | anibaka-xigua | baseline:xigua | 只有这一个来源 | baseline:xigua(2026-09-30) |
+| ylys.cc | kazumi-ylsp | easybangumi:kazumi-ylsp | 只有这一个来源 | easybangumi:kazumi-ylsp(2026-07-27) |
 
 ## 全部候选
 
 | 来源 | 规则 | 版本 | 修改日期 | 转换 | 自动检测 | 采用 | 备注 |
 |---|---|---|---|---|---|---|---|
-| kazumi | 7sefun | 1.3 | 2026-08-10 | 有近似 | ok | 否 | 末尾 text() 已改为取元素全部文本 |
-| kazumi | aafun | 1.2 | 2026-08-21 | 完整 | unreachable | 否 | 请求失败：SSLError |
-| kazumi | AGE | 1.5 | 2025-09-17 | 完整 | blocked | 否 | HTTP 403 |
-| kazumi | akianime | 1.4 | 2026-08-17 | 完整 | ok | 否 |  |
-| kazumi | baimao | 1.0 | 2026-01-28 | 完整 | ok | 是 |  |
-| kazumi | dalvdm | 1.2 | 2026-10-15 | 完整 | blocked | 是 | HTTP 403 |
-| kazumi | DM84 | 1.4 | 2026-02-02 | 完整 | ok | 否 |  |
-| kazumi | ezdmw | 1.2 | 2026-08-16 | 手写 | ok | 否 |  |
-| kazumi | giriGiriLove | 2.6 | 2026-10-22 | 手写 | fail | 是 | 搜索页能打开，但选择器没有选中任何结果 |
-| kazumi | LMM | 2.3 | 2026-10-15 | 完整 | blocked | 是 | HTTP 403 |
-| kazumi | mgnacg | 1.2 | 2026-10-15 | 完整 | ok | 是 |  |
-| kazumi | moonci | 1.1 | 2026-10-19 | 完整 | unreachable | 是 | 请求失败：SSLError |
-| kazumi | mutefun | 1.4 | 2026-10-15 | 完整 | ok | 是 |  |
-| kazumi | MXdm | 2.4 | 2026-10-01 | 完整 | ok | 是 |  |
-| kazumi | sorani | 1.0 | 2026-07-13 | 手写 | skipped | 否 | 手写配置，不做自动检测 |
-| kazumi | xfdmneo | 1.1 | 2026-03-08 | 完整 | ok | 是 |  |
-| kazumi | xfdmnext | 1.1 | 2026-10-01 | 手写 | skipped | 是 | 手写配置，不做自动检测 |
-| baseline | 7sefun | rev 8 | 2026-09-30 | 回退基线 | skipped | 是 | 回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等））；非 no-channel 章节格式，只验证了搜索 |
-| baseline | cyfz | rev 6 | 2026-09-30 | 回退基线 | blocked | 是 | 回退到 baseline/anibaka.json：自动转换的搜索地址是推测的；HTTP 403 |
-| anibaka | 5dm | rev 1 | 2026-10-07 | 完整 | blocked | 是 | HTTP 403 |
-| baseline | ani_pekolove | rev 9 | 2026-10-07 | 回退基线 | blocked | 是 | 回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等））；搜索页出现验证码/环境检查 |
-| anibaka | lm6 | rev 5 | 2026-08-06 | 有近似 | blocked | 是 | AniBaka 播放步骤用了 crypto 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频；HTTP 403 |
+| kazumi | 7sefun | 1.3 | 2026-08-10 | 有近似 | - | 否 | 末尾 text() 已改为取元素全部文本 |
+| kazumi | aafun | 1.2 | 2026-08-21 | 完整 | - | 否 |  |
+| kazumi | AGE | 1.5 | 2025-09-17 | 完整 | - | 否 |  |
+| kazumi | akianime | 1.4 | 2026-08-17 | 完整 | - | 否 |  |
+| kazumi | baimao | 1.0 | 2026-01-28 | 完整 | - | 是 |  |
+| kazumi | dalvdm | 1.2 | 2026-10-15 | 完整 | - | 是 |  |
+| kazumi | DM84 | 1.4 | 2026-02-02 | 完整 | - | 否 |  |
+| kazumi | ezdmw | 1.2 | 2026-08-16 | 手写 | - | 否 |  |
+| kazumi | giriGiriLove | 2.6 | 2026-10-22 | 手写 | - | 是 |  |
+| kazumi | LMM | 2.3 | 2026-10-15 | 完整 | - | 是 |  |
+| kazumi | mgnacg | 1.2 | 2026-10-15 | 完整 | - | 是 |  |
+| kazumi | moonci | 1.1 | 2026-10-19 | 完整 | - | 是 |  |
+| kazumi | mutefun | 1.4 | 2026-10-15 | 完整 | - | 是 |  |
+| kazumi | MXdm | 2.4 | 2026-10-01 | 完整 | - | 是 |  |
+| kazumi | sorani | 1.0 | 2026-07-13 | 手写 | - | 否 |  |
+| kazumi | xfdmneo | 1.1 | 2026-03-08 | 完整 | - | 是 |  |
+| kazumi | xfdmnext | 1.1 | 2026-10-01 | 手写 | - | 是 |  |
+| baseline | 7sefun | rev 8 | 2026-09-30 | 回退基线 | - | 是 | 回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）） |
+| baseline | cyfz | rev 6 | 2026-09-30 | 回退基线 | - | 是 | 回退到 baseline/anibaka.json：自动转换的搜索地址是推测的 |
+| anibaka | 5dm | rev 1 | 2026-10-07 | 完整 | - | 是 |  |
+| baseline | ani_pekolove | rev 9 | 2026-10-07 | 回退基线 | - | 是 | 回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）） |
+| anibaka | lm6 | rev 5 | 2026-08-06 | 有近似 | - | 是 | AniBaka 播放步骤用了 crypto 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频 |
 | anibaka | aniwatch | rev 4 | 2026-09-30 | 无法转换 | - | 否 | 章节步骤无法转换（需要 episodes 操作，实际是：fetch, jsonEpisodes, regex, select, sniff）；baseline 里也没有这个源，已跳过 |
-| anibaka | akianime | rev 6 | 2026-09-30 | 完整 | skipped | 是 | 非 no-channel 章节格式，只验证了搜索 |
-| anibaka | animoe | rev 4 | 2026-09-30 | 有近似 | blocked | 是 | AniBaka 播放步骤不是嗅探（playerAaaa/regex），已改成 WebView 嗅探，请在 Animeko 里试播确认；HTTP 403 |
+| anibaka | akianime | rev 6 | 2026-09-30 | 完整 | - | 是 |  |
+| anibaka | animoe | rev 4 | 2026-09-30 | 有近似 | - | 是 | AniBaka 播放步骤不是嗅探（playerAaaa/regex），已改成 WebView 嗅探，请在 Animeko 里试播确认 |
 | anibaka | tvtfun | rev 12 | 2026-09-30 | 无法转换 | - | 否 | 章节步骤无法转换（需要 episodes 操作，实际是：json, jsonEpisodes, setVar, template）；baseline 里也没有这个源，已跳过 |
-| baseline | ios_mifun | rev 6 | 2026-09-30 | 回退基线 | skipped | 是 | 回退到 baseline/anibaka.json：自动转换的搜索地址是推测的；非 no-channel 章节格式，只验证了搜索 |
-| baseline | agekkkk | rev 2 | 2026-07-18 | 回退基线 | blocked | 是 | 回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等））；搜索页出现验证码/环境检查 |
-| baseline | didahd | rev 6 | 2026-09-30 | 回退基线 | blocked | 是 | 回退到 baseline/anibaka.json：自动转换的搜索地址是推测的；HTTP 403 |
-| anibaka | anime7 | rev 5 | 2026-10-07 | 完整 | blocked | 是 | HTTP 403 |
+| baseline | ios_mifun | rev 6 | 2026-09-30 | 回退基线 | - | 是 | 回退到 baseline/anibaka.json：自动转换的搜索地址是推测的 |
+| baseline | agekkkk | rev 2 | 2026-07-18 | 回退基线 | - | 是 | 回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）） |
+| baseline | didahd | rev 6 | 2026-09-30 | 回退基线 | - | 是 | 回退到 baseline/anibaka.json：自动转换的搜索地址是推测的 |
+| anibaka | anime7 | rev 5 | 2026-10-07 | 完整 | - | 否 |  |
 | anibaka | hanimeone | rev 6 | 2026-09-30 | 无法转换 | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）；baseline 里也没有这个源，已跳过 |
-| anibaka | girigirilove | rev 4 | 2026-09-30 | 完整 | fail | 否 | 搜索页能打开，但选择器没有选中任何结果 |
+| anibaka | girigirilove | rev 4 | 2026-09-30 | 完整 | - | 否 |  |
 | anibaka | girigirilove_beta | rev 1 | 2026-10-07 | 无法转换 | - | 否 | 章节步骤无法转换（需要 episodes 操作，实际是：fetch, maccmsApiEpisodes, regex, template）；baseline 里也没有这个源，已跳过 |
 | anibaka | xifanacg | rev 5 | 2026-09-30 | 无法转换 | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）；baseline 里也没有这个源，已跳过 |
-| anibaka | age | rev 6 | 2026-09-30 | 完整 | blocked | 是 | HTTP 403 |
-| baseline | xigua | rev 8 | 2026-09-30 | 回退基线 | fail | 是 | 回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等））；详情页 HTTP 404（https://www.xgcartoon.com/detail/zangsongdefulilianzangsongzhefulilianriyu-shantianzhongren） |
-| anibaka | 2kdm | rev 5 | 2026-09-30 | 完整 | blocked | 否 | 搜索页出现验证码/环境检查 |
-| anibaka | gugu | rev 4 | 2026-09-30 | 完整 | fail | 是 | HTTP 404 |
+| anibaka | age | rev 6 | 2026-09-30 | 完整 | - | 是 |  |
+| baseline | xigua | rev 8 | 2026-09-30 | 回退基线 | - | 是 | 回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）） |
+| anibaka | 2kdm | rev 5 | 2026-09-30 | 完整 | - | 否 |  |
+| anibaka | gugu | rev 4 | 2026-09-30 | 完整 | - | 是 |  |
 | anibaka | anime1 | rev 2 | 2026-09-14 | 无法转换 | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）；baseline 里也没有这个源，已跳过 |
 | anibaka | dmhy | rev 4 | 2026-09-30 | 无法转换 | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）；baseline 里也没有这个源，已跳过 |
 | anibaka | mikan | rev 5 | 2026-09-30 | 无法转换 | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）；baseline 里也没有这个源，已跳过 |
-| anibaka | dm84 | rev 2 | 2026-09-14 | 有近似 | skipped | 是 | AniBaka 播放步骤不是嗅探（fetch/json/regex/replace/select/setVar/template），已改成 WebView 嗅探，请在 Animeko 里试播确认；非 no-channel 章节格式，只验证了搜索 |
+| anibaka | dm84 | rev 2 | 2026-09-14 | 有近似 | - | 是 | AniBaka 播放步骤不是嗅探（fetch/json/regex/replace/select/setVar/template），已改成 WebView 嗅探，请在 Animeko 里试播确认 |
 | anibaka | fsdm02 | rev 3 | 2026-09-30 | 无法转换 | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）；baseline 里也没有这个源，已跳过 |
-| baseline | mgnacg | rev 1 | 2026-07-18 | 回退基线 | fail | 否 | 回退到 baseline/anibaka.json：自动转换的搜索地址是推测的；搜索页能打开，但选择器没有选中任何结果 |
-| anibaka | moonci | rev 3 | 2026-09-30 | 完整 | unreachable | 否 | 请求失败：SSLError |
-| anibaka | silisili | rev 1 | 2026-09-30 | 有近似 | fail | 是 | AniBaka 播放步骤用了 crypto 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频；搜索页能打开，但选择器没有选中任何结果 |
-| baseline | ezdmw | rev 4 | 2026-10-07 | 回退基线 | ok | 是 | 回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）） |
-| baseline | dalvdm | rev 9 | 2026-10-07 | 回退基线 | blocked | 否 | 回退到 baseline/anibaka.json：自动转换的搜索地址是推测的；HTTP 403 |
-| baseline | sorani | rev 1 | 2026-10-07 | 回退基线 | skipped | 是 | 回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等））；手写配置，不做自动检测 |
+| baseline | mgnacg | rev 1 | 2026-07-18 | 回退基线 | - | 否 | 回退到 baseline/anibaka.json：自动转换的搜索地址是推测的 |
+| anibaka | moonci | rev 3 | 2026-09-30 | 完整 | - | 否 |  |
+| anibaka | silisili | rev 1 | 2026-09-30 | 有近似 | - | 是 | AniBaka 播放步骤用了 crypto 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频 |
+| baseline | ezdmw | rev 4 | 2026-10-07 | 回退基线 | - | 是 | 回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）） |
+| baseline | dalvdm | rev 9 | 2026-10-07 | 回退基线 | - | 否 | 回退到 baseline/anibaka.json：自动转换的搜索地址是推测的 |
+| baseline | sorani | rev 1 | 2026-10-07 | 回退基线 | - | 是 | 回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）） |
+| easybangumi | Jellyfin_v1.8_lib7 | 1.7 | 2025-10-12 | 无法转换 | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
+| easybangumi | age | 1.0 | 2026-07-15 | 无法转换 | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
+| easybangumi | girigirilove-beta | 1.0 | 2026-10-14 | 无法转换 | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
+| easybangumi | girigirilove | 1.5 | 2026-07-15 | 无法转换 | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
+| easybangumi | kazumi-7sefun | 1.2.1 | 2026-10-20 | 有近似 | - | 否 | 末尾 text() 已改为取元素全部文本；版本 1.2.1 不高于 Kazumi 里的同站规则（发布提交的日期不代表规则更新），不参与取新 |
+| easybangumi | kazumi-9ciyuan | 1.3.1 | 2026-10-20 | 完整 | - | 是 |  |
+| easybangumi | kazumi-anime7 | 1.0.1 | 2026-10-20 | 完整 | - | 是 |  |
+| easybangumi | kazumi-ant | 0.0.3 | 2026-10-20 | 完整 | - | 是 |  |
+| easybangumi | kazumi-baimao | 1.0.1 | 2026-10-20 | 完整 | - | 否 | 转换结果与 Kazumi 里同站规则完全相同，不参与取新 |
+| easybangumi | kazumi-gpjda | 1.0 | 2026-07-10 | 无法转换 | - | 否 | 规则使用 POST 搜索，Animeko 的 Web 数据源不支持 |
+| easybangumi | kazumi-lmm | 2.2 | 2026-10-14 | 无法转换 | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
+| easybangumi | kazumi-mifun | 1.1.1 | 2026-10-20 | 无法转换 | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
+| easybangumi | kazumi-mxdm | 2.3.1 | 2026-10-20 | 完整 | - | 否 | 版本 2.3.1 不高于 Kazumi 里的同站规则（发布提交的日期不代表规则更新），不参与取新 |
+| easybangumi | kazumi-omofun03 | 1.1 | 2026-07-27 | 完整 | - | 是 |  |
+| easybangumi | kazumi-sorani | 1.0 | 2026-07-27 | 无法转换 | - | 否 | 接口型，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
+| easybangumi | kazumi-tvtfun | 1.1 | 2026-07-27 | 无法转换 | - | 否 | 接口型，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
+| easybangumi | kazumi-ylsp | 1.1 | 2026-07-27 | 完整 | - | 是 |  |
+| easybangumi | le | 1.0 | 2025-10-19 | 无法转换 | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
+| easybangumi | omofun | 1.3 | 2025-10-19 | 无法转换 | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
+| easybangumi | xifandm | 1.1 | 2026-07-15 | 无法转换 | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
+| easybangumi | yhw | 1.0 | 2025-10-11 | 无法转换 | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
