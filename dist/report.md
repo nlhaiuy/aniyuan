@@ -108,7 +108,7 @@
 | easybangumi | kazumi-omofun03 | 1.1 | 2026-07-27 | 完整 | unreachable | 是 | 请求失败：SSLError |
 | easybangumi | kazumi-sorani | 1.0 | 2026-07-27 | 无法转换 | - | 否 | 接口型，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
 | easybangumi | kazumi-tvtfun | 1.1 | 2026-07-27 | 无法转换 | - | 否 | 接口型，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
-| easybangumi | kazumi-ylsp | 1.1 | 2026-07-27 | 完整 | fail | 是 | HTTP 523 |
+| easybangumi | kazumi-ylsp | 1.1 | 2026-07-27 | 完整 | unreachable | 是 | 请求失败：ReadTimeout |
 | easybangumi | le | 1.0 | 2025-10-19 | 无法转换 | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
 | easybangumi | omofun | 1.3 | 2025-10-19 | 无法转换 | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
 | easybangumi | xifandm | 1.1 | 2026-07-15 | 无法转换 | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |

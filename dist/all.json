@@ -1535,7 +1535,7 @@
       "version": 2,
       "arguments": {
         "name": "ylsp",
-        "description": "[自动检测未通过：HTTP 523] 由纯纯看番社区 JS 源 kazumi.ylsp v1.1 自动转换",
+        "description": "[自动检测未通过：请求失败：ReadTimeout] 由纯纯看番社区 JS 源 kazumi.ylsp v1.1 自动转换",
         "iconUrl": "https://www.ylys.cc/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -3117,7 +3117,7 @@
         "version": 2,
         "arguments": {
           "name": "ylsp",
-          "description": "[自动检测未通过：HTTP 523] 由纯纯看番社区 JS 源 kazumi.ylsp v1.1 自动转换",
+          "description": "[自动检测未通过：请求失败：ReadTimeout] 由纯纯看番社区 JS 源 kazumi.ylsp v1.1 自动转换",
           "iconUrl": "https://www.ylys.cc/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,

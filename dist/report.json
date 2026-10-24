@@ -1409,8 +1409,8 @@
       "guess": false,
       "date": 1785171844,
       "smoke": {
-        "status": "fail",
-        "reason": "HTTP 523"
+        "status": "unreachable",
+        "reason": "请求失败：ReadTimeout"
       },
       "site": "ylys.cc",
       "chosen": true
