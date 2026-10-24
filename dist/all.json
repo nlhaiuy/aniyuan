@@ -212,7 +212,7 @@
       "version": 2,
       "arguments": {
         "name": "4K动漫",
-        "description": "[自动检测未通过：搜索页出现验证码/环境检查] 4K动漫，提供日漫、国漫、美漫和剧场版等在线资源。",
+        "description": "[自动检测未通过：请求失败：ReadTimeout] 4K动漫，提供日漫、国漫、美漫和剧场版等在线资源。",
         "iconUrl": "https://cn.agekkkk.com/template/the4/statics/img/favicon.ico",
         "searchConfig": {
           "searchUrl": "https://cn.agekkkk.com/search/{keyword}-------------.html",
@@ -1535,7 +1535,7 @@
       "version": 2,
       "arguments": {
         "name": "ylsp",
-        "description": "[自动检测未通过：请求失败：ReadTimeout] 由纯纯看番社区 JS 源 kazumi.ylsp v1.1 自动转换",
+        "description": "[自动检测未通过：HTTP 523] 由纯纯看番社区 JS 源 kazumi.ylsp v1.1 自动转换",
         "iconUrl": "https://www.ylys.cc/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1794,7 +1794,7 @@
         "version": 2,
         "arguments": {
           "name": "4K动漫",
-          "description": "[自动检测未通过：搜索页出现验证码/环境检查] 4K动漫，提供日漫、国漫、美漫和剧场版等在线资源。",
+          "description": "[自动检测未通过：请求失败：ReadTimeout] 4K动漫，提供日漫、国漫、美漫和剧场版等在线资源。",
           "iconUrl": "https://cn.agekkkk.com/template/the4/statics/img/favicon.ico",
           "searchConfig": {
             "searchUrl": "https://cn.agekkkk.com/search/{keyword}-------------.html",
@@ -3117,7 +3117,7 @@
         "version": 2,
         "arguments": {
           "name": "ylsp",
-          "description": "[自动检测未通过：请求失败：ReadTimeout] 由纯纯看番社区 JS 源 kazumi.ylsp v1.1 自动转换",
+          "description": "[自动检测未通过：HTTP 523] 由纯纯看番社区 JS 源 kazumi.ylsp v1.1 自动转换",
           "iconUrl": "https://www.ylys.cc/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,

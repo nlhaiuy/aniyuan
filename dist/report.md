@@ -70,7 +70,7 @@
 | anibaka | animoe | rev 4 | 2026-09-30 | 有近似 | blocked | 是 | AniBaka 播放步骤不是嗅探（playerAaaa/regex），已改成 WebView 嗅探，请在 Animeko 里试播确认；HTTP 403 |
 | anibaka | tvtfun | rev 12 | 2026-09-30 | 无法转换 | - | 否 | 章节步骤无法转换（需要 episodes 操作，实际是：json, jsonEpisodes, setVar, template）；baseline 里也没有这个源，已跳过 |
 | baseline | ios_mifun | rev 6 | 2026-09-30 | 回退基线 | skipped | 是 | 回退到 baseline/anibaka.json：自动转换的搜索地址是推测的；非 no-channel 章节格式，只验证了搜索 |
-| baseline | agekkkk | rev 2 | 2026-07-18 | 回退基线 | blocked | 是 | 回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等））；搜索页出现验证码/环境检查 |
+| baseline | agekkkk | rev 2 | 2026-07-18 | 回退基线 | unreachable | 是 | 回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等））；请求失败：ReadTimeout |
 | baseline | didahd | rev 6 | 2026-09-30 | 回退基线 | blocked | 是 | 回退到 baseline/anibaka.json：自动转换的搜索地址是推测的；HTTP 403 |
 | anibaka | anime7 | rev 5 | 2026-10-07 | 完整 | blocked | 否 | HTTP 403 |
 | anibaka | hanimeone | rev 6 | 2026-09-30 | 无法转换 | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）；baseline 里也没有这个源，已跳过 |
@@ -87,7 +87,7 @@
 | anibaka | dm84 | rev 2 | 2026-09-14 | 有近似 | skipped | 是 | AniBaka 播放步骤不是嗅探（fetch/json/regex/replace/select/setVar/template），已改成 WebView 嗅探，请在 Animeko 里试播确认；非 no-channel 章节格式，只验证了搜索 |
 | anibaka | fsdm02 | rev 3 | 2026-09-30 | 无法转换 | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）；baseline 里也没有这个源，已跳过 |
 | baseline | mgnacg | rev 1 | 2026-07-18 | 回退基线 | fail | 否 | 回退到 baseline/anibaka.json：自动转换的搜索地址是推测的；搜索页能打开，但选择器没有选中任何结果 |
-| anibaka | moonci | rev 3 | 2026-09-30 | 完整 | skipped | 否 | 非 no-channel 章节格式，只验证了搜索 |
+| anibaka | moonci | rev 3 | 2026-09-30 | 完整 | blocked | 否 | HTTP 403 |
 | anibaka | silisili | rev 1 | 2026-09-30 | 有近似 | fail | 是 | AniBaka 播放步骤用了 crypto 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频；搜索页能打开，但选择器没有选中任何结果 |
 | baseline | ezdmw | rev 4 | 2026-10-07 | 回退基线 | ok | 是 | 回退到 baseline/anibaka.json：无法自动转换（搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）） |
 | baseline | dalvdm | rev 9 | 2026-10-07 | 回退基线 | blocked | 否 | 回退到 baseline/anibaka.json：自动转换的搜索地址是推测的；HTTP 403 |
@@ -108,7 +108,7 @@
 | easybangumi | kazumi-omofun03 | 1.1 | 2026-07-27 | 完整 | unreachable | 是 | 请求失败：SSLError |
 | easybangumi | kazumi-sorani | 1.0 | 2026-07-27 | 无法转换 | - | 否 | 接口型，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
 | easybangumi | kazumi-tvtfun | 1.1 | 2026-07-27 | 无法转换 | - | 否 | 接口型，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
-| easybangumi | kazumi-ylsp | 1.1 | 2026-07-27 | 完整 | unreachable | 是 | 请求失败：ReadTimeout |
+| easybangumi | kazumi-ylsp | 1.1 | 2026-07-27 | 完整 | fail | 是 | HTTP 523 |
 | easybangumi | le | 1.0 | 2025-10-19 | 无法转换 | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
 | easybangumi | omofun | 1.3 | 2025-10-19 | 无法转换 | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
 | easybangumi | xifandm | 1.1 | 2026-07-15 | 无法转换 | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
