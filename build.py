@@ -16,6 +16,7 @@
   4. AniBaka 规则转不了时，回退到 baseline/anibaka.json 里同 id 的现成配置。
 """
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -54,6 +55,41 @@ def git_date(repo, relpath):
         return None
 
 
+def file_hash(path):
+    try:
+        with open(path, "rb") as f:
+            return hashlib.sha256(f.read()).hexdigest()
+    except OSError:
+        return None
+
+
+def apply_state(cands, state, now):
+    """用“内容哈希”判断规则什么时候真的改过，代替 git 提交日期（发布/整理提交也会动日期）。
+
+    第一次见到（没有记录）：用 git 日期。之后哈希不变：沿用记录的日期，不管 git 日期怎么变；
+    哈希变了：说明内容真的改了，取 git 日期（若它比记录新）否则取本次同步时间。
+    返回新的 state（只保留这次出现的候选）。
+    """
+    new = {}
+    for c in cands:
+        key = "%s:%s" % ("anibaka" if c["origin"] == "baseline" else c["origin"], c["key"])
+        h, git = c.get("raw_hash"), c.get("date")
+        old = state.get(key)
+        if not h:
+            c["date_basis"] = "git"
+            new[key] = old or {}
+            continue
+        if old and old.get("hash") == h and old.get("date"):
+            c["date"], c["date_basis"] = old["date"], "内容未变"
+        elif old and old.get("date"):
+            c["date"] = git if git and git > old["date"] else now
+            c["date_basis"] = "内容已变"
+        else:
+            c["date_basis"] = "首次记录"
+        new[key] = {"hash": h, "date": c["date"]}
+    return new
+
+
 def fmt_date(ts):
     return datetime.fromtimestamp(ts, timezone.utc).strftime("%Y-%m-%d") if ts else "未知"
 
@@ -88,6 +124,7 @@ def collect_kazumi(repo, config, overrides_dir):
             continue
         rule = load_json(path)
         c["version"] = str(rule.get("version", c["version"]))
+        c["raw_hash"] = file_hash(path)
         ov_path = os.path.join(overrides_dir, name + ".json")
         if os.path.exists(ov_path):
             ov = load_json(ov_path)
@@ -118,6 +155,7 @@ def collect_anibaka(repo, baseline, config):
                  status="unsupported", notes=[], info=[], guess=False)
         c["date"] = git_date(repo, e["ref"]) or synced
         path = os.path.join(repo, e["ref"])
+        c["raw_hash"] = file_hash(path)
         res = None
         if os.path.exists(path):
             res = convert_anx(load_json(path), e, config)
@@ -158,7 +196,7 @@ def collect_easybangumi(repo, config):
             if key in exclude:
                 continue
             res, meta = convert_extension(os.path.join(d, fn), config)
-            c = dict(origin="easybangumi", key=key, version=meta.get("versionName", ""), source=res.source,
+            c = dict(raw_hash=file_hash(os.path.join(d, fn)), origin="easybangumi", key=key, version=meta.get("versionName", ""), source=res.source,
                      status=res.status, notes=list(res.notes), info=res.info, guess=False,
                      date=git_date(repo, "%s/%s" % (sub, fn)))
             c["info"] = ["纯纯看番 %s 通道" % channel] + list(c["info"])
@@ -170,7 +208,7 @@ def collect_easybangumi(repo, config):
 def merge(cands, config):
     aliases = config.get("site_aliases", {})
     prefer = config.get("prefer", {})
-    prefer_working = config.get("prefer_working", False)
+    by_smoke = config.get("select_by_smoke", True)
     groups = {}
     for c in cands:
         if c["source"] is None:
@@ -184,25 +222,22 @@ def merge(cands, config):
     chosen, decisions = [], []
     for host, members in sorted(groups.items()):
         rank = {"kazumi": 2, "easybangumi": 1}   # 时间相同：Kazumi > 纯纯看番 > AniBaka
-        members.sort(key=lambda c: (c["date"] or 0, rank.get(c["origin"], 0)), reverse=True)
+        smoke_of = lambda c: (c.get("smoke") or {}).get("status")  # noqa: E731
+        # 实测优先：检测通过 > 没测出结论（无法访问/验证码/跳过） > 明确失败；同档内再比修改时间
+        tier = lambda c: ({"ok": 2, "fail": 0}.get(smoke_of(c), 1) if by_smoke else 1)  # noqa: E731
+        members.sort(key=lambda c: (tier(c), c["date"] or 0, rank.get(c["origin"], 0)), reverse=True)
+        by_date = sorted(members, key=lambda c: (c["date"] or 0, rank.get(c["origin"], 0)), reverse=True)[0]
         winner, reason = members[0], "更新（%s）" % fmt_date(members[0]["date"])
         if len(members) == 1:
             reason = "只有这一个来源"
+        elif winner is not by_date:
+            reason = "最新的 %s:%s 自动检测%s，改用检测结果更好的（%s）" % (
+                by_date["origin"], by_date["key"], {"fail": "未通过"}.get(smoke_of(by_date), "没有结论"), smoke_of(winner) or "-")
         p = prefer.get(host)
         if p:
             forced = [c for c in members if (("anibaka" if c["origin"] == "baseline" else c["origin"]) == p)]
             if forced:
                 winner, reason = forced[0], "config.prefer 指定 %s" % p
-        smoke_of = lambda c: (c.get("smoke") or {}).get("status")  # noqa: E731
-        if len(members) > 1 and smoke_of(winner) in ("fail",):
-            ok = [c for c in members if smoke_of(c) == "ok"]
-            if ok:
-                if prefer_working:
-                    winner, reason = ok[0], "更新的那个自动检测未通过，改用能通过的（prefer_working）"
-                else:
-                    winner.setdefault("notes", []).append(
-                        "更新的来源自动检测未通过，而 %s 的通过了；如想换用，在 config.json 的 prefer 里设置 %s" % (
-                            ok[0]["origin"], host))
         ab = [c for c in members if c["origin"] in ("anibaka", "baseline")]
         kz = [c for c in members if c["origin"] == "kazumi"]
         stable_id = source_id(ab[0]["key"]) if ab else (kz[0]["source"]["id"] if kz else winner["source"]["id"])
@@ -223,6 +258,8 @@ def main():
     ap.add_argument("--config", default=os.path.join(HERE, "config.json"))
     ap.add_argument("--overrides", default=os.path.join(HERE, "overrides"))
     ap.add_argument("--baseline", default=os.path.join(HERE, "baseline", "anibaka.json"))
+    ap.add_argument("--state", default=os.path.join(HERE, "state", "seen.json"),
+                    help="记录各规则内容哈希和“最后真正改动时间”的文件")
     ap.add_argument("--smoke", action="store_true")
     args = ap.parse_args()
     if not (args.kazumi or args.anibaka or args.easybangumi):
@@ -240,6 +277,13 @@ def main():
         cands += collect_anibaka(args.anibaka, baseline, config)
     if args.easybangumi:
         cands += collect_easybangumi(args.easybangumi, config)
+
+    state = load_json(args.state) if os.path.exists(args.state) else {}
+    new_state = apply_state(cands, state, int(time.time()))
+    os.makedirs(os.path.dirname(os.path.abspath(args.state)), exist_ok=True)
+    with open(args.state, "w", encoding="utf-8") as f:
+        json.dump(new_state, f, ensure_ascii=False, indent=1, sort_keys=True)
+        f.write("\n")
 
     if args.smoke:
         import requests
@@ -281,12 +325,12 @@ def main():
            "## 同站点取舍", "", "| 站点 | 最终 id | 采用 | 理由 | 候选（最后修改） |", "|---|---|---|---|---|"]
     for d in decisions:
         rep.append("| %s | %s | %s | %s | %s |" % (d["site"], d["id"], d["winner"], d["reason"], "<br>".join(d["members"])))
-    rep += ["", "## 全部候选", "", "| 来源 | 规则 | 版本 | 修改日期 | 转换 | 自动检测 | 采用 | 备注 |", "|---|---|---|---|---|---|---|---|"]
+    rep += ["", "## 全部候选", "", "| 来源 | 规则 | 版本 | 修改日期（依据） | 转换 | 自动检测 | 采用 | 备注 |", "|---|---|---|---|---|---|---|---|"]
     for c in cands:
         sm = c.get("smoke") or {}
         remark = "；".join(c["notes"] + ([sm["reason"]] if sm.get("reason") and sm.get("status") != "ok" else []))
         rep.append("| %s | %s | %s | %s | %s | %s | %s | %s |" % (
-            c["origin"], c["key"], c["version"], fmt_date(c["date"]), label.get(c["status"], c["status"]),
+            c["origin"], c["key"], c["version"], fmt_date(c["date"]) + ("（%s）" % c["date_basis"] if c.get("date_basis") else ""), label.get(c["status"], c["status"]),
             sm.get("status", "-") + ("（已剔除）" if c.get("dropped") else ""),
             "是" if c.get("chosen") else "否", remark.replace("|", "/")))
     with open(os.path.join(args.out, "report.md"), "w", encoding="utf-8") as f:

@@ -2,7 +2,7 @@
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from anx2animeko import convert_anx, split_selectors, site_host, source_id
-from build import merge
+from build import merge, apply_state
 
 bad = 0
 def check(name, ok):
@@ -69,11 +69,6 @@ check("时间相同取 Kazumi", ch[0]["origin"] == "kazumi")
 a["date"], k["date"] = 100, 200
 ch, _ = merge([a, k], {"prefer": {"foo.com": "anibaka"}})
 check("prefer 强制", ch[0]["origin"] == "anibaka")
-k["smoke"], a["smoke"] = {"status": "fail"}, {"status": "ok"}
-ch, _ = merge([a, k], {"prefer_working": True})
-check("prefer_working：新的没过就用能过的", ch[0]["origin"] == "anibaka")
-ch, _ = merge([a, k], {})
-check("默认：新的没过仍取新的，但在备注里提示", ch[0]["origin"] == "kazumi" and any("自动检测未通过" in n for n in ch[0]["notes"]))
 z = cand("kazumi", "Zed", "zed.com", 1, "kazumi-zed")
 ch, _ = merge([z], {})
 check("只有 Kazumi 的站点沿用 kazumi-<name>", ch[0]["source"]["id"] == "kazumi-zed")
@@ -107,4 +102,39 @@ check("不同来源只看修改时间、不看版本号：版本更旧但日期�
 ab = cand("anibaka", "s", "s.com", 100, "anibaka-s"); ex = eb("e", "s.com", 100, "1.0", "kazumi-s", "easybangumi")
 ch, _ = merge([ab, ex], {})
 check("日期相同：纯纯看番 > AniBaka，id 仍为 anibaka-s", ch[0]["origin"] == "easybangumi" and ch[0]["source"]["id"] == "anibaka-s")
+
+# ---- 实测优先 ----
+a1 = cand("anibaka", "a", "t.com", 200, "anibaka-a", "fail"); k1 = cand("kazumi", "A", "t.com", 100, "kazumi-a", "ok")
+ch, d = merge([a1, k1], {})
+check("最新的检测明确失败、旧的通过 -> 默认改用通过的", ch[0]["origin"] == "kazumi" and "改用" in d[0]["reason"])
+a1 = cand("anibaka", "a", "t.com", 200, "anibaka-a", "unreachable"); k1 = cand("kazumi", "A", "t.com", 100, "kazumi-a", "ok")
+ch, _ = merge([a1, k1], {})
+check("没有结论（无法访问）的排在通过的后面", ch[0]["origin"] == "kazumi")
+a1 = cand("anibaka", "a", "t.com", 200, "anibaka-a", "blocked"); k1 = cand("kazumi", "A", "t.com", 100, "kazumi-a", "unreachable")
+ch, _ = merge([a1, k1], {})
+check("都没有结论：回到按修改时间", ch[0]["origin"] == "anibaka")
+a1 = cand("anibaka", "a", "t.com", 200, "anibaka-a", "fail"); k1 = cand("kazumi", "A", "t.com", 100, "kazumi-a", "ok")
+ch, _ = merge([a1, k1], {"select_by_smoke": False})
+check("select_by_smoke=false：只看时间", ch[0]["origin"] == "anibaka")
+a1 = cand("anibaka", "a", "t.com", 200, "anibaka-a", "fail"); k1 = cand("kazumi", "A", "t.com", 100, "kazumi-a", "ok")
+ch, _ = merge([a1, k1], {"prefer": {"t.com": "anibaka"}})
+check("prefer 优先于实测", ch[0]["origin"] == "anibaka")
+
+# ---- 内容哈希日期 ----
+def hc(origin, key, h, git):
+    return dict(origin=origin, key=key, raw_hash=h, date=git)
+c1 = [hc("kazumi", "x", "h1", 100)]
+st = apply_state(c1, {}, 5000)
+check("首次记录：用 git 日期", c1[0]["date"] == 100 and st["kazumi:x"] == {"hash": "h1", "date": 100})
+c2 = [hc("kazumi", "x", "h1", 999)]
+st2 = apply_state(c2, st, 6000)
+check("内容没变：沿用旧日期，不被新的 git 日期（整理提交）带偏", c2[0]["date"] == 100)
+c3 = [hc("kazumi", "x", "h2", 300)]
+apply_state(c3, st, 6000)
+check("内容变了：用更新的 git 日期", c3[0]["date"] == 300)
+c4 = [hc("kazumi", "x", "h2", 50)]
+apply_state(c4, st, 6000)
+check("内容变了但 git 日期不比记录新：用本次同步时间", c4[0]["date"] == 6000)
+c5 = [hc("baseline", "y", "h", 10)]
+check("baseline 与 anibaka 共用记录", "anibaka:y" in apply_state(c5, {}, 1))
 sys.exit(1 if bad else 0)

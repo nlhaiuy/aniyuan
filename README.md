@@ -30,10 +30,20 @@
 同一个站点在多个来源里都有时，只留一个：
 
 1. **分组**：按站点主机名分组（去掉 `www.` / `m.`；JSON 接口源按图标域名）。
-2. **取新**：取规则文件**最后修改时间**（git 提交时间）更新的那个，**不比版本号**。时间相同时优先级为 Kazumi > 纯纯看番 > AniBaka。
-3. **id 固定**：站点在 AniBaka 里有，id 为 `anibaka-<key>`（与旧订阅一致），否则为 `kazumi-<名字>`。谁胜出都不改 id，Animeko 里已有的启用状态不会丢。
-4. **回退**：AniBaka 规则转不了、或搜索地址只能靠推测时，使用 `baseline/anibaka.json` 里同 id 的现成配置（基线日期取该 AniBaka 规则的日期）。基线里也没有的，在报告里列为“已跳过”。
-5. **检测冲突**：胜出的来源冒烟测试没过、另一个过了：默认仍取新的，只在报告里提示。
+2. **实测优先**（开启联网检测时）：检测通过 > 没有结论（无法访问 / 验证码 / 跳过） > 明确失败。最新的那个明确失败而旧的通过，就用旧的，并在报告里写明原因。可用 `select_by_smoke: false` 关闭。
+3. **取新**：同一档里取规则**最后真正改动的时间**更新的那个，**不比版本号**。时间相同时优先级为 Kazumi > 纯纯看番 > AniBaka。
+4. **id 固定**：站点在 AniBaka 里有，id 为 `anibaka-<key>`（与旧订阅一致），否则为 `kazumi-<名字>`。谁胜出都不改 id，Animeko 里已有的启用状态不会丢。
+5. **回退**：AniBaka 规则转不了、或搜索地址只能靠推测时，使用 `baseline/anibaka.json` 里同 id 的现成配置（基线日期取该 AniBaka 规则的日期）。基线里也没有的，在报告里列为“已跳过”。
+
+### “最后改动时间”怎么算
+
+git 提交日期会被“发布 / 整理”提交带偏（例如社区仓库一次提交就刷新了所有文件的日期）。所以程序在 `state/seen.json` 里记录每个规则**文件内容的哈希**和它的日期：
+
+- 第一次见到：用 git 日期。
+- 内容哈希没变：沿用记录的日期，不管 git 日期怎么变。
+- 内容哈希变了：用 git 日期（若比记录新），否则用本次同步的时间。
+
+`state/seen.json` 由工作流自动提交，不要手动删（删了会退回 git 日期）。
 
 ## 转换范围
 
@@ -52,7 +62,7 @@
 - Kazumi / 纯纯看番的规则没有线路名，转出来的源所有线路合并为一条。
 - 冒烟测试在 GitHub 海外服务器上跑，访问不了的国内站标 `unreachable`，不代表配置错误；有验证码的标 `blocked`。检测未通过的**只标记不剔除**：在描述前加 `[自动检测未通过：原因]`。
 - `overrides/` 手写配置不会跟着上游更新，上游版本变了报告里会提醒核对。
-- 同一规则在不同来源的 git 日期可能只是发布/整理提交，不一定代表规则内容有改动，遇到取新取错的站用 `prefer` 指定。
+- 首次运行没有哈希记录，日期仍用 git 日期（社区仓库的日期可能偏新），之后才会按内容变化校正；遇到取新取错的站用 `prefer` 指定。
 
 ## 配置（`config.json`）
 
@@ -63,7 +73,7 @@
 | `exclude_easybangumi` | 不收录的纯纯看番文件名（不带 `.js`） |
 | `easybangumi_channels` | `["release"]`（默认）；加上 `"dev"` 会收 `dev-extensions/` |
 | `prefer` | `{"站点主机名": "kazumi" / "easybangumi" / "anibaka"}`，强制取某一边 |
-| `prefer_working` | `true`：胜出的检测没过而另一个过了时，自动换用能过的 |
+| `select_by_smoke` | 默认 `true`：同站多个来源时先看联网检测结果；`false` 只看时间 |
 | `prefer_baseline` | 这些 AniBaka key 直接用 `baseline/anibaka.json` 的配置 |
 | `site_aliases` | `{"主机名": "规范主机名"}`，手动并站 |
 | `default_tier` / `tiers` | 数据源优先级（0 最高，4 最低）；`tiers` 按规则名/key 单独设置 |
@@ -101,6 +111,7 @@ python tests/test_pipeline.py    # 整条流水线（本地模拟站点）
 | `anx2animeko.py` | AniBaka 规则转换 |
 | `ebjs.py` | 纯纯看番 JS 源转换 |
 | `smoke.py` | 联网冒烟测试 |
+| `state/seen.json` | 各规则文件内容哈希和最后改动时间（自动维护） |
 | `baseline/anibaka.json` | AniBaka 规则转不了时的回退配置 |
 | `overrides/` | 手写的 Kazumi 规则配置 |
 | `config.json`、`tests/`、`.github/workflows/sync.yml` | 配置、测试、工作流 |

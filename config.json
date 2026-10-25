@@ -9,11 +9,11 @@
   "site_aliases": {},
   "prefer": {},
   "prefer_baseline": [],
-  "prefer_working": false,
-  "_说明2": "prefer：{站点主机名: kazumi|anibaka} 强制取某一边；prefer_baseline：这些 AniBaka 规则直接用 baseline 里手调过的配置；prefer_working：更新的来源自动检测没过而另一个过了时自动换用；site_aliases：{主机名: 规范主机名} 手动并站。",
+  "_说明2": "prefer：{站点主机名: kazumi|anibaka} 强制取某一边；prefer_baseline：这些 AniBaka 规则直接用 baseline 里手调过的配置；select_by_smoke：同站有多个来源时先看联网检测结果（通过>无结论>失败），同档再比时间；site_aliases：{主机名: 规范主机名} 手动并站。",
   "easybangumi_channels": [
     "release"
   ],
   "exclude_easybangumi": [],
-  "_easybangumi说明": "easybangumi_channels：release=社区仓库 extensions/（作者真机验证过），dev=dev-extensions/（未验证，约 70 个，默认不收，要的话改成 [\"release\",\"dev\"]）；exclude_easybangumi：不收录的文件名（不带 .js）。"
+  "_easybangumi说明": "easybangumi_channels：release=社区仓库 extensions/（作者真机验证过），dev=dev-extensions/（未验证，约 70 个，默认不收，要的话改成 [\"release\",\"dev\"]）；exclude_easybangumi：不收录的文件名（不带 .js）。",
+  "select_by_smoke": true
 }

@@ -319,10 +319,8 @@
       ],
       "guess": false,
       "date": 1786362131,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 20 个剧集链接"
-      },
+      "raw_hash": "43228a94fcae885185b7f29977a764d520bf6650d283f4abec428f8bc03344c3",
+      "date_basis": "首次记录",
       "site": "7sefun.top"
     },
     {
@@ -336,10 +334,8 @@
       ],
       "guess": false,
       "date": 1787289623,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 4 个条目，详情页选出 10 个剧集链接"
-      },
+      "raw_hash": "4fe917a871f7e89af5ef7ceaa65df29150f245bae157a2112456a042e62e1e31",
+      "date_basis": "首次记录",
       "site": "moonci.com"
     },
     {
@@ -353,10 +349,8 @@
       ],
       "guess": false,
       "date": 1758092260,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
+      "raw_hash": "a38a6662dcf542b50d0fe5d7d26c44594ab73042d8574ad9a067548a6b457076",
+      "date_basis": "首次记录",
       "site": "agedm.io"
     },
     {
@@ -370,10 +364,8 @@
       ],
       "guess": false,
       "date": 1786942825,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 84 个剧集链接"
-      },
+      "raw_hash": "1c6f89f777b7434e2623d8e1e32d52a7668efab5b9512423084178f379cfeb11",
+      "date_basis": "首次记录",
       "site": "akianime.cc"
     },
     {
@@ -387,10 +379,8 @@
       ],
       "guess": false,
       "date": 1769573721,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 168 个剧集链接"
-      },
+      "raw_hash": "785dd7c120634096470119f2b9bf7e3832ef09a2a4165d2f847b0956a16f9032",
+      "date_basis": "首次记录",
       "site": "baimaodm.com"
     },
     {
@@ -404,10 +394,8 @@
       ],
       "guess": false,
       "date": 1792049112,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
+      "raw_hash": "e89dfff73e057302a2d7b510c7335f0eacab9f0d4e31a1ad51fe27035ba87ace",
+      "date_basis": "首次记录",
       "site": "sbdl.cc",
       "chosen": true
     },
@@ -422,10 +410,8 @@
       ],
       "guess": false,
       "date": 1770015787,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 30 个剧集链接"
-      },
+      "raw_hash": "4fed81571de82cc91fe23ce0034da9641cc64e91e2e8c432ddb2444f3419813c",
+      "date_basis": "首次记录",
       "site": "dmbus.cc"
     },
     {
@@ -439,10 +425,8 @@
       ],
       "guess": false,
       "date": 1786883419,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 1 个条目，详情页选出 38 个剧集链接"
-      },
+      "raw_hash": "a6b0aace9a11d6c6fd41279922195a3334ce279a896b1295a9e7a1ebfebe1fd9",
+      "date_basis": "首次记录",
       "site": "ezdmw.org"
     },
     {
@@ -456,10 +440,8 @@
       ],
       "guess": false,
       "date": 1792645277,
-      "smoke": {
-        "status": "fail",
-        "reason": "搜索页能打开，但选择器没有选中任何结果"
-      },
+      "raw_hash": "a3321917a3531f53e310ef55e0e4be0a34f9e3a3204f0aac239204b21a9a51a3",
+      "date_basis": "首次记录",
       "site": "ani.girigirilove.com",
       "chosen": true
     },
@@ -474,10 +456,8 @@
       ],
       "guess": false,
       "date": 1792049112,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 20 个剧集链接"
-      },
+      "raw_hash": "b4a8f9cb1799da0c872ef16dbd3cbf8b929dfdb6f11a87a06d24cf8610262866",
+      "date_basis": "首次记录",
       "site": "lmm85.com",
       "chosen": true
     },
@@ -493,11 +473,8 @@
       ],
       "guess": false,
       "date": 1792059072,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 50 个剧集链接",
-        "template": "/media/{value}.html"
-      },
+      "raw_hash": "d05577fa17b4ec0c2bb625c5c37596eaca2aebaf1563b5d70bab2546b80a7c9b",
+      "date_basis": "首次记录",
       "site": "mgnacg.com",
       "chosen": true
     },
@@ -512,10 +489,8 @@
       ],
       "guess": false,
       "date": 1792401354,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 30 个剧集链接"
-      },
+      "raw_hash": "ad6e0086a7b17c10990a1fa05f42e756e0f17c8612c5fbd34b6b6346320768bf",
+      "date_basis": "首次记录",
       "site": "moonci.com",
       "chosen": true
     },
@@ -531,11 +506,8 @@
       ],
       "guess": false,
       "date": 1792059072,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 20 个剧集链接",
-        "template": "/voddetail/{value}.html"
-      },
+      "raw_hash": "2d5c68c7ce80c91af3593663158655e8499897011741cdd99f76f8050676a025",
+      "date_basis": "首次记录",
       "site": "2kdm.com",
       "chosen": true
     },
@@ -550,10 +522,8 @@
       ],
       "guess": false,
       "date": 1790853597,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 40 个剧集链接"
-      },
+      "raw_hash": "61d0e4d505828125fadba4ef4b6cca6196d1dd8e2ef870b37817a885a2d4c4f7",
+      "date_basis": "首次记录",
       "site": "dcc3.com"
     },
     {
@@ -567,10 +537,8 @@
       ],
       "guess": false,
       "date": 1783910492,
-      "smoke": {
-        "status": "skipped",
-        "reason": "手写配置，不做自动检测"
-      },
+      "raw_hash": "6a07fd92f0262e48365996e0c6e21c5b246ff24024a22e0a6826e24a6b4e82cd",
+      "date_basis": "首次记录",
       "site": "sorani.net"
     },
     {
@@ -584,10 +552,8 @@
       ],
       "guess": false,
       "date": 1772964002,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 56 个剧集链接"
-      },
+      "raw_hash": "fa84edbaba7024fb60abe70a754201e05faec9f69e6b8aef86fb5b47bc24e0c0",
+      "date_basis": "首次记录",
       "site": "dm1.xfdm.pro",
       "chosen": true
     },
@@ -602,10 +568,8 @@
       ],
       "guess": false,
       "date": 1790868808,
-      "smoke": {
-        "status": "skipped",
-        "reason": "手写配置，不做自动检测"
-      },
+      "raw_hash": "44aedb07ba77c822835f2f3e09fe18eeda82ee46cb3c69624fe39cca0db5c176",
+      "date_basis": "首次记录",
       "site": "next.xifanacg.com",
       "chosen": true
     },
@@ -620,10 +584,8 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "skipped",
-        "reason": "非 no-channel 章节格式，只验证了搜索"
-      },
+      "raw_hash": "7e496a6ea600c063e0b36d17288699799ab00f26411476ba8171c9a949f02dbf",
+      "date_basis": "首次记录",
       "site": "7sefun.top"
     },
     {
@@ -637,10 +599,8 @@
       "info": [],
       "guess": true,
       "date": 1790775080,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
+      "raw_hash": "59f2dcfbe1efbbfac030c26efbb83fa3b48db3e515c74a58bcffa13cb9cd3c0b",
+      "date_basis": "首次记录",
       "site": "cyfz.top",
       "chosen": true
     },
@@ -653,10 +613,8 @@
       "info": [],
       "guess": false,
       "date": 1791361738,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
+      "raw_hash": "adc02908cb83a672b120e8607b32a2e2949bddabf38f3cd8737af07d25089b29",
+      "date_basis": "首次记录",
       "site": "5dm.dev",
       "chosen": true
     },
@@ -671,10 +629,8 @@
       "info": [],
       "guess": false,
       "date": 1791361738,
-      "smoke": {
-        "status": "blocked",
-        "reason": "搜索页出现验证码/环境检查"
-      },
+      "raw_hash": "9f769e503292b337fe328f86001df2b479c574bfae31b34878baacbd48ae26c4",
+      "date_basis": "首次记录",
       "site": "ani.pekolove.net",
       "chosen": true
     },
@@ -689,10 +645,8 @@
       "info": [],
       "guess": false,
       "date": 1786032045,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 20 个剧集链接"
-      },
+      "raw_hash": "2cc3e54935af2adb97f2dea282c98112e05733198df597b472f39bee1160b343",
+      "date_basis": "首次记录",
       "site": "lm6.net",
       "chosen": true
     },
@@ -708,6 +662,8 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
+      "raw_hash": "2e2ddaec95f5c63279251792a2b77c30d4197a53e3f9917a3e9cc9f63e2ca216",
+      "date_basis": "首次记录",
       "site": null
     },
     {
@@ -719,10 +675,8 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "skipped",
-        "reason": "非 no-channel 章节格式，只验证了搜索"
-      },
+      "raw_hash": "8d832887021dc064d00c89f19f31fcbfa760d6ad0cae56ea53c6d0fec3112e29",
+      "date_basis": "首次记录",
       "site": "akianime.cc",
       "chosen": true
     },
@@ -737,10 +691,8 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
+      "raw_hash": "23c05c115a5b8bb93961435b8b172e6700041894c12e68aa50f9d510484cb450",
+      "date_basis": "首次记录",
       "site": "animoe.org",
       "chosen": true
     },
@@ -756,6 +708,8 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
+      "raw_hash": "e08fc606eadceb4fc9dcafd7104b4c3d8fd76cf938c9c0f0affca02d8bbe721a",
+      "date_basis": "首次记录",
       "site": null
     },
     {
@@ -769,10 +723,8 @@
       "info": [],
       "guess": true,
       "date": 1790775080,
-      "smoke": {
-        "status": "skipped",
-        "reason": "非 no-channel 章节格式，只验证了搜索"
-      },
+      "raw_hash": "c39a459c2cf31ea3278a6b875a3b5265c70897f01902884c60dab8080faad8ac",
+      "date_basis": "首次记录",
       "site": "ios.mifun.org",
       "chosen": true
     },
@@ -787,10 +739,8 @@
       "info": [],
       "guess": false,
       "date": 1784350043,
-      "smoke": {
-        "status": "blocked",
-        "reason": "搜索页出现验证码/环境检查"
-      },
+      "raw_hash": "a40f2a17b90fa9a473419e5276c72c7912eb3bac7f995a45e15ebdc4f35decba",
+      "date_basis": "首次记录",
       "site": "cn.agekkkk.com",
       "chosen": true
     },
@@ -805,10 +755,8 @@
       "info": [],
       "guess": true,
       "date": 1790775080,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
+      "raw_hash": "8efbeb5b8a2b0ea28f52af6a1a0346e73cbcdc1bbd4a259471a09e3d7cc6742a",
+      "date_basis": "首次记录",
       "site": "didahd.pro",
       "chosen": true
     },
@@ -821,10 +769,8 @@
       "info": [],
       "guess": false,
       "date": 1791361738,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
+      "raw_hash": "9a6514966d5d1a0609f0a9df52d77e01aa81123c866a1a76076ee4185fc67aa7",
+      "date_basis": "首次记录",
       "site": "anime7.top"
     },
     {
@@ -839,6 +785,8 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
+      "raw_hash": "7e828b23d1838aa79d5a3adadff44d9005bd17fecda9205ea3dba2173057ff6e",
+      "date_basis": "首次记录",
       "site": null
     },
     {
@@ -850,10 +798,8 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "fail",
-        "reason": "搜索页能打开，但选择器没有选中任何结果"
-      },
+      "raw_hash": "5b83ff42c47145f3cb2c7c6ae8839e8b6a8cac35a4f61a681d84892e6b602b16",
+      "date_basis": "首次记录",
       "site": "ani.girigirilove.com"
     },
     {
@@ -868,6 +814,8 @@
       "info": [],
       "guess": false,
       "date": 1791361738,
+      "raw_hash": "3e9c4b6fb230a9164945574ef3c47d50c70fd5a462cbbec78064a7b07b45f113",
+      "date_basis": "首次记录",
       "site": null
     },
     {
@@ -882,6 +830,8 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
+      "raw_hash": "f76a60584be99c2e11d369a1155c5e7f02607e62d143e705bb3ee521f8a81964",
+      "date_basis": "首次记录",
       "site": null
     },
     {
@@ -893,10 +843,8 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
+      "raw_hash": "92911fd4152f09a6843d9293b4e22382395985da43fc5f1443dbe74ed0e52524",
+      "date_basis": "首次记录",
       "site": "agedm.io",
       "chosen": true
     },
@@ -911,10 +859,8 @@
       "info": [],
       "guess": false,
       "date": 1790779316,
-      "smoke": {
-        "status": "fail",
-        "reason": "详情页 HTTP 404（https://www.xgcartoon.com/detail/zangsongdefulilianzangsongzhefulilianriyu-shantianzhongren）"
-      },
+      "raw_hash": "209e17e3c167d678ec654dba9ff5aea4a0a98d648c51d223948a2f14d4389d94",
+      "date_basis": "首次记录",
       "site": "xgcartoon.com",
       "chosen": true
     },
@@ -927,10 +873,8 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "blocked",
-        "reason": "搜索页出现验证码/环境检查"
-      },
+      "raw_hash": "4f3d73fe6eab4c71ecc1db33017ccd8eec33278fba160f0b64c1e6cf0e0ceb30",
+      "date_basis": "首次记录",
       "site": "2kdm.com"
     },
     {
@@ -942,10 +886,8 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "unreachable",
-        "reason": "请求失败：ReadTimeout"
-      },
+      "raw_hash": "a05ca213f6a8d3ae8794f9875240e9356c51c6751c8c3441ff3d1fb53a744fd4",
+      "date_basis": "首次记录",
       "site": "gugu3.com",
       "chosen": true
     },
@@ -961,6 +903,8 @@
       "info": [],
       "guess": false,
       "date": 1789394769,
+      "raw_hash": "de3be12cff0858915450b729324daf6253177dc463a0a6ff078c3507c18f28b3",
+      "date_basis": "首次记录",
       "site": null
     },
     {
@@ -975,6 +919,8 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
+      "raw_hash": "7eb80fb0b6636d96038494f05fa6ef40009fa4d08d2e49b892ded3120744850a",
+      "date_basis": "首次记录",
       "site": null
     },
     {
@@ -989,6 +935,8 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
+      "raw_hash": "3b240c36b6c82bae76e2669fbff10f04fb18f308cba213d67404839472da0e7f",
+      "date_basis": "首次记录",
       "site": null
     },
     {
@@ -1002,10 +950,8 @@
       "info": [],
       "guess": false,
       "date": 1789394769,
-      "smoke": {
-        "status": "skipped",
-        "reason": "非 no-channel 章节格式，只验证了搜索"
-      },
+      "raw_hash": "0788c08fd443a7d8022bca850f3dc20f618f7b547ce8a65f6cb3b48892a766a1",
+      "date_basis": "首次记录",
       "site": "dmbus.cc",
       "chosen": true
     },
@@ -1021,6 +967,8 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
+      "raw_hash": "c632d0dac721353b545b30cbeb6e6e274404a646b9030d5aa365750edc0ababc",
+      "date_basis": "首次记录",
       "site": null
     },
     {
@@ -1034,10 +982,8 @@
       "info": [],
       "guess": true,
       "date": 1784350043,
-      "smoke": {
-        "status": "fail",
-        "reason": "搜索页能打开，但选择器没有选中任何结果"
-      },
+      "raw_hash": "6d048ece8fa408f1343f4aa6b5d9495ebe9628d0ac245bb2ab4ca178ddc37182",
+      "date_basis": "首次记录",
       "site": "mgnacg.com"
     },
     {
@@ -1049,10 +995,8 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "skipped",
-        "reason": "非 no-channel 章节格式，只验证了搜索"
-      },
+      "raw_hash": "f454f5dafce4ce26548f8d8bb7dfb1ea7bb246b0d02d965ce42f71c9200ee766",
+      "date_basis": "首次记录",
       "site": "moonci.com"
     },
     {
@@ -1066,10 +1010,8 @@
       "info": [],
       "guess": false,
       "date": 1790775080,
-      "smoke": {
-        "status": "fail",
-        "reason": "搜索页能打开，但选择器没有选中任何结果"
-      },
+      "raw_hash": "8b4539301276765751e51aa07750652d62728e57e025f70650e2ec0098a91ecb",
+      "date_basis": "首次记录",
       "site": "silisilifun.com",
       "chosen": true
     },
@@ -1084,10 +1026,8 @@
       "info": [],
       "guess": false,
       "date": 1791361738,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 1 个条目，详情页选出 38 个剧集链接"
-      },
+      "raw_hash": "0c7ff13bdc2c40c44167758953de20f76a0d8181a45539cbad29950059469de2",
+      "date_basis": "首次记录",
       "site": "ezdmw.org",
       "chosen": true
     },
@@ -1102,10 +1042,8 @@
       "info": [],
       "guess": true,
       "date": 1791361738,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
+      "raw_hash": "e884660097574948eba2a845dfae0837e9559b95a0fb86743eaf73c73e1b2a83",
+      "date_basis": "首次记录",
       "site": "sbdl.cc"
     },
     {
@@ -1119,14 +1057,13 @@
       "info": [],
       "guess": false,
       "date": 1791361738,
-      "smoke": {
-        "status": "skipped",
-        "reason": "手写配置，不做自动检测"
-      },
+      "raw_hash": "2195291904a785d1fb4a407a7aa457cc8b3b53f71ffee58fa6fab830dc9466a3",
+      "date_basis": "首次记录",
       "site": "sorani.net",
       "chosen": true
     },
     {
+      "raw_hash": "b6ebb3ef391be8285601508dc716519ccab0218aa80eac5ee71d4ee18a334c6a",
       "origin": "easybangumi",
       "key": "Jellyfin_v1.8_lib7",
       "version": "1.7",
@@ -1139,9 +1076,11 @@
       ],
       "guess": false,
       "date": 1760253322,
+      "date_basis": "首次记录",
       "site": null
     },
     {
+      "raw_hash": "237eafa2cd0e33cb87c5b3515ffca99e07551ed5295f4924d28cb92336c03d0b",
       "origin": "easybangumi",
       "key": "age",
       "version": "1.0",
@@ -1154,9 +1093,11 @@
       ],
       "guess": false,
       "date": 1784138284,
+      "date_basis": "首次记录",
       "site": null
     },
     {
+      "raw_hash": "f7734b546d88b18161863bf2045d2f359120564a437133aeb5846158c4972748",
       "origin": "easybangumi",
       "key": "girigirilove-beta",
       "version": "1.0",
@@ -1169,9 +1110,11 @@
       ],
       "guess": false,
       "date": 1791975314,
+      "date_basis": "首次记录",
       "site": null
     },
     {
+      "raw_hash": "496af7c3a5a6d3fdb5a32c36e2f998a418130c3a6f4d3c161e854c31ef49c5bd",
       "origin": "easybangumi",
       "key": "girigirilove",
       "version": "1.5",
@@ -1184,9 +1127,11 @@
       ],
       "guess": false,
       "date": 1784138284,
+      "date_basis": "首次记录",
       "site": null
     },
     {
+      "raw_hash": "a70a3122402577494e5c9f1f459acf022e7e27d33aa5654bea82027b051c8c62",
       "origin": "easybangumi",
       "key": "kazumi-7sefun",
       "version": "1.2.1",
@@ -1200,14 +1145,12 @@
       ],
       "guess": false,
       "date": 1792471432,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 10 个剧集链接"
-      },
+      "date_basis": "首次记录",
       "site": "7sefun.top",
       "chosen": true
     },
     {
+      "raw_hash": "a1d2eb0cebcc43ddf9d5e14acfd154e0232cbe7392fd80bcf02372adc5ff1e14",
       "origin": "easybangumi",
       "key": "kazumi-9ciyuan",
       "version": "1.3.1",
@@ -1219,14 +1162,12 @@
       ],
       "guess": false,
       "date": 1792471432,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
+      "date_basis": "首次记录",
       "site": "jcydm1.com",
       "chosen": true
     },
     {
+      "raw_hash": "73801c425db53e3d6ac9b2e8755e7b21a5c9b300ff5ceffe6a9db06d8e17d1b5",
       "origin": "easybangumi",
       "key": "kazumi-anime7",
       "version": "1.0.1",
@@ -1238,14 +1179,12 @@
       ],
       "guess": false,
       "date": 1792471432,
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
+      "date_basis": "首次记录",
       "site": "anime7.top",
       "chosen": true
     },
     {
+      "raw_hash": "daf3b2ba2814ddbcad3b47847a5a552ed600ef4c03ab9ba9cf2c5bbd8d6d882f",
       "origin": "easybangumi",
       "key": "kazumi-ant",
       "version": "0.0.3",
@@ -1257,14 +1196,12 @@
       ],
       "guess": false,
       "date": 1792471432,
-      "smoke": {
-        "status": "unreachable",
-        "reason": "请求失败：ConnectionError"
-      },
+      "date_basis": "首次记录",
       "site": "mayi520.org",
       "chosen": true
     },
     {
+      "raw_hash": "59a45686c64f258b52c81e64f9dc8c926cc2460427943619f3fad55d5727d4ed",
       "origin": "easybangumi",
       "key": "kazumi-baimao",
       "version": "1.0.1",
@@ -1276,14 +1213,12 @@
       ],
       "guess": false,
       "date": 1792471432,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 168 个剧集链接"
-      },
+      "date_basis": "首次记录",
       "site": "baimaodm.com",
       "chosen": true
     },
     {
+      "raw_hash": "d7c25a43df78ce859d8f4ccdd2fe7f9b484684dd5d1f990b129df316d13cf9c7",
       "origin": "easybangumi",
       "key": "kazumi-gpjda",
       "version": "1.0",
@@ -1296,9 +1231,11 @@
       ],
       "guess": false,
       "date": 1783706169,
+      "date_basis": "首次记录",
       "site": null
     },
     {
+      "raw_hash": "1b6448b326b8198b9c8c628afc5a01293a3787090e1ddbca05019723ef6af888",
       "origin": "easybangumi",
       "key": "kazumi-lmm",
       "version": "2.2",
@@ -1311,9 +1248,11 @@
       ],
       "guess": false,
       "date": 1791975314,
+      "date_basis": "首次记录",
       "site": null
     },
     {
+      "raw_hash": "cb260511ceee317353cf2f9f1759edd827bb001274cda9a744b89ea79d247976",
       "origin": "easybangumi",
       "key": "kazumi-mifun",
       "version": "1.1.1",
@@ -1326,9 +1265,11 @@
       ],
       "guess": false,
       "date": 1792471432,
+      "date_basis": "首次记录",
       "site": null
     },
     {
+      "raw_hash": "398245c1858699dfbbe88424b9924c4d6f9c6e7210aab78e4193e922a2948be4",
       "origin": "easybangumi",
       "key": "kazumi-mxdm",
       "version": "2.3.1",
@@ -1340,14 +1281,12 @@
       ],
       "guess": false,
       "date": 1792471432,
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 40 个剧集链接"
-      },
+      "date_basis": "首次记录",
       "site": "dcc3.com",
       "chosen": true
     },
     {
+      "raw_hash": "ae032a31eb8b09c5c6b1d170df36a7485c9a2115f4bab0acd469ea19baa5d74e",
       "origin": "easybangumi",
       "key": "kazumi-omofun03",
       "version": "1.1",
@@ -1359,14 +1298,12 @@
       ],
       "guess": false,
       "date": 1785171844,
-      "smoke": {
-        "status": "unreachable",
-        "reason": "请求失败：SSLError"
-      },
+      "date_basis": "首次记录",
       "site": "omofun03.top",
       "chosen": true
     },
     {
+      "raw_hash": "a64f3e4c37dbb6540d0938bf46de85003084e4fb808bd9a82b3fa0af2bead914",
       "origin": "easybangumi",
       "key": "kazumi-sorani",
       "version": "1.0",
@@ -1379,9 +1316,11 @@
       ],
       "guess": false,
       "date": 1785171844,
+      "date_basis": "首次记录",
       "site": null
     },
     {
+      "raw_hash": "3aab610f1b000ce3275235252589b51b6da7e960d45d31ddb926686aa0a7719e",
       "origin": "easybangumi",
       "key": "kazumi-tvtfun",
       "version": "1.1",
@@ -1394,9 +1333,11 @@
       ],
       "guess": false,
       "date": 1785171844,
+      "date_basis": "首次记录",
       "site": null
     },
     {
+      "raw_hash": "b7f41e2e0ac2fb872a4a6e5afb7e1016ceab7d5610dd20f26d87620ed8b056e6",
       "origin": "easybangumi",
       "key": "kazumi-ylsp",
       "version": "1.1",
@@ -1408,14 +1349,12 @@
       ],
       "guess": false,
       "date": 1785171844,
-      "smoke": {
-        "status": "fail",
-        "reason": "HTTP 523"
-      },
+      "date_basis": "首次记录",
       "site": "ylys.cc",
       "chosen": true
     },
     {
+      "raw_hash": "f86d70900529ffe5108f1508f8d52011028d47ecacced2a424f10920211e8295",
       "origin": "easybangumi",
       "key": "le",
       "version": "1.0",
@@ -1428,9 +1367,11 @@
       ],
       "guess": false,
       "date": 1760862920,
+      "date_basis": "首次记录",
       "site": null
     },
     {
+      "raw_hash": "56fcd10b387cbad732b71af7a025c5658d6b3da88acaba2d8cd1f99afd68598a",
       "origin": "easybangumi",
       "key": "omofun",
       "version": "1.3",
@@ -1443,9 +1384,11 @@
       ],
       "guess": false,
       "date": 1760862920,
+      "date_basis": "首次记录",
       "site": null
     },
     {
+      "raw_hash": "3cc8c71415a67eacfc750f6cb7c1495b8c1ac3d9e97bc6c78d387f65987a35ce",
       "origin": "easybangumi",
       "key": "xifandm",
       "version": "1.1",
@@ -1458,9 +1401,11 @@
       ],
       "guess": false,
       "date": 1784138284,
+      "date_basis": "首次记录",
       "site": null
     },
     {
+      "raw_hash": "7fb6c88d294ed40cdd984f741f3ed8bd13ca67c7a428d9ac6471212e2e9b0885",
       "origin": "easybangumi",
       "key": "yhw",
       "version": "1.0",
@@ -1473,6 +1418,7 @@
       ],
       "guess": false,
       "date": 1760193357,
+      "date_basis": "首次记录",
       "site": null
     }
   ]
