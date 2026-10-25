@@ -475,8 +475,8 @@
       "guess": false,
       "date": 1792049112,
       "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
+        "status": "ok",
+        "reason": "搜到 2 个条目，详情页选出 20 个剧集链接"
       },
       "site": "lmm85.com",
       "chosen": true
@@ -690,8 +690,8 @@
       "guess": false,
       "date": 1786032045,
       "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
+        "status": "ok",
+        "reason": "搜到 2 个条目，详情页选出 20 个剧集链接"
       },
       "site": "lm6.net",
       "chosen": true
@@ -788,8 +788,8 @@
       "guess": false,
       "date": 1784350043,
       "smoke": {
-        "status": "unreachable",
-        "reason": "请求失败：ReadTimeout"
+        "status": "blocked",
+        "reason": "搜索页出现验证码/环境检查"
       },
       "site": "cn.agekkkk.com",
       "chosen": true
@@ -943,8 +943,8 @@
       "guess": false,
       "date": 1790775080,
       "smoke": {
-        "status": "fail",
-        "reason": "HTTP 404"
+        "status": "unreachable",
+        "reason": "请求失败：ReadTimeout"
       },
       "site": "gugu3.com",
       "chosen": true
@@ -1050,8 +1050,8 @@
       "guess": false,
       "date": 1790775080,
       "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
+        "status": "skipped",
+        "reason": "非 no-channel 章节格式，只验证了搜索"
       },
       "site": "moonci.com"
     },

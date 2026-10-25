@@ -212,7 +212,7 @@
       "version": 2,
       "arguments": {
         "name": "4K动漫",
-        "description": "[自动检测未通过：请求失败：ReadTimeout] 4K动漫，提供日漫、国漫、美漫和剧场版等在线资源。",
+        "description": "[自动检测未通过：搜索页出现验证码/环境检查] 4K动漫，提供日漫、国漫、美漫和剧场版等在线资源。",
         "iconUrl": "https://cn.agekkkk.com/template/the4/statics/img/favicon.ico",
         "searchConfig": {
           "searchUrl": "https://cn.agekkkk.com/search/{keyword}-------------.html",
@@ -732,7 +732,7 @@
       "version": 2,
       "arguments": {
         "name": "咕咕番",
-        "description": "[自动检测未通过：HTTP 404] 咕咕番视频源，源网址gugu3.com，提供大量日漫番剧资源。 （AniBaka 规则 gugu rev 4 自动转换）",
+        "description": "[自动检测未通过：请求失败：ReadTimeout] 咕咕番视频源，源网址gugu3.com，提供大量日漫番剧资源。 （AniBaka 规则 gugu rev 4 自动转换）",
         "iconUrl": "https://www.gugu3.com/upload/site/20260506-1/a0799f74e4bced939fbbc0b79cb27671.png",
         "searchConfig": {
           "searchUrl": "https://www.gugu3.com/index.php/vod/search/wd/{keyword}.html",
@@ -821,7 +821,7 @@
       "version": 2,
       "arguments": {
         "name": "路漫漫动漫",
-        "description": "[自动检测未通过：HTTP 403] 路漫漫在线动漫提供日本动漫、国产动漫、动画电影等免费在线观看。 （AniBaka 规则 lm6 rev 5 自动转换）",
+        "description": "路漫漫在线动漫提供日本动漫、国产动漫、动画电影等免费在线观看。 （AniBaka 规则 lm6 rev 5 自动转换）",
         "iconUrl": "https://m.lm6.net/template/jable/statics/icon/favicon-32x32.png",
         "searchConfig": {
           "searchUrl": "https://m.lm6.net/index.php/ajax/suggest?mid=1&wd={keyword}",
@@ -1259,7 +1259,7 @@
       "version": 2,
       "arguments": {
         "name": "LMM",
-        "description": "[自动检测未通过：HTTP 403] 由 Kazumi 规则 LMM v2.3 自动转换",
+        "description": "由 Kazumi 规则 LMM v2.3 自动转换",
         "iconUrl": "https://www.lmm85.com/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1794,7 +1794,7 @@
         "version": 2,
         "arguments": {
           "name": "4K动漫",
-          "description": "[自动检测未通过：请求失败：ReadTimeout] 4K动漫，提供日漫、国漫、美漫和剧场版等在线资源。",
+          "description": "[自动检测未通过：搜索页出现验证码/环境检查] 4K动漫，提供日漫、国漫、美漫和剧场版等在线资源。",
           "iconUrl": "https://cn.agekkkk.com/template/the4/statics/img/favicon.ico",
           "searchConfig": {
             "searchUrl": "https://cn.agekkkk.com/search/{keyword}-------------.html",
@@ -2314,7 +2314,7 @@
         "version": 2,
         "arguments": {
           "name": "咕咕番",
-          "description": "[自动检测未通过：HTTP 404] 咕咕番视频源，源网址gugu3.com，提供大量日漫番剧资源。 （AniBaka 规则 gugu rev 4 自动转换）",
+          "description": "[自动检测未通过：请求失败：ReadTimeout] 咕咕番视频源，源网址gugu3.com，提供大量日漫番剧资源。 （AniBaka 规则 gugu rev 4 自动转换）",
           "iconUrl": "https://www.gugu3.com/upload/site/20260506-1/a0799f74e4bced939fbbc0b79cb27671.png",
           "searchConfig": {
             "searchUrl": "https://www.gugu3.com/index.php/vod/search/wd/{keyword}.html",
@@ -2403,7 +2403,7 @@
         "version": 2,
         "arguments": {
           "name": "路漫漫动漫",
-          "description": "[自动检测未通过：HTTP 403] 路漫漫在线动漫提供日本动漫、国产动漫、动画电影等免费在线观看。 （AniBaka 规则 lm6 rev 5 自动转换）",
+          "description": "路漫漫在线动漫提供日本动漫、国产动漫、动画电影等免费在线观看。 （AniBaka 规则 lm6 rev 5 自动转换）",
           "iconUrl": "https://m.lm6.net/template/jable/statics/icon/favicon-32x32.png",
           "searchConfig": {
             "searchUrl": "https://m.lm6.net/index.php/ajax/suggest?mid=1&wd={keyword}",
@@ -2841,7 +2841,7 @@
         "version": 2,
         "arguments": {
           "name": "LMM",
-          "description": "[自动检测未通过：HTTP 403] 由 Kazumi 规则 LMM v2.3 自动转换",
+          "description": "由 Kazumi 规则 LMM v2.3 自动转换",
           "iconUrl": "https://www.lmm85.com/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
