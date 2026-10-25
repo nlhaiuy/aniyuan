@@ -29,6 +29,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from anx2animeko import convert_anx, site_host, source_id  # noqa: E402
 from convert import convert_rule  # noqa: E402
 from ebjs import convert_extension  # noqa: E402
+from domains import follow_upstream, host_of  # noqa: E402
 from repair import brittle, mine_presets, repair_source  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -145,10 +146,8 @@ def probe(c, keyword, session, presets, config):
         r2["repaired"] = why
         return True, r2
 
-    if c["origin"] == "manual":   # 亲测可用的配置：只检测，不自动改
-        c["smoke"] = r
-        return
-    if c["source"].get("factoryId") == "web-selector" and config.get("repair", True):
+    # 亲测可用的配置（manual）：不自动改选择器，只允许跟随域名跳转
+    if c["origin"] != "manual" and c["source"].get("factoryId") == "web-selector" and config.get("repair", True):
         if r["status"] == "fail" and r.get("stage") in ("search", "episodes"):
             ok, res = try_repair("both" if r["stage"] == "search" else "episodes")
             if ok:
@@ -188,6 +187,11 @@ def collect_manual(dirpath):
                             info=["manual/%s 手动维护" % fn], guess=False, raw_hash=file_hash(path),
                             date=int(os.path.getmtime(path))))
     return out
+
+
+def _check(source, config, session):
+    from smoke import check_source
+    return check_source(source, config.get("smoke_keyword", "葬送的芙莉莲"), session=session)
 
 
 def run_playchecks(cands, config):
@@ -233,6 +237,7 @@ def collect_kazumi(repo, config, overrides_dir):
             out.append(c)
             continue
         rule = load_json(path)
+        c["live_hosts"] = [h for h in (host_of(rule.get("baseURL", "")), host_of(rule.get("searchURL", ""))) if h]
         c["version"] = str(rule.get("version", c["version"]))
         c["raw_hash"] = file_hash(path)
         ov_path = os.path.join(overrides_dir, name + ".json")
@@ -267,6 +272,9 @@ def collect_anibaka(repo, baseline, config):
         path = os.path.join(repo, e["ref"])
         c["raw_hash"] = file_hash(path)
         res = None
+        if os.path.exists(path):
+            full = load_json(path)
+            c["live_hosts"] = [h for h in (host_of(full.get("baseUrl", "")), host_of(full.get("iconUrl", ""))) if h]
         if os.path.exists(path):
             res = convert_anx(load_json(path), e, config)
             c.update(source=res.source, status=res.status, notes=list(res.notes), guess=res.guess)
@@ -310,6 +318,8 @@ def collect_easybangumi(repo, config):
                      status=res.status, notes=list(res.notes), info=res.info, guess=False,
                      date=git_date(repo, "%s/%s" % (sub, fn)))
             c["info"] = ["纯纯看番 %s 通道" % channel] + list(c["info"])
+            from ebjs import parse_extension
+            c["live_hosts"] = [h for h in [host_of(parse_extension(os.path.join(d, fn))[1].get("DEFAULT_BASE_URL", ""))] if h]
             out.append(c)
     return out
 
@@ -421,6 +431,9 @@ def main():
             if r.get("template"):
                 c["source"]["arguments"]["searchConfig"]["selectorSubjectFormatJsonPathIndexed"]["linkTemplate"] = r["template"]
             time.sleep(1)
+        if config.get("follow_upstream_domains", True):
+            for key, old, new, ok in follow_upstream(cands, lambda src: _check(src, config, session)):
+                print("域名跟随 %s：%s → %s %s" % (key, old, new, "已采用" if ok else "未通过，保持原样"))
         if args.playcheck:
             run_playchecks(cands, config)
 

@@ -29,6 +29,10 @@
 
 你亲自验证过可用的源放在 `manual/` 里（Animeko 导出的订阅文件，或单个源 JSON 都行），同站点时**永远优先于自动转换**，不会被自动修复、替换，也不会因为检测没过而落选（只在报告里写备注）。没有 `id` 的会自动补，和别的来源同站时 id 沿用 AniBaka 的稳定 id。目前有 `girigirilove.json`。
 
+### 域名会变怎么办
+
+静态的源（`manual/`、`baseline/`、`overrides/`）域名换了不会自己更新，所以程序会**跟随上游**：同一个站（按主域名里的名字，如 `girigirilove`，与 `.com/.xyz` 无关）的 Kazumi / AniBaka / 纯纯看番规则多数已经换到新的主域名时，把静态源里的旧主域名整体换掉（保留 `ani.` / `m3u8.` / `bg.` 这些子域名），**重新联网检测通过才采用**，没通过就保持原样并在报告备注里提示。另外，搜索请求被网站自己跳转到新域名、且之后一切正常时，也会自动换成新域名（`follow_redirects`）。两项都只改输出的订阅，不改 `manual/` 里的原文件。可用 `follow_upstream_domains: false` 关闭。
+
 ## 合并规则
 
 同一个站点在多个来源里都有时，只留一个：
@@ -94,7 +98,7 @@ git 提交日期会被“发布 / 整理”提交带偏（例如社区仓库一�
 | `prefer_baseline` | 这些 AniBaka key 直接用 `baseline/anibaka.json` 的配置 |
 | `site_aliases` | `{"主机名": "规范主机名"}`，手动并站 |
 | `default_tier` / `tiers` | 数据源优先级（0 最高，4 最低）；`tiers` 按规则名/key 单独设置 |
-| `repair` / `replace_brittle` / `follow_redirects` | 默认都是 `true`：自动修复失效选择器 / 替换脆弱的位置式写法 / 跟随域名跳转 |
+| `repair` / `replace_brittle` / `follow_redirects` / `follow_upstream_domains` | 默认都是 `true`：自动修复失效选择器 / 替换脆弱的位置式写法 / 跟随搜索跳转的新域名 / 静态源跟随上游换主域名 |
 | `play_check_max` / `play_wait_ms` | 播放检测的数量上限（默认 80）/ 每个最多等待毫秒数（默认 20000） |
 | `drop_failed` | `true`：把“搜得到页面但选择器没选中结果”的源剔除（验证码/无法访问的不剔除） |
 | `smoke_keyword` | 冒烟测试用的搜索关键词 |
@@ -132,6 +136,7 @@ python tests/test_live.py        # 自动修复 / 域名跳转 / 播放检测（
 | `anx2animeko.py` | AniBaka 规则转换 |
 | `ebjs.py` | 纯纯看番 JS 源转换 |
 | `smoke.py` | 联网冒烟测试 |
+| `domains.py` | 静态源跟随上游域名 |
 | `repair.py` | 选择器自动修复 |
 | `playcheck.py` | 无头浏览器播放检测 |
 | `state/seen.json` | 各规则文件内容哈希和最后改动时间（自动维护） |

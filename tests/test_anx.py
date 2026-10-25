@@ -4,6 +4,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from anx2animeko import convert_anx, split_selectors, site_host, source_id
 from build import merge, apply_state, collect_manual
 from smoke import eval_simple_jsonpath
+import domains as D
 
 bad = 0
 def check(name, ok):
@@ -152,4 +153,30 @@ cm = collect_manual(td)
 check("collect_manual 读订阅文件，缺 id 时补 manual-<文件名>", len(cm) == 1 and cm[0]["source"]["id"] == "manual-a" and cm[0]["origin"] == "manual")
 check("jsonpath 支持 $.a.b[*].field", eval_simple_jsonpath({"info": {"rows": [{"vod_id": 1}, {"vod_id": 2}]}}, "$.info.rows[*].vod_id") == [1, 2])
 check("jsonpath 原有 ['field'] 写法不受影响", eval_simple_jsonpath({"list": [{"id": 7}]}, "$.list[*]['id']") == [7])
+
+# ---- 跟随上游域名 ----
+check("registrable：常见后缀", D.registrable("ani.girigirilove.com") == "girigirilove.com" and D.registrable("a.b.example.co.jp") == "example.co.jp")
+check("sld：名字部分与后缀无关", D.sld("ani.girigirilove.xyz") == "girigirilove")
+def st(urls, origin="manual"):
+    return dict(origin=origin, key="m", status="manual", notes=[], date=1, live_hosts=None, source={"id": "i", "factoryId": "web-selector",
+        "arguments": {"name": "n", "iconUrl": urls[2], "searchConfig": {"searchUrl": urls[0], "rawBaseUrl": urls[1]}}})
+def up(host, date=1):
+    return dict(origin="anibaka", key=host, status="ok", notes=[], date=date, live_hosts=[host], source=None)
+m = st(["https://m3u8.girigirilove.com/api?q={keyword}", "https://bg.girigirilove.com", "https://ani.girigirilove.com/i.png"])
+cur = D.current_domains([up("ani.girigirilove.xyz"), up("girigirilove.xyz"), up("ani.girigirilove.com")])
+check("多数上游换了主域名 -> 取多数", cur == {"girigirilove": "girigirilove.xyz"})
+check("票数相同取最近改动的", D.current_domains([up("a.x.com", 1), up("a.x.net", 9)]) == {"x": "x.net"})
+ch = D.follow_upstream([m, up("ani.girigirilove.xyz"), up("girigirilove.xyz")], lambda s: {"status": "ok"})
+sc = m["source"]["arguments"]["searchConfig"]
+check("检测通过：主域名整体替换且保留子域名前缀", ch and ch[0][3] and sc["searchUrl"].startswith("https://m3u8.girigirilove.xyz/api")
+      and sc["rawBaseUrl"] == "https://bg.girigirilove.xyz" and m["source"]["arguments"]["iconUrl"].startswith("https://ani.girigirilove.xyz/"))
+m = st(["https://m3u8.girigirilove.com/api?q={keyword}", "https://bg.girigirilove.com", "https://ani.girigirilove.com/i.png"])
+ch = D.follow_upstream([m, up("ani.girigirilove.xyz"), up("girigirilove.xyz")], lambda s: {"status": "fail", "reason": "x"})
+check("检测没通过：保持原样并留备注", ch and not ch[0][3] and "girigirilove.com" in m["source"]["arguments"]["searchConfig"]["searchUrl"] and m["notes"])
+m = st(["https://m3u8.girigirilove.com/api?q={keyword}", "https://bg.girigirilove.com", "https://ani.girigirilove.com/i.png"], "kazumi"); m["status"] = "ok"
+check("自动转换出来的（非静态）源不被这个机制改", D.follow_upstream([m, up("ani.girigirilove.xyz")], lambda s: {"status": "ok"}) == [])
+m = st(["https://m3u8.girigirilove.com/api?q={keyword}", "https://bg.girigirilove.com", "https://ani.girigirilove.com/i.png"])
+check("上游没换：不动", D.follow_upstream([m, up("ani.girigirilove.com")], lambda s: {"status": "ok"}) == [])
+check("rewrite_domain 不误伤别的域名", D.rewrite_domain({"a": "https://x.girigirilove.com/p?u=https://girigirilove.com.cn/z https://other-girigirilove.com"},
+      "girigirilove.com", "girigirilove.xyz")["a"] == "https://x.girigirilove.xyz/p?u=https://girigirilove.com.cn/z https://other-girigirilove.com")
 sys.exit(1 if bad else 0)
