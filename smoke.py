@@ -1,6 +1,6 @@
 """冒烟测试：真正请求站点，验证「搜得到 → 进得去详情页 → 剧集选择器有结果」。
 
-注意：只能验证到剧集列表，验证不了播放（播放需要 Animeko 的网页加载）。
+只验证到剧集列表；能不能播放由 playcheck.py 用无头浏览器另行检测。
 GitHub Actions 的服务器在海外，部分国内站点可能访问不了，
 这种情况会标成 unreachable（不是配置错误），默认不会被剔除。
 """
@@ -40,13 +40,23 @@ def eval_simple_jsonpath(data, path):
     return [i for i in items if i is not None]
 
 
-def _search_subjects(sc, keyword, session, timeout):
+def _host(url):
+    return re.sub(r"^(www|m)\.", "", (urlparse(url).netloc or "").lower())
+
+
+def _search_subjects(sc, keyword, session, timeout, ctx=None):
     """返回 (subjects[(name, url)], reason|None)；reason 非空表示没成功。"""
+    ctx = ctx if ctx is not None else {}
     url = sc["searchUrl"].replace("{keyword}", quote(keyword))
+    ctx["search_url"] = url
     try:
         r = _get(url, session, timeout)
     except requests.RequestException as e:
         return [], ("unreachable", "请求失败：%s" % type(e).__name__)
+    ctx["search_html"], ctx["search_final_url"] = r.text, r.url
+    if r.history and _host(r.url) != _host(url):
+        p = urlparse(r.url)
+        ctx["final_origin"] = "%s://%s" % (p.scheme, p.netloc)
     if r.status_code != 200:
         return [], ("blocked" if r.status_code in (403, 429, 503) else "fail", "HTTP %d" % r.status_code)
     fmt = sc.get("subjectFormatId")
@@ -78,27 +88,65 @@ def _search_subjects(sc, keyword, session, timeout):
     return subs, None
 
 
-def check_source(source, keyword="葬送的芙莉莲", timeout=15, session=None):
-    """返回 dict(status, reason, template)。status: ok / fail / blocked / unreachable / skipped"""
+def _text_or_title(e):
+    return e.get_text(" ", strip=True) or (e.get("title") or "").strip()
+
+
+def extract_episodes(sc, html, base_url):
+    """按源的章节配置从详情页取剧集 [(名称, 链接)]。支持 no-channel 和 index-grouped。"""
+    soup = BeautifulSoup(html, "lxml")
+    out, seen = [], set()
+
+    def add(el, link_sel):
+        link = (el.select_one(link_sel) if link_sel else el)
+        href = (link.get("href") or "").strip() if link is not None else ""
+        if not href or href.startswith(("javascript", "#")):
+            return
+        url = urljoin(base_url, href)
+        if url not in seen:
+            seen.add(url)
+            out.append((_text_or_title(el), url))
+
+    if sc.get("channelFormatId") == "index-grouped":
+        fl = sc.get("selectorChannelFormatFlattened") or {}
+        if not fl.get("selectEpisodeLists"):
+            return out
+        for lst in soup.select(fl["selectEpisodeLists"]):
+            for el in lst.select(fl.get("selectEpisodesFromList") or "a"):
+                add(el, fl.get("selectEpisodeLinksFromList"))
+    else:
+        nc = sc.get("selectorChannelFormatNoChannel") or {}
+        if nc.get("selectEpisodes"):
+            for el in soup.select(nc["selectEpisodes"]):
+                add(el, nc.get("selectEpisodeLinks"))
+    return out
+
+
+def check_source(source, keyword="葬送的芙莉莲", timeout=15, session=None, ctx=None):
+    """返回 dict(status, reason, ...)。status: ok / fail / blocked / unreachable / skipped。
+
+    ok 时附带 episode_count / episode_url（第一集链接，供播放检测用）；
+    搜索请求被跳转到别的域名且之后一切正常时附带 final_origin。
+    ctx（可选）会被填入页面内容，供 repair.py 使用。"""
     session = session or requests.Session()
+    ctx = ctx if ctx is not None else {}
     a = source["arguments"]
     sc = a.get("searchConfig", {})
     if source.get("factoryId") != "web-selector" or "searchUrl" not in sc:
         return {"status": "skipped", "reason": "手写配置，不做自动检测"}
-    subs, bad = _search_subjects(sc, keyword, session, timeout)
+    subs, bad = _search_subjects(sc, keyword, session, timeout, ctx)
+    ctx["subs"] = subs
     if bad:
         return {"status": bad[0], "reason": bad[1]}
     if not subs:
-        return {"status": "fail", "reason": "搜索页能打开，但选择器没有选中任何结果"}
+        return {"status": "fail", "reason": "搜索页能打开，但选择器没有选中任何结果", "stage": "search"}
     pick = next((s for s in subs if keyword[:3] in s[0]), subs[0])
-    nc = sc.get("selectorChannelFormatNoChannel") or {}
-    sel = nc.get("selectEpisodes")
-    if not sel:
-        return {"status": "skipped", "reason": "非 no-channel 章节格式，只验证了搜索"}
+    if not (sc.get("selectorChannelFormatNoChannel") or {}).get("selectEpisodes") \
+            and not (sc.get("selectorChannelFormatFlattened") or {}).get("selectEpisodeLists"):
+        return {"status": "skipped", "reason": "没有章节选择器，只验证了搜索"}
     jp = sc.get("selectorSubjectFormatJsonPathIndexed")
     # 条目链接模板不确定时，依次尝试几种写法
     variants = [None]
-    chosen = None
     if jp and source.get("_template_guess"):
         base = jp["linkTemplate"].rsplit("/", 1)[0]
         variants = [base + "/{value}.html", base + "/{value}", base + "/{value}/"]
@@ -110,6 +158,7 @@ def check_source(source, keyword="葬送的芙莉莲", timeout=15, session=None)
             if id_val is None:
                 break
             url = urljoin(sc["searchUrl"], tpl.replace("{value}", str(id_val)))
+        ctx["detail_url"] = url
         try:
             r = _get(url, session, timeout)
         except requests.RequestException as e:
@@ -120,14 +169,19 @@ def check_source(source, keyword="葬送的芙莉莲", timeout=15, session=None)
             continue
         if _blocked(r.text):
             return {"status": "blocked", "reason": "详情页出现验证码/环境检查"}
-        eps = BeautifulSoup(r.text, "lxml").select(sel)
+        ctx["detail_html"] = r.text
+        eps = extract_episodes(sc, r.text, r.url)
         if eps:
-            res = {"status": "ok", "reason": "搜到 %d 个条目，详情页选出 %d 个剧集链接" % (len(subs), len(eps))}
+            res = {"status": "ok", "reason": "搜到 %d 个条目，详情页选出 %d 个剧集链接" % (len(subs), len(eps)),
+                   "episode_count": len(eps), "episode_url": eps[0][1]}
             if tpl:
                 res["template"] = tpl
+            if ctx.get("final_origin"):
+                res["final_origin"] = ctx["final_origin"]
             return res
         last = "详情页选择器没有选中剧集（%s）" % url
-    return {"status": "fail", "reason": last or "详情页没有找到剧集"}
+        ctx["stage"] = "episodes"
+    return {"status": "fail", "reason": last or "详情页没有找到剧集", "stage": "episodes"}
 
 
 def _extract_id(sc, keyword, session, timeout, name):

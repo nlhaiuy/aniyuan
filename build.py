@@ -29,6 +29,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from anx2animeko import convert_anx, site_host, source_id  # noqa: E402
 from convert import convert_rule  # noqa: E402
 from ebjs import convert_extension  # noqa: E402
+from repair import brittle, mine_presets, repair_source  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -102,6 +103,91 @@ def parse_iso(s):
 
 
 # ---------------------------------------------------------------- 收集候选
+def rewrite_origin(source, old_origin, new_origin):
+    """搜索被跳转到新域名、且之后一切正常时，把源里的旧域名整体换成新域名。"""
+    from urllib.parse import urlparse
+    old, new = urlparse(old_origin).netloc, urlparse(new_origin).netloc
+    text = json.dumps(source, ensure_ascii=False).replace("://" + old, "://" + new)
+    return json.loads(text)
+
+
+def probe(c, keyword, session, presets, config):
+    """联网检测一个候选：必要时自动修复选择器、跟随域名跳转。结果写进 c["smoke"]。"""
+    from smoke import HEADERS, _blocked, check_source
+    ctx = {}
+    r = check_source(c["source"], keyword, session=session, ctx=ctx)
+
+    def fetch(url):
+        try:
+            resp = session.get(url, headers=HEADERS, timeout=15)
+            return resp.text if resp.status_code == 200 and not _blocked(resp.text) else None
+        except Exception:
+            return None
+
+    def try_repair(which, require_not_fewer=None):
+        new, why = repair_source(c["source"], ctx, keyword, presets, fetch, which)
+        if not new:
+            return False, why
+        if ctx.get("detail_url_repaired"):
+            new["_probe_detail_url"] = ctx["detail_url_repaired"]
+        ctx2 = {}
+        r2 = check_source(new, keyword, session=session, ctx=ctx2)
+        if r2["status"] != "ok":
+            return False, "修复后的选择器仍未通过：" + r2["reason"]
+        if require_not_fewer is not None and r2.get("episode_count", 0) < require_not_fewer:
+            return False, "替换后剧集数更少，保留原配置"
+        new.pop("_probe_detail_url", None)
+        new["arguments"]["description"] = "[选择器已自动修复] " + new["arguments"].get("description", "")
+        c["source"] = new
+        c["notes"].append("已自动修复选择器：" + why)
+        ctx.clear()
+        ctx.update(ctx2)
+        r2["repaired"] = why
+        return True, r2
+
+    if c["source"].get("factoryId") == "web-selector" and config.get("repair", True):
+        if r["status"] == "fail" and r.get("stage") in ("search", "episodes"):
+            ok, res = try_repair("both" if r["stage"] == "search" else "episodes")
+            if ok:
+                r = res
+            else:
+                r["reason"] += "（自动修复也失败：%s）" % res
+        elif r["status"] == "ok" and config.get("replace_brittle", True) and brittle(c["source"]):
+            ok, res = try_repair("both", require_not_fewer=r.get("episode_count", 0))
+            if ok:
+                r = res
+    fo = r.get("final_origin")
+    if fo and r["status"] == "ok" and config.get("follow_redirects", True):
+        from urllib.parse import urlparse
+        sc = c["source"]["arguments"]["searchConfig"]
+        old = "%s://%s" % (urlparse(sc["searchUrl"]).scheme, urlparse(sc["searchUrl"]).netloc)
+        c["source"] = rewrite_origin(c["source"], old, fo)
+        c["notes"].append("域名已跳转，改用新域名 %s（原 %s）" % (fo, old))
+    c["smoke"] = r
+
+
+def run_playchecks(cands, config):
+    """对检测通过的候选逐个做无头浏览器播放检测（耗时，约 20~30 秒一个）。"""
+    todo = [c for c in cands if (c.get("smoke") or {}).get("status") == "ok" and c["smoke"].get("episode_url")]
+    todo = todo[: config.get("play_check_max", 80)]
+    if not todo:
+        return
+    try:
+        from playcheck import PlayChecker
+        pc = PlayChecker()
+    except Exception as e:  # 没装浏览器就跳过，不影响其它流程
+        print("播放检测跳过：%s" % e, file=sys.stderr)
+        return
+    try:
+        for c in todo:
+            try:
+                c["smoke"].update(pc.check(c["source"], c["smoke"]["episode_url"], config.get("play_wait_ms", 20000)))
+            except Exception as e:
+                c["smoke"].update({"play": "error", "play_reason": "检测出错：%s" % type(e).__name__})
+    finally:
+        pc.close()
+
+
 def collect_kazumi(repo, config, overrides_dir):
     out = []
     index = load_json(os.path.join(repo, "index.json"))
@@ -224,7 +310,13 @@ def merge(cands, config):
         rank = {"kazumi": 2, "easybangumi": 1}   # 时间相同：Kazumi > 纯纯看番 > AniBaka
         smoke_of = lambda c: (c.get("smoke") or {}).get("status")  # noqa: E731
         # 实测优先：检测通过 > 没测出结论（无法访问/验证码/跳过） > 明确失败；同档内再比修改时间
-        tier = lambda c: ({"ok": 2, "fail": 0}.get(smoke_of(c), 1) if by_smoke else 1)  # noqa: E731
+        def tier(c):
+            if not by_smoke:
+                return 1
+            sm = c.get("smoke") or {}
+            if sm.get("status") == "ok":   # 播放检测过的：能播 > 没检测 > 没抓到 > 地址认不出
+                return {"ok": 3, "error": 2, "none": 1.8, "blocked": 1.6, "mismatch": 1.5}.get(sm.get("play"), 2)
+            return 0 if sm.get("status") == "fail" else 1
         members.sort(key=lambda c: (tier(c), c["date"] or 0, rank.get(c["origin"], 0)), reverse=True)
         by_date = sorted(members, key=lambda c: (c["date"] or 0, rank.get(c["origin"], 0)), reverse=True)[0]
         winner, reason = members[0], "更新（%s）" % fmt_date(members[0]["date"])
@@ -261,6 +353,7 @@ def main():
     ap.add_argument("--state", default=os.path.join(HERE, "state", "seen.json"),
                     help="记录各规则内容哈希和“最后真正改动时间”的文件")
     ap.add_argument("--smoke", action="store_true")
+    ap.add_argument("--playcheck", action="store_true", help="在 --smoke 之后再用无头浏览器检测能否播放（需要 playwright）")
     args = ap.parse_args()
     if not (args.kazumi or args.anibaka or args.easybangumi):
         ap.error("至少给一个 --kazumi / --anibaka / --easybangumi")
@@ -287,16 +380,18 @@ def main():
 
     if args.smoke:
         import requests
-        from smoke import check_source
         session = requests.Session()
+        presets = mine_presets(args.anibaka)
         for c in cands:
             if c["source"] is None:
                 continue
-            r = check_source(c["source"], config.get("smoke_keyword", "葬送的芙莉莲"), session=session)
-            c["smoke"] = r
+            probe(c, config.get("smoke_keyword", "葬送的芙莉莲"), session, presets, config)
+            r = c["smoke"]
             if r.get("template"):
                 c["source"]["arguments"]["searchConfig"]["selectorSubjectFormatJsonPathIndexed"]["linkTemplate"] = r["template"]
             time.sleep(1)
+        if args.playcheck:
+            run_playchecks(cands, config)
 
     chosen, decisions = merge(cands, config)
 
@@ -325,13 +420,14 @@ def main():
            "## 同站点取舍", "", "| 站点 | 最终 id | 采用 | 理由 | 候选（最后修改） |", "|---|---|---|---|---|"]
     for d in decisions:
         rep.append("| %s | %s | %s | %s | %s |" % (d["site"], d["id"], d["winner"], d["reason"], "<br>".join(d["members"])))
-    rep += ["", "## 全部候选", "", "| 来源 | 规则 | 版本 | 修改日期（依据） | 转换 | 自动检测 | 采用 | 备注 |", "|---|---|---|---|---|---|---|---|"]
+    rep += ["", "## 全部候选", "", "| 来源 | 规则 | 版本 | 修改日期（依据） | 转换 | 自动检测 | 播放 | 采用 | 备注 |", "|---|---|---|---|---|---|---|---|---|"]
     for c in cands:
         sm = c.get("smoke") or {}
-        remark = "；".join(c["notes"] + ([sm["reason"]] if sm.get("reason") and sm.get("status") != "ok" else []))
-        rep.append("| %s | %s | %s | %s | %s | %s | %s | %s |" % (
+        remark = "；".join(c["notes"] + ([sm["reason"]] if sm.get("reason") and sm.get("status") != "ok" else [])
+                           + ([sm["play_reason"]] if sm.get("play") not in (None, "ok") else []))
+        rep.append("| %s | %s | %s | %s | %s | %s | %s | %s | %s |" % (
             c["origin"], c["key"], c["version"], fmt_date(c["date"]) + ("（%s）" % c["date_basis"] if c.get("date_basis") else ""), label.get(c["status"], c["status"]),
-            sm.get("status", "-") + ("（已剔除）" if c.get("dropped") else ""),
+            sm.get("status", "-") + ("（已剔除）" if c.get("dropped") else ""), sm.get("play", "-"),
             "是" if c.get("chosen") else "否", remark.replace("|", "/")))
     with open(os.path.join(args.out, "report.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(rep) + "\n")

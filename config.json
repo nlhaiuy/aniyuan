@@ -15,5 +15,11 @@
   ],
   "exclude_easybangumi": [],
   "_easybangumi说明": "easybangumi_channels：release=社区仓库 extensions/（作者真机验证过），dev=dev-extensions/（未验证，约 70 个，默认不收，要的话改成 [\"release\",\"dev\"]）；exclude_easybangumi：不收录的文件名（不带 .js）。",
-  "select_by_smoke": true
+  "select_by_smoke": true,
+  "repair": true,
+  "replace_brittle": true,
+  "follow_redirects": true,
+  "play_check_max": 80,
+  "play_wait_ms": 20000,
+  "_说明3": "repair：选择器检测失败时，按真实页面自动重选；replace_brittle：位置式写法能用时，若更稳的写法也通过且剧集数不少于原来就替换；follow_redirects：搜索被跳转到新域名且检测通过时自动换域名；play_check_max/play_wait_ms：播放检测的数量上限、每个等待的毫秒数。"
 }

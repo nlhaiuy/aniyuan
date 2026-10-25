@@ -22,7 +22,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
 
@@ -32,6 +32,9 @@ jobs:
           cache: pip
 
       - run: pip install -r requirements.txt
+
+      - name: 安装无头浏览器（播放检测用）
+        run: playwright install --with-deps chromium
 
       - name: 拉取最新的 KazumiRules、AniBakaRule 和纯纯看番社区源（完整历史，用来取每个规则的最后修改时间）
         run: |
@@ -43,10 +46,11 @@ jobs:
         run: |
           KAZUMI_RULES="$RUNNER_TEMP/KazumiRules" python tests/test_xpath2css.py
           python tests/test_anx.py
+          python tests/test_live.py
           python tests/test_pipeline.py
 
       - name: 转换并做联网冒烟测试
-        run: python build.py --kazumi "$RUNNER_TEMP/KazumiRules" --anibaka "$RUNNER_TEMP/AniBakaRule" --easybangumi "$RUNNER_TEMP/EasyBangumi" --out dist.new --smoke
+        run: python build.py --kazumi "$RUNNER_TEMP/KazumiRules" --anibaka "$RUNNER_TEMP/AniBakaRule" --easybangumi "$RUNNER_TEMP/EasyBangumi" --out dist.new --smoke --playcheck
 
       - name: 安全检查（避免上游异常时把订阅清空）
         run: |

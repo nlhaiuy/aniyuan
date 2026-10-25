@@ -30,7 +30,7 @@
 同一个站点在多个来源里都有时，只留一个：
 
 1. **分组**：按站点主机名分组（去掉 `www.` / `m.`；JSON 接口源按图标域名）。
-2. **实测优先**（开启联网检测时）：检测通过 > 没有结论（无法访问 / 验证码 / 跳过） > 明确失败。最新的那个明确失败而旧的通过，就用旧的，并在报告里写明原因。可用 `select_by_smoke: false` 关闭。
+2. **实测优先**（开启联网检测时）：能播放 > 检测通过 > 没有结论（无法访问 / 验证码 / 跳过） > 明确失败。最新的那个明确失败而旧的通过，就用旧的，并在报告里写明原因。可用 `select_by_smoke: false` 关闭。
 3. **取新**：同一档里取规则**最后真正改动的时间**更新的那个，**不比版本号**。时间相同时优先级为 Kazumi > 纯纯看番 > AniBaka。
 4. **id 固定**：站点在 AniBaka 里有，id 为 `anibaka-<key>`（与旧订阅一致），否则为 `kazumi-<名字>`。谁胜出都不改 id，Animeko 里已有的启用状态不会丢。
 5. **回退**：AniBaka 规则转不了、或搜索地址只能靠推测时，使用 `baseline/anibaka.json` 里同 id 的现成配置（基线日期取该 AniBaka 规则的日期）。基线里也没有的，在报告里列为“已跳过”。
@@ -45,6 +45,18 @@ git 提交日期会被“发布 / 整理”提交带偏（例如社区仓库一�
 
 `state/seen.json` 由工作流自动提交，不要手动删（删了会退回 git 日期）。
 
+## 联网检测（`--smoke`、`--playcheck`）
+
+每次同步会真的去请求站点，对**每个候选**依次做：
+
+1. **冒烟测试**：用关键词搜索 → 进详情页 → 检查剧集选择器（`no-channel` 和 `index-grouped` 都支持）。
+2. **自动修复选择器**：检测失败时，直接看真实页面重选。用“常见模板的容器 × 常见详情页路径”去试，挑命中最多最精确的；再在详情页上挑剧集最多的播放列表。候选库 = 内置 + 从 AniBaka 规则里挖出来的（人工维护过）。修复后必须**重新通过检测**才会采用，描述前会加 `[选择器已自动修复]`。
+3. **替换脆弱写法**：位置式选择器（多个 `:nth-of-type`）还能用时，如果更稳的写法也通过、且剧集数不少于原来，就替换。
+4. **跟随域名跳转**：搜索被跳转到新域名、且之后一切正常，就把源里的旧域名整体换成新域名。
+5. **播放检测**：用无头浏览器（Chromium）打开第一集的播放页，监听页面和 iframe 的请求、`<video>` 元素，用**这个源自己的 `matchVideoUrl`** 去匹配。结果：`ok` 能播且正则认得出；`mismatch` 视频地址出现了但正则认不出（配置要改）；`none` 没抓到（可能要点击/登录，不一定坏）；`blocked` 验证码；`error`。
+
+这些结果直接参与“同站取舍”：能播 > 没检测 > 没抓到 > 认不出 > 没结论 > 明确失败。
+
 ## 转换范围
 
 | 来源 | 能转 | 转不了（报告里会列出） |
@@ -57,10 +69,10 @@ git 提交日期会被“发布 / 整理”提交带偏（例如社区仓库一�
 
 ## 重要限制
 
-- **只验证“搜得到、有剧集列表”，验证不了能不能播放**，播放要在 Animeko 里实际试。
+- 播放检测用的是无头浏览器，不等于 Animeko 的 WebView：有的站需要点击、登录、特定 UA 才出视频，会显示 `none`，不代表一定不能播；`ok` 也只代表抓到了视频地址，最终仍请在 Animeko 里试播。
 - 播放一律用 Animeko 的 WebView 嗅探。AniBaka 里靠站内解密/接口取直链的（silisili、lm6、dm84 等）可能拿不到视频，报告里会标“有近似”。
 - Kazumi / 纯纯看番的规则没有线路名，转出来的源所有线路合并为一条。
-- 冒烟测试在 GitHub 海外服务器上跑，访问不了的国内站标 `unreachable`，不代表配置错误；有验证码的标 `blocked`。检测未通过的**只标记不剔除**：在描述前加 `[自动检测未通过：原因]`。
+- 检测在 GitHub 海外服务器上跑，访问不了的国内站标 `unreachable`（没有结论，不会被降级也不会被修复），不代表配置错误；有验证码的标 `blocked`。检测未通过的**只标记不剔除**：在描述前加 `[自动检测未通过：原因]`。
 - `overrides/` 手写配置不会跟着上游更新，上游版本变了报告里会提醒核对。
 - 首次运行没有哈希记录，日期仍用 git 日期（社区仓库的日期可能偏新），之后才会按内容变化校正；遇到取新取错的站用 `prefer` 指定。
 
@@ -77,6 +89,8 @@ git 提交日期会被“发布 / 整理”提交带偏（例如社区仓库一�
 | `prefer_baseline` | 这些 AniBaka key 直接用 `baseline/anibaka.json` 的配置 |
 | `site_aliases` | `{"主机名": "规范主机名"}`，手动并站 |
 | `default_tier` / `tiers` | 数据源优先级（0 最高，4 最低）；`tiers` 按规则名/key 单独设置 |
+| `repair` / `replace_brittle` / `follow_redirects` | 默认都是 `true`：自动修复失效选择器 / 替换脆弱的位置式写法 / 跟随域名跳转 |
+| `play_check_max` / `play_wait_ms` | 播放检测的数量上限（默认 80）/ 每个最多等待毫秒数（默认 20000） |
 | `drop_failed` | `true`：把“搜得到页面但选择器没选中结果”的源剔除（验证码/无法访问的不剔除） |
 | `smoke_keyword` | 冒烟测试用的搜索关键词 |
 
@@ -89,7 +103,8 @@ pip install -r requirements.txt
 git clone https://github.com/Predidit/KazumiRules.git ../KazumiRules
 git clone https://github.com/AniBakaBaka/AniBakaRule.git ../AniBakaRule
 git clone https://github.com/easybangumiorg/CommunityJsExtensionEasyBangumi.git ../EasyBangumi
-python build.py --kazumi ../KazumiRules --anibaka ../AniBakaRule --easybangumi ../EasyBangumi --out dist --smoke
+playwright install chromium   # 只在需要播放检测时
+python build.py --kazumi ../KazumiRules --anibaka ../AniBakaRule --easybangumi ../EasyBangumi --out dist --smoke --playcheck
 ```
 
 要用完整 git 历史（不要 `--depth 1`），否则取不到每个规则文件的最后修改时间。三个来源参数都可以省略。
@@ -100,6 +115,7 @@ python build.py --kazumi ../KazumiRules --anibaka ../AniBakaRule --easybangumi .
 python tests/test_xpath2css.py   # XPath → CSS 翻译器
 python tests/test_anx.py         # AniBaka / 纯纯看番转换 + 同站取新
 python tests/test_pipeline.py    # 整条流水线（本地模拟站点）
+python tests/test_live.py        # 自动修复 / 域名跳转 / 播放检测（本地模拟站点 + Chromium）
 ```
 
 ## 文件
@@ -111,6 +127,8 @@ python tests/test_pipeline.py    # 整条流水线（本地模拟站点）
 | `anx2animeko.py` | AniBaka 规则转换 |
 | `ebjs.py` | 纯纯看番 JS 源转换 |
 | `smoke.py` | 联网冒烟测试 |
+| `repair.py` | 选择器自动修复 |
+| `playcheck.py` | 无头浏览器播放检测 |
 | `state/seen.json` | 各规则文件内容哈希和最后改动时间（自动维护） |
 | `baseline/anibaka.json` | AniBaka 规则转不了时的回退配置 |
 | `overrides/` | 手写的 Kazumi 规则配置 |
