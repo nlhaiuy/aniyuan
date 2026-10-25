@@ -2,10 +2,11 @@
   "decisions": [
     {
       "site": "2kdm.com",
-      "winner": "anibaka:2kdm",
+      "winner": "kazumi:mutefun",
       "id": "anibaka-2kdm",
-      "reason": "只有这一个来源",
+      "reason": "更新（2026-10-15）",
       "members": [
+        "kazumi:mutefun(2026-10-15)",
         "anibaka:2kdm(2026-09-30)"
       ]
     },
@@ -51,10 +52,11 @@
     },
     {
       "site": "ani.girigirilove.com",
-      "winner": "kazumi:giriGiriLove",
+      "winner": "manual:anibaka-girigirilove",
       "id": "anibaka-girigirilove",
-      "reason": "更新（2026-10-22）",
+      "reason": "manual/ 里手动维护的源，优先于自动转换",
       "members": [
+        "manual:anibaka-girigirilove(2026-10-25)",
         "kazumi:giriGiriLove(2026-10-22)",
         "anibaka:girigirilove(2026-09-30)"
       ]
@@ -88,7 +90,7 @@
       ]
     },
     {
-      "site": "bmmdmm.com",
+      "site": "baimaodm.com",
       "winner": "easybangumi:kazumi-baimao",
       "id": "kazumi-baimao",
       "reason": "更新（2026-10-20）",
@@ -239,15 +241,6 @@
       ]
     },
     {
-      "site": "mutedm.com",
-      "winner": "kazumi:mutefun",
-      "id": "kazumi-mutefun",
-      "reason": "只有这一个来源",
-      "members": [
-        "kazumi:mutefun(2026-10-15)"
-      ]
-    },
-    {
       "site": "next.xifanacg.com",
       "winner": "kazumi:xfdmnext",
       "id": "kazumi-xfdmnext",
@@ -329,15 +322,6 @@
       "date": 1786362131,
       "raw_hash": "43228a94fcae885185b7f29977a764d520bf6650d283f4abec428f8bc03344c3",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 20 个剧集链接",
-        "episode_count": 20,
-        "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=173c79042ab6b41dba315966b686bad3&dis_t=1792956178"
-      },
       "site": "7sefun.top"
     },
     {
@@ -353,14 +337,6 @@
       "date": 1787289623,
       "raw_hash": "4fe917a871f7e89af5ef7ceaa65df29150f245bae157a2112456a042e62e1e31",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 4 个条目，详情页选出 10 个剧集链接",
-        "episode_count": 10,
-        "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
-        "play": "none",
-        "play_reason": "等了 20 秒没有出现视频地址"
-      },
       "site": "moonci.com"
     },
     {
@@ -376,10 +352,6 @@
       "date": 1758092260,
       "raw_hash": "a38a6662dcf542b50d0fe5d7d26c44594ab73042d8574ad9a067548a6b457076",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "agedm.io"
     },
     {
@@ -387,9 +359,7 @@
       "key": "akianime",
       "version": "1.4",
       "status": "ok",
-      "notes": [
-        "已自动修复选择器：搜索选择器改为 a[href*='/bgmdetail/']（命中 2/2）；剧集选择器改为 .anthology-list-box a（84 集）"
-      ],
+      "notes": [],
       "info": [
         "Kazumi 规则没有线路名，所有线路合并为一条"
       ],
@@ -397,16 +367,6 @@
       "date": 1786942825,
       "raw_hash": "1c6f89f777b7434e2623d8e1e32d52a7668efab5b9512423084178f379cfeb11",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 84 个剧集链接",
-        "episode_count": 84,
-        "episode_url": "https://www.akianime.cc/bgmplay/dPDDDE-5-1.html",
-        "repaired": "搜索选择器改为 a[href*='/bgmdetail/']（命中 2/2）；剧集选择器改为 .anthology-list-box a（84 集）",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://hcyykj-eos-hhht5-01.eos.huhehaote-8.cmecloud.cn/8d445ce3e7934067863bac5949db46be086?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27%25E7%25AC%25AC01%25E9%259B%2586.mp4&X"
-      },
       "site": "akianime.cc"
     },
     {
@@ -414,9 +374,7 @@
       "key": "baimao",
       "version": "1.0",
       "status": "ok",
-      "notes": [
-        "域名已跳转，改用新域名 https://www.bmmdmm.com（原 https://www.baimaodm.com）"
-      ],
+      "notes": [],
       "info": [
         "Kazumi 规则没有线路名，所有线路合并为一条"
       ],
@@ -424,17 +382,7 @@
       "date": 1769573721,
       "raw_hash": "785dd7c120634096470119f2b9bf7e3832ef09a2a4165d2f847b0956a16f9032",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 168 个剧集链接",
-        "episode_count": 168,
-        "episode_url": "https://www.bmmdmm.com/play/400602-0-0.html",
-        "final_origin": "https://www.bmmdmm.com",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://www.bmmdmm.com/hdst/player/artplayer/index.html?url=https://v.cdnlz14.com/20230930/29887_2e6cf8c7/index.m3u8"
-      },
-      "site": "bmmdmm.com"
+      "site": "baimaodm.com"
     },
     {
       "origin": "kazumi",
@@ -449,10 +397,6 @@
       "date": 1792049112,
       "raw_hash": "e89dfff73e057302a2d7b510c7335f0eacab9f0d4e31a1ad51fe27035ba87ace",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "sbdl.cc",
       "chosen": true
     },
@@ -469,15 +413,6 @@
       "date": 1770015787,
       "raw_hash": "4fed81571de82cc91fe23ce0034da9641cc64e91e2e8c432ddb2444f3419813c",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 30 个剧集链接",
-        "episode_count": 30,
-        "episode_url": "https://dmbus.cc/p/5963-2-1.html",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://hhjx.hhplayer.com/playlist/8298df34c8e87d6dc0af170f24ea0812cda7f688524f9df3.m3u8?expires=1793022439&sign=33b5a8bfb924a9a0faf04702b07bf50813f55ec8c75e8b08d977076c8c97b66f"
-      },
       "site": "dmbus.cc"
     },
     {
@@ -493,14 +428,6 @@
       "date": 1786883419,
       "raw_hash": "a6b0aace9a11d6c6fd41279922195a3334ce279a896b1295a9e7a1ebfebe1fd9",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 1 个条目，详情页选出 38 个剧集链接",
-        "episode_count": 38,
-        "episode_url": "https://www.ezdmw.org/Index/video/98397.html",
-        "play": "none",
-        "play_reason": "等了 20 秒没有出现视频地址"
-      },
       "site": "ezdmw.org"
     },
     {
@@ -516,13 +443,7 @@
       "date": 1792645277,
       "raw_hash": "a3321917a3531f53e310ef55e0e4be0a34f9e3a3204f0aac239204b21a9a51a3",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "fail",
-        "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
-        "stage": "search"
-      },
-      "site": "ani.girigirilove.com",
-      "chosen": true
+      "site": "ani.girigirilove.com"
     },
     {
       "origin": "kazumi",
@@ -537,15 +458,6 @@
       "date": 1792049112,
       "raw_hash": "b4a8f9cb1799da0c872ef16dbd3cbf8b929dfdb6f11a87a06d24cf8610262866",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 20 个剧集链接",
-        "episode_count": 20,
-        "episode_url": "https://www.lmm85.com/play/7817_1_1.html",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=173c79042ab6b41dba315966b686bad3&dis_t=1792956178"
-      },
       "site": "lmm85.com",
       "chosen": true
     },
@@ -563,16 +475,6 @@
       "date": 1792059072,
       "raw_hash": "d05577fa17b4ec0c2bb625c5c37596eaca2aebaf1563b5d70bab2546b80a7c9b",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 50 个剧集链接",
-        "episode_count": 50,
-        "episode_url": "https://www.mgnacg.com/bangumi/1545-2-1/",
-        "template": "/media/{value}.html",
-        "play": "ok",
-        "play_reason": "scanDomMediaUrls 能从 <video> 取到地址",
-        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=0d065x2TIppAXvXsflXoboUC7esm5EgcUik4tQ0dSuk=:1792960901"
-      },
       "site": "mgnacg.com",
       "chosen": true
     },
@@ -589,15 +491,6 @@
       "date": 1792401354,
       "raw_hash": "ad6e0086a7b17c10990a1fa05f42e756e0f17c8612c5fbd34b6b6346320768bf",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 30 个剧集链接",
-        "episode_count": 30,
-        "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=CVI1f50-dLVMfeEMIWG1AlKqFt2Yp9sqDglmiXdAWcQ%3D%3A1792972800"
-      },
       "site": "moonci.com",
       "chosen": true
     },
@@ -606,9 +499,7 @@
       "key": "mutefun",
       "version": "1.4",
       "status": "ok",
-      "notes": [
-        "域名已跳转，改用新域名 https://www.mutedm.com（原 https://www.2kdm.com）"
-      ],
+      "notes": [],
       "info": [
         "规则没有 sourceTemplate，条目链接按 /voddetail/{value}.html 猜测，冒烟测试会尝试其他写法",
         "Kazumi 规则没有线路名，所有线路合并为一条"
@@ -617,18 +508,7 @@
       "date": 1792059072,
       "raw_hash": "2d5c68c7ce80c91af3593663158655e8499897011741cdd99f76f8050676a025",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 20 个剧集链接",
-        "episode_count": 20,
-        "episode_url": "https://www.mutedm.com/vodplay/2989-2-1.html",
-        "template": "/voddetail/{value}.html",
-        "final_origin": "https://www.mutedm.com",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://3ee59f732c9ba3662a3f6c18b60061d3.r2.cloudflarestorage.com/asia/2026/2026%E5%B9%B41%E6%9C%88/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2_%E7%AC%AC%E4%BA%8C%E5%AD%A3/%E8%91%AC%E9%80%8"
-      },
-      "site": "mutedm.com",
+      "site": "2kdm.com",
       "chosen": true
     },
     {
@@ -644,15 +524,6 @@
       "date": 1790853597,
       "raw_hash": "61d0e4d505828125fadba4ef4b6cca6196d1dd8e2ef870b37817a885a2d4c4f7",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 40 个剧集链接",
-        "episode_count": 40,
-        "episode_url": "https://www.dcc3.com/play/18338-1-1/",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://cdn.vvvip-plays33.cc/20260116/4703_ac4395ad/index.m3u8"
-      },
       "site": "dcc3.com"
     },
     {
@@ -668,10 +539,6 @@
       "date": 1783910492,
       "raw_hash": "6a07fd92f0262e48365996e0c6e21c5b246ff24024a22e0a6826e24a6b4e82cd",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "skipped",
-        "reason": "手写配置，不做自动检测"
-      },
       "site": "sorani.net"
     },
     {
@@ -687,15 +554,6 @@
       "date": 1772964002,
       "raw_hash": "fa84edbaba7024fb60abe70a754201e05faec9f69e6b8aef86fb5b47bc24e0c0",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 56 个剧集链接",
-        "episode_count": 56,
-        "episode_url": "https://dm1.xfdm.pro/watch/44/1/1.html",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://player.moedot.net/player/index.php?code=xfdm1&from=cf&url=https://play.xfvod.pro:8088/Z/Z-%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2/S1/01.mp4"
-      },
       "site": "dm1.xfdm.pro",
       "chosen": true
     },
@@ -712,10 +570,6 @@
       "date": 1790868808,
       "raw_hash": "44aedb07ba77c822835f2f3e09fe18eeda82ee46cb3c69624fe39cca0db5c176",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "skipped",
-        "reason": "手写配置，不做自动检测"
-      },
       "site": "next.xifanacg.com",
       "chosen": true
     },
@@ -732,15 +586,6 @@
       "date": 1790775080,
       "raw_hash": "7e496a6ea600c063e0b36d17288699799ab00f26411476ba8171c9a949f02dbf",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 20 个剧集链接",
-        "episode_count": 20,
-        "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=173c79042ab6b41dba315966b686bad3&dis_t=1792956178"
-      },
       "site": "7sefun.top"
     },
     {
@@ -756,10 +601,6 @@
       "date": 1790775080,
       "raw_hash": "59f2dcfbe1efbbfac030c26efbb83fa3b48db3e515c74a58bcffa13cb9cd3c0b",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "cyfz.top",
       "chosen": true
     },
@@ -774,10 +615,6 @@
       "date": 1791361738,
       "raw_hash": "adc02908cb83a672b120e8607b32a2e2949bddabf38f3cd8737af07d25089b29",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "5dm.dev",
       "chosen": true
     },
@@ -794,10 +631,6 @@
       "date": 1791361738,
       "raw_hash": "9f769e503292b337fe328f86001df2b479c574bfae31b34878baacbd48ae26c4",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "blocked",
-        "reason": "搜索页出现验证码/环境检查"
-      },
       "site": "ani.pekolove.net",
       "chosen": true
     },
@@ -814,15 +647,6 @@
       "date": 1786032045,
       "raw_hash": "2cc3e54935af2adb97f2dea282c98112e05733198df597b472f39bee1160b343",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 20 个剧集链接",
-        "episode_count": 20,
-        "episode_url": "https://m.lm6.net/play/7817_1_1.html",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=173c79042ab6b41dba315966b686bad3&dis_t=1792956178"
-      },
       "site": "lm6.net",
       "chosen": true
     },
@@ -853,15 +677,6 @@
       "date": 1790775080,
       "raw_hash": "8d832887021dc064d00c89f19f31fcbfa760d6ad0cae56ea53c6d0fec3112e29",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 84 个剧集链接",
-        "episode_count": 84,
-        "episode_url": "https://www.akianime.cc/bgmplay/dPDDDE-5-1.html",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://hcyykj-eos-hhht5-01.eos.huhehaote-8.cmecloud.cn/8d445ce3e7934067863bac5949db46be086?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27%25E7%25AC%25AC01%25E9%259B%2586.mp4&X"
-      },
       "site": "akianime.cc",
       "chosen": true
     },
@@ -878,10 +693,6 @@
       "date": 1790775080,
       "raw_hash": "23c05c115a5b8bb93961435b8b172e6700041894c12e68aa50f9d510484cb450",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "animoe.org",
       "chosen": true
     },
@@ -914,15 +725,6 @@
       "date": 1790775080,
       "raw_hash": "c39a459c2cf31ea3278a6b875a3b5265c70897f01902884c60dab8080faad8ac",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 140 个剧集链接",
-        "episode_count": 140,
-        "episode_url": "https://ios.mifun.org/vodplay/17612-2-1/",
-        "play": "mismatch",
-        "play_reason": "页面出现了视频地址，但 matchVideoUrl 认不出来",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc3bubemaac7yagxva7fnss2dieiygqersa.f0.mp4?dis_k=3922db4b4dee647158df5d93b33f2a01&dis_t=1792957328"
-      },
       "site": "ios.mifun.org",
       "chosen": true
     },
@@ -939,10 +741,6 @@
       "date": 1784350043,
       "raw_hash": "a40f2a17b90fa9a473419e5276c72c7912eb3bac7f995a45e15ebdc4f35decba",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "blocked",
-        "reason": "搜索页出现验证码/环境检查"
-      },
       "site": "cn.agekkkk.com",
       "chosen": true
     },
@@ -959,10 +757,6 @@
       "date": 1790775080,
       "raw_hash": "8efbeb5b8a2b0ea28f52af6a1a0346e73cbcdc1bbd4a259471a09e3d7cc6742a",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "didahd.pro",
       "chosen": true
     },
@@ -977,10 +771,6 @@
       "date": 1791361738,
       "raw_hash": "9a6514966d5d1a0609f0a9df52d77e01aa81123c866a1a76076ee4185fc67aa7",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "anime7.top"
     },
     {
@@ -1010,11 +800,6 @@
       "date": 1790775080,
       "raw_hash": "5b83ff42c47145f3cb2c7c6ae8839e8b6a8cac35a4f61a681d84892e6b602b16",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "fail",
-        "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
-        "stage": "search"
-      },
       "site": "ani.girigirilove.com"
     },
     {
@@ -1060,10 +845,6 @@
       "date": 1790775080,
       "raw_hash": "92911fd4152f09a6843d9293b4e22382395985da43fc5f1443dbe74ed0e52524",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "agedm.io",
       "chosen": true
     },
@@ -1080,11 +861,6 @@
       "date": 1790779316,
       "raw_hash": "209e17e3c167d678ec654dba9ff5aea4a0a98d648c51d223948a2f14d4389d94",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "fail",
-        "reason": "详情页 HTTP 404（https://www.xgcartoon.com/detail/zangsongdefulilianzangsongzhefulilianriyu-shantianzhongren）（自动修复也失败：没有详情页内容可用来修复剧集选择器）",
-        "stage": "episodes"
-      },
       "site": "xgcartoon.com",
       "chosen": true
     },
@@ -1099,12 +875,7 @@
       "date": 1790775080,
       "raw_hash": "4f3d73fe6eab4c71ecc1db33017ccd8eec33278fba160f0b64c1e6cf0e0ceb30",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "blocked",
-        "reason": "搜索页出现验证码/环境检查"
-      },
-      "site": "2kdm.com",
-      "chosen": true
+      "site": "2kdm.com"
     },
     {
       "origin": "anibaka",
@@ -1117,10 +888,6 @@
       "date": 1790775080,
       "raw_hash": "a05ca213f6a8d3ae8794f9875240e9356c51c6751c8c3441ff3d1fb53a744fd4",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "fail",
-        "reason": "HTTP 404"
-      },
       "site": "gugu3.com",
       "chosen": true
     },
@@ -1185,15 +952,6 @@
       "date": 1789394769,
       "raw_hash": "0788c08fd443a7d8022bca850f3dc20f618f7b547ce8a65f6cb3b48892a766a1",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 4 个条目，详情页选出 30 个剧集链接",
-        "episode_count": 30,
-        "episode_url": "https://dmbus.cc/p/5963-2-1.html",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://hhjx.hhplayer.com/playlist/8298df34c8e87d6dc0af170f24ea0812cda7f688524f9df3.m3u8?expires=1793022439&sign=33b5a8bfb924a9a0faf04702b07bf50813f55ec8c75e8b08d977076c8c97b66f"
-      },
       "site": "dmbus.cc",
       "chosen": true
     },
@@ -1226,11 +984,6 @@
       "date": 1784350043,
       "raw_hash": "6d048ece8fa408f1343f4aa6b5d9495ebe9628d0ac245bb2ab4ca178ddc37182",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "fail",
-        "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
-        "stage": "search"
-      },
       "site": "mgnacg.com"
     },
     {
@@ -1244,15 +997,6 @@
       "date": 1790775080,
       "raw_hash": "f454f5dafce4ce26548f8d8bb7dfb1ea7bb246b0d02d965ce42f71c9200ee766",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 16 个条目，详情页选出 30 个剧集链接",
-        "episode_count": 30,
-        "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=CVI1f50-dLVMfeEMIWG1AlKqFt2Yp9sqDglmiXdAWcQ%3D%3A1792972800"
-      },
       "site": "moonci.com"
     },
     {
@@ -1268,11 +1012,6 @@
       "date": 1790775080,
       "raw_hash": "8b4539301276765751e51aa07750652d62728e57e025f70650e2ec0098a91ecb",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "fail",
-        "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
-        "stage": "search"
-      },
       "site": "silisilifun.com",
       "chosen": true
     },
@@ -1289,14 +1028,6 @@
       "date": 1791361738,
       "raw_hash": "0c7ff13bdc2c40c44167758953de20f76a0d8181a45539cbad29950059469de2",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 1 个条目，详情页选出 38 个剧集链接",
-        "episode_count": 38,
-        "episode_url": "https://www.ezdmw.org/Index/video/98397.html",
-        "play": "none",
-        "play_reason": "等了 20 秒没有出现视频地址"
-      },
       "site": "ezdmw.org",
       "chosen": true
     },
@@ -1313,10 +1044,6 @@
       "date": 1791361738,
       "raw_hash": "e884660097574948eba2a845dfae0837e9559b95a0fb86743eaf73c73e1b2a83",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "sbdl.cc"
     },
     {
@@ -1332,10 +1059,6 @@
       "date": 1791361738,
       "raw_hash": "2195291904a785d1fb4a407a7aa457cc8b3b53f71ffee58fa6fab830dc9466a3",
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "skipped",
-        "reason": "手写配置，不做自动检测"
-      },
       "site": "sorani.net",
       "chosen": true
     },
@@ -1391,23 +1114,6 @@
       "site": null
     },
     {
-      "raw_hash": "c835dcbdffd5382b7d616576692e889bccf79ed141c2052cd0a805eb7f798552",
-      "origin": "easybangumi",
-      "key": "girigirilove-v2",
-      "version": "1.6",
-      "status": "unsupported",
-      "notes": [
-        "手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH）"
-      ],
-      "info": [
-        "纯纯看番 release 通道"
-      ],
-      "guess": false,
-      "date": 1792943097,
-      "date_basis": "首次记录",
-      "site": null
-    },
-    {
       "raw_hash": "496af7c3a5a6d3fdb5a32c36e2f998a418130c3a6f4d3c161e854c31ef49c5bd",
       "origin": "easybangumi",
       "key": "girigirilove",
@@ -1440,15 +1146,6 @@
       "guess": false,
       "date": 1792471432,
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 10 个剧集链接",
-        "episode_count": 10,
-        "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=173c79042ab6b41dba315966b686bad3&dis_t=1792956178"
-      },
       "site": "7sefun.top",
       "chosen": true
     },
@@ -1466,10 +1163,6 @@
       "guess": false,
       "date": 1792471432,
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "jcydm1.com",
       "chosen": true
     },
@@ -1487,10 +1180,6 @@
       "guess": false,
       "date": 1792471432,
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
-      },
       "site": "anime7.top",
       "chosen": true
     },
@@ -1508,10 +1197,6 @@
       "guess": false,
       "date": 1792471432,
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "unreachable",
-        "reason": "请求失败：ConnectionError"
-      },
       "site": "mayi520.org",
       "chosen": true
     },
@@ -1521,9 +1206,7 @@
       "key": "kazumi-baimao",
       "version": "1.0.1",
       "status": "ok",
-      "notes": [
-        "域名已跳转，改用新域名 https://www.bmmdmm.com（原 https://www.baimaodm.com）"
-      ],
+      "notes": [],
       "info": [
         "纯纯看番 release 通道",
         "Kazumi 规则没有线路名，所有线路合并为一条"
@@ -1531,17 +1214,7 @@
       "guess": false,
       "date": 1792471432,
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 168 个剧集链接",
-        "episode_count": 168,
-        "episode_url": "https://www.bmmdmm.com/play/400602-0-0.html",
-        "final_origin": "https://www.bmmdmm.com",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://www.bmmdmm.com/hdst/player/artplayer/index.html?url=https://v.cdnlz14.com/20230930/29887_2e6cf8c7/index.m3u8"
-      },
-      "site": "bmmdmm.com",
+      "site": "baimaodm.com",
       "chosen": true
     },
     {
@@ -1609,15 +1282,6 @@
       "guess": false,
       "date": 1792471432,
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 40 个剧集链接",
-        "episode_count": 40,
-        "episode_url": "https://www.dcc3.com/play/18338-1-1/",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://cdn.vvvip-plays33.cc/20260116/4703_ac4395ad/index.m3u8"
-      },
       "site": "dcc3.com",
       "chosen": true
     },
@@ -1635,10 +1299,6 @@
       "guess": false,
       "date": 1785171844,
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "unreachable",
-        "reason": "请求失败：SSLError"
-      },
       "site": "omofun03.top",
       "chosen": true
     },
@@ -1690,10 +1350,6 @@
       "guess": false,
       "date": 1785171844,
       "date_basis": "内容未变",
-      "smoke": {
-        "status": "unreachable",
-        "reason": "请求失败：ReadTimeout"
-      },
       "site": "ylys.cc",
       "chosen": true
     },
@@ -1764,6 +1420,22 @@
       "date": 1760193357,
       "date_basis": "内容未变",
       "site": null
+    },
+    {
+      "origin": "manual",
+      "key": "anibaka-girigirilove",
+      "version": "",
+      "status": "manual",
+      "notes": [],
+      "info": [
+        "manual/girigirilove.json 手动维护"
+      ],
+      "guess": false,
+      "raw_hash": "b1d68940efbde7f2c94b63f6fe3d2074f2188b9c9e539bd3c97d5dbd831d97e5",
+      "date": 1792957856,
+      "date_basis": "首次记录",
+      "site": "ani.girigirilove.com",
+      "chosen": true
     }
   ]
 }

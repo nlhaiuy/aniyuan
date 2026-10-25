@@ -2,7 +2,8 @@
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from anx2animeko import convert_anx, split_selectors, site_host, source_id
-from build import merge, apply_state
+from build import merge, apply_state, collect_manual
+from smoke import eval_simple_jsonpath
 
 bad = 0
 def check(name, ok):
@@ -137,4 +138,18 @@ apply_state(c4, st, 6000)
 check("内容变了但 git 日期不比记录新：用本次同步时间", c4[0]["date"] == 6000)
 c5 = [hc("baseline", "y", "h", 10)]
 check("baseline 与 anibaka 共用记录", "anibaka:y" in apply_state(c5, {}, 1))
+
+# ---- manual/ ----
+m1 = cand("manual", "girigiri", "api.t.com", 1, "manual-g"); k1 = cand("kazumi", "G", "t2.com", 999, "kazumi-g"); ab = cand("anibaka", "g", "t2.com", 500, "anibaka-g")
+ch, d = merge([m1, k1, ab], {"site_aliases": {"api.t.com": "t2.com"}})
+check("manual 即使更旧也优先，id 仍沿用 AniBaka 的稳定 id", ch[0]["origin"] == "manual" and ch[0]["source"]["id"] == "anibaka-g")
+m1 = cand("manual", "g", "t2.com", 1, "manual-g"); a2 = cand("anibaka", "g", "t2.com", 5, "anibaka-g", "ok"); m1["smoke"] = {"status": "fail", "reason": "x"}
+ch, _ = merge([m1, a2], {})
+check("manual 检测没过也保留，只写备注", ch[0]["origin"] == "manual" and any("仍优先" in n for n in ch[0]["notes"]))
+import tempfile, json as _j
+td = tempfile.mkdtemp(); open(os.path.join(td, "a.json"), "w").write(_j.dumps({"mediaSources": [{"factoryId": "web-selector", "arguments": {"name": "N", "searchConfig": {"searchUrl": "https://q.com/s?{keyword}"}}}]}))
+cm = collect_manual(td)
+check("collect_manual 读订阅文件，缺 id 时补 manual-<文件名>", len(cm) == 1 and cm[0]["source"]["id"] == "manual-a" and cm[0]["origin"] == "manual")
+check("jsonpath 支持 $.a.b[*].field", eval_simple_jsonpath({"info": {"rows": [{"vod_id": 1}, {"vod_id": 2}]}}, "$.info.rows[*].vod_id") == [1, 2])
+check("jsonpath 原有 ['field'] 写法不受影响", eval_simple_jsonpath({"list": [{"id": 7}]}, "$.list[*]['id']") == [7])
 sys.exit(1 if bad else 0)

@@ -25,10 +25,15 @@
 2. **Settings → Actions → General → Workflow permissions** 选 **Read and write permissions**。
 3. 到 **Actions** 页面手动运行一次 `sync-subscription`（若提示 Actions 被禁用，先点启用）。
 
+## 手动维护的源（`manual/`）
+
+你亲自验证过可用的源放在 `manual/` 里（Animeko 导出的订阅文件，或单个源 JSON 都行），同站点时**永远优先于自动转换**，不会被自动修复、替换，也不会因为检测没过而落选（只在报告里写备注）。没有 `id` 的会自动补，和别的来源同站时 id 沿用 AniBaka 的稳定 id。目前有 `girigirilove.json`。
+
 ## 合并规则
 
 同一个站点在多个来源里都有时，只留一个：
 
+0. **手动优先**：`manual/` 里有这个站的源，直接用它，下面几条只用来决定 id。
 1. **分组**：按站点主机名分组（去掉 `www.` / `m.`；JSON 接口源按图标域名）。
 2. **实测优先**（开启联网检测时）：能播放 > 检测通过 > 没有结论（无法访问 / 验证码 / 跳过） > 明确失败。最新的那个明确失败而旧的通过，就用旧的，并在报告里写明原因。可用 `select_by_smoke: false` 关闭。
 3. **取新**：同一档里取规则**最后真正改动的时间**更新的那个，**不比版本号**。时间相同时优先级为 Kazumi > 纯纯看番 > AniBaka。
@@ -130,6 +135,7 @@ python tests/test_live.py        # 自动修复 / 域名跳转 / 播放检测（
 | `repair.py` | 选择器自动修复 |
 | `playcheck.py` | 无头浏览器播放检测 |
 | `state/seen.json` | 各规则文件内容哈希和最后改动时间（自动维护） |
+| `manual/` | 亲测可用的源，同站永远优先 |
 | `baseline/anibaka.json` | AniBaka 规则转不了时的回退配置 |
 | `overrides/` | 手写的 Kazumi 规则配置 |
 | `config.json`、`tests/`、`.github/workflows/sync.yml` | 配置、测试、工作流 |

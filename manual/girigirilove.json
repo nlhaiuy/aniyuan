@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 2,
+  "mediaSources": [
+    {
+      "id": "anibaka-girigirilove",
+      "factoryId": "web-selector",
+      "version": 2,
+      "arguments": {
+        "name": "girigiri愛動漫",
+        "description": "",
+        "iconUrl": "https://ani.girigirilove.com/brand/icon.png",
+        "searchConfig": {
+          "searchUrl": "https://m3u8.girigirilove.com/api.php/Vod/get_list?offset=0&limit=24&vod_name={keyword}",
+          "searchUseOnlyFirstWord": true,
+          "searchRemoveSpecial": true,
+          "searchUseSubjectNamesCount": 1,
+          "rawBaseUrl": "https://bg.girigirilove.com",
+          "requestInterval": 3000,
+          "searchCacheTtl": 7200000,
+          "userAgent": "",
+          "subjectFormatId": "json-path-indexed",
+          "selectorSubjectFormatJsonPathIndexed": {
+            "selectLinks": "$.info.rows[*].vod_id",
+            "selectNames": "$.info.rows[*].vod_name",
+            "linkTemplate": "/GV{value}/",
+            "preferShorterName": true
+          },
+          "channelFormatId": "index-grouped",
+          "selectorChannelFormatFlattened": {
+            "selectChannelNames": ".anthology-tab > .swiper-wrapper > a",
+            "matchChannelName": "^(?<ch>.+?)(?:\\s*\\d+)?$",
+            "selectEpisodeLists": ".anthology-list > .anthology-list-box",
+            "selectEpisodesFromList": ".anthology-list-play a[href]",
+            "selectEpisodeLinksFromList": "",
+            "matchEpisodeSortFromName": "^(?:第\\s*)?(?<ep>\\d+(?:\\.\\d+)?)(?:\\s*[话集])?$"
+          },
+          "defaultResolution": "1080P",
+          "defaultSubtitleLanguage": "CHS",
+          "onlySupportsPlayers": [],
+          "filterByEpisodeSort": true,
+          "selectMedia": {
+            "distinguishSubjectName": true,
+            "distinguishChannelName": true
+          },
+          "matchVideo": {
+            "enableNestedUrl": false,
+            "matchNestedUrl": "",
+            "matchVideoUrl": "(?i)(?:^|[?&]url=)(?<v>https?://[^?#\\s\"'<>]+?\\.(?:m3u8|mpd|mp4|m4v|mkv|webm|mov|flv|avi)(?:\\?[^#\\s\"'<>]*)?(?:#[^\\s\"'<>]*)?)(?=&|$)",
+            "cookies": "",
+            "addHeadersToVideo": {
+              "referer": "https://ani.girigirilove.com/"
+            }
+          },
+          "autoMatch": {
+            "enabled": true,
+            "searchUseOnlyFirstWord": true,
+            "searchRemoveSpecial": true,
+            "searchUseSubjectNamesCount": 1,
+            "preferShorterName": true,
+            "filterByEpisodeSort": true
+          }
+        },
+        "tier": 0,
+        "channelTiers": {
+          "简中": 0,
+          "繁中": 1,
+          "杜比": 6
+        }
+      }
+    }
+  ],
+  "exportedMediaSourceDataList": {
+    "mediaSources": [
+      {
+        "id": "anibaka-girigirilove",
+        "factoryId": "web-selector",
+        "version": 2,
+        "arguments": {
+          "name": "girigiri愛動漫",
+          "description": "",
+          "iconUrl": "https://ani.girigirilove.com/brand/icon.png",
+          "searchConfig": {
+            "searchUrl": "https://m3u8.girigirilove.com/api.php/Vod/get_list?offset=0&limit=24&vod_name={keyword}",
+            "searchUseOnlyFirstWord": true,
+            "searchRemoveSpecial": true,
+            "searchUseSubjectNamesCount": 1,
+            "rawBaseUrl": "https://bg.girigirilove.com",
+            "requestInterval": 3000,
+            "searchCacheTtl": 7200000,
+            "userAgent": "",
+            "subjectFormatId": "json-path-indexed",
+            "selectorSubjectFormatJsonPathIndexed": {
+              "selectLinks": "$.info.rows[*].vod_id",
+              "selectNames": "$.info.rows[*].vod_name",
+              "linkTemplate": "/GV{value}/",
+              "preferShorterName": true
+            },
+            "channelFormatId": "index-grouped",
+            "selectorChannelFormatFlattened": {
+              "selectChannelNames": ".anthology-tab > .swiper-wrapper > a",
+              "matchChannelName": "^(?<ch>.+?)(?:\\s*\\d+)?$",
+              "selectEpisodeLists": ".anthology-list > .anthology-list-box",
+              "selectEpisodesFromList": ".anthology-list-play a[href]",
+              "selectEpisodeLinksFromList": "",
+              "matchEpisodeSortFromName": "^(?:第\\s*)?(?<ep>\\d+(?:\\.\\d+)?)(?:\\s*[话集])?$"
+            },
+            "defaultResolution": "1080P",
+            "defaultSubtitleLanguage": "CHS",
+            "onlySupportsPlayers": [],
+            "filterByEpisodeSort": true,
+            "selectMedia": {
+              "distinguishSubjectName": true,
+              "distinguishChannelName": true
+            },
+            "matchVideo": {
+              "enableNestedUrl": false,
+              "matchNestedUrl": "",
+              "matchVideoUrl": "(?i)(?:^|[?&]url=)(?<v>https?://[^?#\\s\"'<>]+?\\.(?:m3u8|mpd|mp4|m4v|mkv|webm|mov|flv|avi)(?:\\?[^#\\s\"'<>]*)?(?:#[^\\s\"'<>]*)?)(?=&|$)",
+              "cookies": "",
+              "addHeadersToVideo": {
+                "referer": "https://ani.girigirilove.com/"
+              }
+            },
+            "autoMatch": {
+              "enabled": true,
+              "searchUseOnlyFirstWord": true,
+              "searchRemoveSpecial": true,
+              "searchUseSubjectNamesCount": 1,
+              "preferShorterName": true,
+              "filterByEpisodeSort": true
+            }
+          },
+          "tier": 0,
+          "channelTiers": {
+            "简中": 0,
+            "繁中": 1,
+            "杜比": 6
+          }
+        }
+      }
+    ]
+  }
+}

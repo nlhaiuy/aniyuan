@@ -6,7 +6,9 @@
   "smoke_keyword": "葬送的芙莉莲",
   "drop_failed": false,
   "exclude_anibaka": [],
-  "site_aliases": {},
+  "site_aliases": {
+    "m3u8.girigirilove.com": "ani.girigirilove.com"
+  },
   "prefer": {},
   "prefer_baseline": [],
   "_说明2": "prefer：{站点主机名: kazumi|anibaka} 强制取某一边；prefer_baseline：这些 AniBaka 规则直接用 baseline 里手调过的配置；select_by_smoke：同站有多个来源时先看联网检测结果（通过>无结论>失败），同档再比时间；site_aliases：{主机名: 规范主机名} 手动并站。",
@@ -21,5 +23,6 @@
   "follow_redirects": true,
   "play_check_max": 80,
   "play_wait_ms": 20000,
-  "_说明3": "repair：选择器检测失败时，按真实页面自动重选；replace_brittle：位置式写法能用时，若更稳的写法也通过且剧集数不少于原来就替换；follow_redirects：搜索被跳转到新域名且检测通过时自动换域名；play_check_max/play_wait_ms：播放检测的数量上限、每个等待的毫秒数。"
+  "_说明3": "repair：选择器检测失败时，按真实页面自动重选；replace_brittle：位置式写法能用时，若更稳的写法也通过且剧集数不少于原来就替换；follow_redirects：搜索被跳转到新域名且检测通过时自动换域名；play_check_max/play_wait_ms：播放检测的数量上限、每个等待的毫秒数。",
+  "_alias说明": "girigiri 的搜索走 m3u8.girigirilove.com 的接口，但和 ani.girigirilove.com 是同一个站。"
 }

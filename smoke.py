@@ -26,7 +26,7 @@ def _blocked(text):
 
 def eval_simple_jsonpath(data, path):
     """只支持本工具生成的形式：$.a.b[*]['field'] 或 $[*]['field'] 或 $.a.b[*]。"""
-    m = re.match(r"^\$((?:\.[\w]+)*)(\[\*\])?(?:\['(\w+)'\])?$", path)
+    m = re.match(r"^\$((?:\.[\w]+)*)(\[\*\])?(?:\['(\w+)'\]|\.(\w+))?$", path)
     if not m:
         raise ValueError("不支持的 JSONPath: " + path)
     cur = data
@@ -35,8 +35,9 @@ def eval_simple_jsonpath(data, path):
         if cur is None:
             return []
     items = cur if m.group(2) and isinstance(cur, list) else [cur]
-    if m.group(3):
-        items = [i.get(m.group(3)) for i in items if isinstance(i, dict)]
+    field = m.group(3) or m.group(4)
+    if field:
+        items = [i.get(field) for i in items if isinstance(i, dict)]
     return [i for i in items if i is not None]
 
 
@@ -72,7 +73,8 @@ def _search_subjects(sc, keyword, session, timeout, ctx=None):
         except ValueError as e:
             return [], ("fail", str(e))
         tpl = jp.get("linkTemplate") or "{value}"
-        return [(str(n), urljoin(url, tpl.replace("{value}", str(i)))) for n, i in zip(names, ids)], None
+        base = sc.get("rawBaseUrl") or url   # 相对链接按 rawBaseUrl 补全（接口域名常常不是网站域名）
+        return [(str(n), urljoin(base, tpl.replace("{value}", str(i)))) for n, i in zip(names, ids)], None
     if _blocked(r.text):
         return [], ("blocked", "搜索页出现验证码/环境检查")
     soup = BeautifulSoup(r.text, "lxml")
@@ -157,7 +159,7 @@ def check_source(source, keyword="葬送的芙莉莲", timeout=15, session=None,
             id_val = _extract_id(sc, keyword, session, timeout, pick[0])
             if id_val is None:
                 break
-            url = urljoin(sc["searchUrl"], tpl.replace("{value}", str(id_val)))
+            url = urljoin(sc.get("rawBaseUrl") or sc["searchUrl"], tpl.replace("{value}", str(id_val)))
         ctx["detail_url"] = url
         try:
             r = _get(url, session, timeout)

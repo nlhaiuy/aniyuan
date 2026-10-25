@@ -145,6 +145,9 @@ def probe(c, keyword, session, presets, config):
         r2["repaired"] = why
         return True, r2
 
+    if c["origin"] == "manual":   # 亲测可用的配置：只检测，不自动改
+        c["smoke"] = r
+        return
     if c["source"].get("factoryId") == "web-selector" and config.get("repair", True):
         if r["status"] == "fail" and r.get("stage") in ("search", "episodes"):
             ok, res = try_repair("both" if r["stage"] == "search" else "episodes")
@@ -164,6 +167,27 @@ def probe(c, keyword, session, presets, config):
         c["source"] = rewrite_origin(c["source"], old, fo)
         c["notes"].append("域名已跳转，改用新域名 %s（原 %s）" % (fo, old))
     c["smoke"] = r
+
+
+def collect_manual(dirpath):
+    """manual/ 里是你亲自验证过可用的源（订阅文件或单个源 JSON），同站时永远优先。"""
+    out = []
+    if not dirpath or not os.path.isdir(dirpath):
+        return out
+    for fn in sorted(os.listdir(dirpath)):
+        if not fn.endswith(".json"):
+            continue
+        path = os.path.join(dirpath, fn)
+        data = load_json(path)
+        srcs = data["mediaSources"] if isinstance(data, dict) and "mediaSources" in data else [data]
+        for i, src in enumerate(srcs):
+            src = json.loads(json.dumps(src))
+            if not src.get("id"):
+                src["id"] = "manual-%s%s" % (os.path.splitext(fn)[0], "" if len(srcs) == 1 else "-%d" % i)
+            out.append(dict(origin="manual", key=src["id"], version="", source=src, status="manual", notes=[],
+                            info=["manual/%s 手动维护" % fn], guess=False, raw_hash=file_hash(path),
+                            date=int(os.path.getmtime(path))))
+    return out
 
 
 def run_playchecks(cands, config):
@@ -325,8 +349,13 @@ def merge(cands, config):
         elif winner is not by_date:
             reason = "最新的 %s:%s 自动检测%s，改用检测结果更好的（%s）" % (
                 by_date["origin"], by_date["key"], {"fail": "未通过"}.get(smoke_of(by_date), "没有结论"), smoke_of(winner) or "-")
+        manual = [c for c in members if c["origin"] == "manual"]
+        if manual:
+            winner, reason = manual[0], "manual/ 里手动维护的源，优先于自动转换"
+            if smoke_of(winner) in ("fail",):
+                winner["notes"].append("手动源自动检测未通过（%s），但仍优先使用；可能是检测环境访问不了" % winner["smoke"].get("reason", ""))
         p = prefer.get(host)
-        if p:
+        if p and not manual:
             forced = [c for c in members if (("anibaka" if c["origin"] == "baseline" else c["origin"]) == p)]
             if forced:
                 winner, reason = forced[0], "config.prefer 指定 %s" % p
@@ -352,10 +381,11 @@ def main():
     ap.add_argument("--baseline", default=os.path.join(HERE, "baseline", "anibaka.json"))
     ap.add_argument("--state", default=os.path.join(HERE, "state", "seen.json"),
                     help="记录各规则内容哈希和“最后真正改动时间”的文件")
+    ap.add_argument("--manual", default=os.path.join(HERE, "manual"), help="手动维护（亲测可用）的源所在目录")
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--playcheck", action="store_true", help="在 --smoke 之后再用无头浏览器检测能否播放（需要 playwright）")
     args = ap.parse_args()
-    if not (args.kazumi or args.anibaka or args.easybangumi):
+    if not (args.kazumi or args.anibaka or args.easybangumi or os.path.isdir(args.manual)):
         ap.error("至少给一个 --kazumi / --anibaka / --easybangumi")
 
     config = load_json(args.config) if os.path.exists(args.config) else {}
@@ -370,6 +400,7 @@ def main():
         cands += collect_anibaka(args.anibaka, baseline, config)
     if args.easybangumi:
         cands += collect_easybangumi(args.easybangumi, config)
+    cands += collect_manual(args.manual)
 
     state = load_json(args.state) if os.path.exists(args.state) else {}
     new_state = apply_state(cands, state, int(time.time()))
@@ -414,7 +445,7 @@ def main():
         json.dump(sub, f, ensure_ascii=False, indent=2)
         f.write("\n")
 
-    label = {"ok": "完整", "partial": "有近似", "unsupported": "无法转换", "override": "手写", "missing": "缺文件",
+    label = {"manual": "手动", "ok": "完整", "partial": "有近似", "unsupported": "无法转换", "override": "手写", "missing": "缺文件",
              "baseline": "回退基线"}
     rep = ["# 订阅转换报告", "", "写入订阅 **%d** 个数据源（候选 %d 个，同站点合并后）。" % (len(sources), len(cands)), "",
            "## 同站点取舍", "", "| 站点 | 最终 id | 采用 | 理由 | 候选（最后修改） |", "|---|---|---|---|---|"]

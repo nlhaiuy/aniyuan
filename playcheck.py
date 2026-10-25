@@ -15,7 +15,7 @@ import glob
 import re
 
 BLOCK_WORDS = ["验证码", "安全验证", "检查环境", "请输入验证", "Just a moment", "人机验证"]
-MEDIA_RE = re.compile(r"\.(m3u8|mp4|flv|mkv|webm)(\?|$|#)|/video/tos/|mime_type=video", re.I)
+MEDIA_RE = re.compile(r"\.(m3u8|mpd|mp4|m4v|mkv|webm|mov|flv|avi)(\?|$|#)|/video/tos/|mime_type=video", re.I)
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
       "Chrome/120.0.0.0 Safari/537.36")
 CLICK_SELECTORS = ["video", ".dplayer-video-wrap", ".dplayer", ".art-video-player", "#player", "#playleft",
