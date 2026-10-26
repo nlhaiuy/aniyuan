@@ -43,12 +43,39 @@ class PlayChecker:
         self._cm = sync_playwright()
         self._pw = self._cm.start()
         self.browser = _launch(self._pw)
+        self._fetch_ctx = {}
 
     def close(self):
         try:
+            for c in self._fetch_ctx.values():
+                try:
+                    c.close()
+                except Exception:
+                    pass
             self.browser.close()
         finally:
             self._pw.stop()
+
+    def fetch(self, url, timeout_ms=20000):
+        """requests 被 403/503（Cloudflare 一类）拦住时，用真浏览器取页面。同一个站复用同一个浏览器上下文，
+        这样第一次过了检查拿到的 cookie 后面的页面也能用。返回 (状态码, 文本, 最终地址)。"""
+        from urllib.parse import urlparse
+        host = urlparse(url).netloc
+        ctx = self._fetch_ctx.setdefault(host, self.browser.new_context(user_agent=UA, ignore_https_errors=True))
+        page = ctx.new_page()
+        try:
+            resp = page.goto(url, wait_until="domcontentloaded", timeout=timeout_ms)
+            for _ in range(8):   # 等“正在检查你的浏览器”之类的挑战页自己跳转
+                if "Just a moment" not in page.title() and "请稍候" not in page.title():
+                    break
+                page.wait_for_timeout(1500)
+            text = page.content()
+            body = page.inner_text("body", timeout=2000) if "<pre" in text[:600] else ""
+            if body.lstrip()[:1] and body.lstrip()[0] in "{[":
+                text = body
+            return (resp.status if resp else 0, text, page.url)
+        finally:
+            page.close()
 
     def check(self, source, episode_url, wait_ms=20000):
         mv = source["arguments"]["searchConfig"].get("matchVideo", {})

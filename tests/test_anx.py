@@ -179,4 +179,18 @@ m = st(["https://m3u8.girigirilove.com/api?q={keyword}", "https://bg.girigirilov
 check("上游没换：不动", D.follow_upstream([m, up("ani.girigirilove.com")], lambda s: {"status": "ok"}) == [])
 check("rewrite_domain 不误伤别的域名", D.rewrite_domain({"a": "https://x.girigirilove.com/p?u=https://girigirilove.com.cn/z https://other-girigirilove.com"},
       "girigirilove.com", "girigirilove.xyz")["a"] == "https://x.girigirilove.xyz/p?u=https://girigirilove.com.cn/z https://other-girigirilove.com")
+
+# ---- 基线作为独立候选 ----
+auto = cand("anibaka", "s", "new.com", 100, "anibaka-s", "fail"); base = cand("baseline", "s", "old.com", 100, "anibaka-s", "ok")
+ch, _ = merge([auto, base], {})
+check("自动转换的没通过、基线通过 -> 用基线；域名不同也不会拆成两个站", len(ch) == 1 and ch[0]["origin"] == "baseline")
+auto = cand("anibaka", "s", "new.com", 100, "anibaka-s"); base = cand("baseline", "s", "old.com", 100, "anibaka-s")
+ch, _ = merge([auto, base], {})
+check("没联网检测：同日期，自动转换（上游）优先", len(ch) == 1 and ch[0]["origin"] == "anibaka")
+auto = cand("anibaka", "s", "new.com", 100, "anibaka-s"); auto["guess"] = True; base = cand("baseline", "s", "old.com", 100, "anibaka-s")
+ch, _ = merge([auto, base], {})
+check("没联网检测：搜索地址是推测的 -> 基线优先", ch[0]["origin"] == "baseline")
+auto = cand("anibaka", "s", "new.com", 100, "anibaka-s", "ok"); auto["guess"] = True; base = cand("baseline", "s", "old.com", 100, "anibaka-s", "ok")
+ch, _ = merge([auto, base], {})
+check("推测的搜索地址实测通过：不再降级", ch[0]["origin"] == "anibaka")
 sys.exit(1 if bad else 0)

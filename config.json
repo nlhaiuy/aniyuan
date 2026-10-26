@@ -7,7 +7,8 @@
   "drop_failed": false,
   "exclude_anibaka": [],
   "site_aliases": {
-    "m3u8.girigirilove.com": "ani.girigirilove.com"
+    "m3u8.girigirilove.com": "ani.girigirilove.com",
+    "2kdm.com": "mutedm.com"
   },
   "prefer": {},
   "prefer_baseline": [],
@@ -24,7 +25,9 @@
   "play_check_max": 80,
   "play_wait_ms": 20000,
   "_说明3": "repair：选择器检测失败时，按真实页面自动重选；replace_brittle：位置式写法能用时，若更稳的写法也通过且剧集数不少于原来就替换；follow_redirects：搜索被跳转到新域名且检测通过时自动换域名；play_check_max/play_wait_ms：播放检测的数量上限、每个等待的毫秒数。",
-  "_alias说明": "girigiri 的搜索走 m3u8.girigirilove.com 的接口，但和 ani.girigirilove.com 是同一个站。",
+  "_alias说明": "girigiri 的搜索走 m3u8.girigirilove.com 的接口，但和 ani.girigirilove.com 是同一个站；2kdm.com（AniBaka）和 mutedm.com（Kazumi 的 mutefun）也是同一个站（2kdm.com 会跳转到 mutedm.com）。",
   "follow_upstream_domains": true,
-  "_说明4": "follow_upstream_domains：手动/基线/手写的源，上游规则多数换了主域名时自动跟随（重新联网检测通过才采用）。"
+  "_说明4": "follow_upstream_domains：手动/基线/手写的源，上游规则多数换了主域名时自动跟随（重新联网检测通过才采用）。",
+  "browser_fallback": true,
+  "_说明5": "browser_fallback：requests 被 403/503 拦时，改用无头浏览器取页面（需要 --playcheck）。"
 }

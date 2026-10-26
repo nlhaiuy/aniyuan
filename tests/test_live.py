@@ -38,6 +38,11 @@ class H(BaseHTTPRequestHandler):
     def do_GET(self):
         path = self.path.split("?")[0]
         if path == "/s": return self._send(200, SEARCH)
+        if path == "/s2":   # 第一个条目的详情页是 404
+            return self._send(200, "<html><body><a href='/voddetail/9.html'>葬送的芙莉莲 旧</a><a href='/voddetail/1.html'>葬送的芙莉莲</a></body></html>")
+        if path == "/sb":   # 像 Cloudflare 一样拦非浏览器（真 Chromium 会带 Sec-Ch-Ua）
+            if not self.headers.get("Sec-Ch-Ua"): return self._send(403, "forbidden")
+            return self._send(200, SEARCH)
         if path == "/jump":
             return self._send(302, "", headers={"Location": "http://127.0.0.2:%d/s?wd=x" % self.server.server_address[1]})
         if path == "/voddetail/1.html": return self._send(200, DETAIL)
@@ -95,6 +100,26 @@ probe(c, "葬送的芙莉莲", sess, presets, cfg)
 check("搜索被跳转到新域名且通过检测：整体换成新域名", c["smoke"]["status"] == "ok"
       and "127.0.0.2" in c["source"]["arguments"]["searchConfig"]["searchUrl"] and "127.0.0.2" in c["source"]["arguments"]["iconUrl"])
 check("rewrite_origin 只换域名", rewrite_origin({"a": "http://x.com/p?u=http://y.com"}, "http://x.com", "http://z.com")["a"] == "http://z.com/p?u=http://y.com")
+
+# 5b. 第一个条目详情页打不开 -> 试后面的
+c = dict(origin="kazumi", key="t", source=src("a[href*='/voddetail/']", ".module-play-list-content a", B + "/s2?wd={keyword}"), notes=[])
+probe(c, "葬送的芙莉莲", sess, presets, cfg)
+check("第一个条目详情页 404：自动试下一个", c["smoke"]["status"] == "ok" and c["smoke"]["episode_count"] == 3)
+
+# 5c. 403 -> 浏览器回退
+import smoke as smoke_mod
+c = dict(origin="kazumi", key="t", source=src("a[href*='/voddetail/']", ".module-play-list-content a", B + "/sb?wd={keyword}"), notes=[])
+probe(c, "葬送的芙莉莲", sess, presets, {"repair": False})
+check("没有浏览器：被 403 拦住就是 blocked", c["smoke"]["status"] == "blocked")
+pc0 = PlayChecker()
+smoke_mod.set_browser_fetcher(pc0.fetch)
+try:
+    c = dict(origin="kazumi", key="t", source=src("a[href*='/voddetail/']", ".module-play-list-content a", B + "/sb?wd={keyword}"), notes=[])
+    probe(c, "葬送的芙莉莲", sess, presets, {"repair": False})
+    check("403 回退到无头浏览器后通过检测", c["smoke"]["status"] == "ok")
+finally:
+    smoke_mod.set_browser_fetcher(None)
+    pc0.close()
 
 # 6. 播放检测
 check("Kotlin 命名分组转成 Python 写法", to_py_regex("(?<v>a)(?<=b)(?<!c)") == "(?P<v>a)(?<=b)(?<!c)")

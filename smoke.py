@@ -15,8 +15,34 @@ HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
            "Accept-Language": "zh-CN,zh;q=0.9"}
 
 
+FETCHER = None   # 可选：requests 被 403/503 拦时，改用无头浏览器取页面（见 playcheck.BrowserFetcher）
+
+
+def set_browser_fetcher(fn):
+    global FETCHER
+    FETCHER = fn
+
+
+class _BrowserResp:
+    def __init__(self, status, text, url, moved):
+        self.status_code, self.text, self.url = status, text, url
+        self.history = ["redirect"] if moved else []
+
+    def json(self):
+        import json
+        return json.loads(self.text)
+
+
 def _get(url, session, timeout):
-    return session.get(url, headers=HEADERS, timeout=timeout, allow_redirects=True)
+    r = session.get(url, headers=HEADERS, timeout=timeout, allow_redirects=True)
+    if r.status_code in (403, 503) and FETCHER:
+        try:
+            got = FETCHER(url)
+        except Exception:
+            got = None
+        if got and got[0] == 200 and not _blocked(got[1]):
+            return _BrowserResp(got[0], got[1], got[2], _host(got[2]) != _host(url))
+    return r
 
 
 def _blocked(text):
@@ -142,7 +168,8 @@ def check_source(source, keyword="葬送的芙莉莲", timeout=15, session=None,
         return {"status": bad[0], "reason": bad[1]}
     if not subs:
         return {"status": "fail", "reason": "搜索页能打开，但选择器没有选中任何结果", "stage": "search"}
-    pick = next((s for s in subs if keyword[:3] in s[0]), subs[0])
+    first = [x for x in subs if keyword[:3] in x[0]] or subs
+    picks = (first + [x for x in subs if x not in first])[:3]   # 第一个条目的详情页打不开时，再试后面两个
     if not (sc.get("selectorChannelFormatNoChannel") or {}).get("selectEpisodes") \
             and not (sc.get("selectorChannelFormatFlattened") or {}).get("selectEpisodeLists"):
         return {"status": "skipped", "reason": "没有章节选择器，只验证了搜索"}
@@ -153,36 +180,37 @@ def check_source(source, keyword="葬送的芙莉莲", timeout=15, session=None,
         base = jp["linkTemplate"].rsplit("/", 1)[0]
         variants = [base + "/{value}.html", base + "/{value}", base + "/{value}/"]
     last = ""
-    for tpl in variants:
-        url = pick[1]
-        if tpl:
-            id_val = _extract_id(sc, keyword, session, timeout, pick[0])
-            if id_val is None:
-                break
-            url = urljoin(sc.get("rawBaseUrl") or sc["searchUrl"], tpl.replace("{value}", str(id_val)))
-        ctx["detail_url"] = url
-        try:
-            r = _get(url, session, timeout)
-        except requests.RequestException as e:
-            last = "详情页请求失败：%s" % type(e).__name__
-            continue
-        if r.status_code != 200:
-            last = "详情页 HTTP %d（%s）" % (r.status_code, url)
-            continue
-        if _blocked(r.text):
-            return {"status": "blocked", "reason": "详情页出现验证码/环境检查"}
-        ctx["detail_html"] = r.text
-        eps = extract_episodes(sc, r.text, r.url)
-        if eps:
-            res = {"status": "ok", "reason": "搜到 %d 个条目，详情页选出 %d 个剧集链接" % (len(subs), len(eps)),
-                   "episode_count": len(eps), "episode_url": eps[0][1]}
+    for pick in picks:
+        for tpl in variants:
+            url = pick[1]
             if tpl:
-                res["template"] = tpl
-            if ctx.get("final_origin"):
-                res["final_origin"] = ctx["final_origin"]
-            return res
-        last = "详情页选择器没有选中剧集（%s）" % url
-        ctx["stage"] = "episodes"
+                id_val = _extract_id(sc, keyword, session, timeout, pick[0])
+                if id_val is None:
+                    break
+                url = urljoin(sc.get("rawBaseUrl") or sc["searchUrl"], tpl.replace("{value}", str(id_val)))
+            ctx["detail_url"] = url
+            try:
+                r = _get(url, session, timeout)
+            except requests.RequestException as e:
+                last = "详情页请求失败：%s" % type(e).__name__
+                continue
+            if r.status_code != 200:
+                last = "详情页 HTTP %d（%s）" % (r.status_code, url)
+                continue
+            if _blocked(r.text):
+                return {"status": "blocked", "reason": "详情页出现验证码/环境检查"}
+            ctx["detail_html"] = r.text
+            eps = extract_episodes(sc, r.text, r.url)
+            if eps:
+                res = {"status": "ok", "reason": "搜到 %d 个条目，详情页选出 %d 个剧集链接" % (len(subs), len(eps)),
+                       "episode_count": len(eps), "episode_url": eps[0][1]}
+                if tpl:
+                    res["template"] = tpl
+                if ctx.get("final_origin"):
+                    res["final_origin"] = ctx["final_origin"]
+                return res
+            last = "详情页选择器没有选中剧集（%s）" % url
+            ctx["stage"] = "episodes"
     return {"status": "fail", "reason": last or "详情页没有找到剧集", "stage": "episodes"}
 
 

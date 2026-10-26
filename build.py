@@ -194,26 +194,14 @@ def _check(source, config, session):
     return check_source(source, config.get("smoke_keyword", "葬送的芙莉莲"), session=session)
 
 
-def run_playchecks(cands, config):
+def run_playchecks(cands, config, pc):
     """对检测通过的候选逐个做无头浏览器播放检测（耗时，约 20~30 秒一个）。"""
     todo = [c for c in cands if (c.get("smoke") or {}).get("status") == "ok" and c["smoke"].get("episode_url")]
-    todo = todo[: config.get("play_check_max", 80)]
-    if not todo:
-        return
-    try:
-        from playcheck import PlayChecker
-        pc = PlayChecker()
-    except Exception as e:  # 没装浏览器就跳过，不影响其它流程
-        print("播放检测跳过：%s" % e, file=sys.stderr)
-        return
-    try:
-        for c in todo:
-            try:
-                c["smoke"].update(pc.check(c["source"], c["smoke"]["episode_url"], config.get("play_wait_ms", 20000)))
-            except Exception as e:
-                c["smoke"].update({"play": "error", "play_reason": "检测出错：%s" % type(e).__name__})
-    finally:
-        pc.close()
+    for c in todo[: config.get("play_check_max", 80)]:
+        try:
+            c["smoke"].update(pc.check(c["source"], c["smoke"]["episode_url"], config.get("play_wait_ms", 20000)))
+        except Exception as e:
+            c["smoke"].update({"play": "error", "play_reason": "检测出错：%s" % type(e).__name__})
 
 
 def collect_kazumi(repo, config, overrides_dir):
@@ -280,21 +268,24 @@ def collect_anibaka(repo, baseline, config):
             c.update(source=res.source, status=res.status, notes=list(res.notes), guess=res.guess)
         else:
             c["notes"] = ["规则文件 %s 不存在" % e["ref"]]
-        use_baseline = None
+        base_c = None
         if sid in baseline:
-            if c["source"] is None:
-                use_baseline = "无法自动转换（%s）" % ("；".join(c["notes"]) or "?")
-            elif c["guess"]:
-                use_baseline = "自动转换的搜索地址是推测的"
-            elif key in config.get("prefer_baseline", []):
-                use_baseline = "config.prefer_baseline 指定"
-        if use_baseline:
-            c.update(source=json.loads(json.dumps(baseline[sid])), status="baseline",
-                     notes=["回退到 baseline/anibaka.json：" + use_baseline])
-            c["origin"] = "baseline"
-        elif c["source"] is None:
+            bsrc = json.loads(json.dumps(baseline[sid]))
+            base_c = dict(origin="baseline", key=key, version=c["version"], source=bsrc, status="baseline",
+                          notes=["用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较"], info=[],
+                          guess=False, date=c["date"], raw_hash=c.get("raw_hash"), live_hosts=c.get("live_hosts"))
+            if c["source"] is not None:   # 保留你在基线里设置的优先级
+                c["source"]["arguments"]["tier"] = bsrc["arguments"].get("tier", c["source"]["arguments"]["tier"])
+                if bsrc["arguments"].get("channelTiers"):
+                    c["source"]["arguments"]["channelTiers"] = bsrc["arguments"]["channelTiers"]
+            if key in config.get("prefer_baseline", []):
+                c["source"] = None
+                c["notes"].append("config.prefer_baseline 指定只用基线")
+        if c["source"] is None and base_c is None:
             c["notes"].append("baseline 里也没有这个源，已跳过")
         out.append(c)
+        if base_c:
+            out.append(base_c)
     return out
 
 
@@ -329,36 +320,63 @@ def merge(cands, config):
     aliases = config.get("site_aliases", {})
     prefer = config.get("prefer", {})
     by_smoke = config.get("select_by_smoke", True)
-    groups = {}
+    # 分组：同主机名，或同一条 AniBaka 规则（key 相同，含基线配置）算同一个站；用并查集合并，
+    # 这样基线配置的域名和上游不一样时也不会被拆成两个站（否则会出现重复 id）
+    live = [c for c in cands if c["source"] is not None]
+    parent = {id(c): id(c) for c in live}
+
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    seen_key = {}
     for c in cands:
         if c["source"] is None:
             c["site"] = None
             continue
         host = site_host(c["source"])
-        host = aliases.get(host, host)
-        c["site"] = host
-        groups.setdefault(host, []).append(c)
+        c["site"] = aliases.get(host, host)
+        keys = ["h:" + c["site"]] + (["a:" + c["key"]] if c["origin"] in ("anibaka", "baseline") else [])
+        for k in keys:
+            if k in seen_key:
+                parent[find(id(c))] = find(seen_key[k])
+            else:
+                seen_key[k] = id(c)
+    comp = {}
+    for c in live:
+        comp.setdefault(find(id(c)), []).append(c)
+    groups = {}
+    for members in comp.values():
+        label = next((m["site"] for m in members if m["origin"] != "baseline"), members[0]["site"])
+        groups[label] = members
 
     chosen, decisions = [], []
     for host, members in sorted(groups.items()):
-        rank = {"kazumi": 2, "easybangumi": 1}   # 时间相同：Kazumi > 纯纯看番 > AniBaka
+        rank = {"kazumi": 3, "easybangumi": 2, "anibaka": 1}   # 时间相同：Kazumi > 纯纯看番 > AniBaka > 基线
         smoke_of = lambda c: (c.get("smoke") or {}).get("status")  # noqa: E731
         # 实测优先：检测通过 > 没测出结论（无法访问/验证码/跳过） > 明确失败；同档内再比修改时间
         def tier(c):
             if not by_smoke:
-                return 1
+                return 0.5 if c.get("guess") else 1
             sm = c.get("smoke") or {}
             if sm.get("status") == "ok":   # 播放检测过的：能播 > 没检测 > 没抓到 > 地址认不出
                 return {"ok": 3, "error": 2, "none": 1.8, "blocked": 1.6, "mismatch": 1.5}.get(sm.get("play"), 2)
-            return 0 if sm.get("status") == "fail" else 1
+            if sm.get("status") == "fail":
+                return 0
+            return 0.5 if (c.get("guess") and sm.get("status") != "ok") else 1   # 搜索地址是推测的：没验证过就排在后面
         members.sort(key=lambda c: (tier(c), c["date"] or 0, rank.get(c["origin"], 0)), reverse=True)
         by_date = sorted(members, key=lambda c: (c["date"] or 0, rank.get(c["origin"], 0)), reverse=True)[0]
         winner, reason = members[0], "更新（%s）" % fmt_date(members[0]["date"])
         if len(members) == 1:
             reason = "只有这一个来源"
         elif winner is not by_date:
-            reason = "最新的 %s:%s 自动检测%s，改用检测结果更好的（%s）" % (
-                by_date["origin"], by_date["key"], {"fail": "未通过"}.get(smoke_of(by_date), "没有结论"), smoke_of(winner) or "-")
+            if smoke_of(by_date) is None and by_date.get("guess"):
+                reason = "%s:%s 的搜索地址是推测的、没联网验证过，改用 %s:%s" % (by_date["origin"], by_date["key"], winner["origin"], winner["key"])
+            else:
+                reason = "最新的 %s:%s 自动检测%s，改用检测结果更好的（%s）" % (
+                    by_date["origin"], by_date["key"], {"fail": "未通过"}.get(smoke_of(by_date), "没有结论"), smoke_of(winner) or "-")
         manual = [c for c in members if c["origin"] == "manual"]
         if manual:
             winner, reason = manual[0], "manual/ 里手动维护的源，优先于自动转换"
@@ -421,21 +439,36 @@ def main():
 
     if args.smoke:
         import requests
+        import smoke as smoke_mod
         session = requests.Session()
         presets = mine_presets(args.anibaka)
-        for c in cands:
-            if c["source"] is None:
-                continue
-            probe(c, config.get("smoke_keyword", "葬送的芙莉莲"), session, presets, config)
-            r = c["smoke"]
-            if r.get("template"):
-                c["source"]["arguments"]["searchConfig"]["selectorSubjectFormatJsonPathIndexed"]["linkTemplate"] = r["template"]
-            time.sleep(1)
-        if config.get("follow_upstream_domains", True):
-            for key, old, new, ok in follow_upstream(cands, lambda src: _check(src, config, session)):
-                print("域名跟随 %s：%s → %s %s" % (key, old, new, "已采用" if ok else "未通过，保持原样"))
-        if args.playcheck:
-            run_playchecks(cands, config)
+        pc = None
+        if args.playcheck:   # 浏览器启动一次：既用于 403 回退，也用于播放检测
+            try:
+                from playcheck import PlayChecker
+                pc = PlayChecker()
+                if config.get("browser_fallback", True):
+                    smoke_mod.set_browser_fetcher(pc.fetch)
+            except Exception as e:  # 没装浏览器就跳过，不影响其它流程
+                print("浏览器不可用，跳过播放检测和 403 回退：%s" % e, file=sys.stderr)
+        try:
+            for c in cands:
+                if c["source"] is None:
+                    continue
+                probe(c, config.get("smoke_keyword", "葬送的芙莉莲"), session, presets, config)
+                r = c["smoke"]
+                if r.get("template"):
+                    c["source"]["arguments"]["searchConfig"]["selectorSubjectFormatJsonPathIndexed"]["linkTemplate"] = r["template"]
+                time.sleep(1)
+            if config.get("follow_upstream_domains", True):
+                for key, old, new, ok in follow_upstream(cands, lambda src: _check(src, config, session)):
+                    print("域名跟随 %s：%s → %s %s" % (key, old, new, "已采用" if ok else "未通过，保持原样"))
+            if pc:
+                run_playchecks(cands, config, pc)
+        finally:
+            smoke_mod.set_browser_fetcher(None)
+            if pc:
+                pc.close()
 
     chosen, decisions = merge(cands, config)
 
