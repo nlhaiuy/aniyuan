@@ -341,7 +341,7 @@
         "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=173c79042ab6b41dba315966b686bad3&dis_t=1792956178"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=638d2cf1452c73c65346f8a1c3d0b454&dis_t=1792991901"
       },
       "site": "7sefun.top"
     },
@@ -369,7 +369,7 @@
         "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=CVI1f50-dLVMfeEMIWG1AlKqFt2Yp9sqDglmiXdAWcQ%3D%3A1792972800"
+        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=FUM3GB3qO6eLFELNeMccWQzbtqiWaxFfvYCZ7RWF6wM%3D%3A1793005200"
       },
       "site": "moonci.com"
     },
@@ -579,7 +579,7 @@
         "episode_url": "https://www.lmm85.com/play/7817_1_1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=254bc88b77c4e070d08171f2789a55b8&dis_t=1792958136"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=28a39cc757f4039badea7059067024be&dis_t=1792995474"
       },
       "site": "lmm85.com",
       "chosen": true
@@ -609,7 +609,7 @@
         "template": "/media/{value}.html",
         "play": "ok",
         "play_reason": "scanDomMediaUrls 能从 <video> 取到地址",
-        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=kWy0MHots_9Etyxynuyzwki5SWbxROaMfUDr23nzoAM=:1792962057"
+        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=zB6sDY0cTuxulb9LfzQdkJdu-0A9B0xHYEEm2EHbT1g=:1792999142"
       },
       "site": "mgnacg.com",
       "chosen": true
@@ -637,7 +637,7 @@
         "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=CVI1f50-dLVMfeEMIWG1AlKqFt2Yp9sqDglmiXdAWcQ%3D%3A1792972800"
+        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=FUM3GB3qO6eLFELNeMccWQzbtqiWaxFfvYCZ7RWF6wM%3D%3A1793005200"
       },
       "site": "moonci.com",
       "chosen": true
@@ -801,7 +801,7 @@
         "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=173c79042ab6b41dba315966b686bad3&dis_t=1792956178"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=638d2cf1452c73c65346f8a1c3d0b454&dis_t=1792991901"
       },
       "site": "7sefun.top"
     },
@@ -899,7 +899,7 @@
         "episode_url": "https://m.lm6.net/play/7817_1_1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=254bc88b77c4e070d08171f2789a55b8&dis_t=1792958136"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=28a39cc757f4039badea7059067024be&dis_t=1792995474"
       },
       "site": "lm6.net",
       "chosen": true
@@ -1019,7 +1019,7 @@
         "episode_url": "https://ios.mifun.org/vodplay/17612-2-1/",
         "play": "mismatch",
         "play_reason": "页面出现了视频地址，但 matchVideoUrl 认不出来",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc3bubemaac7yagxva7fnss2dieiygqersa.f0.mp4?dis_k=3922db4b4dee647158df5d93b33f2a01&dis_t=1792957328"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc3bubemaac7yagxva7fnss2dieiygqersa.f0.mp4?dis_k=cba59e08d79128702fa50cd4cb45e39f&dis_t=1792995572"
       },
       "site": "ios.mifun.org",
       "chosen": true
@@ -1422,7 +1422,7 @@
         "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=CVI1f50-dLVMfeEMIWG1AlKqFt2Yp9sqDglmiXdAWcQ%3D%3A1792972800"
+        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=FUM3GB3qO6eLFELNeMccWQzbtqiWaxFfvYCZ7RWF6wM%3D%3A1793005200"
       },
       "site": "moonci.com"
     },
@@ -1595,7 +1595,7 @@
       "guess": false,
       "date": 1792943097,
       "live_hosts": [],
-      "date_basis": "首次记录",
+      "date_basis": "内容未变",
       "site": null
     },
     {
@@ -1642,7 +1642,7 @@
         "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=173c79042ab6b41dba315966b686bad3&dis_t=1792956178"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=638d2cf1452c73c65346f8a1c3d0b454&dis_t=1792991901"
       },
       "site": "7sefun.top",
       "chosen": true
