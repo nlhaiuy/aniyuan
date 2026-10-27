@@ -71,8 +71,8 @@
       "reason": "更新（2026-10-20）",
       "members": [
         "easybangumi:kazumi-anime7(2026-10-20)",
-        "baseline:anime7(2026-10-07)",
-        "anibaka:anime7(2026-10-07)"
+        "anibaka:anime7(2026-10-07)",
+        "baseline:anime7(2026-10-07)"
       ]
     },
     {
@@ -234,13 +234,13 @@
     },
     {
       "site": "moonci.com",
-      "winner": "kazumi:moonci",
+      "winner": "anibaka:moonci",
       "id": "anibaka-moonci",
-      "reason": "更新（2026-10-19）",
+      "reason": "最新的 kazumi:moonci 自动检测没有结论，改用检测结果更好的（ok）",
       "members": [
-        "kazumi:moonci(2026-10-19)",
         "anibaka:moonci(2026-09-30)",
-        "kazumi:aafun(2026-08-21)"
+        "kazumi:aafun(2026-08-21)",
+        "kazumi:moonci(2026-10-19)"
       ]
     },
     {
@@ -349,7 +349,7 @@
         "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=724b36cad3987d2637cb232cb0e10fc1&dis_t=1793082137"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=0eb747c096c9ba837a320f44ddf17a31&dis_t=1793121900"
       },
       "site": "7sefun.top"
     },
@@ -377,7 +377,7 @@
         "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=xUgaECtbRDs4M9AV4IOuGxkDRYvvEr6E13zvk-I9Zrw%3D%3A1793095200"
+        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=R0_7LfExLA01fxRkWDjaFFNSTEhppUlX41zv5Rf8ZG8%3D%3A1793124000"
       },
       "site": "moonci.com"
     },
@@ -452,7 +452,7 @@
       "date_basis": "内容未变",
       "smoke": {
         "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 168 个剧集链接",
+        "reason": "搜到 3 个条目，详情页选出 168 个剧集链接",
         "episode_count": 168,
         "episode_url": "https://www.bmddm.com/play/400602-0-0.html",
         "final_origin": "https://www.bmddm.com",
@@ -509,7 +509,7 @@
         "episode_url": "https://dmbus.cc/p/5963-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://hhjx.hhplayer.com/playlist/8298df34c8e87d6dc0af170f24ea0812cda7f688524f9df3.m3u8?expires=1793109545&sign=eace1a810d1b84d0545987c8e3bf5b21cdd4aabf3f147979464588ba0137f790"
+        "media": "https://hhjx.hhplayer.com/playlist/8298df34c8e87d6dc0af170f24ea0812cda7f688524f9df3.m3u8?expires=1793196317&sign=8d2a8fb05f79b8aa2f5cc40acbd3f7a44a87548bd9688ec5f0fe4d026b1199ba"
       },
       "site": "dmbus.cc"
     },
@@ -586,7 +586,7 @@
         "episode_url": "https://www.lmm85.com/play/7817_1_1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=724b36cad3987d2637cb232cb0e10fc1&dis_t=1793082137"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=0eb747c096c9ba837a320f44ddf17a31&dis_t=1793121900"
       },
       "site": "lmm85.com",
       "chosen": true
@@ -616,7 +616,7 @@
         "template": "/media/{value}.html",
         "play": "ok",
         "play_reason": "scanDomMediaUrls 能从 <video> 取到地址",
-        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=mrS_4BMrXi71GJO43T7qh-mBaTDeqZ9wjOPfYlYrKnE=:1793085938"
+        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=epsOk1AkWZctYFlQVSxNaQI0j-e6Vq0b-if3-h46yt8=:1793125700"
       },
       "site": "mgnacg.com",
       "chosen": true
@@ -642,12 +642,10 @@
         "reason": "搜到 2 个条目，详情页选出 30 个剧集链接",
         "episode_count": 30,
         "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=xUgaECtbRDs4M9AV4IOuGxkDRYvvEr6E13zvk-I9Zrw%3D%3A1793095200"
+        "play": "none",
+        "play_reason": "等了 20 秒没有出现视频地址"
       },
-      "site": "moonci.com",
-      "chosen": true
+      "site": "moonci.com"
     },
     {
       "origin": "kazumi",
@@ -827,7 +825,7 @@
         "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=724b36cad3987d2637cb232cb0e10fc1&dis_t=1793082137"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=0eb747c096c9ba837a320f44ddf17a31&dis_t=1793121900"
       },
       "site": "7sefun.top"
     },
@@ -849,13 +847,8 @@
       ],
       "date_basis": "内容未变",
       "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 24 个剧集链接",
-        "episode_count": 24,
-        "episode_url": "https://www.cyfz.top/vodplay/1029-1-1.html",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://player.0072233.xyz/player/ec.php?code=cyfz&if=1&url=https://ossvod.manzhanw.top/d/%E6%AC%A1%E5%85%83fun/%E8%80%81%E7%95%AA/2023/10/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2/01.m3u"
+        "status": "blocked",
+        "reason": "HTTP 403"
       },
       "site": "cyfz.top",
       "chosen": true
@@ -996,7 +989,7 @@
         "episode_url": "https://m.lm6.net/play/7817_1_1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=724b36cad3987d2637cb232cb0e10fc1&dis_t=1793082137"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=0eb747c096c9ba837a320f44ddf17a31&dis_t=1793121900"
       },
       "site": "lm6.net",
       "chosen": true
@@ -1215,7 +1208,7 @@
         "episode_url": "https://ios.mifun.org/vodplay/17612-2-1/",
         "play": "mismatch",
         "play_reason": "页面出现了视频地址，但 matchVideoUrl 认不出来",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc3bubemaac7yagxva7fnss2dieiygqersa.f0.mp4?dis_k=feec5323463d6188aa22c1b7fa94d040&dis_t=1793082020"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc3bubemaac7yagxva7fnss2dieiygqersa.f0.mp4?dis_k=2d927e2c0b2f5f962f48b246e40ad62b&dis_t=1793122307"
       },
       "site": "ios.mifun.org"
     },
@@ -1338,9 +1331,8 @@
       ],
       "date_basis": "内容未变",
       "smoke": {
-        "status": "fail",
-        "reason": "详情页 HTTP 403（https://anime7.top/vod-detail/2645/）（自动修复也失败：没有详情页内容可用来修复剧集选择器）",
-        "stage": "episodes"
+        "status": "blocked",
+        "reason": "HTTP 403"
       },
       "site": "anime7.top"
     },
@@ -1746,7 +1738,7 @@
         "episode_url": "https://dmbus.cc/p/5963-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://hhjx.hhplayer.com/playlist/8298df34c8e87d6dc0af170f24ea0812cda7f688524f9df3.m3u8?expires=1793109545&sign=eace1a810d1b84d0545987c8e3bf5b21cdd4aabf3f147979464588ba0137f790"
+        "media": "https://hhjx.hhplayer.com/playlist/8298df34c8e87d6dc0af170f24ea0812cda7f688524f9df3.m3u8?expires=1793196317&sign=8d2a8fb05f79b8aa2f5cc40acbd3f7a44a87548bd9688ec5f0fe4d026b1199ba"
       },
       "site": "dmbus.cc",
       "chosen": true
@@ -1820,7 +1812,7 @@
         "episode_url": "https://www.mgnacg.com/bangumi/1545-2-1/",
         "play": "ok",
         "play_reason": "scanDomMediaUrls 能从 <video> 取到地址",
-        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=y1K9L99BcTUKqoq4QuALr0zL4Z2Xs6FkCh1LkYAfoac=:1793086197"
+        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=ydYwp6FP5PC7ml6aVXXJ0z_L9W-wHFRbqUnsQqz3_Fc=:1793125975"
       },
       "site": "mgnacg.com"
     },
@@ -1870,9 +1862,10 @@
         "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=xUgaECtbRDs4M9AV4IOuGxkDRYvvEr6E13zvk-I9Zrw%3D%3A1793095200"
+        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=HMhj1HInD8OyZ7yjxNRVJRfqnx1GbsvK9G0NMoa_JGA%3D%3A1793138400"
       },
-      "site": "moonci.com"
+      "site": "moonci.com",
+      "chosen": true
     },
     {
       "origin": "anibaka",
@@ -2176,7 +2169,7 @@
         "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=724b36cad3987d2637cb232cb0e10fc1&dis_t=1793082137"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=0eb747c096c9ba837a320f44ddf17a31&dis_t=1793121900"
       },
       "site": "7sefun.top",
       "chosen": true
@@ -2274,7 +2267,7 @@
       "date_basis": "内容未变",
       "smoke": {
         "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 168 个剧集链接",
+        "reason": "搜到 3 个条目，详情页选出 168 个剧集链接",
         "episode_count": 168,
         "episode_url": "https://www.bmddm.com/play/400602-0-0.html",
         "final_origin": "https://www.bmddm.com",
@@ -2454,8 +2447,8 @@
       ],
       "date_basis": "内容未变",
       "smoke": {
-        "status": "fail",
-        "reason": "HTTP 523"
+        "status": "unreachable",
+        "reason": "请求失败：ReadTimeout"
       },
       "site": "ylys.cc",
       "chosen": true
