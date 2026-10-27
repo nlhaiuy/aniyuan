@@ -462,7 +462,7 @@
       "version": 2,
       "arguments": {
         "name": "次元番",
-        "description": "[自动检测未通过：HTTP 403] 次元番，提供高清动漫资源在线搜索与免费观看。 （AniBaka 规则 cyfz rev 6 自动转换）",
+        "description": "次元番，提供高清动漫资源在线搜索与免费观看。 （AniBaka 规则 cyfz rev 6 自动转换）",
         "iconUrl": "https://hec-community-online.cdn.bcebos.com/COMMENT/98d18b1002eb5dd3dd1faf88162b7045/1781019621344.png",
         "searchConfig": {
           "searchUrl": "https://www.cyfz.top/index.php/ajax/suggest?mid=1&wd={keyword}&limit=30",
@@ -1264,7 +1264,7 @@
           "searchUseSubjectNamesCount": 1,
           "rawBaseUrl": "",
           "requestInterval": 3000,
-          "searchUrl": "https://www.bmmdmm.com/s_all?ex=1&kw={keyword}",
+          "searchUrl": "https://www.bmddm.com/s_all?ex=1&kw={keyword}",
           "subjectFormatId": "a",
           "selectorSubjectFormatA": {
             "selectLists": "div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(1) > ul > li h2 > a",
@@ -2091,7 +2091,7 @@
         "version": 2,
         "arguments": {
           "name": "次元番",
-          "description": "[自动检测未通过：HTTP 403] 次元番，提供高清动漫资源在线搜索与免费观看。 （AniBaka 规则 cyfz rev 6 自动转换）",
+          "description": "次元番，提供高清动漫资源在线搜索与免费观看。 （AniBaka 规则 cyfz rev 6 自动转换）",
           "iconUrl": "https://hec-community-online.cdn.bcebos.com/COMMENT/98d18b1002eb5dd3dd1faf88162b7045/1781019621344.png",
           "searchConfig": {
             "searchUrl": "https://www.cyfz.top/index.php/ajax/suggest?mid=1&wd={keyword}&limit=30",
@@ -2893,7 +2893,7 @@
             "searchUseSubjectNamesCount": 1,
             "rawBaseUrl": "",
             "requestInterval": 3000,
-            "searchUrl": "https://www.bmmdmm.com/s_all?ex=1&kw={keyword}",
+            "searchUrl": "https://www.bmddm.com/s_all?ex=1&kw={keyword}",
             "subjectFormatId": "a",
             "selectorSubjectFormatA": {
               "selectLists": "div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(1) > ul > li h2 > a",
