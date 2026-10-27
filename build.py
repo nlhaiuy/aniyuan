@@ -476,8 +476,11 @@ def main():
     for c in sorted(chosen, key=lambda c: c["source"]["id"]):
         s = strip_private(c["source"])
         sm = c.get("smoke")
-        if sm and sm["status"] in ("fail", "blocked", "unreachable"):
-            if config.get("drop_failed") and sm["status"] == "fail":
+        # 只有“能打开页面但选择器没选中”这种确实是配置问题的才在描述里警告；
+        # blocked / unreachable 多半是 GitHub 海外服务器被拦或访问不了，国内用户未必有问题，
+        # 原因只写在报告里，不往订阅描述里加前缀
+        if sm and sm["status"] == "fail":
+            if config.get("drop_failed"):
                 c["dropped"] = True
                 continue
             s["arguments"]["description"] = "[自动检测未通过：%s] " % sm["reason"] + s["arguments"].get("description", "")

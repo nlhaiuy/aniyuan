@@ -10,6 +10,7 @@ on:
       - "config.json"
       - "overrides/**"
       - "baseline/**"
+      - "manual/**"
       - ".github/workflows/sync.yml"
 
 permissions:
@@ -76,5 +77,7 @@ jobs:
             echo "订阅没有变化"
           else
             git commit -m "chore: 同步 Kazumi + AniBaka 规则并重新生成订阅"
-            git push
+            # 任务最长跑 90 分钟，期间如果有人推送了别的改动，先变基再推，避免非快进失败
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
