@@ -1,7 +1,7 @@
 """输出订阅前统一 id / 名称 / 描述的格式。
 
-id：只做格式规整（小写、只含 a-z0-9 和连字符）。现有 id 不会被改动——id 是 Animeko 里启用状态的
-    钥匙，改了用户的设置就丢了；所以这里是“新出现的 id 也必须长成这样”，而不是重命名。
+id：统一成 aniyuan-<站点名>（去掉 anibaka-/kazumi- 这类来源前缀，它和实际采用的来源常常对不上）。
+    站点名沿用原来的 AniBaka key / Kazumi 规则名，所以同一个站的 id 之后不会再变。
 名称：NFKC 规整、合并空白、括号前留一个空格；纯英文/数字的站名（如 ant、LMM）补上域名，
     写成“名称 (域名)”，和“佩可爱动漫 (peko.love)”一致。config.names 可按 id 手动指定。
 描述：[警告前缀] + 站点简介 + （来源：…）。站点简介取自上游规则自带的描述，没有就写“站点 域名。”；
@@ -25,9 +25,17 @@ ORIGIN_LABEL = {"kazumi": "Kazumi 规则", "anibaka": "AniBaka 规则", "easyban
                 "baseline": "基线配置", "manual": "手动维护"}
 
 
+ID_PREFIX = "aniyuan-"
+OLD_PREFIX = re.compile(r"^(?:anibaka|kazumi|manual|aniyuan)-")
+
+
 def normalize_id(sid):
-    """小写，只留 a-z0-9 和连字符。已经合规的 id 原样返回。"""
-    return re.sub(r"-{2,}", "-", re.sub(r"[^a-z0-9]+", "-", str(sid).lower())).strip("-")
+    """统一成 aniyuan-<站点名>：小写，只含 a-z0-9 和连字符。
+    转换器内部仍按来源给的 id（anibaka-<key> / kazumi-<名字>，用来对上 baseline 和 overrides），
+    输出时去掉来源前缀、统一加 aniyuan-。已经是 aniyuan-xxx 的原样返回（幂等）。"""
+    body = re.sub(r"-{2,}", "-", re.sub(r"[^a-z0-9]+", "-", str(sid).lower())).strip("-")
+    body = OLD_PREFIX.sub("", body, count=1).strip("-")
+    return ID_PREFIX + (body or "rule")
 
 
 def host_label(source):

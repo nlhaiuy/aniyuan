@@ -11,7 +11,7 @@
 合并规则：
   1. 按“站点主机名”（去掉 www./m.，可在 config.json 的 site_aliases 里手动并站）分组；
   2. 同一站点在多个来源里都有，取最后修改时间更新的那个（并列时 Kazumi > 纯纯看番 > AniBaka）；
-  3. 站点在 AniBaka 里有时，订阅里的 id 固定为 anibaka-<key>，否则为 kazumi-<name>；
+  3. 站点在 AniBaka 里有时，订阅里的 id 取自 AniBaka 的 key，否则取 Kazumi 规则名，输出时统一成 aniyuan-<站点名>；
      id 不随“谁赢了”变化，Animeko 里用户的启用状态才不会丢；
   4. AniBaka 规则转不了时，回退到 baseline/anibaka.json 里同 id 的现成配置。
 """

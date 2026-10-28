@@ -17,11 +17,15 @@ def cand(origin, key, version, desc, status="ok", host="x.com"):
     return dict(origin=origin, key=key, version=version, status=status, source=src, notes=[])
 
 
-# ---- id：合规的原样不动，不合规的规整 ----
-for sid in ("anibaka-2kdm", "anibaka-ani-pekolove", "kazumi-xfdmnext", "kazumi-9ciyuan"):
-    check("现有 id 不变：%s" % sid, normalize_id(sid) == sid)
-check("大写和下划线规整", normalize_id("Anibaka-Ani_Peko Love") == "anibaka-ani-peko-love")
-check("连续连字符合并、首尾去掉", normalize_id("-kazumi--x-") == "kazumi-x")
+# ---- id：统一成 aniyuan-<站点名> ----
+for old, new in (("anibaka-2kdm", "aniyuan-2kdm"), ("anibaka-ani-pekolove", "aniyuan-ani-pekolove"),
+                 ("kazumi-xfdmnext", "aniyuan-xfdmnext"), ("kazumi-9ciyuan", "aniyuan-9ciyuan"), ("manual-foo", "aniyuan-foo")):
+    check("去掉来源前缀：%s -> %s" % (old, new), normalize_id(old) == new)
+    check("幂等：%s" % new, normalize_id(new) == new)
+check("大写和下划线规整", normalize_id("Anibaka-Ani_Peko Love") == "aniyuan-ani-peko-love")
+check("连续连字符合并、首尾去掉", normalize_id("-kazumi--x-") == "aniyuan-x")
+check("只去一次前缀：站名本身带 kazumi", normalize_id("aniyuan-kazumi-foo") == "aniyuan-kazumi-foo" and normalize_id("kazumi-kazumi") == "aniyuan-kazumi")
+check("空 id 兜底", normalize_id("") == "aniyuan-rule")
 
 # ---- 名称 ----
 check("纯英文站名补域名", normalize_name("mutefun", "mutedm.com") == "mutefun (mutedm.com)")
@@ -69,7 +73,7 @@ check("描述规整两遍结果不变（幂等）", compose_description(c2, "x.c
 c = cand("kazumi", "LMM", "2.3", "")
 c["source"]["id"] = "Kazumi-LMM"; c["source"]["arguments"]["name"] = "LMM"
 s = normalize_source(c, c["source"], {}, "")
-check("normalize_source：id / 名称 / 描述", s["id"] == "kazumi-lmm" and s["arguments"]["name"] == "LMM (x.com)"
+check("normalize_source：id / 名称 / 描述", s["id"] == "aniyuan-lmm" and s["arguments"]["name"] == "LMM (x.com)"
       and s["arguments"]["description"] == "站点 x.com。（来源：Kazumi 规则 LMM v2.3，自动转换）")
 c = cand("manual", "anibaka-girigirilove", "", "", host="m3u8.girigirilove.com")
 s = normalize_source(c, c["source"], {"site_aliases": {"m3u8.girigirilove.com": "ani.girigirilove.com"}}, "")

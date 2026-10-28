@@ -86,7 +86,7 @@ def main():
         ("post1 标为无法转换", rep["post1"]["status"] == "unsupported" and "post1" not in str(ids)),
         ("gone1 标为缺文件", rep["gone1"]["status"] == "missing"),
         ("订阅里两处列表一致", ids == exp),
-        ("失败项只标记、不剔除", "kazumi-blocked1" in ids and "kazumi-empty1" in ids),
+        ("失败项只标记、不剔除", "aniyuan-blocked1" in ids and "aniyuan-empty1" in ids),
         ("失败项描述带前缀", any(s["arguments"]["description"].startswith("[自动检测未通过") for s in sub["mediaSources"])),
         ("所有描述都带统一的来源说明", all("（来源：" in s["arguments"]["description"] for s in sub["mediaSources"])),
         ("所有 id 都是小写 + 连字符", all(__import__("re").fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", i) for i in ids)),
