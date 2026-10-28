@@ -234,22 +234,22 @@
     },
     {
       "site": "moonci.com",
-      "winner": "anibaka:moonci",
+      "winner": "kazumi:moonci",
       "id": "anibaka-moonci",
-      "reason": "最新的 kazumi:moonci 自动检测没有结论，改用检测结果更好的（ok）",
+      "reason": "更新（2026-10-19）",
       "members": [
+        "kazumi:moonci(2026-10-19)",
         "anibaka:moonci(2026-09-30)",
-        "kazumi:aafun(2026-08-21)",
-        "kazumi:moonci(2026-10-19)"
+        "kazumi:aafun(2026-08-21)"
       ]
     },
     {
       "site": "mutedm.com",
       "winner": "kazumi:mutefun",
       "id": "anibaka-2kdm",
-      "reason": "更新（2026-10-15）",
+      "reason": "更新（2026-10-28）",
       "members": [
-        "kazumi:mutefun(2026-10-15)",
+        "kazumi:mutefun(2026-10-28)",
         "baseline:2kdm(2026-09-30)",
         "anibaka:2kdm(2026-09-30)"
       ]
@@ -349,7 +349,14 @@
         "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=0eb747c096c9ba837a320f44ddf17a31&dis_t=1793121900"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=b1ba288e13c7596ad1424e61455a40f7&dis_t=1793147837"
+      },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
       },
       "site": "7sefun.top"
     },
@@ -377,7 +384,14 @@
         "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=R0_7LfExLA01fxRkWDjaFFNSTEhppUlX41zv5Rf8ZG8%3D%3A1793124000"
+        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=56TekDflgI7XdkA2CrbwUqr88711XKkitmk50BZBzVg%3D%3A1793156400"
+      },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
       },
       "site": "moonci.com"
     },
@@ -401,6 +415,10 @@
       "smoke": {
         "status": "blocked",
         "reason": "HTTP 403"
+      },
+      "health": {
+        "last": "blocked",
+        "grace": false
       },
       "site": "agedm.io"
     },
@@ -428,6 +446,13 @@
         "episode_url": "https://www.akianime.cc/bgmplay/dPDDDE-5-1.html",
         "play": "none",
         "play_reason": "等了 20 秒没有出现视频地址"
+      },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "none",
+        "last": "ok",
+        "grace": false
       },
       "site": "akianime.cc"
     },
@@ -460,6 +485,13 @@
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
         "media": "https://www.bmddm.com/hdst/player/artplayer/index.html?url=https://v.cdnlz14.com/20230930/29887_2e6cf8c7/index.m3u8"
       },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
+      },
       "site": "bmddm.com"
     },
     {
@@ -481,6 +513,10 @@
       "smoke": {
         "status": "blocked",
         "reason": "HTTP 403"
+      },
+      "health": {
+        "last": "blocked",
+        "grace": false
       },
       "site": "sbdl.cc",
       "chosen": true
@@ -511,6 +547,13 @@
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
         "media": "https://hhjx.hhplayer.com/playlist/8298df34c8e87d6dc0af170f24ea0812cda7f688524f9df3.m3u8?expires=1793196317&sign=8d2a8fb05f79b8aa2f5cc40acbd3f7a44a87548bd9688ec5f0fe4d026b1199ba"
       },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
+      },
       "site": "dmbus.cc"
     },
     {
@@ -538,6 +581,13 @@
         "play": "none",
         "play_reason": "等了 20 秒没有出现视频地址"
       },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "none",
+        "last": "ok",
+        "grace": false
+      },
       "site": "ezdmw.org"
     },
     {
@@ -560,6 +610,12 @@
         "status": "fail",
         "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
         "stage": "search"
+      },
+      "health": {
+        "fails": 1,
+        "last_fail": 1793149317,
+        "last": "fail",
+        "grace": false
       },
       "site": "ani.girigirilove.com"
     },
@@ -586,7 +642,14 @@
         "episode_url": "https://www.lmm85.com/play/7817_1_1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=0eb747c096c9ba837a320f44ddf17a31&dis_t=1793121900"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=b1ba288e13c7596ad1424e61455a40f7&dis_t=1793147837"
+      },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
       },
       "site": "lmm85.com",
       "chosen": true
@@ -616,7 +679,14 @@
         "template": "/media/{value}.html",
         "play": "ok",
         "play_reason": "scanDomMediaUrls 能从 <video> 取到地址",
-        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=epsOk1AkWZctYFlQVSxNaQI0j-e6Vq0b-if3-h46yt8=:1793125700"
+        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=T_pxYt3zC6C7KTGWyfZXXDpIWwBBfeaVsZU9FGvqIOo=:1793152621"
+      },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
       },
       "site": "mgnacg.com",
       "chosen": true
@@ -642,40 +712,53 @@
         "reason": "搜到 2 个条目，详情页选出 30 个剧集链接",
         "episode_count": 30,
         "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
-        "play": "none",
-        "play_reason": "等了 20 秒没有出现视频地址"
+        "play": "ok",
+        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
+        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=56TekDflgI7XdkA2CrbwUqr88711XKkitmk50BZBzVg%3D%3A1793156400"
       },
-      "site": "moonci.com"
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
+      },
+      "site": "moonci.com",
+      "chosen": true
     },
     {
       "origin": "kazumi",
       "key": "mutefun",
-      "version": "1.4",
+      "version": "1.5",
       "status": "ok",
-      "notes": [
-        "域名已跳转，改用新域名 https://www.mutedm.com（原 https://www.2kdm.com）"
-      ],
+      "notes": [],
       "info": [
         "规则没有 sourceTemplate，条目链接按 /voddetail/{value}.html 猜测，冒烟测试会尝试其他写法",
         "Kazumi 规则没有线路名，所有线路合并为一条"
       ],
       "guess": false,
-      "date": 1792059072,
+      "date": 1793146170,
       "live_hosts": [
-        "www.2kdm.com"
+        "www.mutedm.com"
       ],
-      "raw_hash": "2d5c68c7ce80c91af3593663158655e8499897011741cdd99f76f8050676a025",
-      "date_basis": "内容未变",
+      "raw_hash": "a2114fdf13acca0a4e78299f7c606e3610e2eb340ba1d28c6c3aa67229867375",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "ok",
         "reason": "搜到 2 个条目，详情页选出 20 个剧集链接",
         "episode_count": 20,
         "episode_url": "https://www.mutedm.com/vodplay/2989-2-1.html",
         "template": "/voddetail/{value}.html",
-        "final_origin": "https://www.mutedm.com",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
         "media": "https://3ee59f732c9ba3662a3f6c18b60061d3.r2.cloudflarestorage.com/asia/2026/2026%E5%B9%B41%E6%9C%88/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2_%E7%AC%AC%E4%BA%8C%E5%AD%A3/%E8%91%AC%E9%80%8"
+      },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
       },
       "site": "mutedm.com",
       "chosen": true
@@ -706,6 +789,13 @@
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
         "media": "https://cdn.vvvip-plays33.cc/20260116/4703_ac4395ad/index.m3u8"
       },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
+      },
       "site": "dcc3.com"
     },
     {
@@ -727,6 +817,10 @@
       "smoke": {
         "status": "skipped",
         "reason": "手写配置，不做自动检测"
+      },
+      "health": {
+        "last": "skipped",
+        "grace": false
       },
       "site": "sorani.net"
     },
@@ -756,6 +850,13 @@
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
         "media": "https://player.moedot.net/player/index.php?code=xfdm1&from=cf&url=https://play.xfvod.pro:8088/Z/Z-%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2/S1/01.mp4"
       },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
+      },
       "site": "dm1.xfdm.pro",
       "chosen": true
     },
@@ -778,6 +879,10 @@
       "smoke": {
         "status": "skipped",
         "reason": "手写配置，不做自动检测"
+      },
+      "health": {
+        "last": "skipped",
+        "grace": false
       },
       "site": "next.xifanacg.com",
       "chosen": true
@@ -825,7 +930,14 @@
         "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=0eb747c096c9ba837a320f44ddf17a31&dis_t=1793121900"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=b1ba288e13c7596ad1424e61455a40f7&dis_t=1793147837"
+      },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
       },
       "site": "7sefun.top"
     },
@@ -849,6 +961,10 @@
       "smoke": {
         "status": "blocked",
         "reason": "HTTP 403"
+      },
+      "health": {
+        "last": "blocked",
+        "grace": false
       },
       "site": "cyfz.top",
       "chosen": true
@@ -875,6 +991,12 @@
         "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
         "stage": "search"
       },
+      "health": {
+        "fails": 1,
+        "last_fail": 1793149317,
+        "last": "fail",
+        "grace": false
+      },
       "site": "cyfz.top"
     },
     {
@@ -895,6 +1017,10 @@
       "smoke": {
         "status": "blocked",
         "reason": "HTTP 403"
+      },
+      "health": {
+        "last": "blocked",
+        "grace": false
       },
       "site": "5dm.dev",
       "chosen": true
@@ -919,6 +1045,10 @@
       "smoke": {
         "status": "blocked",
         "reason": "HTTP 403"
+      },
+      "health": {
+        "last": "blocked",
+        "grace": false
       },
       "site": "5dm.dev"
     },
@@ -962,6 +1092,10 @@
         "status": "blocked",
         "reason": "搜索页出现验证码/环境检查"
       },
+      "health": {
+        "last": "blocked",
+        "grace": false
+      },
       "site": "ani.pekolove.net",
       "chosen": true
     },
@@ -989,7 +1123,14 @@
         "episode_url": "https://m.lm6.net/play/7817_1_1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=0eb747c096c9ba837a320f44ddf17a31&dis_t=1793121900"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=b771dab663f04400b92cc2a997cb7e9a&dis_t=1793149047"
+      },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
       },
       "site": "lm6.net",
       "chosen": true
@@ -1015,6 +1156,12 @@
         "status": "fail",
         "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
         "stage": "search"
+      },
+      "health": {
+        "fails": 1,
+        "last_fail": 1793149317,
+        "last": "fail",
+        "grace": false
       },
       "site": "lm6.net"
     },
@@ -1061,6 +1208,13 @@
         "play": "none",
         "play_reason": "等了 20 秒没有出现视频地址"
       },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "none",
+        "last": "ok",
+        "grace": false
+      },
       "site": "akianime.cc",
       "chosen": true
     },
@@ -1086,6 +1240,12 @@
         "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
         "stage": "search"
       },
+      "health": {
+        "fails": 1,
+        "last_fail": 1793149317,
+        "last": "fail",
+        "grace": false
+      },
       "site": "akianime.cc"
     },
     {
@@ -1108,6 +1268,10 @@
       "smoke": {
         "status": "blocked",
         "reason": "HTTP 403"
+      },
+      "health": {
+        "last": "blocked",
+        "grace": false
       },
       "site": "animoe.org",
       "chosen": true
@@ -1132,6 +1296,10 @@
       "smoke": {
         "status": "blocked",
         "reason": "HTTP 403"
+      },
+      "health": {
+        "last": "blocked",
+        "grace": false
       },
       "site": "animoe.org"
     },
@@ -1181,6 +1349,13 @@
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
         "media": "https://data.m3u8.in/player/?url=video__EA17B03A83A8C8BE3254B318495D031722AF6D1E0D45619362A03FE1D5FD9A5E95560239695373A5F6D92C959A888378"
       },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
+      },
       "site": "ios.mifun.org",
       "chosen": true
     },
@@ -1208,7 +1383,14 @@
         "episode_url": "https://ios.mifun.org/vodplay/17612-2-1/",
         "play": "mismatch",
         "play_reason": "页面出现了视频地址，但 matchVideoUrl 认不出来",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc3bubemaac7yagxva7fnss2dieiygqersa.f0.mp4?dis_k=2d927e2c0b2f5f962f48b246e40ad62b&dis_t=1793122307"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc3bubemaac7yagxva7fnss2dieiygqersa.f0.mp4?dis_k=c7e637b883fc4c93b39388d276ba1a6d&dis_t=1793148221"
+      },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "mismatch",
+        "last": "ok",
+        "grace": false
       },
       "site": "ios.mifun.org"
     },
@@ -1252,6 +1434,10 @@
         "status": "blocked",
         "reason": "搜索页出现验证码/环境检查"
       },
+      "health": {
+        "last": "blocked",
+        "grace": false
+      },
       "site": "cn.agekkkk.com",
       "chosen": true
     },
@@ -1281,6 +1467,13 @@
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
         "media": "https://psstatic.cdn.bcebos.com/basics/chat/afx%202_1750155358000.mp4"
+      },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
       },
       "site": "didahd.xyz",
       "chosen": true
@@ -1313,6 +1506,13 @@
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
         "media": "https://psstatic.cdn.bcebos.com/basics/chat/afx%202_1750155358000.mp4"
       },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
+      },
       "site": "didahd.xyz"
     },
     {
@@ -1333,6 +1533,10 @@
       "smoke": {
         "status": "blocked",
         "reason": "HTTP 403"
+      },
+      "health": {
+        "last": "blocked",
+        "grace": false
       },
       "site": "anime7.top"
     },
@@ -1356,6 +1560,10 @@
       "smoke": {
         "status": "blocked",
         "reason": "HTTP 403"
+      },
+      "health": {
+        "last": "blocked",
+        "grace": false
       },
       "site": "anime7.top"
     },
@@ -1399,6 +1607,12 @@
         "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
         "stage": "search"
       },
+      "health": {
+        "fails": 1,
+        "last_fail": 1793149317,
+        "last": "fail",
+        "grace": false
+      },
       "site": "ani.girigirilove.com"
     },
     {
@@ -1422,6 +1636,12 @@
         "status": "fail",
         "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
         "stage": "search"
+      },
+      "health": {
+        "fails": 1,
+        "last_fail": 1793149317,
+        "last": "fail",
+        "grace": false
       },
       "site": "ani.girigirilove.com"
     },
@@ -1484,6 +1704,10 @@
         "status": "blocked",
         "reason": "HTTP 403"
       },
+      "health": {
+        "last": "blocked",
+        "grace": false
+      },
       "site": "agedm.io",
       "chosen": true
     },
@@ -1507,6 +1731,10 @@
       "smoke": {
         "status": "blocked",
         "reason": "HTTP 403"
+      },
+      "health": {
+        "last": "blocked",
+        "grace": false
       },
       "site": "agedm.io"
     },
@@ -1555,6 +1783,13 @@
         "play_reason": "页面出现了视频地址，但 matchVideoUrl 认不出来",
         "media": "https://xgct-video.bzcdn.net/59439519-1504-4ddd-9840-40522e286e5f/playlist.m3u8"
       },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "mismatch",
+        "last": "ok",
+        "grace": false
+      },
       "site": "xgcartoon.com",
       "chosen": true
     },
@@ -1576,6 +1811,10 @@
       "smoke": {
         "status": "blocked",
         "reason": "搜索页出现验证码/环境检查"
+      },
+      "health": {
+        "last": "blocked",
+        "grace": false
       },
       "site": "mutedm.com"
     },
@@ -1607,6 +1846,13 @@
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
         "media": "https://3ee59f732c9ba3662a3f6c18b60061d3.r2.cloudflarestorage.com/asia/2026/2026%E5%B9%B41%E6%9C%88/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2_%E7%AC%AC%E4%BA%8C%E5%AD%A3/%E8%91%AC%E9%80%8"
       },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
+      },
       "site": "mutedm.com"
     },
     {
@@ -1627,6 +1873,12 @@
       "smoke": {
         "status": "fail",
         "reason": "HTTP 404"
+      },
+      "health": {
+        "fails": 1,
+        "last_fail": 1793149317,
+        "last": "fail",
+        "grace": false
       },
       "site": "gugu3.com",
       "chosen": true
@@ -1651,6 +1903,12 @@
       "smoke": {
         "status": "fail",
         "reason": "HTTP 404"
+      },
+      "health": {
+        "fails": 1,
+        "last_fail": 1793149317,
+        "last": "fail",
+        "grace": false
       },
       "site": "gugu3.com"
     },
@@ -1740,6 +1998,13 @@
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
         "media": "https://hhjx.hhplayer.com/playlist/8298df34c8e87d6dc0af170f24ea0812cda7f688524f9df3.m3u8?expires=1793196317&sign=8d2a8fb05f79b8aa2f5cc40acbd3f7a44a87548bd9688ec5f0fe4d026b1199ba"
       },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
+      },
       "site": "dmbus.cc",
       "chosen": true
     },
@@ -1764,6 +2029,12 @@
         "status": "fail",
         "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
         "stage": "search"
+      },
+      "health": {
+        "fails": 1,
+        "last_fail": 1793149317,
+        "last": "fail",
+        "grace": false
       },
       "site": "dmbus.cc"
     },
@@ -1812,7 +2083,14 @@
         "episode_url": "https://www.mgnacg.com/bangumi/1545-2-1/",
         "play": "ok",
         "play_reason": "scanDomMediaUrls 能从 <video> 取到地址",
-        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=ydYwp6FP5PC7ml6aVXXJ0z_L9W-wHFRbqUnsQqz3_Fc=:1793125975"
+        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=GMHg4dcy_kwEolCTYA0sXyqr7QSVvHbE2QZfle9Gaj4=:1793152874"
+      },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
       },
       "site": "mgnacg.com"
     },
@@ -1838,6 +2116,12 @@
         "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
         "stage": "search"
       },
+      "health": {
+        "fails": 1,
+        "last_fail": 1793149317,
+        "last": "fail",
+        "grace": false
+      },
       "site": "mgnacg.com"
     },
     {
@@ -1862,10 +2146,16 @@
         "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=HMhj1HInD8OyZ7yjxNRVJRfqnx1GbsvK9G0NMoa_JGA%3D%3A1793138400"
+        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=56TekDflgI7XdkA2CrbwUqr88711XKkitmk50BZBzVg%3D%3A1793156400"
       },
-      "site": "moonci.com",
-      "chosen": true
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
+      },
+      "site": "moonci.com"
     },
     {
       "origin": "anibaka",
@@ -1888,6 +2178,12 @@
         "status": "fail",
         "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
         "stage": "search"
+      },
+      "health": {
+        "fails": 1,
+        "last_fail": 1793149317,
+        "last": "fail",
+        "grace": false
       },
       "site": "silisilifun.com",
       "chosen": true
@@ -1913,6 +2209,12 @@
         "status": "fail",
         "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
         "stage": "search"
+      },
+      "health": {
+        "fails": 1,
+        "last_fail": 1793149317,
+        "last": "fail",
+        "grace": false
       },
       "site": "silisilifun.com"
     },
@@ -1960,6 +2262,13 @@
         "play": "none",
         "play_reason": "等了 20 秒没有出现视频地址"
       },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "none",
+        "last": "ok",
+        "grace": false
+      },
       "site": "ezdmw.org",
       "chosen": true
     },
@@ -1985,6 +2294,10 @@
         "status": "blocked",
         "reason": "HTTP 403"
       },
+      "health": {
+        "last": "blocked",
+        "grace": false
+      },
       "site": "sbdl.cc"
     },
     {
@@ -2007,6 +2320,10 @@
       "smoke": {
         "status": "blocked",
         "reason": "HTTP 403"
+      },
+      "health": {
+        "last": "blocked",
+        "grace": false
       },
       "site": "sbdl.cc"
     },
@@ -2049,6 +2366,10 @@
       "smoke": {
         "status": "skipped",
         "reason": "手写配置，不做自动检测"
+      },
+      "health": {
+        "last": "skipped",
+        "grace": false
       },
       "site": "sorani.net",
       "chosen": true
@@ -2169,7 +2490,14 @@
         "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=0eb747c096c9ba837a320f44ddf17a31&dis_t=1793121900"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=b1ba288e13c7596ad1424e61455a40f7&dis_t=1793147837"
+      },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
       },
       "site": "7sefun.top",
       "chosen": true
@@ -2195,6 +2523,10 @@
         "status": "blocked",
         "reason": "HTTP 403"
       },
+      "health": {
+        "last": "blocked",
+        "grace": false
+      },
       "site": "jcydm1.com",
       "chosen": true
     },
@@ -2219,6 +2551,10 @@
         "status": "blocked",
         "reason": "HTTP 403"
       },
+      "health": {
+        "last": "blocked",
+        "grace": false
+      },
       "site": "anime7.top",
       "chosen": true
     },
@@ -2242,6 +2578,10 @@
       "smoke": {
         "status": "unreachable",
         "reason": "请求失败：ConnectionError"
+      },
+      "health": {
+        "last": "unreachable",
+        "grace": false
       },
       "site": "mayi520.org",
       "chosen": true
@@ -2274,6 +2614,13 @@
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
         "media": "https://www.bmddm.com/hdst/player/artplayer/index.html?url=https://v.cdnlz14.com/20230930/29887_2e6cf8c7/index.m3u8"
+      },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
       },
       "site": "bmddm.com",
       "chosen": true
@@ -2362,6 +2709,13 @@
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
         "media": "https://cdn.vvvip-plays33.cc/20260116/4703_ac4395ad/index.m3u8"
       },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
+      },
       "site": "dcc3.com",
       "chosen": true
     },
@@ -2385,6 +2739,10 @@
       "smoke": {
         "status": "unreachable",
         "reason": "请求失败：SSLError"
+      },
+      "health": {
+        "last": "unreachable",
+        "grace": false
       },
       "site": "omofun03.top",
       "chosen": true
@@ -2449,6 +2807,10 @@
       "smoke": {
         "status": "unreachable",
         "reason": "请求失败：ReadTimeout"
+      },
+      "health": {
+        "last": "unreachable",
+        "grace": false
       },
       "site": "ylys.cc",
       "chosen": true
@@ -2546,6 +2908,13 @@
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
         "media": "https://pl.girigirilove.com/addons/aplyer/atom.php?key=0&url=https://ana.girigirilove.com/zijian/oldanime/2025/0725/SousounoFrierenS2CHT/01.mp4"
+      },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793149317,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
       },
       "site": "ani.girigirilove.com",
       "chosen": true
