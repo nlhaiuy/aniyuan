@@ -69,11 +69,12 @@ def main():
                 "searchList": "//li", "searchName": "//a", "searchResult": "//a", "chapterRoads": "//ul", "chapterResult": "//li/a"})
     json.dump([{"name": n, "version": "1"} for n in ("html1", "api1", "blocked1", "empty1", "post1", "down1", "gone1")], open(os.path.join(rules, "index.json"), "w"))
     out = os.path.join(tmp, "dist")
-    r = subprocess.run([sys.executable, "-I", os.path.join(ROOT, "build.py"), "--kazumi", rules, "--baseline", os.path.join(tmp, "none.json"), "--state", os.path.join(tmp, "state.json"), "--manual", os.path.join(tmp, "nomanual"), "--out", out, "--overrides", ov, "--smoke"],
+    r = subprocess.run([sys.executable, "-I", os.path.join(ROOT, "build.py"), "--kazumi", rules, "--baseline", os.path.join(tmp, "none.json"), "--state", os.path.join(tmp, "state.json"), "--health", os.path.join(tmp, "health.json"), "--manual", os.path.join(tmp, "nomanual"), "--out", out, "--overrides", ov, "--smoke"],
                        capture_output=True, text=True)
     print(r.stdout[-2500:], r.stderr[-1500:])
     rep = {e["key"]: e for e in json.load(open(os.path.join(out, "report.json")))["candidates"]}
     sub = json.load(open(os.path.join(out, "all.json")))
+    health = json.load(open(os.path.join(tmp, "health.json")))
     ids = [s["id"] for s in sub["mediaSources"]]
     exp = [s["id"] for s in sub["exportedMediaSourceDataList"]["mediaSources"]]
     checks = [
@@ -87,6 +88,9 @@ def main():
         ("订阅里两处列表一致", ids == exp),
         ("失败项只标记、不剔除", "kazumi-blocked1" in ids and "kazumi-empty1" in ids),
         ("失败项描述带前缀", any(s["arguments"]["description"].startswith("[自动检测未通过") for s in sub["mediaSources"])),
+        ("所有描述都带统一的来源说明", all("（来源：" in s["arguments"]["description"] for s in sub["mediaSources"])),
+        ("所有 id 都是小写 + 连字符", all(__import__("re").fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", i) for i in ids)),
+        ("联网检测后写出检测历史", health.get("kazumi:empty1", {}).get("fails") == 1 and health.get("kazumi:html1", {}).get("last_ok")),
         ("订阅里没有以下划线开头的内部字段", all(not any(k.startswith("_") for k in s) for s in sub["mediaSources"])),
     ]
     bad = 0

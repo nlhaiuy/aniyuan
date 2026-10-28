@@ -9,7 +9,7 @@ import json
 import os
 import re
 
-from convert import convert_rule, _origin
+from convert import convert_rule
 
 META = re.compile(r"^//\s*@(\w+)\s+(.*?)\s*$")
 CONST = re.compile(r'^var\s+([A-Z][A-Z0-9_]*)\s*=\s*("(?:[^"\\]|\\.)*")\s*;\s*$')
@@ -62,7 +62,7 @@ def convert_extension(path, config=None):
     res = convert_rule(rule, config)
     if res.source:
         a = res.source["arguments"]
-        a["description"] = "由纯纯看番社区 JS 源 %s v%s 自动转换" % (meta.get("key", label), meta.get("versionName", "?"))
+        a["description"] = ""   # “来源”说明由 build.py 统一生成
         cover = meta.get("cover", "")
         if cover.startswith("http"):
             a["iconUrl"] = cover

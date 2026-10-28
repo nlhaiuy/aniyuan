@@ -180,9 +180,7 @@ def convert_rule(rule, config=None):
     })
 
     tier = (config.get("tiers") or {}).get(name, config.get("default_tier", 4))
-    desc = "由 Kazumi 规则 %s v%s 自动转换" % (name, rule.get("version", "?"))
-    if rule.get("lastUpdate"):
-        desc += "（规则更新于 %s）" % rule["lastUpdate"]
+    desc = ""   # Kazumi 规则没有站点简介；“来源”说明由 build.py 统一生成（见 normalize.py）
     res.source = {
         "id": "kazumi-" + slugify(name),
         "factoryId": "web-selector",

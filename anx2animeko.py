@@ -275,8 +275,7 @@ def convert_anx(rule, entry=None, config=None):
     })
 
     tier = (config.get("tiers") or {}).get(key, config.get("default_tier", 4))
-    desc = (rule.get("description") or entry.get("intro") or "").strip()
-    desc += "%s（AniBaka 规则 %s rev %s 自动转换）" % (" " if desc else "", key, entry.get("rev", "?"))
+    desc = (rule.get("description") or entry.get("intro") or "").strip()   # “来源”说明由 build.py 统一生成
     res.source = {
         "id": source_id(key),
         "factoryId": "web-selector",

@@ -19,7 +19,6 @@ import argparse
 import hashlib
 import json
 import os
-import re
 import subprocess
 import sys
 import time
@@ -30,6 +29,8 @@ from anx2animeko import convert_anx, site_host, source_id  # noqa: E402
 from convert import convert_rule  # noqa: E402
 from ebjs import convert_extension  # noqa: E402
 from domains import follow_upstream, host_of  # noqa: E402
+from health import DEFAULT_THRESHOLD, confirmed_fail, smoke_tier, update_health  # noqa: E402
+from normalize import normalize_source  # noqa: E402
 from repair import brittle, mine_presets, repair_source  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -360,12 +361,10 @@ def merge(cands, config):
         def tier(c):
             if not by_smoke:
                 return 0.5 if c.get("guess") else 1
-            sm = c.get("smoke") or {}
-            if sm.get("status") == "ok":   # 播放检测过的：能播 > 没检测 > 没抓到 > 地址认不出
-                return {"ok": 3, "error": 2, "none": 1.8, "blocked": 1.6, "mismatch": 1.5}.get(sm.get("play"), 2)
-            if sm.get("status") == "fail":
-                return 0
-            return 0.5 if (c.get("guess") and sm.get("status") != "ok") else 1   # 搜索地址是推测的：没验证过就排在后面
+            t = smoke_tier(c)   # 通过 / 明确失败 / 宽限期内按上次成绩；其余没有结论
+            if t is not None:
+                return t
+            return 0.5 if c.get("guess") else 1   # 搜索地址是推测的：没验证过就排在后面
         members.sort(key=lambda c: (tier(c), c["date"] or 0, rank.get(c["origin"], 0)), reverse=True)
         by_date = sorted(members, key=lambda c: (c["date"] or 0, rank.get(c["origin"], 0)), reverse=True)[0]
         winner, reason = members[0], "更新（%s）" % fmt_date(members[0]["date"])
@@ -377,6 +376,8 @@ def merge(cands, config):
             else:
                 reason = "最新的 %s:%s 自动检测%s，改用检测结果更好的（%s）" % (
                     by_date["origin"], by_date["key"], {"fail": "未通过"}.get(smoke_of(by_date), "没有结论"), smoke_of(winner) or "-")
+        if winner is by_date and (winner.get("health") or {}).get("grace"):
+            reason += "；自动检测本次未通过，但以前通过过，暂不降级"
         manual = [c for c in members if c["origin"] == "manual"]
         if manual:
             winner, reason = manual[0], "manual/ 里手动维护的源，优先于自动转换"
@@ -409,6 +410,8 @@ def main():
     ap.add_argument("--baseline", default=os.path.join(HERE, "baseline", "anibaka.json"))
     ap.add_argument("--state", default=os.path.join(HERE, "state", "seen.json"),
                     help="记录各规则内容哈希和“最后真正改动时间”的文件")
+    ap.add_argument("--health", default=os.path.join(HERE, "state", "health.json"),
+                    help="记录各候选历次联网检测结果的文件（连续失败才降级）")
     ap.add_argument("--manual", default=os.path.join(HERE, "manual"), help="手动维护（亲测可用）的源所在目录")
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--playcheck", action="store_true", help="在 --smoke 之后再用无头浏览器检测能否播放（需要 playwright）")
@@ -470,21 +473,30 @@ def main():
             if pc:
                 pc.close()
 
+    if args.smoke:   # 没联网检测时不动历史
+        history = load_json(args.health) if os.path.exists(args.health) else {}
+        new_health = update_health(cands, history, int(time.time()), config.get("fail_threshold", DEFAULT_THRESHOLD))
+        os.makedirs(os.path.dirname(os.path.abspath(args.health)), exist_ok=True)
+        with open(args.health, "w", encoding="utf-8") as f:
+            json.dump(new_health, f, ensure_ascii=False, indent=1, sort_keys=True)
+            f.write("\n")
+
     chosen, decisions = merge(cands, config)
 
     sources = []
     for c in sorted(chosen, key=lambda c: c["source"]["id"]):
         s = strip_private(c["source"])
         sm = c.get("smoke")
-        # 只有“能打开页面但选择器没选中”这种确实是配置问题的才在描述里警告；
+        warn = ""
+        # 只有“能打开页面但选择器没选中”（fail）、且已连续失败到阈值的才在描述里警告；
         # blocked / unreachable 多半是 GitHub 海外服务器被拦或访问不了，国内用户未必有问题，
-        # 原因只写在报告里，不往订阅描述里加前缀
-        if sm and sm["status"] == "fail":
+        # 原因只写在报告里；宽限期内（以前通过过、这次才第一次失败）也不警告、不剔除
+        if sm and confirmed_fail(c):
             if config.get("drop_failed"):
                 c["dropped"] = True
                 continue
-            s["arguments"]["description"] = "[自动检测未通过：%s] " % sm["reason"] + s["arguments"].get("description", "")
-        sources.append(s)
+            warn = sm["reason"]
+        sources.append(normalize_source(c, s, config, warn))
     ids = [s["id"] for s in sources]
     assert len(ids) == len(set(ids)), "出现重复 id：%s" % sorted({i for i in ids if ids.count(i) > 1})
 

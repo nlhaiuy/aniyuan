@@ -13,19 +13,27 @@ on:
       - "manual/**"
       - ".github/workflows/sync.yml"
 
+# 默认只读。只有最后的 publish 任务单独申请写权限
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: sync-subscription
   cancel-in-progress: false
 
 jobs:
+  # 构建任务：会用无头浏览器去打开一堆第三方站点，所以只给只读权限，
+  # 并且不把 GITHUB_TOKEN 留在 .git/config 里（persist-credentials: false）。
+  # 产物只有几个 JSON 文件，通过 artifact 交给 publish 任务。
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - uses: actions/setup-python@v5
         with:
@@ -47,29 +55,63 @@ jobs:
         run: |
           KAZUMI_RULES="$RUNNER_TEMP/KazumiRules" python tests/test_xpath2css.py
           python tests/test_anx.py
+          python tests/test_health.py
+          python tests/test_normalize.py
           python tests/test_live.py
           python tests/test_pipeline.py
 
       - name: 转换并做联网冒烟测试
         run: python build.py --kazumi "$RUNNER_TEMP/KazumiRules" --anibaka "$RUNNER_TEMP/AniBakaRule" --easybangumi "$RUNNER_TEMP/EasyBangumi" --out dist.new --smoke --playcheck
 
+      # 只打包要发布的几个文件（白名单），不带别的东西
+      - name: 打包产物
+        run: |
+          mkdir -p out/dist out/state
+          cp dist.new/all.json dist.new/report.json dist.new/report.md out/dist/
+          cp state/seen.json state/health.json out/state/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: subscription
+          path: out
+          if-no-files-found: error
+          retention-days: 3
+
+  # 发布任务：有写权限，但不运行浏览器、不访问第三方站点，只检查并提交 JSON 文件。
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: subscription
+          path: out
+
       - name: 安全检查（避免上游异常时把订阅清空）
         run: |
           python - <<'PY'
           import json, os, sys
-          new = json.load(open("dist.new/all.json"))["mediaSources"]
-          old = json.load(open("dist/all.json"))["mediaSources"] if os.path.exists("dist/all.json") else []
+          for p in ("out/dist/all.json", "out/dist/report.json", "out/state/seen.json", "out/state/health.json"):
+              json.load(open(p, encoding="utf-8"))   # 必须是合法 JSON
+          new = json.load(open("out/dist/all.json", encoding="utf-8"))["mediaSources"]
+          old = json.load(open("dist/all.json", encoding="utf-8"))["mediaSources"] if os.path.exists("dist/all.json") else []
           print("旧 %d 条 -> 新 %d 条" % (len(old), len(new)))
           if not new or (old and len(new) < len(old) * 0.5):
               sys.exit("新订阅条目数异常偏少，已中止，不覆盖旧文件")
           PY
 
       - name: 报告写入任务摘要
-        run: cat dist.new/report.md >> "$GITHUB_STEP_SUMMARY"
+        run: cat out/dist/report.md >> "$GITHUB_STEP_SUMMARY"
 
       - name: 提交变更
         run: |
-          rm -rf dist && mv dist.new dist
+          cp out/dist/all.json out/dist/report.json out/dist/report.md dist/
+          cp out/state/seen.json out/state/health.json state/
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add dist state
@@ -77,7 +119,5 @@ jobs:
             echo "订阅没有变化"
           else
             git commit -m "chore: 同步 Kazumi + AniBaka 规则并重新生成订阅"
-            # 任务最长跑 90 分钟，期间如果有人推送了别的改动，先变基再推，避免非快进失败
-            git pull --rebase origin "${GITHUB_REF_NAME}"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
+            git push
           fi
