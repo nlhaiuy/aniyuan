@@ -1,6 +1,6 @@
 # 订阅转换报告
 
-写入订阅 **32** 个数据源（候选 94 个，同站点合并后）。
+写入订阅 **32** 个数据源（候选 95 个，同站点合并后）。
 
 ## 同站点取舍
 
@@ -55,10 +55,11 @@
 | kazumi | LMM | 2.3 | 2026-10-15（内容未变） | 完整 | ok | ok | 是 |  |
 | kazumi | mgnacg | 1.2 | 2026-10-15（内容未变） | 完整 | ok | ok | 是 |  |
 | kazumi | moonci | 1.1 | 2026-10-19（内容未变） | 完整 | ok | ok | 是 |  |
-| kazumi | mutefun | 1.5 | 2026-10-28（内容已变） | 完整 | ok | ok | 是 |  |
+| kazumi | mutefun | 1.5 | 2026-10-28（内容未变） | 完整 | ok | ok | 是 |  |
 | kazumi | MXdm | 2.4 | 2026-10-01（内容未变） | 完整 | ok | ok | 否 |  |
 | kazumi | sorani | 1.0 | 2026-07-13（内容未变） | 手写 | skipped | - | 否 | 手写配置，不做自动检测 |
-| kazumi | xfdmneo | 1.1 | 2026-03-08（内容未变） | 完整 | ok | ok | 是 |  |
+| kazumi | TvTFun | 1.2 | 2026-10-28（首次记录） | 无法转换 | - | - | 否 | 章节来自接口（chapterApiConfig），无法推出 Animeko 需要的播放接口，需要手写 override |
+| kazumi | xfdmneo | 1.1 | 2026-03-08（内容未变） | 完整 | unreachable | - | 是 | 请求失败：ReadTimeout |
 | kazumi | xfdmnext | 1.1 | 2026-10-01（内容未变） | 手写 | skipped | - | 是 | 手写配置，不做自动检测 |
 | anibaka | 7sefun | rev 8 | 2026-09-30（内容未变） | 无法转换 | - | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等） |
 | baseline | 7sefun | rev 8 | 2026-09-30（内容未变） | 回退基线 | ok | ok | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较 |
@@ -131,7 +132,7 @@
 | easybangumi | kazumi-omofun03 | 1.1 | 2026-07-27（内容未变） | 完整 | unreachable | - | 是 | 请求失败：SSLError |
 | easybangumi | kazumi-sorani | 1.0 | 2026-07-27（内容未变） | 无法转换 | - | - | 否 | 接口型，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
 | easybangumi | kazumi-tvtfun | 1.1 | 2026-07-27（内容未变） | 无法转换 | - | - | 否 | 接口型，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
-| easybangumi | kazumi-ylsp | 1.1 | 2026-07-27（内容未变） | 完整 | unreachable | - | 是 | 请求失败：ReadTimeout |
+| easybangumi | kazumi-ylsp | 1.1 | 2026-07-27（内容未变） | 完整 | fail | - | 是 | HTTP 523 |
 | easybangumi | le | 1.0 | 2025-10-19（内容未变） | 无法转换 | - | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
 | easybangumi | omofun | 1.3 | 2025-10-19（内容未变） | 无法转换 | - | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
 | easybangumi | xifandm | 1.1 | 2026-07-15（内容未变） | 无法转换 | - | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
