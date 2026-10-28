@@ -29,8 +29,8 @@
 | lmm85.com | kazumi-lmm | kazumi:LMM | 只有这一个来源 | kazumi:LMM(2026-10-15) |
 | mayi520.org | kazumi-ant | easybangumi:kazumi-ant | 只有这一个来源 | easybangumi:kazumi-ant(2026-10-20) |
 | mgnacg.com | anibaka-mgnacg | kazumi:mgnacg | 更新（2026-10-15） | kazumi:mgnacg(2026-10-15)<br>anibaka:mgnacg(2026-07-18)<br>baseline:mgnacg(2026-07-18) |
-| moonci.com | anibaka-moonci | anibaka:moonci | 最新的 kazumi:moonci 自动检测没有结论，改用检测结果更好的（ok） | anibaka:moonci(2026-09-30)<br>kazumi:aafun(2026-08-21)<br>kazumi:moonci(2026-10-19) |
-| mutedm.com | anibaka-2kdm | kazumi:mutefun | 更新（2026-10-15） | kazumi:mutefun(2026-10-15)<br>baseline:2kdm(2026-09-30)<br>anibaka:2kdm(2026-09-30) |
+| moonci.com | anibaka-moonci | kazumi:moonci | 更新（2026-10-19） | kazumi:moonci(2026-10-19)<br>anibaka:moonci(2026-09-30)<br>kazumi:aafun(2026-08-21) |
+| mutedm.com | anibaka-2kdm | kazumi:mutefun | 更新（2026-10-28） | kazumi:mutefun(2026-10-28)<br>baseline:2kdm(2026-09-30)<br>anibaka:2kdm(2026-09-30) |
 | next.xifanacg.com | kazumi-xfdmnext | kazumi:xfdmnext | 只有这一个来源 | kazumi:xfdmnext(2026-10-01) |
 | omofun03.top | kazumi-omofun03 | easybangumi:kazumi-omofun03 | 只有这一个来源 | easybangumi:kazumi-omofun03(2026-07-27) |
 | sbdl.cc | anibaka-dalvdm | kazumi:dalvdm | 更新（2026-10-15） | kazumi:dalvdm(2026-10-15)<br>baseline:dalvdm(2026-10-07)<br>anibaka:dalvdm(2026-10-07) |
@@ -54,8 +54,8 @@
 | kazumi | giriGiriLove | 2.6 | 2026-10-22（内容未变） | 手写 | fail | - | 否 | 搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器） |
 | kazumi | LMM | 2.3 | 2026-10-15（内容未变） | 完整 | ok | ok | 是 |  |
 | kazumi | mgnacg | 1.2 | 2026-10-15（内容未变） | 完整 | ok | ok | 是 |  |
-| kazumi | moonci | 1.1 | 2026-10-19（内容未变） | 完整 | ok | none | 否 | 等了 20 秒没有出现视频地址 |
-| kazumi | mutefun | 1.4 | 2026-10-15（内容未变） | 完整 | ok | ok | 是 | 域名已跳转，改用新域名 https://www.mutedm.com（原 https://www.2kdm.com） |
+| kazumi | moonci | 1.1 | 2026-10-19（内容未变） | 完整 | ok | ok | 是 |  |
+| kazumi | mutefun | 1.5 | 2026-10-28（内容已变） | 完整 | ok | ok | 是 |  |
 | kazumi | MXdm | 2.4 | 2026-10-01（内容未变） | 完整 | ok | ok | 否 |  |
 | kazumi | sorani | 1.0 | 2026-07-13（内容未变） | 手写 | skipped | - | 否 | 手写配置，不做自动检测 |
 | kazumi | xfdmneo | 1.1 | 2026-03-08（内容未变） | 完整 | ok | ok | 是 |  |
@@ -105,7 +105,7 @@
 | anibaka | fsdm02 | rev 3 | 2026-09-30（内容未变） | 无法转换 | - | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）；baseline 里也没有这个源，已跳过 |
 | anibaka | mgnacg | rev 1 | 2026-07-18（内容未变） | 有近似 | ok | ok | 否 | 搜索用 MacCMS 的 suggest 接口（https://www.mgnacg.com/index.php/ajax/suggest?mid=1&wd={keyword}&limit=30，路径是按 MacCMS 默认值推的，AniBaka 里没写）；AniBaka 播放步骤用了 playerDecrypt 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频 |
 | baseline | mgnacg | rev 1 | 2026-07-18（内容未变） | 回退基线 | fail | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器） |
-| anibaka | moonci | rev 3 | 2026-09-30（内容未变） | 完整 | ok | ok | 是 |  |
+| anibaka | moonci | rev 3 | 2026-09-30（内容未变） | 完整 | ok | ok | 否 |  |
 | anibaka | silisili | rev 1 | 2026-09-30（内容未变） | 有近似 | fail | - | 是 | AniBaka 播放步骤用了 crypto 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频；搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器） |
 | baseline | silisili | rev 1 | 2026-09-30（内容未变） | 回退基线 | fail | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器） |
 | anibaka | ezdmw | rev 4 | 2026-10-07（内容未变） | 无法转换 | - | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等） |

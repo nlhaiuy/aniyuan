@@ -6,8 +6,8 @@
       "factoryId": "web-selector",
       "version": 2,
       "arguments": {
-        "name": "mutefun",
-        "description": "由 Kazumi 规则 mutefun v1.4 自动转换",
+        "name": "mutefun (mutedm.com)",
+        "description": "站点 mutedm.com。（来源：Kazumi 规则 mutefun v1.5，自动转换）",
         "iconUrl": "https://www.mutedm.com/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -59,7 +59,7 @@
       "version": 2,
       "arguments": {
         "name": "五弹幕 (5DM)",
-        "description": "五弹幕动漫源，支持番剧搜索、多线路分集与播放解析。搜索遇到站点验证时使用 WebView。 （AniBaka 规则 5dm rev 1 自动转换）",
+        "description": "五弹幕动漫源，支持番剧搜索、多线路分集与播放解析。搜索遇到站点验证时使用 WebView。（来源：AniBaka 规则 5dm rev 1，自动转换）",
         "iconUrl": "https://www.5dm.dev/wp-content/themes/5dm-next/assets/brand/mascot-face-32.png",
         "searchConfig": {
           "searchUrl": "https://www.5dm.dev/?s={keyword}&cat=-1%2C4%2C3%2C11",
@@ -110,7 +110,7 @@
       "version": 2,
       "arguments": {
         "name": "7sefun",
-        "description": "由纯纯看番社区 JS 源 kazumi.7sefun v1.2.1 自动转换",
+        "description": "站点 7sefun.top。（来源：纯纯看番社区源 kazumi-7sefun v1.2.1，自动转换）",
         "iconUrl": "https://www.7sefun.top/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -161,7 +161,7 @@
       "version": 2,
       "arguments": {
         "name": "AGE动漫",
-        "description": "AGE动漫视频源，源网址www.agedm.io （AniBaka 规则 age rev 6 自动转换）",
+        "description": "AGE动漫视频源，源网址www.agedm.io。（来源：AniBaka 规则 age rev 6，自动转换）",
         "iconUrl": "https://www.agedm.io/favicon.ico",
         "searchConfig": {
           "searchUrl": "https://www.agedm.io/search?query={keyword}",
@@ -212,7 +212,7 @@
       "version": 2,
       "arguments": {
         "name": "4K动漫",
-        "description": "4K动漫，提供日漫、国漫、美漫和剧场版等在线资源。",
+        "description": "4K动漫，提供日漫、国漫、美漫和剧场版等在线资源。（来源：基线配置 agekkkk）",
         "iconUrl": "https://cn.agekkkk.com/template/the4/statics/img/favicon.ico",
         "searchConfig": {
           "searchUrl": "https://cn.agekkkk.com/search/{keyword}-------------.html",
@@ -242,7 +242,7 @@
       "version": 2,
       "arguments": {
         "name": "萌番 AkiAnime",
-        "description": "萌番 AkiAnime 动漫源，源网址 https://www.akianime.cc/ （AniBaka 规则 akianime rev 6 自动转换）",
+        "description": "萌番 AkiAnime 动漫源，源网址 https://www.akianime.cc/。（来源：AniBaka 规则 akianime rev 6，自动转换）",
         "iconUrl": "https://www.akianime.cc/template/dsn2/static/img/ico.png",
         "searchConfig": {
           "searchUrl": "https://www.akianime.cc/bgmsearch/{keyword}-------------.html",
@@ -293,7 +293,7 @@
       "version": 2,
       "arguments": {
         "name": "佩可爱动漫 (peko.love)",
-        "description": "佩可爱动漫 (peko.love)，为您提供优质的动漫在线播放与分享。",
+        "description": "佩可爱动漫 (peko.love)，为您提供优质的动漫在线播放与分享。（来源：基线配置 ani_pekolove）",
         "iconUrl": "https://ani.pekolove.net/wp-content/uploads/cropped-acglogo2-2-32x32.png",
         "searchConfig": {
           "searchUrl": "https://ani.pekolove.net/?s={keyword}",
@@ -361,7 +361,7 @@
       "version": 2,
       "arguments": {
         "name": "anime7",
-        "description": "由纯纯看番社区 JS 源 kazumi.anime7 v1.0.1 自动转换",
+        "description": "站点 anime7.top。（来源：纯纯看番社区源 kazumi-anime7 v1.0.1，自动转换）",
         "iconUrl": "https://ani7.b-cdn.net/upload/logo/icon.png",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -412,7 +412,7 @@
       "version": 2,
       "arguments": {
         "name": "Animoe动漫",
-        "description": "Animoe动漫，提供最新番剧、经典动漫全集免费高清在线观看。 （AniBaka 规则 animoe rev 4 自动转换）",
+        "description": "Animoe动漫，提供最新番剧、经典动漫全集免费高清在线观看。（来源：AniBaka 规则 animoe rev 4，自动转换）",
         "iconUrl": "https://github.elemecdn.com/mstatic616/images/logo/favicon.png",
         "searchConfig": {
           "searchUrl": "https://animoe.org/search.html?wd={keyword}",
@@ -462,7 +462,7 @@
       "version": 2,
       "arguments": {
         "name": "次元番",
-        "description": "次元番，提供高清动漫资源在线搜索与免费观看。 （AniBaka 规则 cyfz rev 6 自动转换）",
+        "description": "次元番，提供高清动漫资源在线搜索与免费观看。（来源：AniBaka 规则 cyfz rev 6，自动转换）",
         "iconUrl": "https://hec-community-online.cdn.bcebos.com/COMMENT/98d18b1002eb5dd3dd1faf88162b7045/1781019621344.png",
         "searchConfig": {
           "searchUrl": "https://www.cyfz.top/index.php/ajax/suggest?mid=1&wd={keyword}&limit=30",
@@ -514,8 +514,8 @@
       "factoryId": "web-selector",
       "version": 2,
       "arguments": {
-        "name": "dalvdm",
-        "description": "由 Kazumi 规则 dalvdm v1.2 自动转换",
+        "name": "dalvdm (sbdl.cc)",
+        "description": "站点 sbdl.cc。（来源：Kazumi 规则 dalvdm v1.2，自动转换）",
         "iconUrl": "https://www.sbdl.cc/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -567,7 +567,7 @@
       "version": 2,
       "arguments": {
         "name": "嘀嗒影视 (Dida HD)",
-        "description": "专注高分电影，高清HD在线，极速秒播不卡顿！ （AniBaka 规则 didahd rev 6 自动转换）",
+        "description": "专注高分电影，高清HD在线，极速秒播不卡顿！（来源：AniBaka 规则 didahd rev 6，自动转换）",
         "iconUrl": "https://www.didahd.xyz/template/mytheme/statics/img/newfavicon.png",
         "searchConfig": {
           "searchUrl": "https://www.didahd.xyz/index.php/ajax/suggest?mid=1&wd={keyword}&limit=30",
@@ -618,8 +618,8 @@
       "factoryId": "web-selector",
       "version": 2,
       "arguments": {
-        "name": "DM84",
-        "description": "DM84 动漫视频源。 （AniBaka 规则 dm84 rev 2 自动转换）",
+        "name": "DM84 (dmbus.cc)",
+        "description": "DM84 动漫视频源。（来源：AniBaka 规则 dm84 rev 2，自动转换）",
         "iconUrl": "https://dmbus.cc/favicon.ico",
         "searchConfig": {
           "searchUrl": "https://dmbus.cc/s----------.html?wd={keyword}",
@@ -670,7 +670,7 @@
       "version": 2,
       "arguments": {
         "name": "E站弹幕网",
-        "description": "E站弹幕网提供动漫搜索、分集观看和弹幕播放器。",
+        "description": "E站弹幕网提供动漫搜索、分集观看和弹幕播放器。（来源：基线配置 ezdmw）",
         "iconUrl": "https://www.ezdmw.org/Public/images/icon.png",
         "searchConfig": {
           "searchUrl": "https://www.ezdmw.org/Index/search.html?searchText={keyword}",
@@ -699,7 +699,7 @@
       "version": 2,
       "arguments": {
         "name": "girigiri愛動漫",
-        "description": "",
+        "description": "站点 ani.girigirilove.com。（来源：手动维护（manual/））",
         "iconUrl": "https://ani.girigirilove.com/brand/icon.png",
         "searchConfig": {
           "searchUrl": "https://m3u8.girigirilove.com/api.php/Vod/get_list?offset=0&limit=24&vod_name={keyword}",
@@ -766,7 +766,7 @@
       "version": 2,
       "arguments": {
         "name": "咕咕番",
-        "description": "[自动检测未通过：HTTP 404] 咕咕番视频源，源网址gugu3.com，提供大量日漫番剧资源。 （AniBaka 规则 gugu rev 4 自动转换）",
+        "description": "[自动检测未通过：HTTP 404] 咕咕番视频源，源网址gugu3.com，提供大量日漫番剧资源。（来源：AniBaka 规则 gugu rev 4，自动转换）",
         "iconUrl": "https://www.gugu3.com/upload/site/20260506-1/a0799f74e4bced939fbbc0b79cb27671.png",
         "searchConfig": {
           "searchUrl": "https://www.gugu3.com/index.php/vod/search/wd/{keyword}.html",
@@ -816,7 +816,7 @@
       "version": 2,
       "arguments": {
         "name": "MiFun",
-        "description": "MiFun在线动漫专注于资源收集整理，海量有效的高质量动漫资源在线观看，完全免费。 （AniBaka 规则 ios_mifun rev 6 自动转换）",
+        "description": "MiFun在线动漫专注于资源收集整理，海量有效的高质量动漫资源在线观看，完全免费。（来源：AniBaka 规则 ios_mifun rev 6，自动转换）",
         "iconUrl": "https://ugc.hitv.com/1/230324151010E2CA349174CE432E9353E29DE5C0EQ0NF/sVoWeL0.png?mxtheme/images/favicon.png",
         "searchConfig": {
           "searchUrl": "https://ios.mifun.org/index.php/ajax/suggest?mid=1&wd={keyword}&limit=30",
@@ -868,7 +868,7 @@
       "version": 2,
       "arguments": {
         "name": "路漫漫动漫",
-        "description": "路漫漫在线动漫提供日本动漫、国产动漫、动画电影等免费在线观看。 （AniBaka 规则 lm6 rev 5 自动转换）",
+        "description": "路漫漫在线动漫提供日本动漫、国产动漫、动画电影等免费在线观看。（来源：AniBaka 规则 lm6 rev 5，自动转换）",
         "iconUrl": "https://m.lm6.net/template/jable/statics/icon/favicon-32x32.png",
         "searchConfig": {
           "searchUrl": "https://m.lm6.net/index.php/ajax/suggest?mid=1&wd={keyword}",
@@ -920,7 +920,7 @@
       "version": 2,
       "arguments": {
         "name": "mgnacg",
-        "description": "由 Kazumi 规则 mgnacg v1.2 自动转换",
+        "description": "站点 mgnacg.com。（来源：Kazumi 规则 mgnacg v1.2，自动转换）",
         "iconUrl": "https://www.mgnacg.com/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -971,28 +971,29 @@
       "factoryId": "web-selector",
       "version": 2,
       "arguments": {
-        "name": "Moonci",
-        "description": "Moonci 动漫视频源。 （AniBaka 规则 moonci rev 3 自动转换）",
+        "name": "moonci",
+        "description": "站点 moonci.com。（来源：Kazumi 规则 moonci v1.1，自动转换）",
         "iconUrl": "https://www.moonci.com/favicon.ico",
         "searchConfig": {
-          "searchUrl": "https://www.moonci.com/search/-------------.html?wd={keyword}",
           "searchUseOnlyFirstWord": true,
           "searchRemoveSpecial": true,
           "searchUseSubjectNamesCount": 1,
-          "rawBaseUrl": "https://www.moonci.com",
+          "rawBaseUrl": "",
           "requestInterval": 3000,
-          "subjectFormatId": "a",
-          "selectorSubjectFormatA": {
-            "selectLists": ".search-item a[href*='/anime/'], .module-item a[href*='/anime/'], a[href*=\"/anime/\"][href*='/anime/']",
+          "searchUrl": "https://www.moonci.com/index.php/ajax/suggest?mid=1&wd={keyword}",
+          "subjectFormatId": "json-path-indexed",
+          "selectorSubjectFormatJsonPathIndexed": {
+            "selectLinks": "$.list[*]['id']",
+            "selectNames": "$.list[*]['name']",
+            "linkTemplate": "/anime/{value}.html",
             "preferShorterName": true
           },
-          "channelFormatId": "index-grouped",
-          "selectorChannelFormatFlattened": {
-            "selectChannelNames": ".play-source-tab a, .source a",
-            "selectEpisodeLists": "ul.hl-plays-list, .anthology-list-play, .module-player-list, .module-play-list, .play-list, .playlist, .episode-list, .content_playlist",
-            "selectEpisodesFromList": "a"
+          "channelFormatId": "no-channel",
+          "selectorChannelFormatNoChannel": {
+            "selectEpisodes": "div[class*=\"hl-play-source\"] ul[class*=\"hl-plays-list\"] a[href*=\"/play/\"]",
+            "selectEpisodeLinks": "",
+            "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
           },
-          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
           "defaultResolution": "1080P",
           "defaultSubtitleLanguage": "CHS",
           "onlySupportsPlayers": [],
@@ -1000,7 +1001,7 @@
           "filterBySubjectName": true,
           "selectMedia": {
             "distinguishSubjectName": true,
-            "distinguishChannelName": true
+            "distinguishChannelName": false
           },
           "matchVideo": {
             "enableNestedUrl": false,
@@ -1008,7 +1009,7 @@
             "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
             "cookies": "quality=1080",
             "addHeadersToVideo": {
-              "referer": "https://www.moonci.com/"
+              "referer": ""
             },
             "scanDomMediaUrls": true
           }
@@ -1023,7 +1024,7 @@
       "version": 2,
       "arguments": {
         "name": "嘶哩嘶哩",
-        "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）] 嘶哩嘶哩动漫源。保留站点访问会话 Cookie，优先通过本站播放接口解密直链，WebView 作为后备。 （AniBaka 规则 silisili rev 1 自动转换）",
+        "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）] 嘶哩嘶哩动漫源。保留站点访问会话 Cookie，优先通过本站播放接口解密直链，WebView 作为后备。（来源：AniBaka 规则 silisili rev 1，自动转换）",
         "iconUrl": "https://www.silisilifun.com/favicon.ico?20190911",
         "searchConfig": {
           "searchUrl": "https://www.silisilifun.com/vodsearch/?wd={keyword}",
@@ -1074,7 +1075,7 @@
       "version": 1,
       "arguments": {
         "name": "青空次元 (Sorani)",
-        "description": "青空次元 (Sorani)，支持番剧搜索、分集列表和公开播放接口。",
+        "description": "青空次元 (Sorani)，支持番剧搜索、分集列表和公开播放接口。（来源：基线配置 sorani）",
         "iconUrl": "https://www.sorani.net/favicon.ico",
         "searchConfig": {
           "baseUrl": "https://api.sorani.cc",
@@ -1124,7 +1125,7 @@
       "version": 2,
       "arguments": {
         "name": "西瓜卡通",
-        "description": "西瓜卡通视频源，源网址www.xgcartoon.com",
+        "description": "西瓜卡通视频源，源网址www.xgcartoon.com。（来源：基线配置 xigua）",
         "iconUrl": "https://www.xgcartoon.com/xgct/icon/favicon-32x32.png",
         "searchConfig": {
           "searchUrl": "https://www.xgcartoon.com/search?q={keyword}",
@@ -1152,8 +1153,8 @@
       "factoryId": "web-selector",
       "version": 2,
       "arguments": {
-        "name": "9ciyuan",
-        "description": "由纯纯看番社区 JS 源 kazumi.9ciyuan v1.3.1 自动转换",
+        "name": "9ciyuan (jcydm1.com)",
+        "description": "站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
         "iconUrl": "https://www.jcydm1.com/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1203,8 +1204,8 @@
       "factoryId": "web-selector",
       "version": 2,
       "arguments": {
-        "name": "ant",
-        "description": "由纯纯看番社区 JS 源 kazumi.ant v0.0.3 自动转换",
+        "name": "ant (mayi520.org)",
+        "description": "站点 mayi520.org。（来源：纯纯看番社区源 kazumi-ant v0.0.3，自动转换）",
         "iconUrl": "https://www.mayi520.org/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1254,8 +1255,8 @@
       "factoryId": "web-selector",
       "version": 2,
       "arguments": {
-        "name": "baimao",
-        "description": "由纯纯看番社区 JS 源 kazumi.baimao v1.0.1 自动转换",
+        "name": "baimao (bmddm.com)",
+        "description": "站点 bmddm.com。（来源：纯纯看番社区源 kazumi-baimao v1.0.1，自动转换）",
         "iconUrl": "https://www.bmmdm.com/hdst/hm_pic/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1305,7 +1306,7 @@
       "version": 2,
       "arguments": {
         "name": "LMM",
-        "description": "由 Kazumi 规则 LMM v2.3 自动转换",
+        "description": "站点 lmm85.com。（来源：Kazumi 规则 LMM v2.3，自动转换）",
         "iconUrl": "https://www.lmm85.com/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1356,8 +1357,8 @@
       "factoryId": "web-selector",
       "version": 2,
       "arguments": {
-        "name": "MXdm",
-        "description": "由纯纯看番社区 JS 源 kazumi.mxdm v2.3.1 自动转换",
+        "name": "MXdm (dcc3.com)",
+        "description": "站点 dcc3.com。（来源：纯纯看番社区源 kazumi-mxdm v2.3.1，自动转换）",
         "iconUrl": "https://www.dcc3.com/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1407,7 +1408,7 @@
       "version": 2,
       "arguments": {
         "name": "omofun03",
-        "description": "由纯纯看番社区 JS 源 kazumi.omofun03 v1.1 自动转换",
+        "description": "站点 omofun03.top。（来源：纯纯看番社区源 kazumi-omofun03 v1.1，自动转换）",
         "iconUrl": "https://omofun03.top/template/mxpro/mxtheme/images/favicon.png",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1457,8 +1458,8 @@
       "factoryId": "web-selector",
       "version": 2,
       "arguments": {
-        "name": "xfdmneo",
-        "description": "由 Kazumi 规则 xfdmneo v1.1 自动转换",
+        "name": "xfdmneo (dm1.xfdm.pro)",
+        "description": "站点 dm1.xfdm.pro。（来源：Kazumi 规则 xfdmneo v1.1，自动转换）",
         "iconUrl": "https://dm1.xfdm.pro/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1509,7 +1510,7 @@
       "version": 1,
       "arguments": {
         "name": "稀饭动漫 Next",
-        "description": "",
+        "description": "站点 next.xifanacg.com。（来源：Kazumi 规则 xfdmnext v1.1，手写配置）",
         "iconUrl": "https://next.xifanacg.com/favicon.ico",
         "tier": 0,
         "searchConfig": {
@@ -1580,8 +1581,8 @@
       "factoryId": "web-selector",
       "version": 2,
       "arguments": {
-        "name": "ylsp",
-        "description": "由纯纯看番社区 JS 源 kazumi.ylsp v1.1 自动转换",
+        "name": "ylsp (ylys.cc)",
+        "description": "站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
         "iconUrl": "https://www.ylys.cc/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1634,8 +1635,8 @@
         "factoryId": "web-selector",
         "version": 2,
         "arguments": {
-          "name": "mutefun",
-          "description": "由 Kazumi 规则 mutefun v1.4 自动转换",
+          "name": "mutefun (mutedm.com)",
+          "description": "站点 mutedm.com。（来源：Kazumi 规则 mutefun v1.5，自动转换）",
           "iconUrl": "https://www.mutedm.com/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -1687,7 +1688,7 @@
         "version": 2,
         "arguments": {
           "name": "五弹幕 (5DM)",
-          "description": "五弹幕动漫源，支持番剧搜索、多线路分集与播放解析。搜索遇到站点验证时使用 WebView。 （AniBaka 规则 5dm rev 1 自动转换）",
+          "description": "五弹幕动漫源，支持番剧搜索、多线路分集与播放解析。搜索遇到站点验证时使用 WebView。（来源：AniBaka 规则 5dm rev 1，自动转换）",
           "iconUrl": "https://www.5dm.dev/wp-content/themes/5dm-next/assets/brand/mascot-face-32.png",
           "searchConfig": {
             "searchUrl": "https://www.5dm.dev/?s={keyword}&cat=-1%2C4%2C3%2C11",
@@ -1738,7 +1739,7 @@
         "version": 2,
         "arguments": {
           "name": "7sefun",
-          "description": "由纯纯看番社区 JS 源 kazumi.7sefun v1.2.1 自动转换",
+          "description": "站点 7sefun.top。（来源：纯纯看番社区源 kazumi-7sefun v1.2.1，自动转换）",
           "iconUrl": "https://www.7sefun.top/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -1789,7 +1790,7 @@
         "version": 2,
         "arguments": {
           "name": "AGE动漫",
-          "description": "AGE动漫视频源，源网址www.agedm.io （AniBaka 规则 age rev 6 自动转换）",
+          "description": "AGE动漫视频源，源网址www.agedm.io。（来源：AniBaka 规则 age rev 6，自动转换）",
           "iconUrl": "https://www.agedm.io/favicon.ico",
           "searchConfig": {
             "searchUrl": "https://www.agedm.io/search?query={keyword}",
@@ -1840,7 +1841,7 @@
         "version": 2,
         "arguments": {
           "name": "4K动漫",
-          "description": "4K动漫，提供日漫、国漫、美漫和剧场版等在线资源。",
+          "description": "4K动漫，提供日漫、国漫、美漫和剧场版等在线资源。（来源：基线配置 agekkkk）",
           "iconUrl": "https://cn.agekkkk.com/template/the4/statics/img/favicon.ico",
           "searchConfig": {
             "searchUrl": "https://cn.agekkkk.com/search/{keyword}-------------.html",
@@ -1870,7 +1871,7 @@
         "version": 2,
         "arguments": {
           "name": "萌番 AkiAnime",
-          "description": "萌番 AkiAnime 动漫源，源网址 https://www.akianime.cc/ （AniBaka 规则 akianime rev 6 自动转换）",
+          "description": "萌番 AkiAnime 动漫源，源网址 https://www.akianime.cc/。（来源：AniBaka 规则 akianime rev 6，自动转换）",
           "iconUrl": "https://www.akianime.cc/template/dsn2/static/img/ico.png",
           "searchConfig": {
             "searchUrl": "https://www.akianime.cc/bgmsearch/{keyword}-------------.html",
@@ -1921,7 +1922,7 @@
         "version": 2,
         "arguments": {
           "name": "佩可爱动漫 (peko.love)",
-          "description": "佩可爱动漫 (peko.love)，为您提供优质的动漫在线播放与分享。",
+          "description": "佩可爱动漫 (peko.love)，为您提供优质的动漫在线播放与分享。（来源：基线配置 ani_pekolove）",
           "iconUrl": "https://ani.pekolove.net/wp-content/uploads/cropped-acglogo2-2-32x32.png",
           "searchConfig": {
             "searchUrl": "https://ani.pekolove.net/?s={keyword}",
@@ -1989,7 +1990,7 @@
         "version": 2,
         "arguments": {
           "name": "anime7",
-          "description": "由纯纯看番社区 JS 源 kazumi.anime7 v1.0.1 自动转换",
+          "description": "站点 anime7.top。（来源：纯纯看番社区源 kazumi-anime7 v1.0.1，自动转换）",
           "iconUrl": "https://ani7.b-cdn.net/upload/logo/icon.png",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -2040,7 +2041,7 @@
         "version": 2,
         "arguments": {
           "name": "Animoe动漫",
-          "description": "Animoe动漫，提供最新番剧、经典动漫全集免费高清在线观看。 （AniBaka 规则 animoe rev 4 自动转换）",
+          "description": "Animoe动漫，提供最新番剧、经典动漫全集免费高清在线观看。（来源：AniBaka 规则 animoe rev 4，自动转换）",
           "iconUrl": "https://github.elemecdn.com/mstatic616/images/logo/favicon.png",
           "searchConfig": {
             "searchUrl": "https://animoe.org/search.html?wd={keyword}",
@@ -2090,7 +2091,7 @@
         "version": 2,
         "arguments": {
           "name": "次元番",
-          "description": "次元番，提供高清动漫资源在线搜索与免费观看。 （AniBaka 规则 cyfz rev 6 自动转换）",
+          "description": "次元番，提供高清动漫资源在线搜索与免费观看。（来源：AniBaka 规则 cyfz rev 6，自动转换）",
           "iconUrl": "https://hec-community-online.cdn.bcebos.com/COMMENT/98d18b1002eb5dd3dd1faf88162b7045/1781019621344.png",
           "searchConfig": {
             "searchUrl": "https://www.cyfz.top/index.php/ajax/suggest?mid=1&wd={keyword}&limit=30",
@@ -2142,8 +2143,8 @@
         "factoryId": "web-selector",
         "version": 2,
         "arguments": {
-          "name": "dalvdm",
-          "description": "由 Kazumi 规则 dalvdm v1.2 自动转换",
+          "name": "dalvdm (sbdl.cc)",
+          "description": "站点 sbdl.cc。（来源：Kazumi 规则 dalvdm v1.2，自动转换）",
           "iconUrl": "https://www.sbdl.cc/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -2195,7 +2196,7 @@
         "version": 2,
         "arguments": {
           "name": "嘀嗒影视 (Dida HD)",
-          "description": "专注高分电影，高清HD在线，极速秒播不卡顿！ （AniBaka 规则 didahd rev 6 自动转换）",
+          "description": "专注高分电影，高清HD在线，极速秒播不卡顿！（来源：AniBaka 规则 didahd rev 6，自动转换）",
           "iconUrl": "https://www.didahd.xyz/template/mytheme/statics/img/newfavicon.png",
           "searchConfig": {
             "searchUrl": "https://www.didahd.xyz/index.php/ajax/suggest?mid=1&wd={keyword}&limit=30",
@@ -2246,8 +2247,8 @@
         "factoryId": "web-selector",
         "version": 2,
         "arguments": {
-          "name": "DM84",
-          "description": "DM84 动漫视频源。 （AniBaka 规则 dm84 rev 2 自动转换）",
+          "name": "DM84 (dmbus.cc)",
+          "description": "DM84 动漫视频源。（来源：AniBaka 规则 dm84 rev 2，自动转换）",
           "iconUrl": "https://dmbus.cc/favicon.ico",
           "searchConfig": {
             "searchUrl": "https://dmbus.cc/s----------.html?wd={keyword}",
@@ -2298,7 +2299,7 @@
         "version": 2,
         "arguments": {
           "name": "E站弹幕网",
-          "description": "E站弹幕网提供动漫搜索、分集观看和弹幕播放器。",
+          "description": "E站弹幕网提供动漫搜索、分集观看和弹幕播放器。（来源：基线配置 ezdmw）",
           "iconUrl": "https://www.ezdmw.org/Public/images/icon.png",
           "searchConfig": {
             "searchUrl": "https://www.ezdmw.org/Index/search.html?searchText={keyword}",
@@ -2327,7 +2328,7 @@
         "version": 2,
         "arguments": {
           "name": "girigiri愛動漫",
-          "description": "",
+          "description": "站点 ani.girigirilove.com。（来源：手动维护（manual/））",
           "iconUrl": "https://ani.girigirilove.com/brand/icon.png",
           "searchConfig": {
             "searchUrl": "https://m3u8.girigirilove.com/api.php/Vod/get_list?offset=0&limit=24&vod_name={keyword}",
@@ -2394,7 +2395,7 @@
         "version": 2,
         "arguments": {
           "name": "咕咕番",
-          "description": "[自动检测未通过：HTTP 404] 咕咕番视频源，源网址gugu3.com，提供大量日漫番剧资源。 （AniBaka 规则 gugu rev 4 自动转换）",
+          "description": "[自动检测未通过：HTTP 404] 咕咕番视频源，源网址gugu3.com，提供大量日漫番剧资源。（来源：AniBaka 规则 gugu rev 4，自动转换）",
           "iconUrl": "https://www.gugu3.com/upload/site/20260506-1/a0799f74e4bced939fbbc0b79cb27671.png",
           "searchConfig": {
             "searchUrl": "https://www.gugu3.com/index.php/vod/search/wd/{keyword}.html",
@@ -2444,7 +2445,7 @@
         "version": 2,
         "arguments": {
           "name": "MiFun",
-          "description": "MiFun在线动漫专注于资源收集整理，海量有效的高质量动漫资源在线观看，完全免费。 （AniBaka 规则 ios_mifun rev 6 自动转换）",
+          "description": "MiFun在线动漫专注于资源收集整理，海量有效的高质量动漫资源在线观看，完全免费。（来源：AniBaka 规则 ios_mifun rev 6，自动转换）",
           "iconUrl": "https://ugc.hitv.com/1/230324151010E2CA349174CE432E9353E29DE5C0EQ0NF/sVoWeL0.png?mxtheme/images/favicon.png",
           "searchConfig": {
             "searchUrl": "https://ios.mifun.org/index.php/ajax/suggest?mid=1&wd={keyword}&limit=30",
@@ -2496,7 +2497,7 @@
         "version": 2,
         "arguments": {
           "name": "路漫漫动漫",
-          "description": "路漫漫在线动漫提供日本动漫、国产动漫、动画电影等免费在线观看。 （AniBaka 规则 lm6 rev 5 自动转换）",
+          "description": "路漫漫在线动漫提供日本动漫、国产动漫、动画电影等免费在线观看。（来源：AniBaka 规则 lm6 rev 5，自动转换）",
           "iconUrl": "https://m.lm6.net/template/jable/statics/icon/favicon-32x32.png",
           "searchConfig": {
             "searchUrl": "https://m.lm6.net/index.php/ajax/suggest?mid=1&wd={keyword}",
@@ -2548,7 +2549,7 @@
         "version": 2,
         "arguments": {
           "name": "mgnacg",
-          "description": "由 Kazumi 规则 mgnacg v1.2 自动转换",
+          "description": "站点 mgnacg.com。（来源：Kazumi 规则 mgnacg v1.2，自动转换）",
           "iconUrl": "https://www.mgnacg.com/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -2599,28 +2600,29 @@
         "factoryId": "web-selector",
         "version": 2,
         "arguments": {
-          "name": "Moonci",
-          "description": "Moonci 动漫视频源。 （AniBaka 规则 moonci rev 3 自动转换）",
+          "name": "moonci",
+          "description": "站点 moonci.com。（来源：Kazumi 规则 moonci v1.1，自动转换）",
           "iconUrl": "https://www.moonci.com/favicon.ico",
           "searchConfig": {
-            "searchUrl": "https://www.moonci.com/search/-------------.html?wd={keyword}",
             "searchUseOnlyFirstWord": true,
             "searchRemoveSpecial": true,
             "searchUseSubjectNamesCount": 1,
-            "rawBaseUrl": "https://www.moonci.com",
+            "rawBaseUrl": "",
             "requestInterval": 3000,
-            "subjectFormatId": "a",
-            "selectorSubjectFormatA": {
-              "selectLists": ".search-item a[href*='/anime/'], .module-item a[href*='/anime/'], a[href*=\"/anime/\"][href*='/anime/']",
+            "searchUrl": "https://www.moonci.com/index.php/ajax/suggest?mid=1&wd={keyword}",
+            "subjectFormatId": "json-path-indexed",
+            "selectorSubjectFormatJsonPathIndexed": {
+              "selectLinks": "$.list[*]['id']",
+              "selectNames": "$.list[*]['name']",
+              "linkTemplate": "/anime/{value}.html",
               "preferShorterName": true
             },
-            "channelFormatId": "index-grouped",
-            "selectorChannelFormatFlattened": {
-              "selectChannelNames": ".play-source-tab a, .source a",
-              "selectEpisodeLists": "ul.hl-plays-list, .anthology-list-play, .module-player-list, .module-play-list, .play-list, .playlist, .episode-list, .content_playlist",
-              "selectEpisodesFromList": "a"
+            "channelFormatId": "no-channel",
+            "selectorChannelFormatNoChannel": {
+              "selectEpisodes": "div[class*=\"hl-play-source\"] ul[class*=\"hl-plays-list\"] a[href*=\"/play/\"]",
+              "selectEpisodeLinks": "",
+              "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
             },
-            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
             "defaultResolution": "1080P",
             "defaultSubtitleLanguage": "CHS",
             "onlySupportsPlayers": [],
@@ -2628,7 +2630,7 @@
             "filterBySubjectName": true,
             "selectMedia": {
               "distinguishSubjectName": true,
-              "distinguishChannelName": true
+              "distinguishChannelName": false
             },
             "matchVideo": {
               "enableNestedUrl": false,
@@ -2636,7 +2638,7 @@
               "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
               "cookies": "quality=1080",
               "addHeadersToVideo": {
-                "referer": "https://www.moonci.com/"
+                "referer": ""
               },
               "scanDomMediaUrls": true
             }
@@ -2651,7 +2653,7 @@
         "version": 2,
         "arguments": {
           "name": "嘶哩嘶哩",
-          "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）] 嘶哩嘶哩动漫源。保留站点访问会话 Cookie，优先通过本站播放接口解密直链，WebView 作为后备。 （AniBaka 规则 silisili rev 1 自动转换）",
+          "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）] 嘶哩嘶哩动漫源。保留站点访问会话 Cookie，优先通过本站播放接口解密直链，WebView 作为后备。（来源：AniBaka 规则 silisili rev 1，自动转换）",
           "iconUrl": "https://www.silisilifun.com/favicon.ico?20190911",
           "searchConfig": {
             "searchUrl": "https://www.silisilifun.com/vodsearch/?wd={keyword}",
@@ -2702,7 +2704,7 @@
         "version": 1,
         "arguments": {
           "name": "青空次元 (Sorani)",
-          "description": "青空次元 (Sorani)，支持番剧搜索、分集列表和公开播放接口。",
+          "description": "青空次元 (Sorani)，支持番剧搜索、分集列表和公开播放接口。（来源：基线配置 sorani）",
           "iconUrl": "https://www.sorani.net/favicon.ico",
           "searchConfig": {
             "baseUrl": "https://api.sorani.cc",
@@ -2752,7 +2754,7 @@
         "version": 2,
         "arguments": {
           "name": "西瓜卡通",
-          "description": "西瓜卡通视频源，源网址www.xgcartoon.com",
+          "description": "西瓜卡通视频源，源网址www.xgcartoon.com。（来源：基线配置 xigua）",
           "iconUrl": "https://www.xgcartoon.com/xgct/icon/favicon-32x32.png",
           "searchConfig": {
             "searchUrl": "https://www.xgcartoon.com/search?q={keyword}",
@@ -2780,8 +2782,8 @@
         "factoryId": "web-selector",
         "version": 2,
         "arguments": {
-          "name": "9ciyuan",
-          "description": "由纯纯看番社区 JS 源 kazumi.9ciyuan v1.3.1 自动转换",
+          "name": "9ciyuan (jcydm1.com)",
+          "description": "站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
           "iconUrl": "https://www.jcydm1.com/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -2831,8 +2833,8 @@
         "factoryId": "web-selector",
         "version": 2,
         "arguments": {
-          "name": "ant",
-          "description": "由纯纯看番社区 JS 源 kazumi.ant v0.0.3 自动转换",
+          "name": "ant (mayi520.org)",
+          "description": "站点 mayi520.org。（来源：纯纯看番社区源 kazumi-ant v0.0.3，自动转换）",
           "iconUrl": "https://www.mayi520.org/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -2882,8 +2884,8 @@
         "factoryId": "web-selector",
         "version": 2,
         "arguments": {
-          "name": "baimao",
-          "description": "由纯纯看番社区 JS 源 kazumi.baimao v1.0.1 自动转换",
+          "name": "baimao (bmddm.com)",
+          "description": "站点 bmddm.com。（来源：纯纯看番社区源 kazumi-baimao v1.0.1，自动转换）",
           "iconUrl": "https://www.bmmdm.com/hdst/hm_pic/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -2933,7 +2935,7 @@
         "version": 2,
         "arguments": {
           "name": "LMM",
-          "description": "由 Kazumi 规则 LMM v2.3 自动转换",
+          "description": "站点 lmm85.com。（来源：Kazumi 规则 LMM v2.3，自动转换）",
           "iconUrl": "https://www.lmm85.com/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -2984,8 +2986,8 @@
         "factoryId": "web-selector",
         "version": 2,
         "arguments": {
-          "name": "MXdm",
-          "description": "由纯纯看番社区 JS 源 kazumi.mxdm v2.3.1 自动转换",
+          "name": "MXdm (dcc3.com)",
+          "description": "站点 dcc3.com。（来源：纯纯看番社区源 kazumi-mxdm v2.3.1，自动转换）",
           "iconUrl": "https://www.dcc3.com/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -3035,7 +3037,7 @@
         "version": 2,
         "arguments": {
           "name": "omofun03",
-          "description": "由纯纯看番社区 JS 源 kazumi.omofun03 v1.1 自动转换",
+          "description": "站点 omofun03.top。（来源：纯纯看番社区源 kazumi-omofun03 v1.1，自动转换）",
           "iconUrl": "https://omofun03.top/template/mxpro/mxtheme/images/favicon.png",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -3085,8 +3087,8 @@
         "factoryId": "web-selector",
         "version": 2,
         "arguments": {
-          "name": "xfdmneo",
-          "description": "由 Kazumi 规则 xfdmneo v1.1 自动转换",
+          "name": "xfdmneo (dm1.xfdm.pro)",
+          "description": "站点 dm1.xfdm.pro。（来源：Kazumi 规则 xfdmneo v1.1，自动转换）",
           "iconUrl": "https://dm1.xfdm.pro/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -3137,7 +3139,7 @@
         "version": 1,
         "arguments": {
           "name": "稀饭动漫 Next",
-          "description": "",
+          "description": "站点 next.xifanacg.com。（来源：Kazumi 规则 xfdmnext v1.1，手写配置）",
           "iconUrl": "https://next.xifanacg.com/favicon.ico",
           "tier": 0,
           "searchConfig": {
@@ -3208,8 +3210,8 @@
         "factoryId": "web-selector",
         "version": 2,
         "arguments": {
-          "name": "ylsp",
-          "description": "由纯纯看番社区 JS 源 kazumi.ylsp v1.1 自动转换",
+          "name": "ylsp (ylys.cc)",
+          "description": "站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
           "iconUrl": "https://www.ylys.cc/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,

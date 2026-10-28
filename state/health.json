@@ -1,0 +1,308 @@
+{
+ "anibaka:2kdm": {
+  "last": "blocked"
+ },
+ "anibaka:5dm": {
+  "last": "blocked"
+ },
+ "anibaka:age": {
+  "last": "blocked"
+ },
+ "anibaka:akianime": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "none"
+ },
+ "anibaka:anime7": {
+  "last": "blocked"
+ },
+ "anibaka:animoe": {
+  "last": "blocked"
+ },
+ "anibaka:cyfz": {
+  "last": "blocked"
+ },
+ "anibaka:dalvdm": {
+  "last": "blocked"
+ },
+ "anibaka:didahd": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "anibaka:dm84": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "anibaka:girigirilove": {
+  "fails": 1,
+  "last": "fail",
+  "last_fail": 1793148335
+ },
+ "anibaka:gugu": {
+  "fails": 1,
+  "last": "fail",
+  "last_fail": 1793148335
+ },
+ "anibaka:ios_mifun": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "anibaka:lm6": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "anibaka:mgnacg": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "anibaka:moonci": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "anibaka:silisili": {
+  "fails": 1,
+  "last": "fail",
+  "last_fail": 1793148335
+ },
+ "baseline:2kdm": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "baseline:5dm": {
+  "last": "blocked"
+ },
+ "baseline:7sefun": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "baseline:age": {
+  "last": "blocked"
+ },
+ "baseline:agekkkk": {
+  "last": "blocked"
+ },
+ "baseline:akianime": {
+  "fails": 1,
+  "last": "fail",
+  "last_fail": 1793148335
+ },
+ "baseline:ani_pekolove": {
+  "last": "blocked"
+ },
+ "baseline:anime7": {
+  "last": "blocked"
+ },
+ "baseline:animoe": {
+  "last": "blocked"
+ },
+ "baseline:cyfz": {
+  "fails": 1,
+  "last": "fail",
+  "last_fail": 1793148335
+ },
+ "baseline:dalvdm": {
+  "last": "blocked"
+ },
+ "baseline:didahd": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "baseline:dm84": {
+  "fails": 1,
+  "last": "fail",
+  "last_fail": 1793148335
+ },
+ "baseline:ezdmw": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "none"
+ },
+ "baseline:girigirilove": {
+  "fails": 1,
+  "last": "fail",
+  "last_fail": 1793148335
+ },
+ "baseline:gugu": {
+  "fails": 1,
+  "last": "fail",
+  "last_fail": 1793148335
+ },
+ "baseline:ios_mifun": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "mismatch"
+ },
+ "baseline:lm6": {
+  "fails": 1,
+  "last": "fail",
+  "last_fail": 1793148335
+ },
+ "baseline:mgnacg": {
+  "fails": 1,
+  "last": "fail",
+  "last_fail": 1793148335
+ },
+ "baseline:silisili": {
+  "fails": 1,
+  "last": "fail",
+  "last_fail": 1793148335
+ },
+ "baseline:sorani": {
+  "last": "skipped"
+ },
+ "baseline:xigua": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "mismatch"
+ },
+ "easybangumi:kazumi-7sefun": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "easybangumi:kazumi-9ciyuan": {
+  "last": "blocked"
+ },
+ "easybangumi:kazumi-anime7": {
+  "last": "blocked"
+ },
+ "easybangumi:kazumi-ant": {
+  "last": "unreachable"
+ },
+ "easybangumi:kazumi-baimao": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "easybangumi:kazumi-mxdm": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "easybangumi:kazumi-omofun03": {
+  "last": "unreachable"
+ },
+ "easybangumi:kazumi-ylsp": {
+  "last": "unreachable"
+ },
+ "kazumi:7sefun": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "kazumi:AGE": {
+  "last": "blocked"
+ },
+ "kazumi:DM84": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "kazumi:LMM": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "kazumi:MXdm": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "kazumi:aafun": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "kazumi:akianime": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "none"
+ },
+ "kazumi:baimao": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "kazumi:dalvdm": {
+  "last": "blocked"
+ },
+ "kazumi:ezdmw": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "none"
+ },
+ "kazumi:giriGiriLove": {
+  "fails": 1,
+  "last": "fail",
+  "last_fail": 1793148335
+ },
+ "kazumi:mgnacg": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "kazumi:moonci": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "kazumi:mutefun": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "kazumi:sorani": {
+  "last": "skipped"
+ },
+ "kazumi:xfdmneo": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ },
+ "kazumi:xfdmnext": {
+  "last": "skipped"
+ },
+ "manual:anibaka-girigirilove": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793148335,
+  "play": "ok"
+ }
+}
