@@ -8,7 +8,7 @@
 |---|---|---|---|---|
 | 5dm.dev | anibaka-5dm | anibaka:5dm | 更新（2026-10-07） | anibaka:5dm(2026-10-07)<br>baseline:5dm(2026-10-07) |
 | 7sefun.top | anibaka-7sefun | easybangumi:kazumi-7sefun | 更新（2026-10-20） | easybangumi:kazumi-7sefun(2026-10-20)<br>baseline:7sefun(2026-09-30)<br>kazumi:7sefun(2026-08-10) |
-| agedm.io | anibaka-age | anibaka:age | 更新（2026-09-30） | anibaka:age(2026-09-30)<br>baseline:age(2026-09-30)<br>kazumi:AGE(2025-09-17) |
+| agedm.io | anibaka-age | kazumi:AGE | 更新（2026-10-28） | kazumi:AGE(2026-10-28)<br>anibaka:age(2026-09-30)<br>baseline:age(2026-09-30) |
 | akianime.cc | anibaka-akianime | anibaka:akianime | 更新（2026-09-30） | anibaka:akianime(2026-09-30)<br>kazumi:akianime(2026-08-17)<br>baseline:akianime(2026-09-30) |
 | ani.girigirilove.com | anibaka-girigirilove | manual:anibaka-girigirilove | manual/ 里手动维护的源，优先于自动转换 | manual:anibaka-girigirilove(2026-10-25)<br>kazumi:giriGiriLove(2026-10-22)<br>anibaka:girigirilove(2026-09-30)<br>baseline:girigirilove(2026-09-30) |
 | ani.pekolove.net | anibaka-ani-pekolove | baseline:ani_pekolove | 只有这一个来源 | baseline:ani_pekolove(2026-10-07) |
@@ -45,7 +45,7 @@
 |---|---|---|---|---|---|---|---|---|
 | kazumi | 7sefun | 1.3 | 2026-08-10（内容未变） | 有近似 | ok | ok | 否 | 末尾 text() 已改为取元素全部文本 |
 | kazumi | aafun | 1.2 | 2026-08-21（内容未变） | 完整 | ok | ok | 否 |  |
-| kazumi | AGE | 1.5 | 2025-09-17（内容未变） | 完整 | blocked | - | 否 | HTTP 403 |
+| kazumi | AGE | 1.6 | 2026-10-28（内容已变） | 完整 | blocked | - | 是 | HTTP 403 |
 | kazumi | akianime | 1.4 | 2026-08-17（内容未变） | 完整 | ok | none | 否 | 等了 20 秒没有出现视频地址 |
 | kazumi | baimao | 1.0 | 2026-01-28（内容未变） | 完整 | ok | ok | 否 | 域名已跳转，改用新域名 https://www.bmddm.com（原 https://www.baimaodm.com） |
 | kazumi | dalvdm | 1.2 | 2026-10-15（内容未变） | 完整 | blocked | - | 是 | HTTP 403 |
@@ -58,8 +58,8 @@
 | kazumi | mutefun | 1.5 | 2026-10-28（内容未变） | 完整 | ok | ok | 是 |  |
 | kazumi | MXdm | 2.4 | 2026-10-01（内容未变） | 完整 | ok | ok | 否 |  |
 | kazumi | sorani | 1.0 | 2026-07-13（内容未变） | 手写 | skipped | - | 否 | 手写配置，不做自动检测 |
-| kazumi | TvTFun | 1.2 | 2026-10-28（首次记录） | 无法转换 | - | - | 否 | 章节来自接口（chapterApiConfig），无法推出 Animeko 需要的播放接口，需要手写 override |
-| kazumi | xfdmneo | 1.1 | 2026-03-08（内容未变） | 完整 | unreachable | - | 是 | 请求失败：ReadTimeout |
+| kazumi | TvTFun | 1.3 | 2026-10-28（内容已变） | 无法转换 | - | - | 否 | 章节 XPath 无法转换：谓词 [@class*='tvt-watch-episodes'] |
+| kazumi | xfdmneo | 1.1 | 2026-03-08（内容未变） | 完整 | ok | ok | 是 |  |
 | kazumi | xfdmnext | 1.1 | 2026-10-01（内容未变） | 手写 | skipped | - | 是 | 手写配置，不做自动检测 |
 | anibaka | 7sefun | rev 8 | 2026-09-30（内容未变） | 无法转换 | - | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等） |
 | baseline | 7sefun | rev 8 | 2026-09-30（内容未变） | 回退基线 | ok | ok | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较 |
@@ -90,7 +90,7 @@
 | baseline | girigirilove | rev 4 | 2026-09-30（内容未变） | 回退基线 | fail | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器） |
 | anibaka | girigirilove_beta | rev 1 | 2026-10-07（内容未变） | 无法转换 | - | - | 否 | 章节步骤无法转换（需要 episodes 操作，实际是：fetch, maccmsApiEpisodes, regex, template）；baseline 里也没有这个源，已跳过 |
 | anibaka | xifanacg | rev 5 | 2026-09-30（内容未变） | 无法转换 | - | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）；baseline 里也没有这个源，已跳过 |
-| anibaka | age | rev 6 | 2026-09-30（内容未变） | 完整 | blocked | - | 是 | HTTP 403 |
+| anibaka | age | rev 6 | 2026-09-30（内容未变） | 完整 | blocked | - | 否 | HTTP 403 |
 | baseline | age | rev 6 | 2026-09-30（内容未变） | 回退基线 | blocked | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；HTTP 403 |
 | anibaka | xigua | rev 8 | 2026-09-30（内容未变） | 无法转换 | - | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等） |
 | baseline | xigua | rev 8 | 2026-09-30（内容未变） | 回退基线 | ok | mismatch | 是 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；页面出现了视频地址，但 matchVideoUrl 认不出来 |
