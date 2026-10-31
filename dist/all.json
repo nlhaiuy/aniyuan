@@ -359,28 +359,28 @@
       "factoryId": "web-selector",
       "version": 2,
       "arguments": {
-        "name": "anime7",
-        "description": "站点 anime7.top。（来源：纯纯看番社区源 kazumi-anime7 v1.0.1，自动转换）",
-        "iconUrl": "https://ani7.b-cdn.net/upload/logo/icon.png",
+        "name": "Anime7 动画线上看",
+        "description": "Anime7 动画线上看，提供日韩动漫、剧场版、国产动漫等高清在线观看。含广告。（来源：AniBaka 规则 anime7 rev 5，自动转换）",
+        "iconUrl": "https://ani7.b-cdn.net/upload/logo/web-icon.png",
         "searchConfig": {
+          "searchUrl": "https://anime7.top/vod-search/wd/{keyword}/",
           "searchUseOnlyFirstWord": true,
           "searchRemoveSpecial": true,
           "searchUseSubjectNamesCount": 1,
-          "rawBaseUrl": "",
+          "rawBaseUrl": "https://anime7.top",
           "requestInterval": 3000,
-          "searchUrl": "https://anime7.top/vod-search/?wd={keyword}&submit=",
-          "subjectFormatId": "indexed",
-          "selectorSubjectFormatIndexed": {
-            "selectNames": "div:nth-of-type(2) > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) > div > div:nth-of-type(2) > div > ul li div > div > div:nth-of-type(2) > div:nth-of-type(1) > a",
-            "selectLinks": "div:nth-of-type(2) > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) > div > div:nth-of-type(2) > div > ul li div > div > div:nth-of-type(2) > div:nth-of-type(2) > a",
+          "subjectFormatId": "a",
+          "selectorSubjectFormatA": {
+            "selectLists": ".hl-list-item a, a[href*=\"/vod-detail/\"]",
             "preferShorterName": true
           },
-          "channelFormatId": "no-channel",
-          "selectorChannelFormatNoChannel": {
-            "selectEpisodes": "ul[id=\"hl-plays-list\"] li > a",
-            "selectEpisodeLinks": "",
-            "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
+          "channelFormatId": "index-grouped",
+          "selectorChannelFormatFlattened": {
+            "selectChannelNames": ".hl-plays-from a",
+            "selectEpisodeLists": "ul.hl-plays-list",
+            "selectEpisodesFromList": "a"
           },
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
           "defaultResolution": "1080P",
           "defaultSubtitleLanguage": "CHS",
           "onlySupportsPlayers": [],
@@ -388,7 +388,7 @@
           "filterBySubjectName": true,
           "selectMedia": {
             "distinguishSubjectName": true,
-            "distinguishChannelName": false
+            "distinguishChannelName": true
           },
           "matchVideo": {
             "enableNestedUrl": false,
@@ -396,7 +396,7 @@
             "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
             "cookies": "quality=1080",
             "addHeadersToVideo": {
-              "referer": ""
+              "referer": "https://anime7.top/"
             },
             "scanDomMediaUrls": true
           }
@@ -1581,7 +1581,7 @@
       "version": 2,
       "arguments": {
         "name": "ylsp (ylys.cc)",
-        "description": "[自动检测未通过：HTTP 523] 站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
+        "description": "站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
         "iconUrl": "https://www.ylys.cc/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1987,28 +1987,28 @@
         "factoryId": "web-selector",
         "version": 2,
         "arguments": {
-          "name": "anime7",
-          "description": "站点 anime7.top。（来源：纯纯看番社区源 kazumi-anime7 v1.0.1，自动转换）",
-          "iconUrl": "https://ani7.b-cdn.net/upload/logo/icon.png",
+          "name": "Anime7 动画线上看",
+          "description": "Anime7 动画线上看，提供日韩动漫、剧场版、国产动漫等高清在线观看。含广告。（来源：AniBaka 规则 anime7 rev 5，自动转换）",
+          "iconUrl": "https://ani7.b-cdn.net/upload/logo/web-icon.png",
           "searchConfig": {
+            "searchUrl": "https://anime7.top/vod-search/wd/{keyword}/",
             "searchUseOnlyFirstWord": true,
             "searchRemoveSpecial": true,
             "searchUseSubjectNamesCount": 1,
-            "rawBaseUrl": "",
+            "rawBaseUrl": "https://anime7.top",
             "requestInterval": 3000,
-            "searchUrl": "https://anime7.top/vod-search/?wd={keyword}&submit=",
-            "subjectFormatId": "indexed",
-            "selectorSubjectFormatIndexed": {
-              "selectNames": "div:nth-of-type(2) > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) > div > div:nth-of-type(2) > div > ul li div > div > div:nth-of-type(2) > div:nth-of-type(1) > a",
-              "selectLinks": "div:nth-of-type(2) > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) > div > div:nth-of-type(2) > div > ul li div > div > div:nth-of-type(2) > div:nth-of-type(2) > a",
+            "subjectFormatId": "a",
+            "selectorSubjectFormatA": {
+              "selectLists": ".hl-list-item a, a[href*=\"/vod-detail/\"]",
               "preferShorterName": true
             },
-            "channelFormatId": "no-channel",
-            "selectorChannelFormatNoChannel": {
-              "selectEpisodes": "ul[id=\"hl-plays-list\"] li > a",
-              "selectEpisodeLinks": "",
-              "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
+            "channelFormatId": "index-grouped",
+            "selectorChannelFormatFlattened": {
+              "selectChannelNames": ".hl-plays-from a",
+              "selectEpisodeLists": "ul.hl-plays-list",
+              "selectEpisodesFromList": "a"
             },
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
             "defaultResolution": "1080P",
             "defaultSubtitleLanguage": "CHS",
             "onlySupportsPlayers": [],
@@ -2016,7 +2016,7 @@
             "filterBySubjectName": true,
             "selectMedia": {
               "distinguishSubjectName": true,
-              "distinguishChannelName": false
+              "distinguishChannelName": true
             },
             "matchVideo": {
               "enableNestedUrl": false,
@@ -2024,7 +2024,7 @@
               "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
               "cookies": "quality=1080",
               "addHeadersToVideo": {
-                "referer": ""
+                "referer": "https://anime7.top/"
               },
               "scanDomMediaUrls": true
             }
@@ -3209,7 +3209,7 @@
         "version": 2,
         "arguments": {
           "name": "ylsp (ylys.cc)",
-          "description": "[自动检测未通过：HTTP 523] 站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
+          "description": "站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
           "iconUrl": "https://www.ylys.cc/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
