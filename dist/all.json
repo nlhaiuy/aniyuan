@@ -7,7 +7,7 @@
       "version": 2,
       "arguments": {
         "name": "MuteFun动漫 (2kdm)",
-        "description": "MuteFun动漫网站-无声乐趣，提供日漫、美漫、特摄、日剧等高清在线观看。（来源：AniBaka 规则 2kdm rev 6，自动转换）",
+        "description": "[自动检测未通过：HTTP 404] MuteFun动漫网站-无声乐趣，提供日漫、美漫、特摄、日剧等高清在线观看。（来源：AniBaka 规则 2kdm rev 6，自动转换）",
         "iconUrl": "https://image1.ljcdn.com/materials/cmsapi/1a5b58f50c23e5475dc6a8bb827035e2.png",
         "searchConfig": {
           "searchUrl": "https://www.2kdm.com/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
@@ -52,7 +52,8 @@
         },
         "tier": 3,
         "channelTiers": {}
-      }
+      },
+      "clientVersions": ">=6.3.0"
     },
     {
       "id": "aniyuan-5dm",
@@ -101,7 +102,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 4,
+        "tier": 3,
         "channelTiers": {}
       }
     },
@@ -151,7 +152,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 4,
+        "tier": 1,
         "channelTiers": {}
       }
     },
@@ -202,7 +203,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 4,
+        "tier": 3,
         "channelTiers": {}
       }
     },
@@ -233,7 +234,7 @@
             }
           }
         },
-        "tier": 4
+        "tier": 3
       }
     },
     {
@@ -352,7 +353,7 @@
           },
           "userAgent": ""
         },
-        "tier": 4
+        "tier": 3
       }
     },
     {
@@ -404,9 +405,10 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 4,
+        "tier": 1,
         "channelTiers": {}
-      }
+      },
+      "clientVersions": ">=6.3.0"
     },
     {
       "id": "aniyuan-animoe",
@@ -459,7 +461,8 @@
         },
         "tier": 3,
         "channelTiers": {}
-      }
+      },
+      "clientVersions": ">=6.3.0"
     },
     {
       "id": "aniyuan-cyfz",
@@ -512,7 +515,8 @@
         },
         "tier": 3,
         "channelTiers": {}
-      }
+      },
+      "clientVersions": ">=6.3.0"
     },
     {
       "id": "aniyuan-dalvdm",
@@ -562,9 +566,10 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 4,
+        "tier": 3,
         "channelTiers": {}
-      }
+      },
+      "clientVersions": ">=6.3.0"
     },
     {
       "id": "aniyuan-didahd",
@@ -614,9 +619,10 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 4,
+        "tier": 2,
         "channelTiers": {}
-      }
+      },
+      "clientVersions": ">=6.3.0"
     },
     {
       "id": "aniyuan-dm84",
@@ -665,7 +671,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 4,
+        "tier": 1,
         "channelTiers": {}
       }
     },
@@ -695,7 +701,7 @@
             }
           }
         },
-        "tier": 4
+        "tier": 2
       }
     },
     {
@@ -763,7 +769,8 @@
           "繁中": 1,
           "杜比": 6
         }
-      }
+      },
+      "clientVersions": ">=6.3.0"
     },
     {
       "id": "aniyuan-gugu",
@@ -866,7 +873,8 @@
         },
         "tier": 3,
         "channelTiers": {}
-      }
+      },
+      "clientVersions": ">=6.3.0"
     },
     {
       "id": "aniyuan-lm6",
@@ -916,9 +924,10 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 4,
+        "tier": 1,
         "channelTiers": {}
-      }
+      },
+      "clientVersions": ">=6.3.0"
     },
     {
       "id": "aniyuan-mgnacg",
@@ -969,9 +978,10 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 4,
+        "tier": 1,
         "channelTiers": {}
-      }
+      },
+      "clientVersions": ">=6.3.0"
     },
     {
       "id": "aniyuan-moonci",
@@ -1020,7 +1030,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 4,
+        "tier": 1,
         "channelTiers": {}
       }
     },
@@ -1030,7 +1040,7 @@
       "version": 2,
       "arguments": {
         "name": "嘶哩嘶哩",
-        "description": "[自动检测未通过：HTTP 502] 嘶哩嘶哩动漫源。保留站点访问会话 Cookie，优先通过本站播放接口解密直链，WebView 作为后备。（来源：AniBaka 规则 silisili rev 2，自动转换）",
+        "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）] 嘶哩嘶哩动漫源。保留站点访问会话 Cookie，优先通过本站播放接口解密直链，WebView 作为后备。（来源：AniBaka 规则 silisili rev 2，自动转换）",
         "iconUrl": "https://www.silisilifun.com/favicon.ico?20190911",
         "searchConfig": {
           "searchUrl": "https://www.silisilifun.com/vodsearch/?wd={keyword}",
@@ -1122,7 +1132,7 @@
             "referer": "https://www.sorani.net/"
           }
         },
-        "tier": 4
+        "tier": 3
       }
     },
     {
@@ -1221,7 +1231,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 4,
+        "tier": 3,
         "channelTiers": {}
       }
     },
@@ -1272,7 +1282,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 4,
+        "tier": 3,
         "channelTiers": {}
       }
     },
@@ -1322,7 +1332,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 4,
+        "tier": 1,
         "channelTiers": {}
       }
     },
@@ -1374,9 +1384,10 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 4,
+        "tier": 1,
         "channelTiers": {}
-      }
+      },
+      "clientVersions": ">=6.3.0"
     },
     {
       "id": "aniyuan-mxdm",
@@ -1424,7 +1435,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 4,
+        "tier": 1,
         "channelTiers": {}
       }
     },
@@ -1475,9 +1486,62 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 4,
+        "tier": 3,
         "channelTiers": {}
       }
+    },
+    {
+      "id": "aniyuan-tvtfun",
+      "factoryId": "web-selector",
+      "version": 2,
+      "arguments": {
+        "name": "TvTFun",
+        "description": "站点 tvtfun.net。（来源：Kazumi 规则 TvTFun v1.3，自动转换）",
+        "iconUrl": "https://www.tvtfun.net/favicon.ico",
+        "searchConfig": {
+          "searchUseOnlyFirstWord": true,
+          "searchRemoveSpecial": true,
+          "searchUseSubjectNamesCount": 1,
+          "rawBaseUrl": "",
+          "requestInterval": 3000,
+          "searchUrl": "https://www.tvtfun.net/api/client/anime?keyword={keyword}&page=1&pageSize=24",
+          "subjectFormatId": "json-path-indexed",
+          "selectorSubjectFormatJsonPathIndexed": {
+            "selectLinks": "$.data.items[*]['slug']",
+            "selectNames": "$.data.items[*]['name']",
+            "linkTemplate": "/watch/{value}/1",
+            "preferShorterName": true
+          },
+          "channelFormatId": "no-channel",
+          "selectorChannelFormatNoChannel": {
+            "selectEpisodes": "ol[class*=\"tvt-watch-episodes\"] li > a",
+            "selectEpisodeLinks": "",
+            "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
+          },
+          "defaultResolution": "1080P",
+          "defaultSubtitleLanguage": "CHS",
+          "onlySupportsPlayers": [],
+          "filterByEpisodeSort": true,
+          "filterBySubjectName": true,
+          "selectMedia": {
+            "distinguishSubjectName": true,
+            "distinguishChannelName": false
+          },
+          "matchVideo": {
+            "enableNestedUrl": false,
+            "matchNestedUrl": "$^",
+            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
+            "cookies": "quality=1080",
+            "addHeadersToVideo": {
+              "referer": ""
+            },
+            "scanDomMediaUrls": true
+          }
+        },
+        "tier": 1,
+        "channelTiers": {}
+      },
+      "clientVersions": ">=6.3.0"
     },
     {
       "id": "aniyuan-xfdmneo",
@@ -1526,7 +1590,7 @@
             "scanDomMediaUrls": false
           }
         },
-        "tier": 4,
+        "tier": 1,
         "channelTiers": {}
       }
     },
@@ -1608,7 +1672,7 @@
       "version": 2,
       "arguments": {
         "name": "ylsp (ylys.cc)",
-        "description": "[自动检测未通过：HTTP 523] 站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
+        "description": "站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
         "iconUrl": "https://www.ylys.cc/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1649,7 +1713,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 4,
+        "tier": 3,
         "channelTiers": {}
       }
     }
@@ -1662,7 +1726,7 @@
         "version": 2,
         "arguments": {
           "name": "MuteFun动漫 (2kdm)",
-          "description": "MuteFun动漫网站-无声乐趣，提供日漫、美漫、特摄、日剧等高清在线观看。（来源：AniBaka 规则 2kdm rev 6，自动转换）",
+          "description": "[自动检测未通过：HTTP 404] MuteFun动漫网站-无声乐趣，提供日漫、美漫、特摄、日剧等高清在线观看。（来源：AniBaka 规则 2kdm rev 6，自动转换）",
           "iconUrl": "https://image1.ljcdn.com/materials/cmsapi/1a5b58f50c23e5475dc6a8bb827035e2.png",
           "searchConfig": {
             "searchUrl": "https://www.2kdm.com/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
@@ -1707,7 +1771,8 @@
           },
           "tier": 3,
           "channelTiers": {}
-        }
+        },
+        "clientVersions": ">=6.3.0"
       },
       {
         "id": "aniyuan-5dm",
@@ -1756,7 +1821,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 4,
+          "tier": 3,
           "channelTiers": {}
         }
       },
@@ -1806,7 +1871,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 4,
+          "tier": 1,
           "channelTiers": {}
         }
       },
@@ -1857,7 +1922,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 4,
+          "tier": 3,
           "channelTiers": {}
         }
       },
@@ -1888,7 +1953,7 @@
               }
             }
           },
-          "tier": 4
+          "tier": 3
         }
       },
       {
@@ -2007,7 +2072,7 @@
             },
             "userAgent": ""
           },
-          "tier": 4
+          "tier": 3
         }
       },
       {
@@ -2059,9 +2124,10 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 4,
+          "tier": 1,
           "channelTiers": {}
-        }
+        },
+        "clientVersions": ">=6.3.0"
       },
       {
         "id": "aniyuan-animoe",
@@ -2114,7 +2180,8 @@
           },
           "tier": 3,
           "channelTiers": {}
-        }
+        },
+        "clientVersions": ">=6.3.0"
       },
       {
         "id": "aniyuan-cyfz",
@@ -2167,7 +2234,8 @@
           },
           "tier": 3,
           "channelTiers": {}
-        }
+        },
+        "clientVersions": ">=6.3.0"
       },
       {
         "id": "aniyuan-dalvdm",
@@ -2217,9 +2285,10 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 4,
+          "tier": 3,
           "channelTiers": {}
-        }
+        },
+        "clientVersions": ">=6.3.0"
       },
       {
         "id": "aniyuan-didahd",
@@ -2269,9 +2338,10 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 4,
+          "tier": 2,
           "channelTiers": {}
-        }
+        },
+        "clientVersions": ">=6.3.0"
       },
       {
         "id": "aniyuan-dm84",
@@ -2320,7 +2390,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 4,
+          "tier": 1,
           "channelTiers": {}
         }
       },
@@ -2350,7 +2420,7 @@
               }
             }
           },
-          "tier": 4
+          "tier": 2
         }
       },
       {
@@ -2418,7 +2488,8 @@
             "繁中": 1,
             "杜比": 6
           }
-        }
+        },
+        "clientVersions": ">=6.3.0"
       },
       {
         "id": "aniyuan-gugu",
@@ -2521,7 +2592,8 @@
           },
           "tier": 3,
           "channelTiers": {}
-        }
+        },
+        "clientVersions": ">=6.3.0"
       },
       {
         "id": "aniyuan-lm6",
@@ -2571,9 +2643,10 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 4,
+          "tier": 1,
           "channelTiers": {}
-        }
+        },
+        "clientVersions": ">=6.3.0"
       },
       {
         "id": "aniyuan-mgnacg",
@@ -2624,9 +2697,10 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 4,
+          "tier": 1,
           "channelTiers": {}
-        }
+        },
+        "clientVersions": ">=6.3.0"
       },
       {
         "id": "aniyuan-moonci",
@@ -2675,7 +2749,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 4,
+          "tier": 1,
           "channelTiers": {}
         }
       },
@@ -2685,7 +2759,7 @@
         "version": 2,
         "arguments": {
           "name": "嘶哩嘶哩",
-          "description": "[自动检测未通过：HTTP 502] 嘶哩嘶哩动漫源。保留站点访问会话 Cookie，优先通过本站播放接口解密直链，WebView 作为后备。（来源：AniBaka 规则 silisili rev 2，自动转换）",
+          "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）] 嘶哩嘶哩动漫源。保留站点访问会话 Cookie，优先通过本站播放接口解密直链，WebView 作为后备。（来源：AniBaka 规则 silisili rev 2，自动转换）",
           "iconUrl": "https://www.silisilifun.com/favicon.ico?20190911",
           "searchConfig": {
             "searchUrl": "https://www.silisilifun.com/vodsearch/?wd={keyword}",
@@ -2777,7 +2851,7 @@
               "referer": "https://www.sorani.net/"
             }
           },
-          "tier": 4
+          "tier": 3
         }
       },
       {
@@ -2876,7 +2950,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 4,
+          "tier": 3,
           "channelTiers": {}
         }
       },
@@ -2927,7 +3001,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 4,
+          "tier": 3,
           "channelTiers": {}
         }
       },
@@ -2977,7 +3051,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 4,
+          "tier": 1,
           "channelTiers": {}
         }
       },
@@ -3029,9 +3103,10 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 4,
+          "tier": 1,
           "channelTiers": {}
-        }
+        },
+        "clientVersions": ">=6.3.0"
       },
       {
         "id": "aniyuan-mxdm",
@@ -3079,7 +3154,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 4,
+          "tier": 1,
           "channelTiers": {}
         }
       },
@@ -3130,9 +3205,62 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 4,
+          "tier": 3,
           "channelTiers": {}
         }
+      },
+      {
+        "id": "aniyuan-tvtfun",
+        "factoryId": "web-selector",
+        "version": 2,
+        "arguments": {
+          "name": "TvTFun",
+          "description": "站点 tvtfun.net。（来源：Kazumi 规则 TvTFun v1.3，自动转换）",
+          "iconUrl": "https://www.tvtfun.net/favicon.ico",
+          "searchConfig": {
+            "searchUseOnlyFirstWord": true,
+            "searchRemoveSpecial": true,
+            "searchUseSubjectNamesCount": 1,
+            "rawBaseUrl": "",
+            "requestInterval": 3000,
+            "searchUrl": "https://www.tvtfun.net/api/client/anime?keyword={keyword}&page=1&pageSize=24",
+            "subjectFormatId": "json-path-indexed",
+            "selectorSubjectFormatJsonPathIndexed": {
+              "selectLinks": "$.data.items[*]['slug']",
+              "selectNames": "$.data.items[*]['name']",
+              "linkTemplate": "/watch/{value}/1",
+              "preferShorterName": true
+            },
+            "channelFormatId": "no-channel",
+            "selectorChannelFormatNoChannel": {
+              "selectEpisodes": "ol[class*=\"tvt-watch-episodes\"] li > a",
+              "selectEpisodeLinks": "",
+              "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
+            },
+            "defaultResolution": "1080P",
+            "defaultSubtitleLanguage": "CHS",
+            "onlySupportsPlayers": [],
+            "filterByEpisodeSort": true,
+            "filterBySubjectName": true,
+            "selectMedia": {
+              "distinguishSubjectName": true,
+              "distinguishChannelName": false
+            },
+            "matchVideo": {
+              "enableNestedUrl": false,
+              "matchNestedUrl": "$^",
+              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
+              "cookies": "quality=1080",
+              "addHeadersToVideo": {
+                "referer": ""
+              },
+              "scanDomMediaUrls": true
+            }
+          },
+          "tier": 1,
+          "channelTiers": {}
+        },
+        "clientVersions": ">=6.3.0"
       },
       {
         "id": "aniyuan-xfdmneo",
@@ -3181,7 +3309,7 @@
               "scanDomMediaUrls": false
             }
           },
-          "tier": 4,
+          "tier": 1,
           "channelTiers": {}
         }
       },
@@ -3263,7 +3391,7 @@
         "version": 2,
         "arguments": {
           "name": "ylsp (ylys.cc)",
-          "description": "[自动检测未通过：HTTP 523] 站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
+          "description": "站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
           "iconUrl": "https://www.ylys.cc/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -3304,7 +3432,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 4,
+          "tier": 3,
           "channelTiers": {}
         }
       }
