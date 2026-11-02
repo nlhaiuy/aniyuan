@@ -13,15 +13,24 @@ from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 
 DEFAULT_PATTERNS = ["/voddetail/", "/vod-detail/", "/vod/detail/", "/detail/", "/bangumi/", "/media/", "/info/",
-                    "/anime/", "/video/", "/vodshow/", "/GV", "/v/", "/vod/", "/dm/", "/cartoon/"]
+                    "/anime/", "/video/", "/vodshow/", "/GV", "/v/", "/vod/", "/dm/", "/cartoon/",
+                    ""]   # "" = 不限制链接路径（站点用了没见过的详情页路径时的兜底；同分时排在有路径的后面）
 DEFAULT_CONTAINERS = ["", ".module-card-item", ".module-item", ".module-search-item", ".module-poster-item",
                       ".search-list", ".vod-detail", ".public-list-box", ".stui-vodlist__box", ".stui-vodlist li",
                       ".hl-list-item", ".myui-vodlist__box", ".myui-vodlist__thumb", ".thumb-menu", ".video-item",
-                      ".video-list li", ".item", ".card", ".list-item", "article", "li"]
+                      ".video-list li", ".item", ".card", ".list-item", "article", "li",
+                      # 以“标题所在节点”为容器的常见写法（MacCMS 各模板的结果标题）
+                      ".module-card-item-title", ".thumb-txt", ".hl-item-title", ".hl-item-thumb", ".stui-vodlist__detail",
+                      ".video-info-header", ".detail-info", ".fed-part-eone", ".card-title", ".vod-title", ".title",
+                      "h2", "h3", "h4", "#searchList li", "#search_list li", ".search-box .thumb-content"]
 DEFAULT_LISTS = [".module-play-list-content", ".module-play-list", ".anthology-list-play", ".anthology-list-box",
                  ".stui-content__playlist", "ul.hl-plays-list", ".hl-plays-list", ".play_list", ".playlist",
                  ".player_list", ".episode-list", ".content_playlist", "#panel1", ".myui-content__list",
-                 ".ep-list", ".video_detail_episode", ".play-list", ".tab-pane", ".play-pannel-list"]
+                 ".ep-list", ".video_detail_episode", ".play-list", ".tab-pane", ".play-pannel-list",
+                 # 参考订阅里出现过的剧集列表容器
+                 ".fed-play-item", ".fed-drop-boxs .fed-part-rows", ".jisu", ".movurl", ".videolist", ".lists",
+                 "ul.list-unstyled", "#playsx", ".anime-episode", ".module-blocklist", ".play_source_list_item",
+                 "#playlist1", ".playlist-box", ".vod-play-list", ".episode", ".ep-item"]
 EP_TEXT = re.compile(r"第\s*[\d一二三四五六七八九十百]+\s*[话集]|^\s*\d{1,4}\s*$|^\s*(EP|ep|E)\s*\d+|[集话]$|^\d{1,4}\D*$|完结|全集|预告|SP|OVA|PV", re.I)
 
 
@@ -78,12 +87,13 @@ def find_search_selector(html, keyword, presets):
     best, best_key = None, None
     for pat in presets["patterns"]:
         for cont in presets["containers"]:
-            sel = ("%s a[href*='%s']" % (cont, pat)).strip()
+            sel = (("%s a[href*='%s']" % (cont, pat)) if pat else ("%s a[href]" % cont)).strip()
             links = _anchors(soup, sel)
             hits = [l for l in links if key in l[0]]
             if not hits:
                 continue
-            rank = (round(len(hits) / len(links), 3), len(hits), -len(sel))
+            # 命中率 > 命中数 > 限定了链接路径的（更不容易被改版误伤）> 选择器更短
+            rank = (round(len(hits) / len(links), 3), len(hits), 1 if pat else 0, -len(sel))
             if best_key is None or rank > best_key:
                 best, best_key = (sel, len(hits), len(links), hits[0]), rank
     return best

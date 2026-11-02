@@ -57,6 +57,7 @@ jobs:
           python tests/test_anx.py
           python tests/test_health.py
           python tests/test_normalize.py
+          python tests/test_repair.py
           python tests/test_live.py
           python tests/test_pipeline.py
 

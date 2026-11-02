@@ -29,7 +29,7 @@ from anx2animeko import convert_anx, site_host, source_id  # noqa: E402
 from convert import convert_rule  # noqa: E402
 from ebjs import convert_extension  # noqa: E402
 from domains import follow_upstream, host_of  # noqa: E402
-from health import DEFAULT_THRESHOLD, confirmed_fail, smoke_tier, update_health  # noqa: E402
+from health import DEFAULT_THRESHOLD, auto_tier, confirmed_fail, smoke_tier, update_health  # noqa: E402
 from normalize import normalize_source  # noqa: E402
 from repair import brittle, mine_presets, repair_source  # noqa: E402
 
@@ -399,6 +399,27 @@ def merge(cands, config):
     return chosen, decisions
 
 
+def apply_auto_tier(chosen, config):
+    """给最终入选的源按联网检测结果自动分档。人工指定过的一律不动：
+    manual/ 里的源、config.tiers 里点名的、以及 tier 已经不是默认值的（baseline / overrides 里手调的）。
+    config.auto_tier 设为 false 关闭。没有联网检测结果的源保持原样。"""
+    if not config.get("auto_tier", True):
+        return
+    default = config.get("default_tier", 4)
+    named = config.get("tiers") or {}
+    for c in chosen:
+        a = c["source"]["arguments"]
+        if c["origin"] == "manual" or c["key"] in named or a.get("name") in named:
+            continue
+        if a.get("tier", default) != default:
+            continue
+        tier, why = auto_tier(c)
+        if tier is None or tier == a.get("tier"):
+            continue
+        a["tier"] = tier
+        c["notes"].append("优先级自动设为 %d（%s）" % (tier, why))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--kazumi", help="KazumiRules 仓库目录")
@@ -482,6 +503,7 @@ def main():
             f.write("\n")
 
     chosen, decisions = merge(cands, config)
+    apply_auto_tier(chosen, config)
 
     sources = []
     for c in sorted(chosen, key=lambda c: c["source"]["id"]):

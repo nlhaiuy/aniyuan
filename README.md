@@ -119,6 +119,7 @@ git 提交日期会被“发布 / 整理”提交带偏（例如社区仓库一�
 | `fail_threshold` | 默认 `2`：连续明确失败几次才降级 / 加警告 / 剔除（以前通过过的候选，没到次数都算宽限期） |
 | `names` | `{"id": "显示名称"}`：手动指定某个源的名称，优先于自动规整 |
 | `smoke_keyword` | 冒烟测试用的搜索关键词 |
+| `auto_tier` | 默认 `true`：按联网检测结果给源自动分档（1 能播 / 2 搜索剧集通过但播放没结论 / 3 播放有疑点或没有结论 / 4 明确失败或推测未验证）。0 留给人工指定；`manual/` 里的源、`config.tiers` 点名的、tier 已被手调成非默认值的（baseline / overrides）都不动。没有联网检测结果时不分档。设为 `false` 关闭 |
 | `link_template_client_versions` | 默认 `">=6.3.0"`：用了 `linkTemplate` 的源自动加上 `clientVersions`（官方订阅仓库的要求，旧客户端不会拿到用不了的源）；设为 `""` 关闭 |
 
 `overrides/<Kazumi规则名>.json`：完整的 Animeko 数据源对象，优先于自动转换。`_kazumiVersion` 记录它基于的 Kazumi 规则版本。
@@ -143,6 +144,7 @@ python tests/test_xpath2css.py   # XPath → CSS 翻译器
 python tests/test_anx.py         # AniBaka / 纯纯看番转换 + 同站取新
 python tests/test_health.py      # 检测历史：连续失败才降级
 python tests/test_normalize.py   # id / 名称 / 描述规整
+python tests/test_repair.py      # 选择器自动修复：候选库和排序
 python tests/test_pipeline.py    # 整条流水线（本地模拟站点）
 python tests/test_live.py        # 自动修复 / 域名跳转 / 播放检测（本地模拟站点 + Chromium）
 ```
