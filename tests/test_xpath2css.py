@@ -81,6 +81,18 @@ def main():
         status = "OK " if diffs == 0 else "BAD"
         print(status, xp, "->", css, "(非空文档 %d/%d)" % (nonempty, 150 + len(FIXTURES)))
         bad += diffs
+    # Kazumi 接受的 CSS 风格谓词（非标准 XPath，lxml 无法当标准答案，直接断言翻译结果）
+    for xp, want in [
+        ("//ol[@class*='tvt-watch-episodes']", 'ol[class*="tvt-watch-episodes"]'),
+        ("//a[@href^='/play/']", 'a[href^="/play/"]'),
+        ("//a[@href$='.html']", 'a[href$=".html"]'),
+        ("//div[@class *= 'x']/a", 'div[class*="x"] > a'),
+    ]:
+        got, _ = xpath_to_css(xp)
+        ok = got == want
+        print("OK " if ok else "BAD", xp, "->", got)
+        bad += 0 if ok else 1
+        total += 1
     # 相对路径(.//a) 与 item 组合: 在 item 内用 CSS 后代，等价于 XPath 的 .//
     # 真实规则也跑一遍，确认至少都能翻译或明确报告不支持
     rules_dir = os.environ.get("KAZUMI_RULES")

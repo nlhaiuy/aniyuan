@@ -119,6 +119,7 @@ git 提交日期会被“发布 / 整理”提交带偏（例如社区仓库一�
 | `fail_threshold` | 默认 `2`：连续明确失败几次才降级 / 加警告 / 剔除（以前通过过的候选，没到次数都算宽限期） |
 | `names` | `{"id": "显示名称"}`：手动指定某个源的名称，优先于自动规整 |
 | `smoke_keyword` | 冒烟测试用的搜索关键词 |
+| `link_template_client_versions` | 默认 `">=6.3.0"`：用了 `linkTemplate` 的源自动加上 `clientVersions`（官方订阅仓库的要求，旧客户端不会拿到用不了的源）；设为 `""` 关闭 |
 
 `overrides/<Kazumi规则名>.json`：完整的 Animeko 数据源对象，优先于自动转换。`_kazumiVersion` 记录它基于的 Kazumi 规则版本。
 

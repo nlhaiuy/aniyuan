@@ -78,4 +78,22 @@ check("normalize_source：id / 名称 / 描述", s["id"] == "aniyuan-lmm" and s[
 c = cand("manual", "anibaka-girigirilove", "", "", host="m3u8.girigirilove.com")
 s = normalize_source(c, c["source"], {"site_aliases": {"m3u8.girigirilove.com": "ani.girigirilove.com"}}, "")
 check("站点别名：描述里用规范主机名", "站点 ani.girigirilove.com。" in s["arguments"]["description"])
+
+# ---- clientVersions：用了 linkTemplate 的源要 6.3.0+ ----
+def jp_cand(tpl):
+    c = cand("anibaka", "x", "1", "")
+    c["source"]["arguments"]["searchConfig"].update(
+        subjectFormatId="json-path-indexed",
+        selectorSubjectFormatJsonPathIndexed={"selectLinks": "$[*]['id']", "selectNames": "$[*]['name']", "linkTemplate": tpl})
+    return c
+c = jp_cand("/d/{value}.html")
+check("linkTemplate 源：加 clientVersions >=6.3.0", normalize_source(c, c["source"], {}, "").get("clientVersions") == ">=6.3.0")
+c = jp_cand("{value}")
+check("linkTemplate 为 {value}（不改链接）：不加", "clientVersions" not in normalize_source(c, c["source"], {}, ""))
+c = cand("kazumi", "y", "1", "")
+check("普通选择器源：不加", "clientVersions" not in normalize_source(c, c["source"], {}, ""))
+c = jp_cand("/d/{value}.html"); c["source"]["clientVersions"] = ">=7.0.0"
+check("已有 clientVersions：不覆盖", normalize_source(c, c["source"], {}, "").get("clientVersions") == ">=7.0.0")
+c = jp_cand("/d/{value}.html")
+check("config 设为空字符串可关闭", "clientVersions" not in normalize_source(c, c["source"], {"link_template_client_versions": ""}, ""))
 sys.exit(1 if bad else 0)
