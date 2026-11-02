@@ -5,26 +5,35 @@
  "anibaka:5dm": {
   "last": "blocked"
  },
+ "anibaka:7sefun": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793605716,
+  "play": "ok"
+ },
  "anibaka:age": {
   "last": "blocked"
  },
  "anibaka:akianime": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "anibaka:anime7": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "anibaka:animoe": {
   "last": "blocked"
  },
  "anibaka:cyfz": {
-  "last": "blocked"
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793605716,
+  "play": "ok"
  },
  "anibaka:dalvdm": {
   "last": "blocked"
@@ -32,57 +41,58 @@
  "anibaka:didahd": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "anibaka:dm84": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
- "anibaka:girigirilove": {
-  "fails": 6,
-  "last": "fail",
-  "last_fail": 1793518845
- },
  "anibaka:gugu": {
-  "fails": 6,
+  "fails": 7,
   "last": "fail",
-  "last_fail": 1793518845
+  "last_fail": 1793605716
  },
  "anibaka:ios_mifun": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "anibaka:lm6": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "anibaka:mgnacg": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "anibaka:moonci": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "anibaka:silisili": {
-  "fails": 6,
+  "fails": 7,
   "last": "fail",
-  "last_fail": 1793518845
+  "last_fail": 1793605716
+ },
+ "anibaka:xigua": {
+  "fails": 0,
+  "last": "ok",
+  "last_ok": 1793605716,
+  "play": "ok"
  },
  "baseline:2kdm": {
   "fails": 2,
-  "last": "fail",
+  "last": "blocked",
   "last_fail": 1793518845,
   "last_ok": 1793344459,
   "play": "ok"
@@ -93,7 +103,7 @@
  "baseline:7sefun": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "baseline:age": {
@@ -103,9 +113,9 @@
   "last": "blocked"
  },
  "baseline:akianime": {
-  "fails": 6,
+  "fails": 7,
   "last": "fail",
-  "last_fail": 1793518845
+  "last_fail": 1793605716
  },
  "baseline:ani_pekolove": {
   "last": "blocked"
@@ -117,9 +127,9 @@
   "last": "blocked"
  },
  "baseline:cyfz": {
-  "fails": 6,
+  "fails": 7,
   "last": "fail",
-  "last_fail": 1793518845
+  "last_fail": 1793605716
  },
  "baseline:dalvdm": {
   "last": "blocked"
@@ -127,50 +137,50 @@
  "baseline:didahd": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "baseline:dm84": {
-  "fails": 6,
+  "fails": 7,
   "last": "fail",
-  "last_fail": 1793518845
+  "last_fail": 1793605716
  },
  "baseline:ezdmw": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "none"
  },
  "baseline:girigirilove": {
-  "fails": 6,
+  "fails": 7,
   "last": "fail",
-  "last_fail": 1793518845
+  "last_fail": 1793605716
  },
  "baseline:gugu": {
-  "fails": 6,
+  "fails": 7,
   "last": "fail",
-  "last_fail": 1793518845
+  "last_fail": 1793605716
  },
  "baseline:ios_mifun": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "mismatch"
  },
  "baseline:lm6": {
-  "fails": 6,
+  "fails": 7,
   "last": "fail",
-  "last_fail": 1793518845
+  "last_fail": 1793605716
  },
  "baseline:mgnacg": {
-  "fails": 6,
+  "fails": 7,
   "last": "fail",
-  "last_fail": 1793518845
+  "last_fail": 1793605716
  },
  "baseline:silisili": {
-  "fails": 6,
+  "fails": 7,
   "last": "fail",
-  "last_fail": 1793518845
+  "last_fail": 1793605716
  },
  "baseline:sorani": {
   "last": "skipped"
@@ -178,13 +188,13 @@
  "baseline:xigua": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "mismatch"
  },
  "easybangumi:kazumi-7sefun": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "easybangumi:kazumi-9ciyuan": {
@@ -199,27 +209,27 @@
  "easybangumi:kazumi-baimao": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "easybangumi:kazumi-mxdm": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "easybangumi:kazumi-omofun03": {
   "last": "unreachable"
  },
  "easybangumi:kazumi-ylsp": {
-  "fails": 4,
+  "fails": 5,
   "last": "fail",
-  "last_fail": 1793518845
+  "last_fail": 1793605716
  },
  "kazumi:7sefun": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "kazumi:AGE": {
@@ -228,37 +238,37 @@
  "kazumi:DM84": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "kazumi:LMM": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
-  "play": "ok"
+  "last_ok": 1793605716,
+  "play": "none"
  },
  "kazumi:MXdm": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "kazumi:aafun": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "kazumi:akianime": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "kazumi:baimao": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "kazumi:dalvdm": {
@@ -267,24 +277,24 @@
  "kazumi:ezdmw": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "none"
  },
  "kazumi:giriGiriLove": {
-  "fails": 6,
+  "fails": 7,
   "last": "fail",
-  "last_fail": 1793518845
+  "last_fail": 1793605716
  },
  "kazumi:mgnacg": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "kazumi:moonci": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "kazumi:sorani": {
@@ -293,7 +303,7 @@
  "kazumi:xfdmneo": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  },
  "kazumi:xfdmnext": {
@@ -302,7 +312,7 @@
  "manual:anibaka-girigirilove": {
   "fails": 0,
   "last": "ok",
-  "last_ok": 1793518845,
+  "last_ok": 1793605716,
   "play": "ok"
  }
 }

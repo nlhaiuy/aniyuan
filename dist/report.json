@@ -12,35 +12,36 @@
     },
     {
       "site": "7sefun.top",
-      "winner": "easybangumi:kazumi-7sefun",
+      "winner": "anibaka:7sefun",
       "id": "anibaka-7sefun",
-      "reason": "更新（2026-10-20）",
+      "reason": "更新（2026-11-01）",
       "members": [
+        "anibaka:7sefun(2026-11-01)",
+        "baseline:7sefun(2026-11-01)",
         "easybangumi:kazumi-7sefun(2026-10-20)",
-        "baseline:7sefun(2026-09-30)",
         "kazumi:7sefun(2026-08-10)"
       ]
     },
     {
       "site": "agedm.io",
-      "winner": "kazumi:AGE",
+      "winner": "anibaka:age",
       "id": "anibaka-age",
-      "reason": "更新（2026-10-28）",
+      "reason": "更新（2026-11-01）",
       "members": [
-        "kazumi:AGE(2026-10-28)",
-        "anibaka:age(2026-09-30)",
-        "baseline:age(2026-09-30)"
+        "anibaka:age(2026-11-01)",
+        "baseline:age(2026-11-01)",
+        "kazumi:AGE(2026-10-28)"
       ]
     },
     {
       "site": "akianime.cc",
       "winner": "anibaka:akianime",
       "id": "anibaka-akianime",
-      "reason": "更新（2026-09-30）",
+      "reason": "更新（2026-11-01）",
       "members": [
-        "anibaka:akianime(2026-09-30)",
+        "anibaka:akianime(2026-11-01)",
         "kazumi:akianime(2026-08-17)",
-        "baseline:akianime(2026-09-30)"
+        "baseline:akianime(2026-11-01)"
       ]
     },
     {
@@ -50,9 +51,8 @@
       "reason": "manual/ 里手动维护的源，优先于自动转换",
       "members": [
         "manual:anibaka-girigirilove(2026-10-25)",
-        "kazumi:giriGiriLove(2026-10-22)",
-        "anibaka:girigirilove(2026-09-30)",
-        "baseline:girigirilove(2026-09-30)"
+        "baseline:girigirilove(2026-11-01)",
+        "kazumi:giriGiriLove(2026-10-22)"
       ]
     },
     {
@@ -61,28 +61,28 @@
       "id": "anibaka-ani-pekolove",
       "reason": "只有这一个来源",
       "members": [
-        "baseline:ani_pekolove(2026-10-07)"
+        "baseline:ani_pekolove(2026-11-01)"
       ]
     },
     {
       "site": "anime7.top",
       "winner": "anibaka:anime7",
       "id": "anibaka-anime7",
-      "reason": "最新的 easybangumi:kazumi-anime7 自动检测没有结论，改用检测结果更好的（ok）",
+      "reason": "更新（2026-11-01）",
       "members": [
-        "anibaka:anime7(2026-10-07)",
-        "easybangumi:kazumi-anime7(2026-10-20)",
-        "baseline:anime7(2026-10-07)"
+        "anibaka:anime7(2026-11-01)",
+        "baseline:anime7(2026-11-01)",
+        "easybangumi:kazumi-anime7(2026-10-20)"
       ]
     },
     {
       "site": "animoe.org",
       "winner": "anibaka:animoe",
       "id": "anibaka-animoe",
-      "reason": "更新（2026-09-30）",
+      "reason": "更新（2026-11-01）",
       "members": [
-        "anibaka:animoe(2026-09-30)",
-        "baseline:animoe(2026-09-30)"
+        "anibaka:animoe(2026-11-01)",
+        "baseline:animoe(2026-11-01)"
       ]
     },
     {
@@ -101,17 +101,17 @@
       "id": "anibaka-agekkkk",
       "reason": "只有这一个来源",
       "members": [
-        "baseline:agekkkk(2026-07-18)"
+        "baseline:agekkkk(2026-11-01)"
       ]
     },
     {
       "site": "cyfz.top",
       "winner": "anibaka:cyfz",
       "id": "anibaka-cyfz",
-      "reason": "更新（2026-09-30）",
+      "reason": "更新（2026-11-01）",
       "members": [
-        "anibaka:cyfz(2026-09-30)",
-        "baseline:cyfz(2026-09-30)"
+        "anibaka:cyfz(2026-11-01)",
+        "baseline:cyfz(2026-11-01)"
       ]
     },
     {
@@ -128,10 +128,10 @@
       "site": "didahd.xyz",
       "winner": "anibaka:didahd",
       "id": "anibaka-didahd",
-      "reason": "更新（2026-09-30）",
+      "reason": "更新（2026-11-01）",
       "members": [
-        "anibaka:didahd(2026-09-30)",
-        "baseline:didahd(2026-09-30)"
+        "anibaka:didahd(2026-11-01)",
+        "baseline:didahd(2026-11-01)"
       ]
     },
     {
@@ -147,20 +147,20 @@
       "site": "dmbus.cc",
       "winner": "anibaka:dm84",
       "id": "anibaka-dm84",
-      "reason": "更新（2026-09-14）",
+      "reason": "更新（2026-11-01）",
       "members": [
-        "anibaka:dm84(2026-09-14)",
+        "anibaka:dm84(2026-11-01)",
         "kazumi:DM84(2026-02-02)",
-        "baseline:dm84(2026-09-14)"
+        "baseline:dm84(2026-11-01)"
       ]
     },
     {
       "site": "ezdmw.org",
       "winner": "baseline:ezdmw",
       "id": "anibaka-ezdmw",
-      "reason": "更新（2026-10-07）",
+      "reason": "更新（2026-11-01）",
       "members": [
-        "baseline:ezdmw(2026-10-07)",
+        "baseline:ezdmw(2026-11-01)",
         "kazumi:ezdmw(2026-08-16)"
       ]
     },
@@ -178,10 +178,10 @@
       "site": "ios.mifun.org",
       "winner": "anibaka:ios_mifun",
       "id": "anibaka-ios-mifun",
-      "reason": "更新（2026-09-30）",
+      "reason": "更新（2026-11-01）",
       "members": [
-        "anibaka:ios_mifun(2026-09-30)",
-        "baseline:ios_mifun(2026-09-30)"
+        "anibaka:ios_mifun(2026-11-01)",
+        "baseline:ios_mifun(2026-11-01)"
       ]
     },
     {
@@ -223,23 +223,23 @@
     },
     {
       "site": "mgnacg.com",
-      "winner": "kazumi:mgnacg",
+      "winner": "anibaka:mgnacg",
       "id": "anibaka-mgnacg",
-      "reason": "更新（2026-10-15）",
+      "reason": "更新（2026-11-01）",
       "members": [
+        "anibaka:mgnacg(2026-11-01)",
         "kazumi:mgnacg(2026-10-15)",
-        "anibaka:mgnacg(2026-07-18)",
-        "baseline:mgnacg(2026-07-18)"
+        "baseline:mgnacg(2026-11-01)"
       ]
     },
     {
       "site": "moonci.com",
-      "winner": "kazumi:moonci",
+      "winner": "anibaka:moonci",
       "id": "anibaka-moonci",
-      "reason": "更新（2026-10-19）",
+      "reason": "更新（2026-11-01）",
       "members": [
+        "anibaka:moonci(2026-11-01)",
         "kazumi:moonci(2026-10-19)",
-        "anibaka:moonci(2026-09-30)",
         "kazumi:aafun(2026-08-21)"
       ]
     },
@@ -247,10 +247,10 @@
       "site": "mutedm.com",
       "winner": "anibaka:2kdm",
       "id": "anibaka-2kdm",
-      "reason": "更新（2026-09-30）",
+      "reason": "更新（2026-11-01）",
       "members": [
-        "anibaka:2kdm(2026-09-30)",
-        "baseline:2kdm(2026-09-30)"
+        "anibaka:2kdm(2026-11-01)",
+        "baseline:2kdm(2026-11-01)"
       ]
     },
     {
@@ -286,10 +286,10 @@
       "site": "silisilifun.com",
       "winner": "anibaka:silisili",
       "id": "anibaka-silisili",
-      "reason": "更新（2026-09-30）",
+      "reason": "更新（2026-11-01）",
       "members": [
-        "anibaka:silisili(2026-09-30)",
-        "baseline:silisili(2026-09-30)"
+        "anibaka:silisili(2026-11-01)",
+        "baseline:silisili(2026-11-01)"
       ]
     },
     {
@@ -304,11 +304,12 @@
     },
     {
       "site": "xgcartoon.com",
-      "winner": "baseline:xigua",
+      "winner": "anibaka:xigua",
       "id": "anibaka-xigua",
-      "reason": "只有这一个来源",
+      "reason": "更新（2026-11-01）",
       "members": [
-        "baseline:xigua(2026-09-30)"
+        "anibaka:xigua(2026-11-01)",
+        "baseline:xigua(2026-11-01)"
       ]
     },
     {
@@ -348,12 +349,12 @@
         "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=399d6cd14f1e6b44f430290984de7028&dis_t=1793516264"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=35e88d9230c09b5ac49a45cb27e98ffc&dis_t=1793605505"
       },
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
@@ -383,12 +384,12 @@
         "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=Gq5Nl2WbPOMN66vKzov7TBt0030bLarKPe1-KAWvIa4%3D%3A1793527200"
+        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=Q0JNnQd9vg8V4TaXae3Kr5lNWu7IsPSFktdIYySNZQU%3D%3A1793613600"
       },
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
@@ -419,8 +420,7 @@
         "last": "blocked",
         "grace": false
       },
-      "site": "agedm.io",
-      "chosen": true
+      "site": "agedm.io"
     },
     {
       "origin": "kazumi",
@@ -451,7 +451,7 @@
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
@@ -489,7 +489,7 @@
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
@@ -546,12 +546,12 @@
         "episode_url": "https://dmbus.cc/p/5963-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://hhjx.hhplayer.com/playlist/8298df34c8e87d6dc0af170f24ea0812cda7f688524f9df3.m3u8?expires=1793543622&sign=d79ca4c726afa772434627492574df1f0c9d50051c4fa176ea383f08f5ec574d"
+        "media": "https://hhjx.hhplayer.com/playlist/8298df34c8e87d6dc0af170f24ea0812cda7f688524f9df3.m3u8?expires=1793630216&sign=14654dae637ae0e0ed88e56470c3887999c5b043d88b34b4f4c59cf65d108841"
       },
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
@@ -585,7 +585,7 @@
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "none",
         "grace": false
       },
@@ -613,9 +613,9 @@
         "stage": "search"
       },
       "health": {
-        "fails": 6,
+        "fails": 7,
         "last": "fail",
-        "last_fail": 1793518845,
+        "last_fail": 1793605716,
         "grace": false
       },
       "site": "ani.girigirilove.com"
@@ -641,15 +641,14 @@
         "reason": "搜到 2 个条目，详情页选出 20 个剧集链接",
         "episode_count": 20,
         "episode_url": "https://www.lmm85.com/play/7817_1_1.html",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=f742415aa092b13c0e2ceaaac8d61938&dis_t=1793517794"
+        "play": "none",
+        "play_reason": "等了 20 秒没有出现视频地址"
       },
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
-        "play": "ok",
+        "last_ok": 1793605716,
+        "play": "none",
         "grace": false
       },
       "site": "lmm85.com",
@@ -680,17 +679,16 @@
         "template": "/media/{value}.html",
         "play": "ok",
         "play_reason": "scanDomMediaUrls 能从 <video> 取到地址",
-        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=G0KGYIm0KLy9r6kl56nSeHDJlvmArM1_awoyMW-6TsI=:1793522298"
+        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=rnDxddVss1ufMjA2X3wG7ty6u3jr_a0HXaoL1vI13rM=:1793609168"
       },
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
-      "site": "mgnacg.com",
-      "chosen": true
+      "site": "mgnacg.com"
     },
     {
       "origin": "kazumi",
@@ -715,17 +713,16 @@
         "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=Gq5Nl2WbPOMN66vKzov7TBt0030bLarKPe1-KAWvIa4%3D%3A1793527200"
+        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=Q0JNnQd9vg8V4TaXae3Kr5lNWu7IsPSFktdIYySNZQU%3D%3A1793613600"
       },
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
-      "site": "moonci.com",
-      "chosen": true
+      "site": "moonci.com"
     },
     {
       "origin": "kazumi",
@@ -743,7 +740,7 @@
         "www.mutedm.com"
       ],
       "raw_hash": "18117a625569169781ed9d0aa0c732f94a19248ed191ab840a5ab7b49f9bd7af",
-      "date_basis": "内容已变",
+      "date_basis": "内容未变",
       "site": null
     },
     {
@@ -775,7 +772,7 @@
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
@@ -854,7 +851,7 @@
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
@@ -891,39 +888,18 @@
     {
       "origin": "anibaka",
       "key": "7sefun",
-      "version": "rev 8",
-      "status": "unsupported",
-      "notes": [
-        "搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）"
-      ],
+      "version": "rev 9",
+      "status": "ok",
+      "notes": [],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "7e496a6ea600c063e0b36d17288699799ab00f26411476ba8171c9a949f02dbf",
+      "date": 1793543658,
+      "raw_hash": "2b9a79d9bfffa386e8804c3095433a577c8a43f92741964889be57a41f585330",
       "live_hosts": [
         "www.7sefun.top",
         "www.7sefun.top"
       ],
-      "date_basis": "内容未变",
-      "site": null
-    },
-    {
-      "origin": "baseline",
-      "key": "7sefun",
-      "version": "rev 8",
-      "status": "baseline",
-      "notes": [
-        "用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较"
-      ],
-      "info": [],
-      "guess": false,
-      "date": 1790775080,
-      "raw_hash": "7e496a6ea600c063e0b36d17288699799ab00f26411476ba8171c9a949f02dbf",
-      "live_hosts": [
-        "www.7sefun.top",
-        "www.7sefun.top"
-      ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "ok",
         "reason": "搜到 2 个条目，详情页选出 20 个剧集链接",
@@ -931,12 +907,48 @@
         "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=399d6cd14f1e6b44f430290984de7028&dis_t=1793516264"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=35e88d9230c09b5ac49a45cb27e98ffc&dis_t=1793605505"
+      },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793605716,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
+      },
+      "site": "7sefun.top",
+      "chosen": true
+    },
+    {
+      "origin": "baseline",
+      "key": "7sefun",
+      "version": "rev 9",
+      "status": "baseline",
+      "notes": [
+        "用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1793543658,
+      "raw_hash": "2b9a79d9bfffa386e8804c3095433a577c8a43f92741964889be57a41f585330",
+      "live_hosts": [
+        "www.7sefun.top",
+        "www.7sefun.top"
+      ],
+      "date_basis": "内容已变",
+      "smoke": {
+        "status": "ok",
+        "reason": "搜到 2 个条目，详情页选出 20 个剧集链接",
+        "episode_count": 20,
+        "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
+        "play": "ok",
+        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=35e88d9230c09b5ac49a45cb27e98ffc&dis_t=1793605505"
       },
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
@@ -945,26 +957,32 @@
     {
       "origin": "anibaka",
       "key": "cyfz",
-      "version": "rev 6",
-      "status": "partial",
-      "notes": [
-        "搜索用 MacCMS 的 suggest 接口（https://www.cyfz.top/index.php/ajax/suggest?mid=1&wd={keyword}&limit=30，路径是按 MacCMS 默认值推的，AniBaka 里没写）"
-      ],
+      "version": "rev 7",
+      "status": "ok",
+      "notes": [],
       "info": [],
-      "guess": true,
-      "date": 1790775080,
-      "raw_hash": "59f2dcfbe1efbbfac030c26efbb83fa3b48db3e515c74a58bcffa13cb9cd3c0b",
+      "guess": false,
+      "date": 1793543658,
+      "raw_hash": "4c1e58c478a6565fa04286295686bc3930050f0052116290c593707ef657c6b4",
       "live_hosts": [
         "www.cyfz.top",
         "hec-community-online.cdn.bcebos.com"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
-        "status": "blocked",
-        "reason": "HTTP 403"
+        "status": "ok",
+        "reason": "搜到 2 个条目，详情页选出 24 个剧集链接",
+        "episode_count": 24,
+        "episode_url": "https://www.cyfz.top/vodplay/1029-1-1.html",
+        "play": "ok",
+        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
+        "media": "https://player.0072233.xyz/player/ec.php?code=cyfz&if=1&url=https://ossvod.manzhanw.top/d/%E6%AC%A1%E5%85%83fun/%E8%80%81%E7%95%AA/2023/10/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2/01.m3u"
       },
       "health": {
-        "last": "blocked",
+        "last": "ok",
+        "fails": 0,
+        "last_ok": 1793605716,
+        "play": "ok",
         "grace": false
       },
       "site": "cyfz.top",
@@ -973,29 +991,29 @@
     {
       "origin": "baseline",
       "key": "cyfz",
-      "version": "rev 6",
+      "version": "rev 7",
       "status": "baseline",
       "notes": [
         "用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较"
       ],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "59f2dcfbe1efbbfac030c26efbb83fa3b48db3e515c74a58bcffa13cb9cd3c0b",
+      "date": 1793543658,
+      "raw_hash": "4c1e58c478a6565fa04286295686bc3930050f0052116290c593707ef657c6b4",
       "live_hosts": [
         "www.cyfz.top",
         "hec-community-online.cdn.bcebos.com"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "fail",
         "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
         "stage": "search"
       },
       "health": {
-        "fails": 6,
+        "fails": 7,
         "last": "fail",
-        "last_fail": 1793518845,
+        "last_fail": 1793605716,
         "grace": false
       },
       "site": "cyfz.top"
@@ -1056,39 +1074,39 @@
     {
       "origin": "anibaka",
       "key": "ani_pekolove",
-      "version": "rev 9",
+      "version": "rev 10",
       "status": "unsupported",
       "notes": [
         "搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）"
       ],
       "info": [],
       "guess": false,
-      "date": 1791361738,
-      "raw_hash": "9f769e503292b337fe328f86001df2b479c574bfae31b34878baacbd48ae26c4",
+      "date": 1793543658,
+      "raw_hash": "1e461b151ff9f5b8780c7f224e3229df8977cf88c75487dfa62fc7238784d6f1",
       "live_hosts": [
         "ani.pekolove.net",
         "ani.pekolove.net"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "site": null
     },
     {
       "origin": "baseline",
       "key": "ani_pekolove",
-      "version": "rev 9",
+      "version": "rev 10",
       "status": "baseline",
       "notes": [
         "用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较"
       ],
       "info": [],
       "guess": false,
-      "date": 1791361738,
-      "raw_hash": "9f769e503292b337fe328f86001df2b479c574bfae31b34878baacbd48ae26c4",
+      "date": 1793543658,
+      "raw_hash": "1e461b151ff9f5b8780c7f224e3229df8977cf88c75487dfa62fc7238784d6f1",
       "live_hosts": [
         "ani.pekolove.net",
         "ani.pekolove.net"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "blocked",
         "reason": "搜索页出现验证码/环境检查"
@@ -1123,13 +1141,13 @@
         "episode_count": 20,
         "episode_url": "https://m.lm6.net/play/7817_1_1.html",
         "play": "ok",
-        "play_reason": "scanDomMediaUrls 能从 <video> 取到地址",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=f742415aa092b13c0e2ceaaac8d61938&dis_t=1793517794"
+        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=35e88d9230c09b5ac49a45cb27e98ffc&dis_t=1793605505"
       },
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
@@ -1159,9 +1177,9 @@
         "stage": "search"
       },
       "health": {
-        "fails": 6,
+        "fails": 7,
         "last": "fail",
-        "last_fail": 1793518845,
+        "last_fail": 1793605716,
         "grace": false
       },
       "site": "lm6.net"
@@ -1169,41 +1187,43 @@
     {
       "origin": "anibaka",
       "key": "aniwatch",
-      "version": "rev 4",
+      "version": "rev 5",
       "status": "unsupported",
       "notes": [
-        "章节步骤无法转换（需要 episodes 操作，实际是：fetch, jsonEpisodes, regex, select, sniff）",
+        "章节步骤无法转换（需要 episodes 操作，实际是：fetch, jsonEpisodes, regex）",
         "baseline 里也没有这个源，已跳过"
       ],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "2e2ddaec95f5c63279251792a2b77c30d4197a53e3f9917a3e9cc9f63e2ca216",
+      "date": 1793543658,
+      "raw_hash": "1cae55770034fba2bbb10f95986d8130766eb27adca89eb975c4365810845c7a",
       "live_hosts": [
         "www.aniwatch.top",
         "www.aniwatch.top"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "site": null
     },
     {
       "origin": "anibaka",
       "key": "akianime",
-      "version": "rev 6",
-      "status": "ok",
-      "notes": [],
+      "version": "rev 7",
+      "status": "partial",
+      "notes": [
+        "searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）"
+      ],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "8d832887021dc064d00c89f19f31fcbfa760d6ad0cae56ea53c6d0fec3112e29",
+      "date": 1793543658,
+      "raw_hash": "95c6703047397114da2de34c5efb9938b7222ca5b2cf60d24666e57e50b54bfc",
       "live_hosts": [
         "www.akianime.cc",
         "www.akianime.cc"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 84 个剧集链接",
+        "reason": "搜到 32 个条目，详情页选出 84 个剧集链接",
         "episode_count": 84,
         "episode_url": "https://www.akianime.cc/bgmplay/dPDDDE-5-1.html",
         "play": "ok",
@@ -1213,7 +1233,7 @@
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
@@ -1223,29 +1243,29 @@
     {
       "origin": "baseline",
       "key": "akianime",
-      "version": "rev 6",
+      "version": "rev 7",
       "status": "baseline",
       "notes": [
         "用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较"
       ],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "8d832887021dc064d00c89f19f31fcbfa760d6ad0cae56ea53c6d0fec3112e29",
+      "date": 1793543658,
+      "raw_hash": "95c6703047397114da2de34c5efb9938b7222ca5b2cf60d24666e57e50b54bfc",
       "live_hosts": [
         "www.akianime.cc",
         "www.akianime.cc"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "fail",
         "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
         "stage": "search"
       },
       "health": {
-        "fails": 6,
+        "fails": 7,
         "last": "fail",
-        "last_fail": 1793518845,
+        "last_fail": 1793605716,
         "grace": false
       },
       "site": "akianime.cc"
@@ -1253,20 +1273,20 @@
     {
       "origin": "anibaka",
       "key": "animoe",
-      "version": "rev 4",
+      "version": "rev 5",
       "status": "partial",
       "notes": [
         "AniBaka 播放步骤不是嗅探（playerAaaa/regex），已改成 WebView 嗅探，请在 Animeko 里试播确认"
       ],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "23c05c115a5b8bb93961435b8b172e6700041894c12e68aa50f9d510484cb450",
+      "date": 1793543658,
+      "raw_hash": "223643929566708b46fde30b241a1ac5271d3e714611c8ff2943b77fe8ac8a7e",
       "live_hosts": [
         "animoe.org",
         "github.elemecdn.com"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "blocked",
         "reason": "HTTP 403"
@@ -1281,20 +1301,20 @@
     {
       "origin": "baseline",
       "key": "animoe",
-      "version": "rev 4",
+      "version": "rev 5",
       "status": "baseline",
       "notes": [
         "用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较"
       ],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "23c05c115a5b8bb93961435b8b172e6700041894c12e68aa50f9d510484cb450",
+      "date": 1793543658,
+      "raw_hash": "223643929566708b46fde30b241a1ac5271d3e714611c8ff2943b77fe8ac8a7e",
       "live_hosts": [
         "animoe.org",
         "github.elemecdn.com"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "blocked",
         "reason": "HTTP 403"
@@ -1308,40 +1328,38 @@
     {
       "origin": "anibaka",
       "key": "tvtfun",
-      "version": "rev 12",
+      "version": "rev 13",
       "status": "unsupported",
       "notes": [
-        "章节步骤无法转换（需要 episodes 操作，实际是：json, jsonEpisodes, setVar, template）",
+        "章节步骤无法转换（需要 episodes 操作，实际是：fetch, jsonEpisodes, regex）",
         "baseline 里也没有这个源，已跳过"
       ],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "e08fc606eadceb4fc9dcafd7104b4c3d8fd76cf938c9c0f0affca02d8bbe721a",
+      "date": 1793543658,
+      "raw_hash": "5f01c4e0a6703910b542390d0850805b8ede1a258e12748eb29ff2b9b133d9e2",
       "live_hosts": [
         "www.tvtfun.net",
         "www.tvtfun.net"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "site": null
     },
     {
       "origin": "anibaka",
       "key": "ios_mifun",
-      "version": "rev 6",
-      "status": "partial",
-      "notes": [
-        "搜索用 MacCMS 的 suggest 接口（https://ios.mifun.org/index.php/ajax/suggest?mid=1&wd={keyword}&limit=30，路径是按 MacCMS 默认值推的，AniBaka 里没写）"
-      ],
+      "version": "rev 7",
+      "status": "ok",
+      "notes": [],
       "info": [],
-      "guess": true,
-      "date": 1790775080,
-      "raw_hash": "c39a459c2cf31ea3278a6b875a3b5265c70897f01902884c60dab8080faad8ac",
+      "guess": false,
+      "date": 1793543658,
+      "raw_hash": "1c25ef84baaa3ec41994ac35a160c9f5a6fd19b03f88963e4e42434cbf39aeec",
       "live_hosts": [
         "ios.mifun.org",
         "ugc.hitv.com"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "ok",
         "reason": "搜到 2 个条目，详情页选出 40 个剧集链接",
@@ -1354,7 +1372,7 @@
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
@@ -1364,20 +1382,20 @@
     {
       "origin": "baseline",
       "key": "ios_mifun",
-      "version": "rev 6",
+      "version": "rev 7",
       "status": "baseline",
       "notes": [
         "用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较"
       ],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "c39a459c2cf31ea3278a6b875a3b5265c70897f01902884c60dab8080faad8ac",
+      "date": 1793543658,
+      "raw_hash": "1c25ef84baaa3ec41994ac35a160c9f5a6fd19b03f88963e4e42434cbf39aeec",
       "live_hosts": [
         "ios.mifun.org",
         "ugc.hitv.com"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "ok",
         "reason": "搜到 2 个条目，详情页选出 140 个剧集链接",
@@ -1385,12 +1403,12 @@
         "episode_url": "https://ios.mifun.org/vodplay/17612-2-1/",
         "play": "mismatch",
         "play_reason": "页面出现了视频地址，但 matchVideoUrl 认不出来",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc3bubemaac7yagxva7fnss2dieiygqersa.f0.mp4?dis_k=9e86423acb75c7f2622765b6c3f8cfaa&dis_t=1793518734"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc3bubemaac7yagxva7fnss2dieiygqersa.f0.mp4?dis_k=abaac2dd931c356703bef99f7d57087a&dis_t=1793605600"
       },
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "mismatch",
         "grace": false
       },
@@ -1399,39 +1417,39 @@
     {
       "origin": "anibaka",
       "key": "agekkkk",
-      "version": "rev 2",
+      "version": "rev 3",
       "status": "unsupported",
       "notes": [
         "搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）"
       ],
       "info": [],
       "guess": false,
-      "date": 1784350043,
-      "raw_hash": "a40f2a17b90fa9a473419e5276c72c7912eb3bac7f995a45e15ebdc4f35decba",
+      "date": 1793543658,
+      "raw_hash": "b96d30da815516633a94420eded1b754b2394b0712e3f3d83e078092c0d1d704",
       "live_hosts": [
         "cn.agekkkk.com",
         "cn.agekkkk.com"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "site": null
     },
     {
       "origin": "baseline",
       "key": "agekkkk",
-      "version": "rev 2",
+      "version": "rev 3",
       "status": "baseline",
       "notes": [
         "用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较"
       ],
       "info": [],
       "guess": false,
-      "date": 1784350043,
-      "raw_hash": "a40f2a17b90fa9a473419e5276c72c7912eb3bac7f995a45e15ebdc4f35decba",
+      "date": 1793543658,
+      "raw_hash": "b96d30da815516633a94420eded1b754b2394b0712e3f3d83e078092c0d1d704",
       "live_hosts": [
         "cn.agekkkk.com",
         "cn.agekkkk.com"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "blocked",
         "reason": "搜索页出现验证码/环境检查"
@@ -1446,21 +1464,20 @@
     {
       "origin": "anibaka",
       "key": "didahd",
-      "version": "rev 6",
+      "version": "rev 7",
       "status": "partial",
       "notes": [
-        "搜索用 MacCMS 的 suggest 接口（https://www.didahd.xyz/index.php/ajax/suggest?mid=1&wd={keyword}&limit=30，路径是按 MacCMS 默认值推的，AniBaka 里没写）",
         "AniBaka 播放步骤用了 maccmsVerify 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频"
       ],
       "info": [],
-      "guess": true,
-      "date": 1790775080,
-      "raw_hash": "8efbeb5b8a2b0ea28f52af6a1a0346e73cbcdc1bbd4a259471a09e3d7cc6742a",
+      "guess": false,
+      "date": 1793543658,
+      "raw_hash": "8950722d606d0c2e314bfe947771e25a477915f0f18acde615d498948b2a1ea1",
       "live_hosts": [
         "www.didahd.xyz",
         "www.didahd.xyz"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "ok",
         "reason": "搜到 2 个条目，详情页选出 42 个剧集链接",
@@ -1473,7 +1490,7 @@
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
@@ -1483,7 +1500,7 @@
     {
       "origin": "baseline",
       "key": "didahd",
-      "version": "rev 6",
+      "version": "rev 7",
       "status": "baseline",
       "notes": [
         "用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较",
@@ -1491,13 +1508,13 @@
       ],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "8efbeb5b8a2b0ea28f52af6a1a0346e73cbcdc1bbd4a259471a09e3d7cc6742a",
+      "date": 1793543658,
+      "raw_hash": "8950722d606d0c2e314bfe947771e25a477915f0f18acde615d498948b2a1ea1",
       "live_hosts": [
         "www.didahd.xyz",
         "www.didahd.xyz"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "ok",
         "reason": "搜到 2 个条目，详情页选出 42 个剧集链接",
@@ -1511,7 +1528,7 @@
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
@@ -1520,21 +1537,21 @@
     {
       "origin": "anibaka",
       "key": "anime7",
-      "version": "rev 5",
+      "version": "rev 6",
       "status": "ok",
       "notes": [],
       "info": [],
       "guess": false,
-      "date": 1791361738,
-      "raw_hash": "9a6514966d5d1a0609f0a9df52d77e01aa81123c866a1a76076ee4185fc67aa7",
+      "date": 1793543658,
+      "raw_hash": "f3b79de0059f052123e3d99860e91762982067543bf3187d8a276d90c2e8c2d5",
       "live_hosts": [
         "anime7.top",
         "ani7.b-cdn.net"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "ok",
-        "reason": "搜到 19 个条目，详情页选出 10 个剧集链接",
+        "reason": "搜到 3 个条目，详情页选出 10 个剧集链接",
         "episode_count": 10,
         "episode_url": "https://anime7.top/vod-play/9467-1-1/",
         "play": "ok",
@@ -1544,7 +1561,7 @@
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
@@ -1554,20 +1571,20 @@
     {
       "origin": "baseline",
       "key": "anime7",
-      "version": "rev 5",
+      "version": "rev 6",
       "status": "baseline",
       "notes": [
         "用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较"
       ],
       "info": [],
       "guess": false,
-      "date": 1791361738,
-      "raw_hash": "9a6514966d5d1a0609f0a9df52d77e01aa81123c866a1a76076ee4185fc67aa7",
+      "date": 1793543658,
+      "raw_hash": "f3b79de0059f052123e3d99860e91762982067543bf3187d8a276d90c2e8c2d5",
       "live_hosts": [
         "anime7.top",
         "ani7.b-cdn.net"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "blocked",
         "reason": "HTTP 403"
@@ -1581,77 +1598,68 @@
     {
       "origin": "anibaka",
       "key": "hanimeone",
-      "version": "rev 6",
+      "version": "rev 7",
       "status": "unsupported",
       "notes": [
-        "搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）",
+        "章节步骤无法转换（需要 episodes 操作，实际是：jsonEpisodes, template）",
         "baseline 里也没有这个源，已跳过"
       ],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "7e828b23d1838aa79d5a3adadff44d9005bd17fecda9205ea3dba2173057ff6e",
+      "date": 1793543658,
+      "raw_hash": "88e80bc02ef71409a9787c56b9bd5d3d8fb3c3642c8921f8aea6c20152fe60dc",
       "live_hosts": [
         "hanimeone.me",
         "vdownload.hembed.com"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "site": null
     },
     {
       "origin": "anibaka",
       "key": "girigirilove",
-      "version": "rev 4",
-      "status": "ok",
-      "notes": [],
+      "version": "rev 5",
+      "status": "unsupported",
+      "notes": [
+        "章节步骤无法转换（需要 episodes 操作，实际是：fetch, maccmsApiEpisodes, regex, template）"
+      ],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "5b83ff42c47145f3cb2c7c6ae8839e8b6a8cac35a4f61a681d84892e6b602b16",
+      "date": 1793543658,
+      "raw_hash": "8b0dc194cb5be62e3db324d3f621da8a68cfe63dad014247d798eaa139217b0a",
       "live_hosts": [
         "ani.girigirilove.com",
         "ani.girigirilove.com"
       ],
-      "date_basis": "内容未变",
-      "smoke": {
-        "status": "fail",
-        "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
-        "stage": "search"
-      },
-      "health": {
-        "fails": 6,
-        "last": "fail",
-        "last_fail": 1793518845,
-        "grace": false
-      },
-      "site": "ani.girigirilove.com"
+      "date_basis": "内容已变",
+      "site": null
     },
     {
       "origin": "baseline",
       "key": "girigirilove",
-      "version": "rev 4",
+      "version": "rev 5",
       "status": "baseline",
       "notes": [
         "用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较"
       ],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "5b83ff42c47145f3cb2c7c6ae8839e8b6a8cac35a4f61a681d84892e6b602b16",
+      "date": 1793543658,
+      "raw_hash": "8b0dc194cb5be62e3db324d3f621da8a68cfe63dad014247d798eaa139217b0a",
       "live_hosts": [
         "ani.girigirilove.com",
         "ani.girigirilove.com"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "fail",
         "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
         "stage": "search"
       },
       "health": {
-        "fails": 6,
+        "fails": 7,
         "last": "fail",
-        "last_fail": 1793518845,
+        "last_fail": 1793605716,
         "grace": false
       },
       "site": "ani.girigirilove.com"
@@ -1659,7 +1667,7 @@
     {
       "origin": "anibaka",
       "key": "girigirilove_beta",
-      "version": "rev 1",
+      "version": "rev 2",
       "status": "unsupported",
       "notes": [
         "章节步骤无法转换（需要 episodes 操作，实际是：fetch, maccmsApiEpisodes, regex, template）",
@@ -1667,13 +1675,13 @@
       ],
       "info": [],
       "guess": false,
-      "date": 1791361738,
-      "raw_hash": "3e9c4b6fb230a9164945574ef3c47d50c70fd5a462cbbec78064a7b07b45f113",
+      "date": 1793543658,
+      "raw_hash": "f2920531c39157c953cf94d9289651a01d216166d4ea24df3da98c0f86c0f70b",
       "live_hosts": [
         "beta.girigirilove.com",
         "beta.girigirilove.com"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "site": null
     },
     {
@@ -1699,18 +1707,20 @@
     {
       "origin": "anibaka",
       "key": "age",
-      "version": "rev 6",
-      "status": "ok",
-      "notes": [],
+      "version": "rev 7",
+      "status": "partial",
+      "notes": [
+        "searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）"
+      ],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "92911fd4152f09a6843d9293b4e22382395985da43fc5f1443dbe74ed0e52524",
+      "date": 1793543658,
+      "raw_hash": "9d437ad1714b7361df8f539cf294b69c78d9b1c82ad31eeb214f2b4200c8a0b0",
       "live_hosts": [
         "www.agedm.io",
         "www.agedm.io"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "blocked",
         "reason": "HTTP 403"
@@ -1719,25 +1729,26 @@
         "last": "blocked",
         "grace": false
       },
-      "site": "agedm.io"
+      "site": "agedm.io",
+      "chosen": true
     },
     {
       "origin": "baseline",
       "key": "age",
-      "version": "rev 6",
+      "version": "rev 7",
       "status": "baseline",
       "notes": [
         "用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较"
       ],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "92911fd4152f09a6843d9293b4e22382395985da43fc5f1443dbe74ed0e52524",
+      "date": 1793543658,
+      "raw_hash": "9d437ad1714b7361df8f539cf294b69c78d9b1c82ad31eeb214f2b4200c8a0b0",
       "live_hosts": [
         "www.agedm.io",
         "www.agedm.io"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "blocked",
         "reason": "HTTP 403"
@@ -1751,39 +1762,57 @@
     {
       "origin": "anibaka",
       "key": "xigua",
-      "version": "rev 8",
-      "status": "unsupported",
+      "version": "rev 9",
+      "status": "partial",
       "notes": [
-        "搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）"
+        "searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）",
+        "AniBaka 播放步骤不是嗅探（json/regex/template），已改成 WebView 嗅探，请在 Animeko 里试播确认"
       ],
       "info": [],
       "guess": false,
-      "date": 1790779316,
-      "raw_hash": "209e17e3c167d678ec654dba9ff5aea4a0a98d648c51d223948a2f14d4389d94",
+      "date": 1793543658,
+      "raw_hash": "e4ae5667a34817d008c96c769ddbec7a12281f1eaab7a7b7d128756a0c4f9d7e",
       "live_hosts": [
         "www.xgcartoon.com",
         "www.xgcartoon.com"
       ],
-      "date_basis": "内容未变",
-      "site": null
+      "date_basis": "内容已变",
+      "smoke": {
+        "status": "ok",
+        "reason": "搜到 100 个条目，详情页选出 24 个剧集链接",
+        "episode_count": 24,
+        "episode_url": "https://www.xgcartoon.com/user/page_direct?cartoon_id=qiangweiwangdezanglieqiangweiwangdezangduiriyu-lingmujiantailang&chapter_id=RpuEzMitDB",
+        "play": "ok",
+        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
+        "media": "https://xgct-video.bzcdn.net/59439519-1504-4ddd-9840-40522e286e5f/playlist.m3u8"
+      },
+      "health": {
+        "fails": 0,
+        "last_ok": 1793605716,
+        "play": "ok",
+        "last": "ok",
+        "grace": false
+      },
+      "site": "xgcartoon.com",
+      "chosen": true
     },
     {
       "origin": "baseline",
       "key": "xigua",
-      "version": "rev 8",
+      "version": "rev 9",
       "status": "baseline",
       "notes": [
         "用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较"
       ],
       "info": [],
       "guess": false,
-      "date": 1790779316,
-      "raw_hash": "209e17e3c167d678ec654dba9ff5aea4a0a98d648c51d223948a2f14d4389d94",
+      "date": 1793543658,
+      "raw_hash": "e4ae5667a34817d008c96c769ddbec7a12281f1eaab7a7b7d128756a0c4f9d7e",
       "live_hosts": [
         "www.xgcartoon.com",
         "www.xgcartoon.com"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "ok",
         "reason": "搜到 100 个条目，详情页选出 24 个剧集链接",
@@ -1796,28 +1825,27 @@
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "mismatch",
         "grace": false
       },
-      "site": "xgcartoon.com",
-      "chosen": true
+      "site": "xgcartoon.com"
     },
     {
       "origin": "anibaka",
       "key": "2kdm",
-      "version": "rev 5",
+      "version": "rev 6",
       "status": "ok",
       "notes": [],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "4f3d73fe6eab4c71ecc1db33017ccd8eec33278fba160f0b64c1e6cf0e0ceb30",
+      "date": 1793543658,
+      "raw_hash": "a189590ff2bcf38511531c8434106d30a09ee2b93d75aaab2108e8734d1b5eba",
       "live_hosts": [
         "www.2kdm.com",
         "image1.ljcdn.com"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "blocked",
         "reason": "HTTP 403"
@@ -1832,27 +1860,27 @@
     {
       "origin": "baseline",
       "key": "2kdm",
-      "version": "rev 5",
+      "version": "rev 6",
       "status": "baseline",
       "notes": [
         "用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较"
       ],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "4f3d73fe6eab4c71ecc1db33017ccd8eec33278fba160f0b64c1e6cf0e0ceb30",
+      "date": 1793543658,
+      "raw_hash": "a189590ff2bcf38511531c8434106d30a09ee2b93d75aaab2108e8734d1b5eba",
       "live_hosts": [
         "www.2kdm.com",
         "image1.ljcdn.com"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
-        "status": "fail",
-        "reason": "HTTP 404"
+        "status": "blocked",
+        "reason": "HTTP 403"
       },
       "health": {
         "fails": 2,
-        "last": "fail",
+        "last": "blocked",
         "last_fail": 1793518845,
         "last_ok": 1793344459,
         "play": "ok",
@@ -1880,9 +1908,9 @@
         "reason": "HTTP 404"
       },
       "health": {
-        "fails": 6,
+        "fails": 7,
         "last": "fail",
-        "last_fail": 1793518845,
+        "last_fail": 1793605716,
         "grace": false
       },
       "site": "gugu3.com",
@@ -1910,9 +1938,9 @@
         "reason": "HTTP 404"
       },
       "health": {
-        "fails": 6,
+        "fails": 7,
         "last": "fail",
-        "last_fail": 1793518845,
+        "last_fail": 1793605716,
         "grace": false
       },
       "site": "gugu3.com"
@@ -1920,7 +1948,7 @@
     {
       "origin": "anibaka",
       "key": "anime1",
-      "version": "rev 2",
+      "version": "rev 3",
       "status": "unsupported",
       "notes": [
         "搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）",
@@ -1928,38 +1956,18 @@
       ],
       "info": [],
       "guess": false,
-      "date": 1789394769,
-      "raw_hash": "de3be12cff0858915450b729324daf6253177dc463a0a6ff078c3507c18f28b3",
+      "date": 1793543658,
+      "raw_hash": "8e6eb879e7f574c3f34743e552d201d38453e48a175176da2bf5ccee5618f093",
       "live_hosts": [
         "anime1.me",
         "anime1.me"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "site": null
     },
     {
       "origin": "anibaka",
       "key": "dmhy",
-      "version": "rev 4",
-      "status": "unsupported",
-      "notes": [
-        "搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）",
-        "baseline 里也没有这个源，已跳过"
-      ],
-      "info": [],
-      "guess": false,
-      "date": 1790775080,
-      "raw_hash": "7eb80fb0b6636d96038494f05fa6ef40009fa4d08d2e49b892ded3120744850a",
-      "live_hosts": [
-        "share.dmhy.org",
-        "share.dmhy.org"
-      ],
-      "date_basis": "内容未变",
-      "site": null
-    },
-    {
-      "origin": "anibaka",
-      "key": "mikan",
       "version": "rev 5",
       "status": "unsupported",
       "notes": [
@@ -1968,32 +1976,53 @@
       ],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "3b240c36b6c82bae76e2669fbff10f04fb18f308cba213d67404839472da0e7f",
+      "date": 1793543658,
+      "raw_hash": "2108e86be217ef10427b67e6d2c764961e8a394a24cbbb6aee832fca6147758f",
+      "live_hosts": [
+        "share.dmhy.org",
+        "share.dmhy.org"
+      ],
+      "date_basis": "内容已变",
+      "site": null
+    },
+    {
+      "origin": "anibaka",
+      "key": "mikan",
+      "version": "rev 6",
+      "status": "unsupported",
+      "notes": [
+        "搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）",
+        "baseline 里也没有这个源，已跳过"
+      ],
+      "info": [],
+      "guess": false,
+      "date": 1793543658,
+      "raw_hash": "c4c760bbd062a69bc0733240738b733bbab82c03824897b3d042e6cc82c235e6",
       "live_hosts": [
         "mikanani.me",
         "mikanani.me"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "site": null
     },
     {
       "origin": "anibaka",
       "key": "dm84",
-      "version": "rev 2",
+      "version": "rev 3",
       "status": "partial",
       "notes": [
+        "searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）",
         "AniBaka 播放步骤不是嗅探（fetch/json/regex/replace/select/setVar/template），已改成 WebView 嗅探，请在 Animeko 里试播确认"
       ],
       "info": [],
       "guess": false,
-      "date": 1789394769,
-      "raw_hash": "0788c08fd443a7d8022bca850f3dc20f618f7b547ce8a65f6cb3b48892a766a1",
+      "date": 1793543658,
+      "raw_hash": "f343f14ec4ec3ab261832055d4a289f4bdf148f7f0d2458e685c3bc037d311a1",
       "live_hosts": [
         "dmbus.cc",
         "dmbus.cc"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "ok",
         "reason": "搜到 4 个条目，详情页选出 30 个剧集链接",
@@ -2001,12 +2030,12 @@
         "episode_url": "https://dmbus.cc/p/5963-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://hhjx.hhplayer.com/playlist/8298df34c8e87d6dc0af170f24ea0812cda7f688524f9df3.m3u8?expires=1793543622&sign=d79ca4c726afa772434627492574df1f0c9d50051c4fa176ea383f08f5ec574d"
+        "media": "https://hhjx.hhplayer.com/playlist/8298df34c8e87d6dc0af170f24ea0812cda7f688524f9df3.m3u8?expires=1793630216&sign=14654dae637ae0e0ed88e56470c3887999c5b043d88b34b4f4c59cf65d108841"
       },
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
@@ -2016,29 +2045,29 @@
     {
       "origin": "baseline",
       "key": "dm84",
-      "version": "rev 2",
+      "version": "rev 3",
       "status": "baseline",
       "notes": [
         "用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较"
       ],
       "info": [],
       "guess": false,
-      "date": 1789394769,
-      "raw_hash": "0788c08fd443a7d8022bca850f3dc20f618f7b547ce8a65f6cb3b48892a766a1",
+      "date": 1793543658,
+      "raw_hash": "f343f14ec4ec3ab261832055d4a289f4bdf148f7f0d2458e685c3bc037d311a1",
       "live_hosts": [
         "dmbus.cc",
         "dmbus.cc"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "fail",
         "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
         "stage": "search"
       },
       "health": {
-        "fails": 6,
+        "fails": 7,
         "last": "fail",
-        "last_fail": 1793518845,
+        "last_fail": 1793605716,
         "grace": false
       },
       "site": "dmbus.cc"
@@ -2066,21 +2095,20 @@
     {
       "origin": "anibaka",
       "key": "mgnacg",
-      "version": "rev 1",
+      "version": "rev 2",
       "status": "partial",
       "notes": [
-        "搜索用 MacCMS 的 suggest 接口（https://www.mgnacg.com/index.php/ajax/suggest?mid=1&wd={keyword}&limit=30，路径是按 MacCMS 默认值推的，AniBaka 里没写）",
         "AniBaka 播放步骤用了 playerDecrypt 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频"
       ],
       "info": [],
-      "guess": true,
-      "date": 1784350043,
-      "raw_hash": "6d048ece8fa408f1343f4aa6b5d9495ebe9628d0ac245bb2ab4ca178ddc37182",
+      "guess": false,
+      "date": 1793543658,
+      "raw_hash": "67edef90675fcefa75f2edfa53d7393f12a0c7736f0f3e89e3f9d8e6170dc958",
       "live_hosts": [
         "www.mgnacg.com",
         "r2img.nanoacg.com"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "ok",
         "reason": "搜到 2 个条目，详情页选出 50 个剧集链接",
@@ -2088,43 +2116,44 @@
         "episode_url": "https://www.mgnacg.com/bangumi/1545-2-1/",
         "play": "ok",
         "play_reason": "scanDomMediaUrls 能从 <video> 取到地址",
-        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=8machu862Rx3O6gZMtSughRq5kAldwCLKP1SzUc18L8=:1793522402"
+        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=0nnMYDp60E2WRWtK-t_Z6fr7D8pvaCJ3LMftzrsnKK4=:1793609275"
       },
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
-      "site": "mgnacg.com"
+      "site": "mgnacg.com",
+      "chosen": true
     },
     {
       "origin": "baseline",
       "key": "mgnacg",
-      "version": "rev 1",
+      "version": "rev 2",
       "status": "baseline",
       "notes": [
         "用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较"
       ],
       "info": [],
       "guess": false,
-      "date": 1784350043,
-      "raw_hash": "6d048ece8fa408f1343f4aa6b5d9495ebe9628d0ac245bb2ab4ca178ddc37182",
+      "date": 1793543658,
+      "raw_hash": "67edef90675fcefa75f2edfa53d7393f12a0c7736f0f3e89e3f9d8e6170dc958",
       "live_hosts": [
         "www.mgnacg.com",
         "r2img.nanoacg.com"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "fail",
         "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
         "stage": "search"
       },
       "health": {
-        "fails": 6,
+        "fails": 7,
         "last": "fail",
-        "last_fail": 1793518845,
+        "last_fail": 1793605716,
         "grace": false
       },
       "site": "mgnacg.com"
@@ -2132,62 +2161,65 @@
     {
       "origin": "anibaka",
       "key": "moonci",
-      "version": "rev 3",
-      "status": "ok",
-      "notes": [],
+      "version": "rev 4",
+      "status": "partial",
+      "notes": [
+        "searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）"
+      ],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "f454f5dafce4ce26548f8d8bb7dfb1ea7bb246b0d02d965ce42f71c9200ee766",
+      "date": 1793543658,
+      "raw_hash": "ceef44aaffb0b26390dccbabf84065772191dd8a351367fc708e6622236e8d92",
       "live_hosts": [
         "www.moonci.com",
         "www.moonci.com"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "ok",
-        "reason": "搜到 16 个条目，详情页选出 30 个剧集链接",
+        "reason": "搜到 6 个条目，详情页选出 30 个剧集链接",
         "episode_count": 30,
         "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=Gq5Nl2WbPOMN66vKzov7TBt0030bLarKPe1-KAWvIa4%3D%3A1793527200"
+        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=Q0JNnQd9vg8V4TaXae3Kr5lNWu7IsPSFktdIYySNZQU%3D%3A1793613600"
       },
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
-      "site": "moonci.com"
+      "site": "moonci.com",
+      "chosen": true
     },
     {
       "origin": "anibaka",
       "key": "silisili",
-      "version": "rev 1",
+      "version": "rev 2",
       "status": "partial",
       "notes": [
+        "searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）",
         "AniBaka 播放步骤用了 crypto 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频"
       ],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "8b4539301276765751e51aa07750652d62728e57e025f70650e2ec0098a91ecb",
+      "date": 1793543658,
+      "raw_hash": "e7b5e3900e604c04720da8da0e67b1a81d12581a43a10477a6c4afce844f3c97",
       "live_hosts": [
         "www.silisilifun.com",
         "www.silisilifun.com"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "fail",
-        "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
-        "stage": "search"
+        "reason": "HTTP 502"
       },
       "health": {
-        "fails": 6,
+        "fails": 7,
         "last": "fail",
-        "last_fail": 1793518845,
+        "last_fail": 1793605716,
         "grace": false
       },
       "site": "silisilifun.com",
@@ -2196,29 +2228,28 @@
     {
       "origin": "baseline",
       "key": "silisili",
-      "version": "rev 1",
+      "version": "rev 2",
       "status": "baseline",
       "notes": [
         "用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较"
       ],
       "info": [],
       "guess": false,
-      "date": 1790775080,
-      "raw_hash": "8b4539301276765751e51aa07750652d62728e57e025f70650e2ec0098a91ecb",
+      "date": 1793543658,
+      "raw_hash": "e7b5e3900e604c04720da8da0e67b1a81d12581a43a10477a6c4afce844f3c97",
       "live_hosts": [
         "www.silisilifun.com",
         "www.silisilifun.com"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "fail",
-        "reason": "搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）",
-        "stage": "search"
+        "reason": "HTTP 502"
       },
       "health": {
-        "fails": 6,
+        "fails": 7,
         "last": "fail",
-        "last_fail": 1793518845,
+        "last_fail": 1793605716,
         "grace": false
       },
       "site": "silisilifun.com"
@@ -2226,39 +2257,40 @@
     {
       "origin": "anibaka",
       "key": "ezdmw",
-      "version": "rev 4",
+      "version": "rev 5",
       "status": "unsupported",
       "notes": [
-        "搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）"
+        "searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）",
+        "章节步骤无法转换（需要 episodes 操作，实际是：episodes）"
       ],
       "info": [],
       "guess": false,
-      "date": 1791361738,
-      "raw_hash": "0c7ff13bdc2c40c44167758953de20f76a0d8181a45539cbad29950059469de2",
+      "date": 1793543658,
+      "raw_hash": "ac2b2f0ff6985e971faece89eee249e6b37c3d3236d4fd3a8182a4d2fe9a9427",
       "live_hosts": [
         "www.ezdmw.org",
         "www.ezdmw.org"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "site": null
     },
     {
       "origin": "baseline",
       "key": "ezdmw",
-      "version": "rev 4",
+      "version": "rev 5",
       "status": "baseline",
       "notes": [
         "用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较"
       ],
       "info": [],
       "guess": false,
-      "date": 1791361738,
-      "raw_hash": "0c7ff13bdc2c40c44167758953de20f76a0d8181a45539cbad29950059469de2",
+      "date": 1793543658,
+      "raw_hash": "ac2b2f0ff6985e971faece89eee249e6b37c3d3236d4fd3a8182a4d2fe9a9427",
       "live_hosts": [
         "www.ezdmw.org",
         "www.ezdmw.org"
       ],
-      "date_basis": "内容未变",
+      "date_basis": "内容已变",
       "smoke": {
         "status": "ok",
         "reason": "搜到 1 个条目，详情页选出 38 个剧集链接",
@@ -2270,7 +2302,7 @@
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "none",
         "grace": false
       },
@@ -2495,17 +2527,16 @@
         "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=399d6cd14f1e6b44f430290984de7028&dis_t=1793516264"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=35e88d9230c09b5ac49a45cb27e98ffc&dis_t=1793605505"
       },
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
-      "site": "7sefun.top",
-      "chosen": true
+      "site": "7sefun.top"
     },
     {
       "raw_hash": "a1d2eb0cebcc43ddf9d5e14acfd154e0232cbe7392fd80bcf02372adc5ff1e14",
@@ -2622,7 +2653,7 @@
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
@@ -2716,7 +2747,7 @@
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
@@ -2813,9 +2844,9 @@
         "reason": "HTTP 523"
       },
       "health": {
-        "fails": 4,
+        "fails": 5,
         "last": "fail",
-        "last_fail": 1793518845,
+        "last_fail": 1793605716,
         "grace": false
       },
       "site": "ylys.cc",
@@ -2918,7 +2949,7 @@
       "health": {
         "fails": 0,
         "last": "ok",
-        "last_ok": 1793518845,
+        "last_ok": 1793605716,
         "play": "ok",
         "grace": false
       },
