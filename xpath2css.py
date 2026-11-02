@@ -104,6 +104,8 @@ _P_EQ = re.compile(r"""^@([\w:-]+)\s*=\s*(['"])(.*?)\2$""")
 _P_CONTAINS = re.compile(r"""^contains\(\s*@([\w:-]+)\s*,\s*(['"])(.*?)\2\s*\)$""")
 _P_STARTS = re.compile(r"""^starts-with\(\s*@([\w:-]+)\s*,\s*(['"])(.*?)\2\s*\)$""")
 _P_EXISTS = re.compile(r"^@([\w:-]+)$")
+# 非标准但 Kazumi 解析器接受的 CSS 风格写法：[@class*='x'] / [@href^='x'] / [@href$='x']
+_P_CSSOP = re.compile(r"""^@([\w:-]+)\s*([*^$])=\s*(['"])(.*?)\3$""")
 _P_INDEX = re.compile(r"^\d+$")
 
 
@@ -133,6 +135,10 @@ def _translate_step(name: str, preds):
         m = _P_STARTS.match(p)
         if m:
             css += "[%s^=%s]" % (m.group(1), _css_str(m.group(3)))
+            continue
+        m = _P_CSSOP.match(p)
+        if m:
+            css += "[%s%s=%s]" % (m.group(1), m.group(2), _css_str(m.group(4)))
             continue
         m = _P_EXISTS.match(p)
         if m:

@@ -117,4 +117,19 @@ def normalize_source(c, source, config=None, warn=""):
     source["id"] = normalize_id(source["id"])
     a["name"] = normalize_name(a.get("name"), host, (config.get("names") or {}).get(source["id"]))
     a["description"] = compose_description(c, host, warn)
+    set_client_versions(source, config)
+    return source
+
+
+def set_client_versions(source, config=None):
+    """用了 linkTemplate 的源需要 Animeko 6.3.0+（官方订阅仓库的要求），否则旧客户端会拿到用不了的源。
+    源里已经写了 clientVersions 的不动；config 里 link_template_client_versions 设为 "" 可关闭。"""
+    config = config or {}
+    want = config.get("link_template_client_versions", ">=6.3.0")
+    if not want or source.get("clientVersions"):
+        return source
+    sc = (source.get("arguments") or {}).get("searchConfig") or {}
+    tpl = (sc.get("selectorSubjectFormatJsonPathIndexed") or {}).get("linkTemplate")
+    if sc.get("subjectFormatId") == "json-path-indexed" and tpl and tpl != "{value}":
+        source["clientVersions"] = want
     return source

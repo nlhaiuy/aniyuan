@@ -70,4 +70,44 @@ check("最新的从没通过过：第一次 fail 就改用通过的", ch[0]["ori
 # 宽限期按上次的播放成绩排名：上次没抓到视频（none），而旧来源能播 -> 旧来源胜
 ch, d = pair("fail", {"anibaka:a": {"fails": 0, "last_ok": 100, "play": "none"}})
 check("宽限期按上次播放成绩排名", ch[0]["origin"] == "kazumi")
+
+# ---- 自动分档（tier）----
+from health import auto_tier
+from build import apply_auto_tier
+
+
+def tcand(status=None, play=None, grace=None, play_hist=None, guess=False, origin="anibaka", key="k", tier=4, name="n"):
+    c = cand(origin, key, "t.com", 1, "id-" + key, status, play)
+    c["source"]["arguments"]["tier"] = tier
+    c["source"]["arguments"]["name"] = name
+    if grace is not None:
+        c["health"] = {"grace": grace, "play": play_hist}
+    if guess:
+        c["guess"] = True
+    return c
+
+
+check("通过 + 能播 -> 1", auto_tier(tcand("ok", "ok"))[0] == 1)
+check("通过 + 没跑播放检测 -> 2", auto_tier(tcand("ok"))[0] == 2)
+check("通过 + 没抓到视频 -> 2", auto_tier(tcand("ok", "none"))[0] == 2)
+check("通过 + 认不出视频地址 -> 3", auto_tier(tcand("ok", "mismatch"))[0] == 3)
+check("明确失败（已过宽限期）-> 4", auto_tier(tcand("fail", grace=False))[0] == 4)
+check("宽限期内按上次通过时的播放成绩", auto_tier(tcand("fail", grace=True, play_hist="ok"))[0] == 1)
+check("无法访问（没有结论）-> 3", auto_tier(tcand("unreachable"))[0] == 3 and auto_tier(tcand("blocked"))[0] == 3)
+check("推测的搜索地址且没结论 -> 4", auto_tier(tcand("unreachable", guess=True))[0] == 4)
+check("没有检测结果 -> None", auto_tier(tcand())[0] is None)
+
+cs = [tcand("ok", "ok", key="a"), tcand("ok", "ok", key="b", tier=2), tcand("ok", "ok", key="c", origin="manual"),
+      tcand("ok", "ok", key="d"), tcand("ok", "ok", key="e", name="E名"), tcand(key="f")]
+apply_auto_tier(cs, {"tiers": {"d": 3, "E名": 0}})
+t = {c["key"]: c["source"]["arguments"]["tier"] for c in cs}
+check("默认值的源按检测结果自动分档", t["a"] == 1)
+check("手调过的（tier 不是默认值）不动", t["b"] == 2)
+check("manual 不动", t["c"] == 4)
+check("config.tiers 点名的不动（按 key 或名称）", t["d"] == 4 and t["e"] == 4)
+check("没有检测结果的保持默认", t["f"] == 4)
+check("自动分档写进备注", any("优先级自动设为 1" in n for n in cs[0]["notes"]))
+cs = [tcand("ok", "ok", key="a")]
+apply_auto_tier(cs, {"auto_tier": False})
+check("auto_tier=false 关闭", cs[0]["source"]["arguments"]["tier"] == 4)
 sys.exit(1 if bad else 0)

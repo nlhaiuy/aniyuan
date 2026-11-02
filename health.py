@@ -52,6 +52,32 @@ def confirmed_fail(c):
     return (c.get("smoke") or {}).get("status") == "fail" and not (c.get("health") or {}).get("grace")
 
 
+def auto_tier(c):
+    """按联网检测结果给 Animeko 的优先级分档（0 最高，4 最低）；没有检测结果返回 (None, "")。
+    0 留给人工指定（manual/、baseline 里写了 tier、config.tiers），自动分档只用 1-4：
+      1  搜索和剧集通过，播放检测也能抓到视频
+      2  搜索和剧集通过，播放没有验证出结论（没跑播放检测 / 没抓到 / 出错）
+      3  播放有疑点（认不出视频地址 / 验证码），或没有结论（无法访问、被拦、跳过）
+      4  明确失败（已过宽限期），或搜索地址是推测且没验证过
+    宽限期内（以前通过过、这次才第一次失败）按上次通过时的播放成绩算。"""
+    sm = c.get("smoke") or {}
+    st = sm.get("status")
+    if st is None:
+        return None, ""
+    if st == "ok":
+        play, basis = sm.get("play"), "检测通过"
+    elif st == "fail":
+        h = c.get("health") or {}
+        if not h.get("grace"):
+            return 4, "检测明确失败"
+        play, basis = h.get("play"), "检测未通过但在宽限期内，按上次通过的成绩"
+    else:
+        return (4, "搜索地址是推测的且没验证过") if c.get("guess") else (3, "检测没有结论（%s）" % st)
+    t = PLAY_TIER.get(play, 2)
+    tier = 1 if t >= 3 else 2 if t >= 1.8 else 3
+    return tier, "%s，播放检测：%s" % (basis, play or "未检测")
+
+
 def smoke_tier(c):
     """给 merge 用的“实测档位”：通过的按播放结果分档；明确失败为 0；宽限期内按上次通过的成绩；
     其余（没有结论 / 没检测）为 1。"""
