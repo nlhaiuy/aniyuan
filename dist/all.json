@@ -619,7 +619,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 1,
+        "tier": 2,
         "channelTiers": {}
       },
       "clientVersions": ">=6.3.0"
@@ -710,8 +710,8 @@
       "version": 2,
       "arguments": {
         "name": "girigiri愛動漫",
-        "description": "站点 ani.girigirilove.com。（来源：手动维护（manual/））",
-        "iconUrl": "https://ani.girigirilove.com/brand/icon.png",
+        "description": "站点 ani.girigirilove.com。（来源：Kazumi 规则 giriGiriLove v2.6，手写配置）",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-girigirilove.png",
         "searchConfig": {
           "searchUrl": "https://m3u8.girigirilove.com/api.php/Vod/get_list?offset=0&limit=24&vod_name={keyword}",
           "searchUseOnlyFirstWord": true,
@@ -2338,7 +2338,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 1,
+          "tier": 2,
           "channelTiers": {}
         },
         "clientVersions": ">=6.3.0"
@@ -2429,8 +2429,8 @@
         "version": 2,
         "arguments": {
           "name": "girigiri愛動漫",
-          "description": "站点 ani.girigirilove.com。（来源：手动维护（manual/））",
-          "iconUrl": "https://ani.girigirilove.com/brand/icon.png",
+          "description": "站点 ani.girigirilove.com。（来源：Kazumi 规则 giriGiriLove v2.6，手写配置）",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-girigirilove.png",
           "searchConfig": {
             "searchUrl": "https://m3u8.girigirilove.com/api.php/Vod/get_list?offset=0&limit=24&vod_name={keyword}",
             "searchUseOnlyFirstWord": true,
