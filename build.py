@@ -529,7 +529,7 @@ def main():
         get_html, get_image = icons_mod.make_fetchers(requests.Session())
         icon_results = icons_mod.resolve_icons(
             icon_items, args.icons_dir,
-            config.get("icon_base_url", "https://cdn.jsdelivr.net/gh/nlhaiuy/aniyuan@main/icons"),
+            config.get("icon_base_url", "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons"),
             get_html, get_image)
     ids = [s["id"] for s in sources]
     assert len(ids) == len(set(ids)), "出现重复 id：%s" % sorted({i for i in ids if ids.count(i) > 1})
