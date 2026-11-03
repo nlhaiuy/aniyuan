@@ -17,7 +17,7 @@
 
 仓库必须是公开的，私有仓库的链接无法匿名访问。
 
-自动同步：每天北京时间 09:17 运行一次；改动 `*.py`、`config.json`、`overrides/`、`baseline/`、`manual/` 或工作流文件时也会运行。也可以在仓库 **Actions → sync-subscription → Run workflow** 手动运行。每次运行的转换报告在任务页的 Summary 里，同时保存为 `dist/report.md`。
+自动同步：每天北京时间 09:17 运行一次；改动 `aniyuan/`、`config.json`、`overrides/`、`baseline/` 或工作流文件时也会运行。也可以在仓库 **Actions → sync-subscription → Run workflow** 手动运行。每次运行的转换报告在任务页的 Summary 里，同时保存为 `dist/report.md`。
 
 工作流分两个任务：**build** 只有只读权限、不保留 `GITHUB_TOKEN`，负责跑测试、联网检测和无头浏览器（要打开一堆第三方站点），产物只有 `dist/` 和 `state/` 里的几个 JSON；**publish** 才有写权限，不运行浏览器、不访问第三方站点，只检查产物是合法 JSON、条目数没异常偏少，再提交。
 
@@ -27,19 +27,18 @@
 2. **Settings → Actions → General → Workflow permissions** 选 **Read and write permissions**。
 3. 到 **Actions** 页面手动运行一次 `sync-subscription`（若提示 Actions 被禁用，先点启用）。
 
-## 手动维护的源（`manual/`）
+## 固定使用某一份配置
 
-你亲自验证过可用的源放在 `manual/` 里（Animeko 导出的订阅文件，或单个源 JSON 都行），同站点时**永远优先于自动转换**，不会被自动修复、替换，也不会因为检测没过而落选（只在报告里写备注）。没有 `id` 的会自动补，和别的来源同站时 id 沿用 AniBaka 的稳定 id。目前有 `girigirilove.json`。
+某个站自动转换出来的结果用不了、而你有亲测可用的配置时：把完整的 Animeko 数据源对象放进 `overrides/<Kazumi 规则名>.json`，再在 `config.json` 的 `prefer` 里写 `{"站点主机名": "kazumi"}`，这个站就固定取它（不受联网检测排名影响，id 仍沿用 AniBaka 的稳定 id）。目前 girigiri 就是这样处理的：`overrides/giriGiriLove.json`（走 `m3u8.girigirilove.com` 的接口）。
 
 ### 域名会变怎么办
 
-静态的源（`manual/`、`baseline/`、`overrides/`）域名换了不会自己更新，所以程序会**跟随上游**：同一个站（按主域名里的名字，如 `girigirilove`，与 `.com/.xyz` 无关）的 Kazumi / AniBaka / 纯纯看番规则多数已经换到新的主域名时，把静态源里的旧主域名整体换掉（保留 `ani.` / `m3u8.` / `bg.` 这些子域名），**重新联网检测通过才采用**，没通过就保持原样并在报告备注里提示。另外，搜索请求被网站自己跳转到新域名、且之后一切正常时，也会自动换成新域名（`follow_redirects`）。两项都只改输出的订阅，不改 `manual/` 里的原文件。可用 `follow_upstream_domains: false` 关闭。
+静态的源（`baseline/`、`overrides/`）域名换了不会自己更新，所以程序会**跟随上游**：同一个站（按主域名里的名字，如 `girigirilove`，与 `.com/.xyz` 无关）的 Kazumi / AniBaka / 纯纯看番规则多数已经换到新的主域名时，把静态源里的旧主域名整体换掉（保留 `ani.` / `m3u8.` / `bg.` 这些子域名），**重新联网检测通过才采用**，没通过就保持原样并在报告备注里提示。另外，搜索请求被网站自己跳转到新域名、且之后一切正常时，也会自动换成新域名（`follow_redirects`）。两项都只改输出的订阅，不改 `baseline/`、`overrides/` 里的原文件。可用 `follow_upstream_domains: false` 关闭。
 
 ## 合并规则
 
 同一个站点在多个来源里都有时，只留一个：
 
-0. **手动优先**：`manual/` 里有这个站的源，直接用它，下面几条只用来决定 id。
 1. **分组**：按站点主机名分组（去掉 `www.` / `m.`；JSON 接口源按图标域名）。
 2. **实测优先**（开启联网检测时）：能播放 > 检测通过 > 没有结论（无法访问 / 验证码 / 跳过） > 明确失败。最新的那个明确失败而旧的通过，就用旧的，并在报告里写明原因。可用 `select_by_smoke: false` 关闭。
 3. **取新**：同一档里取规则**最后真正改动的时间**更新的那个，**不比版本号**。时间相同时优先级为 Kazumi > 纯纯看番 > AniBaka > 基线。
@@ -84,11 +83,11 @@ git 提交日期会被“发布 / 整理”提交带偏（例如社区仓库一�
 
 ## 订阅里的 id / 名称 / 描述格式
 
-输出前由 `normalize.py` 统一规整：
+输出前由 `aniyuan/normalize.py` 统一规整：
 
 - **id**：`aniyuan-<站点名>`，小写字母、数字和连字符；不再带 `anibaka-` / `kazumi-` 这类来源前缀（它和实际采用的来源常常对不上）。站点名沿用原来的 AniBaka key / Kazumi 规则名，所以同一个站的 id 之后不会再变。
 - **名称**：全角括号转半角，括号前留一个空格；纯英文/数字的站名（如 `ant`、`LMM`）补上域名，写成 `ant (mayi520.org)`；名称本来就是域名里的名字（`mgnacg` / `mgnacg.com`）则不补。想用别的名字，在 `config.json` 的 `names` 里按 id 指定。
-- **描述**：`[自动检测未通过：…] [选择器已自动修复] 站点简介。（来源：AniBaka 规则 age rev 6，自动转换）`。简介取上游规则自带的，没有就写 `站点 域名。`；来源（Kazumi 规则 / AniBaka 规则 / 纯纯看番社区源 / 基线配置 / 手动维护，加规则名、版本和“自动转换 / 手写配置”）由程序统一生成，各转换器不再自己拼。
+- **描述**：`[自动检测未通过：…] [选择器已自动修复] 站点简介。（来源：AniBaka 规则 age rev 6，自动转换）`。简介取上游规则自带的，没有就写 `站点 域名。`；来源（Kazumi 规则 / AniBaka 规则 / 纯纯看番社区源 / 基线配置，加规则名、版本和“自动转换 / 手写配置”）由程序统一生成，各转换器不再自己拼。
 
 ## 重要限制
 
@@ -119,8 +118,8 @@ git 提交日期会被“发布 / 整理”提交带偏（例如社区仓库一�
 | `fail_threshold` | 默认 `2`：连续明确失败几次才降级 / 加警告 / 剔除（以前通过过的候选，没到次数都算宽限期） |
 | `names` | `{"id": "显示名称"}`：手动指定某个源的名称，优先于自动规整 |
 | `smoke_keyword` | 冒烟测试用的搜索关键词 |
-| `icons` / `icon_base_url` | 默认 `true`：联网检测时给每个源找图标（顺序：首页 `<link rel="icon">` → 规则里原来的 `iconUrl` → `/favicon.ico`；下载时带站点自己的 Referer，绕过图床防盗链；requests 拿不到真图片（403、防盗链、Cloudflare 一类）时，用无头浏览器再试一次（先打开站点首页拿 cookie，再请求图片；需要 `--playcheck` 且 `browser_fallback` 没关；连首页都打不开的主机只试一次）；只收 ≤300KB 的 PNG/ICO/JPEG/GIF/WebP），存进 `icons/`，`iconUrl` 改成 `icon_base_url/<id>.<扩展名>`。这次取不到就沿用上次存的，一直没取到才保留原地址。`manual/` 的源不动。设为 `false` 关闭 |
-| `auto_tier` | 默认 `true`：按联网检测结果给源自动分档（1 能播 / 2 搜索剧集通过但播放没结论 / 3 播放有疑点或没有结论 / 4 明确失败或推测未验证）。0 留给人工指定；`manual/` 里的源、`config.tiers` 点名的、tier 已被手调成非默认值的（baseline / overrides）都不动。没有联网检测结果时不分档。设为 `false` 关闭 |
+| `icons` / `icon_base_url` | 默认 `true`：联网检测时给每个源找图标（顺序：首页 `<link rel="icon">` → 规则里原来的 `iconUrl` → `/favicon.ico`；下载时带站点自己的 Referer，绕过图床防盗链；requests 拿不到真图片（403、防盗链、Cloudflare 一类）时，用无头浏览器再试一次（先打开站点首页拿 cookie，再请求图片；需要 `--playcheck` 且 `browser_fallback` 没关；连首页都打不开的主机只试一次）；只收 ≤300KB 的 PNG/ICO/JPEG/GIF/WebP），存进 `icons/`，`iconUrl` 改成 `icon_base_url/<id>.<扩展名>`。这次取不到就沿用上次存的，一直没取到才保留原地址。设为 `false` 关闭 |
+| `auto_tier` | 默认 `true`：按联网检测结果给源自动分档（1 能播 / 2 搜索剧集通过但播放没结论 / 3 播放有疑点或没有结论 / 4 明确失败或推测未验证）。0 留给人工指定；`config.tiers` 点名的、tier 已被手调成非默认值的（baseline / overrides）都不动。没有联网检测结果时不分档。设为 `false` 关闭 |
 | `link_template_client_versions` | 默认 `">=6.3.0"`：用了 `linkTemplate` 的源自动加上 `clientVersions`（官方订阅仓库的要求，旧客户端不会拿到用不了的源）；设为 `""` 关闭 |
 
 `overrides/<Kazumi规则名>.json`：完整的 Animeko 数据源对象，优先于自动转换。`_kazumiVersion` 记录它基于的 Kazumi 规则版本。
@@ -133,7 +132,7 @@ git clone https://github.com/Predidit/KazumiRules.git ../KazumiRules
 git clone https://github.com/AniBakaBaka/AniBakaRule.git ../AniBakaRule
 git clone https://github.com/easybangumiorg/CommunityJsExtensionEasyBangumi.git ../EasyBangumi
 playwright install chromium   # 只在需要播放检测时
-python build.py --kazumi ../KazumiRules --anibaka ../AniBakaRule --easybangumi ../EasyBangumi --out dist --smoke --playcheck
+python -m aniyuan --kazumi ../KazumiRules --anibaka ../AniBakaRule --easybangumi ../EasyBangumi --out dist --smoke --playcheck
 ```
 
 要用完整 git 历史（不要 `--depth 1`），否则取不到每个规则文件的最后修改时间。三个来源参数都可以省略。
@@ -153,23 +152,28 @@ python tests/test_live.py        # 自动修复 / 域名跳转 / 播放检测（
 
 ## 文件
 
-| 文件 | 作用 |
-|---|---|
-| `build.py` | 总控：收集、冒烟测试、合并、输出 |
-| `convert.py` / `xpath2css.py` | Kazumi 规则转换 / XPath → CSS 翻译器 |
-| `anx2animeko.py` | AniBaka 规则转换 |
-| `ebjs.py` | 纯纯看番 JS 源转换 |
-| `smoke.py` | 联网冒烟测试 |
-| `domains.py` | 静态源跟随上游域名 |
-| `repair.py` | 选择器自动修复 |
-| `playcheck.py` | 无头浏览器播放检测 |
-| `health.py` | 检测历史：连续失败才降级 |
-| `normalize.py` | 输出前统一 id / 名称 / 描述格式 |
-| `icons.py` | 站点图标：像浏览器一样读首页 `<link rel="icon">`，带站点 Referer 下载，存进 `icons/` |
-| `icons/` | 自动维护的站点图标（`<id>.png` 等），订阅的 `iconUrl` 指向这里；发布前按文件头检查只含小尺寸真图片 |
-| `state/seen.json` | 各规则文件内容哈希和最后改动时间（自动维护） |
-| `state/health.json` | 各候选历次联网检测结果（自动维护，别手动删，删了会失去宽限期） |
-| `manual/` | 亲测可用的源，同站永远优先 |
-| `baseline/anibaka.json` | AniBaka 规则转不了时的回退配置 |
-| `overrides/` | 手写的 Kazumi 规则配置 |
-| `config.json`、`tests/`、`.github/workflows/sync.yml` | 配置、测试、工作流 |
+```
+aniyuan/                 # 程序（python -m aniyuan 运行）
+├── build.py             # 总控：收集、联网检测、合并、输出
+├── normalize.py         # 输出前统一 id / 名称 / 描述格式
+├── icons.py             # 站点图标：像浏览器一样读首页 <link rel="icon">，带站点 Referer 下载，存进 icons/
+├── convert/             # 把三种上游规则转成 Animeko 数据源
+│   ├── kazumi.py        #   Kazumi 规则
+│   ├── xpath2css.py     #   XPath → CSS 翻译器（Kazumi 用）
+│   ├── anibaka.py       #   AniBaka 规则
+│   └── easybangumi.py   #   纯纯看番 JS 源
+└── check/               # 联网检测与自动修复
+    ├── smoke.py         #   联网冒烟测试
+    ├── playcheck.py     #   无头浏览器：播放检测、403 回退、图标下载回退
+    ├── repair.py        #   选择器自动修复
+    ├── health.py        #   检测历史（连续失败才降级）、按结果自动分档
+    └── domains.py       #   静态源跟随上游域名
+baseline/anibaka.json    # AniBaka 规则转不了时的回退配置
+overrides/               # 手写的 Kazumi 规则配置
+icons/                   # 自动维护的站点图标，订阅的 iconUrl 指向这里；发布前按文件头检查只含小尺寸真图片
+dist/                    # 输出：all.json 订阅和转换报告（自动生成）
+state/                   # seen.json 各规则内容哈希和最后改动时间；health.json 各候选历次检测结果（自动维护，别手动删，删了会失去宽限期）
+tests/                   # 自测
+config.json              # 配置
+.github/workflows/sync.yml
+```

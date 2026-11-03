@@ -54,7 +54,7 @@ def confirmed_fail(c):
 
 def auto_tier(c):
     """按联网检测结果给 Animeko 的优先级分档（0 最高，4 最低）；没有检测结果返回 (None, "")。
-    0 留给人工指定（manual/、baseline 里写了 tier、config.tiers），自动分档只用 1-4：
+    0 留给人工指定（baseline / overrides 里写了 tier、config.tiers），自动分档只用 1-4：
       1  搜索和剧集通过，播放检测也能抓到视频
       2  搜索和剧集通过，播放没有验证出结论（没跑播放检测 / 没抓到 / 出错）
       3  播放有疑点（认不出视频地址 / 验证码），或没有结论（无法访问、被拦、跳过）

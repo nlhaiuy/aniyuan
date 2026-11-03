@@ -1,7 +1,7 @@
 """选择器自动修复的自测（不联网）：候选库和排序规则。"""
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from repair import find_search_selector, find_episode_selector, mine_presets, repair_source
+from aniyuan.check.repair import find_search_selector, find_episode_selector, mine_presets, repair_source
 
 bad = 0
 def check(name, ok):

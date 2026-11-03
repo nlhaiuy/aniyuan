@@ -12,7 +12,7 @@
   2. 逐个下载（带站点自己的 Referer），确认文件头确实是 PNG / ICO / JPEG / GIF / WebP、且不超过 300KB；
   3. 存成 icons/<id>.<扩展名>，iconUrl 改成 <icon_base_url>/<id>.<扩展名>；
   4. 全部候选都拿不到时：沿用上次存的图标，没有就保留原来的 iconUrl。
-manual/ 里的源图标不动。发布前用 `python icons.py --verify icons` 检查目录里只有合规的图片。
+发布前用 `python -m aniyuan.icons --verify icons` 检查目录里只有合规的图片。
 """
 import os
 import re
@@ -100,18 +100,15 @@ def _save(icons_dir, sid, ext, data):
     return name
 
 
-def resolve_icons(items, icons_dir, base_url, get_html, get_image, prune=True):
-    """items: [(source, skip)]，source 是要输出的数据源（会被原地改 iconUrl）；skip 为 True 的不动。
+def resolve_icons(sources, icons_dir, base_url, get_html, get_image, prune=True):
+    """sources：要输出的数据源列表（会被原地改 iconUrl）。
     get_html(url) -> (text, final_url) 或 None；get_image(url, referer) -> bytes 或 None。
-    返回 [(id, 状态, 说明)]，状态：new / same / cached / kept / skipped。"""
+    返回 [(id, 状态, 说明)]，状态：new / same / cached / kept。"""
     os.makedirs(icons_dir, exist_ok=True)
     base_url = base_url.rstrip("/")
     results, keep = [], set()
-    for source, skip in items:
+    for source in sources:
         sid, a = source["id"], source["arguments"]
-        if skip:
-            results.append((sid, "skipped", "手动源，图标不动"))
-            continue
         origin = site_origin(source)
         name, why = None, "没有可用的站点地址"
         if origin:
@@ -165,7 +162,7 @@ def verify_dir(path):
 def make_fetchers(session, timeout=15, browser_bytes=None):
     """真实网络用的两个抓取函数（测试里换成假的）。
     browser_bytes(url, referer) -> bytes|None：requests 没拿到真图片时的回退（用真浏览器，见 playcheck.PlayChecker.fetch_bytes）。"""
-    import smoke
+    from .check import smoke
 
     def get_html(url):
         try:
@@ -198,4 +195,4 @@ if __name__ == "__main__":
         for b in bad:
             print("图标检查未通过：" + b)
         sys.exit(1 if bad else 0)
-    sys.exit("用法：python icons.py --verify <icons 目录>")
+    sys.exit("用法：python -m aniyuan.icons --verify <icons 目录>")

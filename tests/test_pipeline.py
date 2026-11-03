@@ -69,8 +69,8 @@ def main():
                 "searchList": "//li", "searchName": "//a", "searchResult": "//a", "chapterRoads": "//ul", "chapterResult": "//li/a"})
     json.dump([{"name": n, "version": "1"} for n in ("html1", "api1", "blocked1", "empty1", "post1", "down1", "gone1")], open(os.path.join(rules, "index.json"), "w"))
     out = os.path.join(tmp, "dist")
-    r = subprocess.run([sys.executable, "-I", os.path.join(ROOT, "build.py"), "--kazumi", rules, "--baseline", os.path.join(tmp, "none.json"), "--state", os.path.join(tmp, "state.json"), "--health", os.path.join(tmp, "health.json"), "--manual", os.path.join(tmp, "nomanual"), "--out", out, "--overrides", ov, "--smoke"],
-                       capture_output=True, text=True)
+    r = subprocess.run([sys.executable, "-m", "aniyuan", "--kazumi", rules, "--baseline", os.path.join(tmp, "none.json"), "--state", os.path.join(tmp, "state.json"), "--health", os.path.join(tmp, "health.json"), "--out", out, "--overrides", ov, "--smoke"],
+                       capture_output=True, text=True, cwd=ROOT)
     print(r.stdout[-2500:], r.stderr[-1500:])
     rep = {e["key"]: e for e in json.load(open(os.path.join(out, "report.json")))["candidates"]}
     sub = json.load(open(os.path.join(out, "all.json")))

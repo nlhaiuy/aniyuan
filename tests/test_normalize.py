@@ -1,7 +1,7 @@
 """id / 名称 / 描述规范化的自测（不联网）。"""
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from normalize import (clean_intro, compose_description, normalize_id, normalize_name, normalize_source,
+from aniyuan.normalize import (clean_intro, compose_description, normalize_id, normalize_name, normalize_source,
                        source_note, split_prefixes)
 
 bad = 0
@@ -19,7 +19,7 @@ def cand(origin, key, version, desc, status="ok", host="x.com"):
 
 # ---- id：统一成 aniyuan-<站点名> ----
 for old, new in (("anibaka-2kdm", "aniyuan-2kdm"), ("anibaka-ani-pekolove", "aniyuan-ani-pekolove"),
-                 ("kazumi-xfdmnext", "aniyuan-xfdmnext"), ("kazumi-9ciyuan", "aniyuan-9ciyuan"), ("manual-foo", "aniyuan-foo")):
+                 ("kazumi-xfdmnext", "aniyuan-xfdmnext"), ("kazumi-9ciyuan", "aniyuan-9ciyuan")):
     check("去掉来源前缀：%s -> %s" % (old, new), normalize_id(old) == new)
     check("幂等：%s" % new, normalize_id(new) == new)
 check("大写和下划线规整", normalize_id("Anibaka-Ani_Peko Love") == "aniyuan-ani-peko-love")
@@ -53,7 +53,6 @@ check("来源：Kazumi 版本加 v", source_note(cand("kazumi", "mutefun", "1.4"
 check("来源：纯纯看番", source_note(cand("easybangumi", "kazumi-7sefun", "1.2.1", "")) == "纯纯看番社区源 kazumi-7sefun v1.2.1，自动转换")
 check("来源：手写配置", source_note(cand("kazumi", "xfdmnext", "1.0", "", status="override")) == "Kazumi 规则 xfdmnext v1.0，手写配置")
 check("来源：基线", source_note(cand("baseline", "age", "rev 6", "")) == "基线配置 age")
-check("来源：手动", source_note(cand("manual", "anibaka-girigirilove", "", "")) == "手动维护（manual/）")
 
 c = cand("anibaka", "age", "rev 6", "AGE动漫视频源 （AniBaka 规则 age rev 6 自动转换）", host="www.agedm.io")
 check("完整描述", compose_description(c, "agedm.io") == "AGE动漫视频源。（来源：AniBaka 规则 age rev 6，自动转换）")
@@ -75,7 +74,7 @@ c["source"]["id"] = "Kazumi-LMM"; c["source"]["arguments"]["name"] = "LMM"
 s = normalize_source(c, c["source"], {}, "")
 check("normalize_source：id / 名称 / 描述", s["id"] == "aniyuan-lmm" and s["arguments"]["name"] == "LMM (x.com)"
       and s["arguments"]["description"] == "站点 x.com。（来源：Kazumi 规则 LMM v2.3，自动转换）")
-c = cand("manual", "anibaka-girigirilove", "", "", host="m3u8.girigirilove.com")
+c = cand("kazumi", "giriGiriLove", "", "", host="m3u8.girigirilove.com")
 s = normalize_source(c, c["source"], {"site_aliases": {"m3u8.girigirilove.com": "ani.girigirilove.com"}}, "")
 check("站点别名：描述里用规范主机名", "站点 ani.girigirilove.com。" in s["arguments"]["description"])
 

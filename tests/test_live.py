@@ -5,10 +5,10 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import requests
-from build import probe, rewrite_origin, merge
-from convert import MATCH_VIDEO_URL
-from repair import mine_presets
-from playcheck import PlayChecker, to_py_regex
+from aniyuan.build import probe, rewrite_origin, merge
+from aniyuan.convert.kazumi import MATCH_VIDEO_URL
+from aniyuan.check.repair import mine_presets
+from aniyuan.check.playcheck import PlayChecker, to_py_regex
 
 bad = 0
 def check(name, ok):
@@ -107,7 +107,7 @@ probe(c, "葬送的芙莉莲", sess, presets, cfg)
 check("第一个条目详情页 404：自动试下一个", c["smoke"]["status"] == "ok" and c["smoke"]["episode_count"] == 3)
 
 # 5c. 403 -> 浏览器回退
-import smoke as smoke_mod
+from aniyuan.check import smoke as smoke_mod
 c = dict(origin="kazumi", key="t", source=src("a[href*='/voddetail/']", ".module-play-list-content a", B + "/sb?wd={keyword}"), notes=[])
 probe(c, "葬送的芙莉莲", sess, presets, {"repair": False})
 check("没有浏览器：被 403 拦住就是 blocked", c["smoke"]["status"] == "blocked")

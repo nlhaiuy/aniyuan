@@ -50,7 +50,7 @@ def rewrite_domain(source, old_reg, new_reg):
 
 
 def is_static(c):
-    return c["origin"] in ("manual", "baseline") or c.get("status") == "override"
+    return c["origin"] == "baseline" or c.get("status") == "override"
 
 
 def current_domains(cands):

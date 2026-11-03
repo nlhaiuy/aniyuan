@@ -3,7 +3,7 @@ import json, os, random, sys, glob
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from lxml import html as LH
 from bs4 import BeautifulSoup
-from xpath2css import xpath_to_css, Unsupported
+from aniyuan.convert.xpath2css import xpath_to_css, Unsupported
 
 
 def make_doc(seed, depth=5):

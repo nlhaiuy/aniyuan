@@ -2,8 +2,8 @@
 """KazumiRules + AniBakaRule + 纯纯看番社区 JS 源 -> 一个 Animeko 订阅。
 
 用法:
-  python build.py --kazumi ./KazumiRules --anibaka ./AniBakaRule --out dist
-  python build.py --kazumi ./KazumiRules --anibaka ./AniBakaRule --out dist --smoke
+  python -m aniyuan --kazumi ./KazumiRules --anibaka ./AniBakaRule --out dist
+  python -m aniyuan --kazumi ./KazumiRules --anibaka ./AniBakaRule --out dist --smoke
 
   --kazumi / --anibaka 都可以省略其中一个（只转换另一个）。
   两个仓库最好是完整克隆（fetch-depth: 0），才能取到每个规则文件的最后修改时间。
@@ -24,16 +24,15 @@ import sys
 import time
 from datetime import datetime, timezone
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from anx2animeko import convert_anx, site_host, source_id  # noqa: E402
-from convert import convert_rule  # noqa: E402
-from ebjs import convert_extension  # noqa: E402
-from domains import follow_upstream, host_of  # noqa: E402
-from health import DEFAULT_THRESHOLD, auto_tier, confirmed_fail, smoke_tier, update_health  # noqa: E402
-from normalize import normalize_source  # noqa: E402
-from repair import brittle, mine_presets, repair_source  # noqa: E402
+from .convert.anibaka import convert_anx, site_host, source_id
+from .convert.kazumi import convert_rule
+from .convert.easybangumi import convert_extension
+from .check.domains import follow_upstream, host_of
+from .check.health import DEFAULT_THRESHOLD, auto_tier, confirmed_fail, smoke_tier, update_health
+from .normalize import normalize_source
+from .check.repair import brittle, mine_presets, repair_source
 
-HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # 仓库根目录（config.json、baseline/、state/ 等所在）
 
 
 def load_json(path):
@@ -115,7 +114,7 @@ def rewrite_origin(source, old_origin, new_origin):
 
 def probe(c, keyword, session, presets, config):
     """联网检测一个候选：必要时自动修复选择器、跟随域名跳转。结果写进 c["smoke"]。"""
-    from smoke import HEADERS, _blocked, check_source
+    from .check.smoke import HEADERS, _blocked, check_source
     ctx = {}
     r = check_source(c["source"], keyword, session=session, ctx=ctx)
 
@@ -147,8 +146,7 @@ def probe(c, keyword, session, presets, config):
         r2["repaired"] = why
         return True, r2
 
-    # 亲测可用的配置（manual）：不自动改选择器，只允许跟随域名跳转
-    if c["origin"] != "manual" and c["source"].get("factoryId") == "web-selector" and config.get("repair", True):
+    if c["source"].get("factoryId") == "web-selector" and config.get("repair", True):
         if r["status"] == "fail" and r.get("stage") in ("search", "episodes"):
             ok, res = try_repair("both" if r["stage"] == "search" else "episodes")
             if ok:
@@ -169,29 +167,8 @@ def probe(c, keyword, session, presets, config):
     c["smoke"] = r
 
 
-def collect_manual(dirpath):
-    """manual/ 里是你亲自验证过可用的源（订阅文件或单个源 JSON），同站时永远优先。"""
-    out = []
-    if not dirpath or not os.path.isdir(dirpath):
-        return out
-    for fn in sorted(os.listdir(dirpath)):
-        if not fn.endswith(".json"):
-            continue
-        path = os.path.join(dirpath, fn)
-        data = load_json(path)
-        srcs = data["mediaSources"] if isinstance(data, dict) and "mediaSources" in data else [data]
-        for i, src in enumerate(srcs):
-            src = json.loads(json.dumps(src))
-            if not src.get("id"):
-                src["id"] = "manual-%s%s" % (os.path.splitext(fn)[0], "" if len(srcs) == 1 else "-%d" % i)
-            out.append(dict(origin="manual", key=src["id"], version="", source=src, status="manual", notes=[],
-                            info=["manual/%s 手动维护" % fn], guess=False, raw_hash=file_hash(path),
-                            date=int(os.path.getmtime(path))))
-    return out
-
-
 def _check(source, config, session):
-    from smoke import check_source
+    from .check.smoke import check_source
     return check_source(source, config.get("smoke_keyword", "葬送的芙莉莲"), session=session)
 
 
@@ -310,7 +287,7 @@ def collect_easybangumi(repo, config):
                      status=res.status, notes=list(res.notes), info=res.info, guess=False,
                      date=git_date(repo, "%s/%s" % (sub, fn)))
             c["info"] = ["纯纯看番 %s 通道" % channel] + list(c["info"])
-            from ebjs import parse_extension
+            from .convert.easybangumi import parse_extension
             c["live_hosts"] = [h for h in [host_of(parse_extension(os.path.join(d, fn))[1].get("DEFAULT_BASE_URL", ""))] if h]
             out.append(c)
     return out
@@ -378,13 +355,8 @@ def merge(cands, config):
                     by_date["origin"], by_date["key"], {"fail": "未通过"}.get(smoke_of(by_date), "没有结论"), smoke_of(winner) or "-")
         if winner is by_date and (winner.get("health") or {}).get("grace"):
             reason += "；自动检测本次未通过，但以前通过过，暂不降级"
-        manual = [c for c in members if c["origin"] == "manual"]
-        if manual:
-            winner, reason = manual[0], "manual/ 里手动维护的源，优先于自动转换"
-            if smoke_of(winner) in ("fail",):
-                winner["notes"].append("手动源自动检测未通过（%s），但仍优先使用；可能是检测环境访问不了" % winner["smoke"].get("reason", ""))
         p = prefer.get(host)
-        if p and not manual:
+        if p:
             forced = [c for c in members if (("anibaka" if c["origin"] == "baseline" else c["origin"]) == p)]
             if forced:
                 winner, reason = forced[0], "config.prefer 指定 %s" % p
@@ -401,7 +373,7 @@ def merge(cands, config):
 
 def apply_auto_tier(chosen, config):
     """给最终入选的源按联网检测结果自动分档。人工指定过的一律不动：
-    manual/ 里的源、config.tiers 里点名的、以及 tier 已经不是默认值的（baseline / overrides 里手调的）。
+    config.tiers 里点名的、以及 tier 已经不是默认值的（baseline / overrides 里手调的）。
     config.auto_tier 设为 false 关闭。没有联网检测结果的源保持原样。"""
     if not config.get("auto_tier", True):
         return
@@ -409,7 +381,7 @@ def apply_auto_tier(chosen, config):
     named = config.get("tiers") or {}
     for c in chosen:
         a = c["source"]["arguments"]
-        if c["origin"] == "manual" or c["key"] in named or a.get("name") in named:
+        if c["key"] in named or a.get("name") in named:
             continue
         if a.get("tier", default) != default:
             continue
@@ -426,20 +398,19 @@ def main():
     ap.add_argument("--anibaka", help="AniBakaRule 仓库目录")
     ap.add_argument("--easybangumi", help="CommunityJsExtensionEasyBangumi 仓库目录")
     ap.add_argument("--out", default="dist")
-    ap.add_argument("--config", default=os.path.join(HERE, "config.json"))
-    ap.add_argument("--overrides", default=os.path.join(HERE, "overrides"))
-    ap.add_argument("--baseline", default=os.path.join(HERE, "baseline", "anibaka.json"))
-    ap.add_argument("--state", default=os.path.join(HERE, "state", "seen.json"),
+    ap.add_argument("--config", default=os.path.join(ROOT, "config.json"))
+    ap.add_argument("--overrides", default=os.path.join(ROOT, "overrides"))
+    ap.add_argument("--baseline", default=os.path.join(ROOT, "baseline", "anibaka.json"))
+    ap.add_argument("--state", default=os.path.join(ROOT, "state", "seen.json"),
                     help="记录各规则内容哈希和“最后真正改动时间”的文件")
-    ap.add_argument("--health", default=os.path.join(HERE, "state", "health.json"),
+    ap.add_argument("--health", default=os.path.join(ROOT, "state", "health.json"),
                     help="记录各候选历次联网检测结果的文件（连续失败才降级）")
-    ap.add_argument("--manual", default=os.path.join(HERE, "manual"), help="手动维护（亲测可用）的源所在目录")
     ap.add_argument("--icons-dir", default=None,
                     help="站点图标存放目录（和 --smoke 一起用才会联网取图标；不给就不处理图标）")
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--playcheck", action="store_true", help="在 --smoke 之后再用无头浏览器检测能否播放（需要 playwright）")
     args = ap.parse_args()
-    if not (args.kazumi or args.anibaka or args.easybangumi or os.path.isdir(args.manual)):
+    if not (args.kazumi or args.anibaka or args.easybangumi):
         ap.error("至少给一个 --kazumi / --anibaka / --easybangumi")
 
     config = load_json(args.config) if os.path.exists(args.config) else {}
@@ -454,7 +425,6 @@ def main():
         cands += collect_anibaka(args.anibaka, baseline, config)
     if args.easybangumi:
         cands += collect_easybangumi(args.easybangumi, config)
-    cands += collect_manual(args.manual)
 
     state = load_json(args.state) if os.path.exists(args.state) else {}
     new_state = apply_state(cands, state, int(time.time()))
@@ -470,12 +440,12 @@ def main():
 
     if args.smoke:
         import requests
-        import smoke as smoke_mod
+        from .check import smoke as smoke_mod
         session = requests.Session()
         presets = mine_presets(args.anibaka)
         if args.playcheck:   # 浏览器启动一次：既用于 403 回退，也用于播放检测
             try:
-                from playcheck import PlayChecker
+                from .check.playcheck import PlayChecker
                 pc = PlayChecker()
                 if config.get("browser_fallback", True):
                     smoke_mod.set_browser_fetcher(pc.fetch)
@@ -514,7 +484,7 @@ def main():
     chosen, decisions = merge(cands, config)
     apply_auto_tier(chosen, config)
 
-    sources, icon_items = [], []
+    sources = []
     for c in sorted(chosen, key=lambda c: c["source"]["id"]):
         s = strip_private(c["source"])
         sm = c.get("smoke")
@@ -528,16 +498,15 @@ def main():
                 continue
             warn = sm["reason"]
         sources.append(normalize_source(c, s, config, warn))
-        icon_items.append((sources[-1], c["origin"] == "manual"))
     icon_results = []
     if args.icons_dir and args.smoke and config.get("icons", True):
         import requests
-        import icons as icons_mod
+        from . import icons as icons_mod
         try:
             get_html, get_image = icons_mod.make_fetchers(
                 requests.Session(), browser_bytes=(pc.fetch_bytes if pc and config.get("browser_fallback", True) else None))
             icon_results = icons_mod.resolve_icons(
-                icon_items, args.icons_dir,
+                sources, args.icons_dir,
                 config.get("icon_base_url", "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons"),
                 get_html, get_image)
         except BaseException:
@@ -553,7 +522,7 @@ def main():
         json.dump(sub, f, ensure_ascii=False, indent=2)
         f.write("\n")
 
-    label = {"manual": "手动", "ok": "完整", "partial": "有近似", "unsupported": "无法转换", "override": "手写", "missing": "缺文件",
+    label = {"ok": "完整", "partial": "有近似", "unsupported": "无法转换", "override": "手写", "missing": "缺文件",
              "baseline": "回退基线"}
     rep = ["# 订阅转换报告", "", "写入订阅 **%d** 个数据源（候选 %d 个，同站点合并后）。" % (len(sources), len(cands)), "",
            "## 同站点取舍", "", "| 站点 | 最终 id | 采用 | 理由 | 候选（最后修改） |", "|---|---|---|---|---|"]
@@ -569,9 +538,9 @@ def main():
             sm.get("status", "-") + ("（已剔除）" if c.get("dropped") else ""), sm.get("play", "-"),
             "是" if c.get("chosen") else "否", remark.replace("|", "/")))
     if icon_results:
-        names = {"new": "新存", "same": "没变", "cached": "沿用上次", "kept": "没取到（保留原地址）", "skipped": "不处理"}
+        names = {"new": "新存", "same": "没变", "cached": "沿用上次", "kept": "没取到（保留原地址）"}
         rep += ["", "## 站点图标", "", "| 源 | 结果 | 说明 |", "|---|---|---|"]
-        for sid, st, why in sorted(icon_results, key=lambda r: (r[1] in ("new", "same", "skipped"), r[0])):
+        for sid, st, why in sorted(icon_results, key=lambda r: (r[1] in ("new", "same"), r[0])):
             rep.append("| %s | %s | %s |" % (sid, names.get(st, st), why.replace("|", "/")))
     with open(os.path.join(args.out, "report.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(rep) + "\n")

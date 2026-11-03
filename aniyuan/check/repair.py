@@ -36,7 +36,7 @@ EP_TEXT = re.compile(r"第\s*[\d一二三四五六七八九十百]+\s*[话集]|^
 
 def mine_presets(anibaka_repo):
     """从 AniBakaRule 的规则里收集选择器/路径写法，补充到内置候选库。"""
-    from anx2animeko import _pipeline, _walk_ops, split_selectors
+    from ..convert.anibaka import _pipeline, _walk_ops, split_selectors
     pats, conts, lists = list(DEFAULT_PATTERNS), list(DEFAULT_CONTAINERS), list(DEFAULT_LISTS)
     if not anibaka_repo or not os.path.isdir(anibaka_repo):
         return dict(patterns=pats, containers=conts, lists=lists)

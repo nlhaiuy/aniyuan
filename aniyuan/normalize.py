@@ -10,23 +10,23 @@ id：统一成 aniyuan-<站点名>（去掉 anibaka-/kazumi- 这类来源前缀�
 import re
 import unicodedata
 
-from anx2animeko import site_host
+from .convert.anibaka import site_host
 
 SENTENCE_END = "。.!！?？…"
 MAX_INTRO = 200
 PREFIX_RE = re.compile(r"^((?:\[[^\]]*\]\s*)+)")
 # 旧版转换器拼在描述里的来源说明，遇到就剥掉，避免重复
 LEGACY = [
-    re.compile(r"\s*（来源：[^）]*）\s*$"),   # 本程序自己生成的来源说明（manual/ 里可能放着导出的旧订阅）
+    re.compile(r"\s*（来源：[^）]*）\s*$"),   # 本程序自己生成的来源说明
     re.compile(r"\s*（(?:AniBaka 规则|Kazumi 规则)[^）]*自动转换）\s*$"),
     re.compile(r"^由(?: Kazumi 规则| 纯纯看番社区 JS 源|纯纯看番社区 JS 源)[^（]*自动转换(?:（规则更新于[^）]*）)?\s*$"),
 ]
 ORIGIN_LABEL = {"kazumi": "Kazumi 规则", "anibaka": "AniBaka 规则", "easybangumi": "纯纯看番社区源",
-                "baseline": "基线配置", "manual": "手动维护"}
+                "baseline": "基线配置"}
 
 
 ID_PREFIX = "aniyuan-"
-OLD_PREFIX = re.compile(r"^(?:anibaka|kazumi|manual|aniyuan)-")
+OLD_PREFIX = re.compile(r"^(?:anibaka|kazumi|aniyuan)-")
 
 
 def normalize_id(sid):
@@ -85,8 +85,6 @@ def source_note(c):
     """（来源：…）里的文字，由候选的来源/规则名/版本统一生成。"""
     origin, key, ver = c["origin"], c["key"], str(c.get("version") or "").strip()
     label = ORIGIN_LABEL.get(origin, origin)
-    if origin == "manual":
-        return "手动维护（manual/）"
     parts = ["%s %s" % (label, key)]
     if ver and origin != "baseline":
         parts.append(ver if not ver[0].isdigit() else "v" + ver)

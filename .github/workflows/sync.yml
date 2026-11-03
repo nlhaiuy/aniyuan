@@ -6,11 +6,11 @@ on:
   workflow_dispatch:           # 也可以在 Actions 页面手动运行
   push:
     paths:
-      - "*.py"
+      - "aniyuan/**"
+      - "requirements.txt"
       - "config.json"
       - "overrides/**"
       - "baseline/**"
-      - "manual/**"
       - ".github/workflows/sync.yml"
 
 # 默认只读。只有最后的 publish 任务单独申请写权限
@@ -63,7 +63,7 @@ jobs:
           python tests/test_pipeline.py
 
       - name: 转换并做联网冒烟测试
-        run: python build.py --kazumi "$RUNNER_TEMP/KazumiRules" --anibaka "$RUNNER_TEMP/AniBakaRule" --easybangumi "$RUNNER_TEMP/EasyBangumi" --out dist.new --icons-dir icons --smoke --playcheck
+        run: python -m aniyuan --kazumi "$RUNNER_TEMP/KazumiRules" --anibaka "$RUNNER_TEMP/AniBakaRule" --easybangumi "$RUNNER_TEMP/EasyBangumi" --out dist.new --icons-dir icons --smoke --playcheck
 
       # 只打包要发布的几个文件（白名单），不带别的东西
       - name: 打包产物
@@ -110,7 +110,7 @@ jobs:
 
       # 图标是从第三方站点下载来的，发布前只放行小尺寸的真图片（按文件头判断），脚本、HTML、SVG 一律不收
       - name: 检查图标
-        run: python icons.py --verify out/icons
+        run: python -m aniyuan.icons --verify out/icons
 
       - name: 报告写入任务摘要
         run: cat out/dist/report.md >> "$GITHUB_STEP_SUMMARY"

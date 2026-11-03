@@ -1,7 +1,7 @@
 """站点图标的自测（不联网：用假的抓取函数）。"""
 import os, sys, tempfile
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from icons import candidates, page_icons, resolve_icons, sniff, verify_dir
+from aniyuan.icons import candidates, page_icons, resolve_icons, sniff, verify_dir
 
 bad = 0
 def check(name, ok):
@@ -13,16 +13,16 @@ PNG = b"\x89PNG\r\n\x1a\n" + b"x" * 40
 ICO = b"\x00\x00\x01\x00" + b"x" * 40
 HTML_ERR = b"<html>403 Forbidden</html>"
 
-# ---- CI 发布任务不装第三方依赖：icons.py 的 --verify 必须只靠标准库 ----
+# ---- CI 发布任务不装第三方依赖：python -m aniyuan.icons --verify 必须只靠标准库 ----
 import subprocess
 here = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 with tempfile.TemporaryDirectory() as d:
     open(os.path.join(d, "aniyuan-x.png"), "wb").write(PNG)
     code = ("import sys; sys.modules['bs4'] = None; sys.modules['requests'] = None; sys.modules['lxml'] = None; "
-            "sys.argv = ['icons.py', '--verify', %r]; sys.path.insert(0, %r); "
-            "import runpy; runpy.run_path(%r, run_name='__main__')" % (d, here, os.path.join(here, "icons.py")))
-    r = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True)
-check("没有 bs4 / requests / lxml 也能跑 icons.py --verify（发布任务的环境）", r.returncode == 0)
+            "sys.argv = ['aniyuan.icons', '--verify', %r]; "
+            "import runpy; runpy.run_module('aniyuan.icons', run_name='__main__')" % d)
+    r = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, cwd=here)
+check("没有 bs4 / requests / lxml 也能跑 python -m aniyuan.icons --verify（发布任务的环境）", r.returncode == 0)
 
 # ---- 文件头判断 ----
 check("PNG / ICO / JPEG / GIF / WebP 都认得", [sniff(PNG), sniff(ICO), sniff(b"\xff\xd8\xff\xe0xx"), sniff(b"GIF89a.."), sniff(b"RIFF\0\0\0\0WEBPxx")] == ["png", "ico", "jpg", "gif", "webp"])
@@ -61,40 +61,38 @@ with tempfile.TemporaryDirectory() as d:
         calls.append((url, referer))
         return PNG if url.endswith("/fav.ico") and referer == "https://www.x.com/" else None
 
-    items = [(src("aniyuan-a"), False)]
+    items = [src("aniyuan-a")]
     r = resolve_icons(items, d, BASE, get_html, get_image)
-    s = items[0][0]
+    s = items[0]
     check("按页面声明的图标下载，带站点自己的 Referer", r[0][1] == "new" and any(u.endswith("/fav.ico") and ref == "https://www.x.com/" for u, ref in calls))
     check("图标存进目录，iconUrl 改成自己仓库的链接", os.path.exists(os.path.join(d, "aniyuan-a.png")) and s["arguments"]["iconUrl"] == BASE + "/aniyuan-a.png")
 
-    r = resolve_icons([(src("aniyuan-a"), False)], d, BASE, get_html, get_image)
+    r = resolve_icons([src("aniyuan-a")], d, BASE, get_html, get_image)
     check("再跑一次内容没变：same", r[0][1] == "same")
 
     # 这次站点打不开：沿用上次存的
-    it = [(src("aniyuan-a"), False)]
+    it = [src("aniyuan-a")]
     r = resolve_icons(it, d, BASE, lambda u: None, lambda u, ref: None)
-    check("这次取不到：沿用上次存的图标", r[0][1] == "cached" and it[0][0]["arguments"]["iconUrl"] == BASE + "/aniyuan-a.png")
+    check("这次取不到：沿用上次存的图标", r[0][1] == "cached" and it[0]["arguments"]["iconUrl"] == BASE + "/aniyuan-a.png")
 
     # 从没取到过：保留原来的 iconUrl，不写目录
-    it = [(src("aniyuan-b"), False)]
+    it = [src("aniyuan-b")]
     r = resolve_icons(it, d, BASE, lambda u: None, lambda u, ref: HTML_ERR)
-    check("从没取到过：保留原 iconUrl", r[0][1] == "kept" and it[0][0]["arguments"]["iconUrl"] == "https://old.com/i.png" and not os.path.exists(os.path.join(d, "aniyuan-b.png")))
+    check("从没取到过：保留原 iconUrl", r[0][1] == "kept" and it[0]["arguments"]["iconUrl"] == "https://old.com/i.png" and not os.path.exists(os.path.join(d, "aniyuan-b.png")))
 
     # 拿到的是 HTML 错误页 / 超大文件 都不算图片
-    it = [(src("aniyuan-c"), False)]
+    it = [src("aniyuan-c")]
     resolve_icons(it, d, BASE, lambda u: None, lambda u, ref: HTML_ERR)
     check("HTML 错误页不会被当成图标存下来", not any(f.startswith("aniyuan-c.") for f in os.listdir(d)))
-    it = [(src("aniyuan-c"), False)]
+    it = [src("aniyuan-c")]
     resolve_icons(it, d, BASE, lambda u: None, lambda u, ref: PNG + b"x" * (300 * 1024))
     check("超过 300KB 不存", not any(f.startswith("aniyuan-c.") for f in os.listdir(d)))
 
-    # 手动源不动；不在订阅里的旧图标会清掉；类型变了清掉旧扩展名
-    it = [(src("aniyuan-m"), True)]
-    r = resolve_icons(it, d, BASE, get_html, get_image)
-    check("manual 源：图标不动", r[0][1] == "skipped" and it[0][0]["arguments"]["iconUrl"] == "https://old.com/i.png")
+    # 不在订阅里的旧图标会清掉；类型变了清掉旧扩展名
+    resolve_icons([src("aniyuan-keep")], d, BASE, get_html, get_image)
     check("不在订阅里的源，图标被清掉", not os.path.exists(os.path.join(d, "aniyuan-a.png")))
-    resolve_icons([(src("aniyuan-t"), False)], d, BASE, lambda u: None, lambda u, ref: PNG)
-    resolve_icons([(src("aniyuan-t"), False)], d, BASE, lambda u: None, lambda u, ref: ICO)
+    resolve_icons([src("aniyuan-t")], d, BASE, lambda u: None, lambda u, ref: PNG)
+    resolve_icons([src("aniyuan-t")], d, BASE, lambda u: None, lambda u, ref: ICO)
     check("图标类型变了：旧扩展名不残留", sorted(os.listdir(d)) == ["aniyuan-t.ico"])
 
 # ---- 发布前检查 ----
@@ -109,7 +107,7 @@ with tempfile.TemporaryDirectory() as d:
 
 # ---- 浏览器回退：图片要 cookie（首页脚本种的）+ Referer，requests 拿不到，真浏览器能拿到 ----
 try:
-    from playcheck import PlayChecker
+    from aniyuan.check.playcheck import PlayChecker
     import playwright  # noqa: F401
     have_browser = True
 except Exception as e:
@@ -140,7 +138,7 @@ if have_browser:
 
     pc = PlayChecker()
     try:
-        from icons import make_fetchers
+        from aniyuan.icons import make_fetchers
         gh0, gi0 = make_fetchers(requests.Session())
         plain = gi0(site + "/logo.png", site + "/")
         check("对照：只用 requests，要 cookie 的图片拿不到", plain is None)
@@ -152,10 +150,10 @@ if have_browser:
         # 端到端：resolve_icons 全流程（首页 200，所以不走页面回退；图标靠浏览器回退拿到）
         with tempfile.TemporaryDirectory() as d:
             s = src("aniyuan-b1", url=site + "/s?wd={keyword}", icon="")
-            r = resolve_icons([(s, False)], d, BASE, gh1, gi1)
+            r = resolve_icons([s], d, BASE, gh1, gi1)
             check("端到端：取到图标并改写 iconUrl", r[0][1] == "new" and s["arguments"]["iconUrl"] == BASE + "/aniyuan-b1.png")
             s2 = src("aniyuan-b2", url=site + "/s?wd={keyword}", icon="")
-            r = resolve_icons([(s2, False)], d, BASE, gh0, gi0)
+            r = resolve_icons([s2], d, BASE, gh0, gi0)
             check("端到端对照：没有浏览器回退时取不到，保留原地址", r[0][1] == "kept")
 
         # 连页面都打不开的主机：只试一次就标记为不可达，后面直接返回

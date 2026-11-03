@@ -6,7 +6,7 @@
 import re
 from urllib.parse import urlparse
 
-from xpath2css import xpath_to_css, join_relative, Unsupported
+from .xpath2css import xpath_to_css, join_relative, Unsupported
 
 # 视频地址匹配：与 Animeko 官方订阅里同类站点的通用写法一致
 MATCH_VIDEO_URL = (

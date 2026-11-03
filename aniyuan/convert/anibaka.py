@@ -10,7 +10,7 @@
 import re
 from urllib.parse import urljoin, urlparse
 
-from convert import MATCH_VIDEO_URL, Result, _origin
+from .kazumi import MATCH_VIDEO_URL, Result, _origin
 
 # 播放步骤里出现这些 op，说明 AniBaka 是靠站内解密/接口取直链，Animeko 只能靠 WebView 嗅探
 PLAY_HARD_OPS = {"crypto", "playerDecrypt", "maccmsVerify", "aesDecrypt"}

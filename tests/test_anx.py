@@ -1,10 +1,10 @@
 """AniBaka 转换器 + 同站点合并的自测（不联网）。"""
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from anx2animeko import convert_anx, split_selectors, site_host, source_id
-from build import merge, apply_state, collect_manual
-from smoke import eval_simple_jsonpath
-import domains as D
+from aniyuan.convert.anibaka import convert_anx, split_selectors, site_host, source_id
+from aniyuan.build import merge, apply_state
+from aniyuan.check.smoke import eval_simple_jsonpath
+from aniyuan.check import domains as D
 
 bad = 0
 def check(name, ok):
@@ -79,7 +79,7 @@ check("site_aliases 手动并站", len(ch) == 1)
 
 # ---- 纯纯看番 JS 源 ----
 import tempfile
-from ebjs import convert_extension
+from aniyuan.convert.easybangumi import convert_extension
 js = ('// @key kazumi.demo\n// @label demo\n// @versionName 1.2.1\n// @cover https://d.example.com/f.ico\n\n'
       'var DEFAULT_BASE_URL = "https://d.example.com/";\nvar SEARCH_URL = "https://d.example.com/s?wd=@keyword";\n'
       'var SEARCH_LIST_XPATH = "//ul/li";\nvar SEARCH_NAME_XPATH = "//h3/a";\nvar SEARCH_RESULT_XPATH = "//h3/a";\n'
@@ -140,25 +140,20 @@ check("内容变了但 git 日期不比记录新：用本次同步时间", c4[0]
 c5 = [hc("baseline", "y", "h", 10)]
 check("baseline 与 anibaka 共用记录", "anibaka:y" in apply_state(c5, {}, 1))
 
-# ---- manual/ ----
-m1 = cand("manual", "girigiri", "api.t.com", 1, "manual-g"); k1 = cand("kazumi", "G", "t2.com", 999, "kazumi-g"); ab = cand("anibaka", "g", "t2.com", 500, "anibaka-g")
-ch, d = merge([m1, k1, ab], {"site_aliases": {"api.t.com": "t2.com"}})
-check("manual 即使更旧也优先，id 仍沿用 AniBaka 的稳定 id", ch[0]["origin"] == "manual" and ch[0]["source"]["id"] == "anibaka-g")
-m1 = cand("manual", "g", "t2.com", 1, "manual-g"); a2 = cand("anibaka", "g", "t2.com", 5, "anibaka-g", "ok"); m1["smoke"] = {"status": "fail", "reason": "x"}
-ch, _ = merge([m1, a2], {})
-check("manual 检测没过也保留，只写备注", ch[0]["origin"] == "manual" and any("仍优先" in n for n in ch[0]["notes"]))
-import tempfile, json as _j
-td = tempfile.mkdtemp(); open(os.path.join(td, "a.json"), "w").write(_j.dumps({"mediaSources": [{"factoryId": "web-selector", "arguments": {"name": "N", "searchConfig": {"searchUrl": "https://q.com/s?{keyword}"}}}]}))
-cm = collect_manual(td)
-check("collect_manual 读订阅文件，缺 id 时补 manual-<文件名>", len(cm) == 1 and cm[0]["source"]["id"] == "manual-a" and cm[0]["origin"] == "manual")
+# ---- prefer：固定取某一边（girigiri 用它固定取 overrides 里亲测可用的那份）----
+k1 = cand("kazumi", "G", "api.t.com", 1, "kazumi-g"); ab = cand("anibaka", "g", "t2.com", 500, "anibaka-g")
+ch, d = merge([k1, ab], {"site_aliases": {"api.t.com": "t2.com"}, "prefer": {"t2.com": "kazumi"}})
+check("prefer 固定取 Kazumi 一边，即使它更旧；id 仍沿用 AniBaka 的稳定 id", ch[0]["origin"] == "kazumi" and ch[0]["source"]["id"] == "anibaka-g")
+ch, d = merge([cand("kazumi", "G", "api.t.com", 1, "kazumi-g"), cand("anibaka", "g", "t2.com", 500, "anibaka-g")], {"site_aliases": {"api.t.com": "t2.com"}})
+check("对照：不设 prefer 时取更新的 AniBaka", ch[0]["origin"] == "anibaka")
 check("jsonpath 支持 $.a.b[*].field", eval_simple_jsonpath({"info": {"rows": [{"vod_id": 1}, {"vod_id": 2}]}}, "$.info.rows[*].vod_id") == [1, 2])
 check("jsonpath 原有 ['field'] 写法不受影响", eval_simple_jsonpath({"list": [{"id": 7}]}, "$.list[*]['id']") == [7])
 
 # ---- 跟随上游域名 ----
 check("registrable：常见后缀", D.registrable("ani.girigirilove.com") == "girigirilove.com" and D.registrable("a.b.example.co.jp") == "example.co.jp")
 check("sld：名字部分与后缀无关", D.sld("ani.girigirilove.xyz") == "girigirilove")
-def st(urls, origin="manual"):
-    return dict(origin=origin, key="m", status="manual", notes=[], date=1, live_hosts=None, source={"id": "i", "factoryId": "web-selector",
+def st(urls, origin="baseline"):
+    return dict(origin=origin, key="m", status="baseline", notes=[], date=1, live_hosts=None, source={"id": "i", "factoryId": "web-selector",
         "arguments": {"name": "n", "iconUrl": urls[2], "searchConfig": {"searchUrl": urls[0], "rawBaseUrl": urls[1]}}})
 def up(host, date=1):
     return dict(origin="anibaka", key=host, status="ok", notes=[], date=date, live_hosts=[host], source=None)

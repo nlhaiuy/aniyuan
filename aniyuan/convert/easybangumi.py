@@ -9,7 +9,7 @@ import json
 import os
 import re
 
-from convert import convert_rule
+from .kazumi import convert_rule
 
 META = re.compile(r"^//\s*@(\w+)\s+(.*?)\s*$")
 CONST = re.compile(r'^var\s+([A-Z][A-Z0-9_]*)\s*=\s*("(?:[^"\\]|\\.)*")\s*;\s*$')
@@ -44,7 +44,7 @@ def convert_extension(path, config=None):
     """返回 (Result, meta)。Result.source 为 None 表示无法转换。"""
     meta, c = parse_extension(path)
     label = meta.get("label") or os.path.splitext(os.path.basename(path))[0]
-    from convert import Result
+    from .kazumi import Result
     res = Result(label, meta.get("versionName", ""))
     missing = [k for k in NEED if not c.get(k)]
     if missing:
