@@ -162,8 +162,9 @@ def verify_dir(path):
     return problems
 
 
-def make_fetchers(session, timeout=15):
-    """真实网络用的两个抓取函数（测试里换成假的）。"""
+def make_fetchers(session, timeout=15, browser_bytes=None):
+    """真实网络用的两个抓取函数（测试里换成假的）。
+    browser_bytes(url, referer) -> bytes|None：requests 没拿到真图片时的回退（用真浏览器，见 playcheck.PlayChecker.fetch_bytes）。"""
     import smoke
 
     def get_html(url):
@@ -174,15 +175,20 @@ def make_fetchers(session, timeout=15):
             return None
 
     def get_image(url, referer):
+        data = None
         try:
             r = session.get(url, headers=dict(smoke.HEADERS, Referer=referer, Accept="image/*,*/*;q=0.8"),
                             timeout=timeout, allow_redirects=True, stream=True)
-            if r.status_code != 200:
-                return None
-            data = r.raw.read(MAX_BYTES + 1, decode_content=True)
-            return data
+            if r.status_code == 200:
+                data = r.raw.read(MAX_BYTES + 1, decode_content=True)
         except Exception:
-            return None
+            data = None
+        if not (data and sniff(data)) and browser_bytes:   # 403 / 防盗链 / 返回的是挑战页：改用真浏览器再试一次
+            try:
+                data = browser_bytes(url, referer)
+            except Exception:
+                data = None
+        return data
     return get_html, get_image
 
 

@@ -44,6 +44,8 @@ class PlayChecker:
         self._pw = self._cm.start()
         self.browser = _launch(self._pw)
         self._fetch_ctx = {}
+        self._warmed = set()   # fetch_bytes 已经预热过的主机
+        self._dead = set()     # fetch_bytes 连页面都打不开的主机
 
     def close(self):
         try:
@@ -74,6 +76,37 @@ class PlayChecker:
             if body.lstrip()[:1] and body.lstrip()[0] in "{[":
                 text = body
             return (resp.status if resp else 0, text, page.url)
+        finally:
+            page.close()
+
+    def fetch_bytes(self, url, referer="", timeout_ms=12000):
+        """用真浏览器下载一个文件（图标）：requests 被 403 / 防盗链 / Cloudflare 拦住时的回退。
+        图片和站点同一个主机时，先在同一个浏览器上下文里打开一次 referer 页面（拿到站点种的 cookie），
+        再带 Referer 去请求图片，和人用浏览器打开页面时一样。
+        整个站点连页面都打不开的，记下来，后面这个主机的请求直接返回 None，不再各等一遍超时。
+        返回字节，失败返回 None。"""
+        from urllib.parse import urlparse
+        host = urlparse(url).netloc
+        if host in self._dead:
+            return None
+        ctx = self._fetch_ctx.setdefault(host, self.browser.new_context(user_agent=UA, ignore_https_errors=True))
+        if referer and urlparse(referer).netloc == host and host not in self._warmed:
+            self._warmed.add(host)
+            page = ctx.new_page()
+            try:
+                page.goto(referer, wait_until="domcontentloaded", timeout=timeout_ms)
+                page.wait_for_timeout(800)   # 让页面里的脚本有机会种 cookie
+            except Exception:
+                self._dead.add(host)
+                return None
+            finally:
+                page.close()
+        page = ctx.new_page()
+        try:
+            resp = page.goto(url, wait_until="load", timeout=timeout_ms, referer=referer or None)
+            return resp.body() if resp is not None and resp.status == 200 else None
+        except Exception:   # 超时、被当成下载、连接失败……都算没取到
+            return None
         finally:
             page.close()
 

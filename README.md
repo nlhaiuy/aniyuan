@@ -119,7 +119,7 @@ git 提交日期会被“发布 / 整理”提交带偏（例如社区仓库一�
 | `fail_threshold` | 默认 `2`：连续明确失败几次才降级 / 加警告 / 剔除（以前通过过的候选，没到次数都算宽限期） |
 | `names` | `{"id": "显示名称"}`：手动指定某个源的名称，优先于自动规整 |
 | `smoke_keyword` | 冒烟测试用的搜索关键词 |
-| `icons` / `icon_base_url` | 默认 `true`：联网检测时给每个源找图标（顺序：首页 `<link rel="icon">` → 规则里原来的 `iconUrl` → `/favicon.ico`；下载时带站点自己的 Referer，绕过图床防盗链；只收 ≤300KB 的 PNG/ICO/JPEG/GIF/WebP），存进 `icons/`，`iconUrl` 改成 `icon_base_url/<id>.<扩展名>`。这次取不到就沿用上次存的，一直没取到才保留原地址。`manual/` 的源不动。设为 `false` 关闭 |
+| `icons` / `icon_base_url` | 默认 `true`：联网检测时给每个源找图标（顺序：首页 `<link rel="icon">` → 规则里原来的 `iconUrl` → `/favicon.ico`；下载时带站点自己的 Referer，绕过图床防盗链；requests 拿不到真图片（403、防盗链、Cloudflare 一类）时，用无头浏览器再试一次（先打开站点首页拿 cookie，再请求图片；需要 `--playcheck` 且 `browser_fallback` 没关；连首页都打不开的主机只试一次）；只收 ≤300KB 的 PNG/ICO/JPEG/GIF/WebP），存进 `icons/`，`iconUrl` 改成 `icon_base_url/<id>.<扩展名>`。这次取不到就沿用上次存的，一直没取到才保留原地址。`manual/` 的源不动。设为 `false` 关闭 |
 | `auto_tier` | 默认 `true`：按联网检测结果给源自动分档（1 能播 / 2 搜索剧集通过但播放没结论 / 3 播放有疑点或没有结论 / 4 明确失败或推测未验证）。0 留给人工指定；`manual/` 里的源、`config.tiers` 点名的、tier 已被手调成非默认值的（baseline / overrides）都不动。没有联网检测结果时不分档。设为 `false` 关闭 |
 | `link_template_client_versions` | 默认 `">=6.3.0"`：用了 `linkTemplate` 的源自动加上 `clientVersions`（官方订阅仓库的要求，旧客户端不会拿到用不了的源）；设为 `""` 关闭 |
 

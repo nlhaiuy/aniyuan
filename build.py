@@ -463,12 +463,16 @@ def main():
         json.dump(new_state, f, ensure_ascii=False, indent=1, sort_keys=True)
         f.write("\n")
 
+    pc = None
+
+    def cleanup():   # 浏览器要一直开到图标步骤结束（图标下载也会用它回退），所以不在这个块里关
+        pass
+
     if args.smoke:
         import requests
         import smoke as smoke_mod
         session = requests.Session()
         presets = mine_presets(args.anibaka)
-        pc = None
         if args.playcheck:   # 浏览器启动一次：既用于 403 回退，也用于播放检测
             try:
                 from playcheck import PlayChecker
@@ -477,6 +481,10 @@ def main():
                     smoke_mod.set_browser_fetcher(pc.fetch)
             except Exception as e:  # 没装浏览器就跳过，不影响其它流程
                 print("浏览器不可用，跳过播放检测和 403 回退：%s" % e, file=sys.stderr)
+        def cleanup():  # noqa: F811
+            smoke_mod.set_browser_fetcher(None)
+            if pc:
+                pc.close()
         try:
             for c in cands:
                 if c["source"] is None:
@@ -491,10 +499,9 @@ def main():
                     print("域名跟随 %s：%s → %s %s" % (key, old, new, "已采用" if ok else "未通过，保持原样"))
             if pc:
                 run_playchecks(cands, config, pc)
-        finally:
-            smoke_mod.set_browser_fetcher(None)
-            if pc:
-                pc.close()
+        except BaseException:
+            cleanup()
+            raise
 
     if args.smoke:   # 没联网检测时不动历史
         history = load_json(args.health) if os.path.exists(args.health) else {}
@@ -526,11 +533,17 @@ def main():
     if args.icons_dir and args.smoke and config.get("icons", True):
         import requests
         import icons as icons_mod
-        get_html, get_image = icons_mod.make_fetchers(requests.Session())
-        icon_results = icons_mod.resolve_icons(
-            icon_items, args.icons_dir,
-            config.get("icon_base_url", "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons"),
-            get_html, get_image)
+        try:
+            get_html, get_image = icons_mod.make_fetchers(
+                requests.Session(), browser_bytes=(pc.fetch_bytes if pc and config.get("browser_fallback", True) else None))
+            icon_results = icons_mod.resolve_icons(
+                icon_items, args.icons_dir,
+                config.get("icon_base_url", "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons"),
+                get_html, get_image)
+        except BaseException:
+            cleanup()
+            raise
+    cleanup()
     ids = [s["id"] for s in sources]
     assert len(ids) == len(set(ids)), "出现重复 id：%s" % sorted({i for i in ids if ids.count(i) > 1})
 

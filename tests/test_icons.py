@@ -106,4 +106,64 @@ with tempfile.TemporaryDirectory() as d:
     open(os.path.join(d, "Bad Name.png"), "wb").write(PNG)
     p = verify_dir(d)
     check("检查挡住伪装成图片的文件、脚本、不合规文件名", len(p) == 3)
+
+# ---- 浏览器回退：图片要 cookie（首页脚本种的）+ Referer，requests 拿不到，真浏览器能拿到 ----
+try:
+    from playcheck import PlayChecker
+    import playwright  # noqa: F401
+    have_browser = True
+except Exception as e:
+    print("跳过浏览器回退测试（没有 playwright）：%s" % e)
+    have_browser = False
+
+if have_browser:
+    import threading, requests
+    from http.server import BaseHTTPRequestHandler, HTTPServer
+    os.environ["NO_PROXY"] = os.environ["no_proxy"] = "127.0.0.1"
+
+    class H(BaseHTTPRequestHandler):
+        def log_message(self, *a): pass
+        def do_GET(self):
+            port = self.server.server_port
+            ok = "pass=1" in (self.headers.get("Cookie") or "") and (self.headers.get("Referer") or "").startswith("http://127.0.0.1:%d" % port)
+            if self.path == "/":
+                body = b'<html><head><link rel="icon" href="/logo.png"><script>document.cookie="pass=1; path=/"</script></head><body>hi</body></html>'
+                self.send_response(200); self.send_header("Content-Type", "text/html"); self.end_headers(); self.wfile.write(body)
+            elif self.path == "/logo.png" and ok:
+                self.send_response(200); self.send_header("Content-Type", "image/png"); self.end_headers(); self.wfile.write(PNG)
+            else:
+                self.send_response(403); self.end_headers(); self.wfile.write(b"forbidden")
+    srv = HTTPServer(("127.0.0.1", 0), H); port = srv.server_address[1]
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    site = "http://127.0.0.1:%d" % port
+    dead = "http://127.0.0.1:1"   # 没人监听：连接立刻被拒绝
+
+    pc = PlayChecker()
+    try:
+        from icons import make_fetchers
+        gh0, gi0 = make_fetchers(requests.Session())
+        plain = gi0(site + "/logo.png", site + "/")
+        check("对照：只用 requests，要 cookie 的图片拿不到", plain is None)
+
+        gh1, gi1 = make_fetchers(requests.Session(), browser_bytes=pc.fetch_bytes)
+        data = gi1(site + "/logo.png", site + "/")
+        check("浏览器回退：先打开首页拿 cookie，再带 Referer 拿到图片", data == PNG)
+
+        # 端到端：resolve_icons 全流程（首页 200，所以不走页面回退；图标靠浏览器回退拿到）
+        with tempfile.TemporaryDirectory() as d:
+            s = src("aniyuan-b1", url=site + "/s?wd={keyword}", icon="")
+            r = resolve_icons([(s, False)], d, BASE, gh1, gi1)
+            check("端到端：取到图标并改写 iconUrl", r[0][1] == "new" and s["arguments"]["iconUrl"] == BASE + "/aniyuan-b1.png")
+            s2 = src("aniyuan-b2", url=site + "/s?wd={keyword}", icon="")
+            r = resolve_icons([(s2, False)], d, BASE, gh0, gi0)
+            check("端到端对照：没有浏览器回退时取不到，保留原地址", r[0][1] == "kept")
+
+        # 连页面都打不开的主机：只试一次就标记为不可达，后面直接返回
+        import time
+        t0 = time.time()
+        a = pc.fetch_bytes(dead + "/a.png", dead + "/"); b = pc.fetch_bytes(dead + "/b.png", dead + "/")
+        check("打不开的主机：返回 None，并记入不可达", a is None and b is None and "127.0.0.1:1" in pc._dead)
+        check("打不开的主机：第二次不再等待", time.time() - t0 < 10)
+    finally:
+        pc.close(); srv.shutdown()
 sys.exit(1 if bad else 0)
