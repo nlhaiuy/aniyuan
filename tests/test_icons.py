@@ -13,6 +13,17 @@ PNG = b"\x89PNG\r\n\x1a\n" + b"x" * 40
 ICO = b"\x00\x00\x01\x00" + b"x" * 40
 HTML_ERR = b"<html>403 Forbidden</html>"
 
+# ---- CI 发布任务不装第三方依赖：icons.py 的 --verify 必须只靠标准库 ----
+import subprocess
+here = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+with tempfile.TemporaryDirectory() as d:
+    open(os.path.join(d, "aniyuan-x.png"), "wb").write(PNG)
+    code = ("import sys; sys.modules['bs4'] = None; sys.modules['requests'] = None; sys.modules['lxml'] = None; "
+            "sys.argv = ['icons.py', '--verify', %r]; sys.path.insert(0, %r); "
+            "import runpy; runpy.run_path(%r, run_name='__main__')" % (d, here, os.path.join(here, "icons.py")))
+    r = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True)
+check("没有 bs4 / requests / lxml 也能跑 icons.py --verify（发布任务的环境）", r.returncode == 0)
+
 # ---- 文件头判断 ----
 check("PNG / ICO / JPEG / GIF / WebP 都认得", [sniff(PNG), sniff(ICO), sniff(b"\xff\xd8\xff\xe0xx"), sniff(b"GIF89a.."), sniff(b"RIFF\0\0\0\0WEBPxx")] == ["png", "ico", "jpg", "gif", "webp"])
 check("HTML 错误页 / SVG / 空内容不当图片", sniff(HTML_ERR) is None and sniff(b"<svg xmlns=...>") is None and sniff(b"") is None)

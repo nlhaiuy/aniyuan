@@ -19,7 +19,8 @@ import re
 import sys
 from urllib.parse import urljoin, urlparse
 
-from bs4 import BeautifulSoup
+# 注意：这个文件在 CI 的发布任务里也会运行（icons.py --verify），那个任务不装第三方依赖，
+# 所以顶层只能用标准库；bs4 / requests 都在用到的函数里再导入。
 
 MAX_BYTES = 300 * 1024
 EXTS = ("png", "ico", "jpg", "gif", "webp")
@@ -57,6 +58,7 @@ def _size_score(sizes):
 
 def page_icons(html, base_url):
     """首页里声明的图标，按优先级排好：普通 icon（尺寸接近 64）在前，apple-touch-icon 在后。"""
+    from bs4 import BeautifulSoup
     found = []
     for i, link in enumerate(BeautifulSoup(html or "", "lxml").find_all("link")):
         rel = [r.lower() for r in (link.get("rel") or [])]
