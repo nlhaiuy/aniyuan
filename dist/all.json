@@ -578,7 +578,7 @@
       "arguments": {
         "name": "嘀嗒影视 (Dida HD)",
         "description": "专注高分电影，高清HD在线，极速秒播不卡顿！（来源：AniBaka 规则 didahd rev 7，自动转换）",
-        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-didahd.png",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-didahd.ico",
         "searchConfig": {
           "searchUrl": "https://www.didahd.xyz/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
           "searchUseOnlyFirstWord": true,
@@ -619,7 +619,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 2,
+        "tier": 1,
         "channelTiers": {}
       },
       "clientVersions": ">=6.3.0"
@@ -924,7 +924,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 2,
+        "tier": 1,
         "channelTiers": {}
       },
       "clientVersions": ">=6.3.0"
@@ -2297,7 +2297,7 @@
         "arguments": {
           "name": "嘀嗒影视 (Dida HD)",
           "description": "专注高分电影，高清HD在线，极速秒播不卡顿！（来源：AniBaka 规则 didahd rev 7，自动转换）",
-          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-didahd.png",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-didahd.ico",
           "searchConfig": {
             "searchUrl": "https://www.didahd.xyz/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
             "searchUseOnlyFirstWord": true,
@@ -2338,7 +2338,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 2,
+          "tier": 1,
           "channelTiers": {}
         },
         "clientVersions": ">=6.3.0"
@@ -2643,7 +2643,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 2,
+          "tier": 1,
           "channelTiers": {}
         },
         "clientVersions": ">=6.3.0"
