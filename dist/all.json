@@ -113,7 +113,7 @@
       "arguments": {
         "name": "七色番",
         "description": "七色番提供最新番剧TV、剧场版在线高速播放，每日及时更新，是动漫迷的不二选择！（来源：AniBaka 规则 7sefun rev 9，自动转换）",
-        "iconUrl": "https://www.7sefun.top/pc/img/favicon.ico",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-7sefun.ico",
         "searchConfig": {
           "searchUrl": "https://www.7sefun.top/vodsearch/-------------.html?wd={keyword}",
           "searchUseOnlyFirstWord": true,
@@ -214,7 +214,7 @@
       "arguments": {
         "name": "4K动漫",
         "description": "4K动漫，提供日漫、国漫、美漫和剧场版等在线资源。（来源：基线配置 agekkkk）",
-        "iconUrl": "https://cn.agekkkk.com/template/the4/statics/img/favicon.ico",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-agekkkk.ico",
         "searchConfig": {
           "searchUrl": "https://cn.agekkkk.com/search/{keyword}-------------.html",
           "rawBaseUrl": "https://cn.agekkkk.com",
@@ -295,7 +295,7 @@
       "arguments": {
         "name": "佩可爱动漫 (peko.love)",
         "description": "佩可爱动漫 (peko.love)，为您提供优质的动漫在线播放与分享。（来源：基线配置 ani_pekolove）",
-        "iconUrl": "https://ani.pekolove.net/wp-content/uploads/cropped-acglogo2-2-32x32.png",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-ani-pekolove.png",
         "searchConfig": {
           "searchUrl": "https://ani.pekolove.net/?s={keyword}",
           "searchUseOnlyFirstWord": false,
@@ -363,7 +363,7 @@
       "arguments": {
         "name": "Anime7 动画线上看",
         "description": "Anime7 动画线上看，提供日韩动漫、剧场版、国产动漫等高清在线观看。含广告。（来源：AniBaka 规则 anime7 rev 6，自动转换）",
-        "iconUrl": "https://ani7.b-cdn.net/upload/logo/web-icon.png",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-anime7.png",
         "searchConfig": {
           "searchUrl": "https://anime7.top/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
           "searchUseOnlyFirstWord": true,
@@ -417,7 +417,7 @@
       "arguments": {
         "name": "Animoe动漫",
         "description": "Animoe动漫，提供最新番剧、经典动漫全集免费高清在线观看。（来源：AniBaka 规则 animoe rev 5，自动转换）",
-        "iconUrl": "https://github.elemecdn.com/mstatic616/images/logo/favicon.png",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-animoe.png",
         "searchConfig": {
           "searchUrl": "https://animoe.org/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
           "searchUseOnlyFirstWord": true,
@@ -578,7 +578,7 @@
       "arguments": {
         "name": "嘀嗒影视 (Dida HD)",
         "description": "专注高分电影，高清HD在线，极速秒播不卡顿！（来源：AniBaka 规则 didahd rev 7，自动转换）",
-        "iconUrl": "https://www.didahd.xyz/template/mytheme/statics/img/newfavicon.png",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-didahd.png",
         "searchConfig": {
           "searchUrl": "https://www.didahd.xyz/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
           "searchUseOnlyFirstWord": true,
@@ -631,7 +631,7 @@
       "arguments": {
         "name": "DM84 (dmbus.cc)",
         "description": "DM84 动漫视频源。（来源：AniBaka 规则 dm84 rev 3，自动转换）",
-        "iconUrl": "https://dmbus.cc/favicon.ico",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-dm84.ico",
         "searchConfig": {
           "searchUrl": "https://dmbus.cc/s----------.html?wd={keyword}",
           "searchUseOnlyFirstWord": true,
@@ -682,7 +682,7 @@
       "arguments": {
         "name": "E站弹幕网",
         "description": "E站弹幕网提供动漫搜索、分集观看和弹幕播放器。（来源：基线配置 ezdmw）",
-        "iconUrl": "https://www.ezdmw.org/Public/images/icon.png",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-ezdmw.png",
         "searchConfig": {
           "searchUrl": "https://www.ezdmw.org/Index/search.html?searchText={keyword}",
           "rawBaseUrl": "https://www.ezdmw.org",
@@ -883,7 +883,7 @@
       "arguments": {
         "name": "路漫漫动漫",
         "description": "路漫漫在线动漫提供日本动漫、国产动漫、动画电影等免费在线观看。（来源：AniBaka 规则 lm6 rev 5，自动转换）",
-        "iconUrl": "https://m.lm6.net/template/jable/statics/icon/favicon-32x32.png",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-lm6.ico",
         "searchConfig": {
           "searchUrl": "https://m.lm6.net/index.php/ajax/suggest?mid=1&wd={keyword}",
           "searchUseOnlyFirstWord": true,
@@ -924,7 +924,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 1,
+        "tier": 2,
         "channelTiers": {}
       },
       "clientVersions": ">=6.3.0"
@@ -936,7 +936,7 @@
       "arguments": {
         "name": "Mgnacg 橘子动漫",
         "description": "Mgnacg 橘子动漫视频源。（来源：AniBaka 规则 mgnacg rev 2，自动转换）",
-        "iconUrl": "https://r2img.nanoacg.com/favicon.png",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-mgnacg.png",
         "searchConfig": {
           "searchUrl": "https://www.mgnacg.com/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
           "searchUseOnlyFirstWord": true,
@@ -990,7 +990,7 @@
       "arguments": {
         "name": "Moonci",
         "description": "Moonci 动漫视频源。（来源：AniBaka 规则 moonci rev 4，自动转换）",
-        "iconUrl": "https://www.moonci.com/favicon.ico",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-moonci.png",
         "searchConfig": {
           "searchUrl": "https://www.moonci.com/search/-------------.html?wd={keyword}",
           "searchUseOnlyFirstWord": true,
@@ -1041,7 +1041,7 @@
       "arguments": {
         "name": "嘶哩嘶哩",
         "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）] 嘶哩嘶哩动漫源。保留站点访问会话 Cookie，优先通过本站播放接口解密直链，WebView 作为后备。（来源：AniBaka 规则 silisili rev 2，自动转换）",
-        "iconUrl": "https://www.silisilifun.com/favicon.ico?20190911",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-silisili.png",
         "searchConfig": {
           "searchUrl": "https://www.silisilifun.com/vodsearch/?wd={keyword}",
           "searchUseOnlyFirstWord": true,
@@ -1092,7 +1092,7 @@
       "arguments": {
         "name": "青空次元 (Sorani)",
         "description": "青空次元 (Sorani)，支持番剧搜索、分集列表和公开播放接口。（来源：基线配置 sorani）",
-        "iconUrl": "https://www.sorani.net/favicon.ico",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-sorani.png",
         "searchConfig": {
           "baseUrl": "https://api.sorani.cc",
           "requestInterval": 1000,
@@ -1142,7 +1142,7 @@
       "arguments": {
         "name": "西瓜卡通",
         "description": "西瓜卡通视频源，源网址www.xgcartoon.com。（来源：AniBaka 规则 xigua rev 9，自动转换）",
-        "iconUrl": "https://www.xgcartoon.com/xgct/icon/favicon-32x32.png",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xigua.ico",
         "searchConfig": {
           "searchUrl": "https://www.xgcartoon.com/search?q={keyword}",
           "searchUseOnlyFirstWord": true,
@@ -1293,7 +1293,7 @@
       "arguments": {
         "name": "baimao (bmddm.com)",
         "description": "站点 bmddm.com。（来源：纯纯看番社区源 kazumi-baimao v1.0.1，自动转换）",
-        "iconUrl": "https://www.bmmdm.com/hdst/hm_pic/favicon.ico",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-baimao.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
           "searchRemoveSpecial": true,
@@ -1343,7 +1343,7 @@
       "arguments": {
         "name": "LMM",
         "description": "站点 lmm85.com。（来源：Kazumi 规则 LMM v2.3，自动转换）",
-        "iconUrl": "https://www.lmm85.com/favicon.ico",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-lmm.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
           "searchRemoveSpecial": true,
@@ -1396,7 +1396,7 @@
       "arguments": {
         "name": "MXdm (dcc3.com)",
         "description": "站点 dcc3.com。（来源：纯纯看番社区源 kazumi-mxdm v2.3.1，自动转换）",
-        "iconUrl": "https://www.dcc3.com/favicon.ico",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-mxdm.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
           "searchRemoveSpecial": true,
@@ -1538,7 +1538,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 1,
+        "tier": 2,
         "channelTiers": {}
       },
       "clientVersions": ">=6.3.0"
@@ -1601,7 +1601,7 @@
       "arguments": {
         "name": "稀饭动漫 Next",
         "description": "站点 next.xifanacg.com。（来源：Kazumi 规则 xfdmnext v1.1，手写配置）",
-        "iconUrl": "https://next.xifanacg.com/favicon.ico",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xfdmnext.ico",
         "tier": 0,
         "searchConfig": {
           "baseUrl": "https://api.xifanacg.com",
@@ -1672,7 +1672,7 @@
       "version": 2,
       "arguments": {
         "name": "ylsp (ylys.cc)",
-        "description": "站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
+        "description": "[自动检测未通过：HTTP 523] 站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
         "iconUrl": "https://www.ylys.cc/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1713,7 +1713,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 3,
+        "tier": 4,
         "channelTiers": {}
       }
     }
@@ -1832,7 +1832,7 @@
         "arguments": {
           "name": "七色番",
           "description": "七色番提供最新番剧TV、剧场版在线高速播放，每日及时更新，是动漫迷的不二选择！（来源：AniBaka 规则 7sefun rev 9，自动转换）",
-          "iconUrl": "https://www.7sefun.top/pc/img/favicon.ico",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-7sefun.ico",
           "searchConfig": {
             "searchUrl": "https://www.7sefun.top/vodsearch/-------------.html?wd={keyword}",
             "searchUseOnlyFirstWord": true,
@@ -1933,7 +1933,7 @@
         "arguments": {
           "name": "4K动漫",
           "description": "4K动漫，提供日漫、国漫、美漫和剧场版等在线资源。（来源：基线配置 agekkkk）",
-          "iconUrl": "https://cn.agekkkk.com/template/the4/statics/img/favicon.ico",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-agekkkk.ico",
           "searchConfig": {
             "searchUrl": "https://cn.agekkkk.com/search/{keyword}-------------.html",
             "rawBaseUrl": "https://cn.agekkkk.com",
@@ -2014,7 +2014,7 @@
         "arguments": {
           "name": "佩可爱动漫 (peko.love)",
           "description": "佩可爱动漫 (peko.love)，为您提供优质的动漫在线播放与分享。（来源：基线配置 ani_pekolove）",
-          "iconUrl": "https://ani.pekolove.net/wp-content/uploads/cropped-acglogo2-2-32x32.png",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-ani-pekolove.png",
           "searchConfig": {
             "searchUrl": "https://ani.pekolove.net/?s={keyword}",
             "searchUseOnlyFirstWord": false,
@@ -2082,7 +2082,7 @@
         "arguments": {
           "name": "Anime7 动画线上看",
           "description": "Anime7 动画线上看，提供日韩动漫、剧场版、国产动漫等高清在线观看。含广告。（来源：AniBaka 规则 anime7 rev 6，自动转换）",
-          "iconUrl": "https://ani7.b-cdn.net/upload/logo/web-icon.png",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-anime7.png",
           "searchConfig": {
             "searchUrl": "https://anime7.top/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
             "searchUseOnlyFirstWord": true,
@@ -2136,7 +2136,7 @@
         "arguments": {
           "name": "Animoe动漫",
           "description": "Animoe动漫，提供最新番剧、经典动漫全集免费高清在线观看。（来源：AniBaka 规则 animoe rev 5，自动转换）",
-          "iconUrl": "https://github.elemecdn.com/mstatic616/images/logo/favicon.png",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-animoe.png",
           "searchConfig": {
             "searchUrl": "https://animoe.org/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
             "searchUseOnlyFirstWord": true,
@@ -2297,7 +2297,7 @@
         "arguments": {
           "name": "嘀嗒影视 (Dida HD)",
           "description": "专注高分电影，高清HD在线，极速秒播不卡顿！（来源：AniBaka 规则 didahd rev 7，自动转换）",
-          "iconUrl": "https://www.didahd.xyz/template/mytheme/statics/img/newfavicon.png",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-didahd.png",
           "searchConfig": {
             "searchUrl": "https://www.didahd.xyz/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
             "searchUseOnlyFirstWord": true,
@@ -2350,7 +2350,7 @@
         "arguments": {
           "name": "DM84 (dmbus.cc)",
           "description": "DM84 动漫视频源。（来源：AniBaka 规则 dm84 rev 3，自动转换）",
-          "iconUrl": "https://dmbus.cc/favicon.ico",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-dm84.ico",
           "searchConfig": {
             "searchUrl": "https://dmbus.cc/s----------.html?wd={keyword}",
             "searchUseOnlyFirstWord": true,
@@ -2401,7 +2401,7 @@
         "arguments": {
           "name": "E站弹幕网",
           "description": "E站弹幕网提供动漫搜索、分集观看和弹幕播放器。（来源：基线配置 ezdmw）",
-          "iconUrl": "https://www.ezdmw.org/Public/images/icon.png",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-ezdmw.png",
           "searchConfig": {
             "searchUrl": "https://www.ezdmw.org/Index/search.html?searchText={keyword}",
             "rawBaseUrl": "https://www.ezdmw.org",
@@ -2602,7 +2602,7 @@
         "arguments": {
           "name": "路漫漫动漫",
           "description": "路漫漫在线动漫提供日本动漫、国产动漫、动画电影等免费在线观看。（来源：AniBaka 规则 lm6 rev 5，自动转换）",
-          "iconUrl": "https://m.lm6.net/template/jable/statics/icon/favicon-32x32.png",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-lm6.ico",
           "searchConfig": {
             "searchUrl": "https://m.lm6.net/index.php/ajax/suggest?mid=1&wd={keyword}",
             "searchUseOnlyFirstWord": true,
@@ -2643,7 +2643,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 1,
+          "tier": 2,
           "channelTiers": {}
         },
         "clientVersions": ">=6.3.0"
@@ -2655,7 +2655,7 @@
         "arguments": {
           "name": "Mgnacg 橘子动漫",
           "description": "Mgnacg 橘子动漫视频源。（来源：AniBaka 规则 mgnacg rev 2，自动转换）",
-          "iconUrl": "https://r2img.nanoacg.com/favicon.png",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-mgnacg.png",
           "searchConfig": {
             "searchUrl": "https://www.mgnacg.com/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
             "searchUseOnlyFirstWord": true,
@@ -2709,7 +2709,7 @@
         "arguments": {
           "name": "Moonci",
           "description": "Moonci 动漫视频源。（来源：AniBaka 规则 moonci rev 4，自动转换）",
-          "iconUrl": "https://www.moonci.com/favicon.ico",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-moonci.png",
           "searchConfig": {
             "searchUrl": "https://www.moonci.com/search/-------------.html?wd={keyword}",
             "searchUseOnlyFirstWord": true,
@@ -2760,7 +2760,7 @@
         "arguments": {
           "name": "嘶哩嘶哩",
           "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）] 嘶哩嘶哩动漫源。保留站点访问会话 Cookie，优先通过本站播放接口解密直链，WebView 作为后备。（来源：AniBaka 规则 silisili rev 2，自动转换）",
-          "iconUrl": "https://www.silisilifun.com/favicon.ico?20190911",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-silisili.png",
           "searchConfig": {
             "searchUrl": "https://www.silisilifun.com/vodsearch/?wd={keyword}",
             "searchUseOnlyFirstWord": true,
@@ -2811,7 +2811,7 @@
         "arguments": {
           "name": "青空次元 (Sorani)",
           "description": "青空次元 (Sorani)，支持番剧搜索、分集列表和公开播放接口。（来源：基线配置 sorani）",
-          "iconUrl": "https://www.sorani.net/favicon.ico",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-sorani.png",
           "searchConfig": {
             "baseUrl": "https://api.sorani.cc",
             "requestInterval": 1000,
@@ -2861,7 +2861,7 @@
         "arguments": {
           "name": "西瓜卡通",
           "description": "西瓜卡通视频源，源网址www.xgcartoon.com。（来源：AniBaka 规则 xigua rev 9，自动转换）",
-          "iconUrl": "https://www.xgcartoon.com/xgct/icon/favicon-32x32.png",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xigua.ico",
           "searchConfig": {
             "searchUrl": "https://www.xgcartoon.com/search?q={keyword}",
             "searchUseOnlyFirstWord": true,
@@ -3012,7 +3012,7 @@
         "arguments": {
           "name": "baimao (bmddm.com)",
           "description": "站点 bmddm.com。（来源：纯纯看番社区源 kazumi-baimao v1.0.1，自动转换）",
-          "iconUrl": "https://www.bmmdm.com/hdst/hm_pic/favicon.ico",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-baimao.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
             "searchRemoveSpecial": true,
@@ -3062,7 +3062,7 @@
         "arguments": {
           "name": "LMM",
           "description": "站点 lmm85.com。（来源：Kazumi 规则 LMM v2.3，自动转换）",
-          "iconUrl": "https://www.lmm85.com/favicon.ico",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-lmm.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
             "searchRemoveSpecial": true,
@@ -3115,7 +3115,7 @@
         "arguments": {
           "name": "MXdm (dcc3.com)",
           "description": "站点 dcc3.com。（来源：纯纯看番社区源 kazumi-mxdm v2.3.1，自动转换）",
-          "iconUrl": "https://www.dcc3.com/favicon.ico",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-mxdm.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
             "searchRemoveSpecial": true,
@@ -3257,7 +3257,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 1,
+          "tier": 2,
           "channelTiers": {}
         },
         "clientVersions": ">=6.3.0"
@@ -3320,7 +3320,7 @@
         "arguments": {
           "name": "稀饭动漫 Next",
           "description": "站点 next.xifanacg.com。（来源：Kazumi 规则 xfdmnext v1.1，手写配置）",
-          "iconUrl": "https://next.xifanacg.com/favicon.ico",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xfdmnext.ico",
           "tier": 0,
           "searchConfig": {
             "baseUrl": "https://api.xifanacg.com",
@@ -3391,7 +3391,7 @@
         "version": 2,
         "arguments": {
           "name": "ylsp (ylys.cc)",
-          "description": "站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
+          "description": "[自动检测未通过：HTTP 523] 站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
           "iconUrl": "https://www.ylys.cc/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -3432,7 +3432,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 3,
+          "tier": 4,
           "channelTiers": {}
         }
       }
