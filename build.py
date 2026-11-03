@@ -434,6 +434,8 @@ def main():
     ap.add_argument("--health", default=os.path.join(HERE, "state", "health.json"),
                     help="记录各候选历次联网检测结果的文件（连续失败才降级）")
     ap.add_argument("--manual", default=os.path.join(HERE, "manual"), help="手动维护（亲测可用）的源所在目录")
+    ap.add_argument("--icons-dir", default=None,
+                    help="站点图标存放目录（和 --smoke 一起用才会联网取图标；不给就不处理图标）")
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--playcheck", action="store_true", help="在 --smoke 之后再用无头浏览器检测能否播放（需要 playwright）")
     args = ap.parse_args()
@@ -505,7 +507,7 @@ def main():
     chosen, decisions = merge(cands, config)
     apply_auto_tier(chosen, config)
 
-    sources = []
+    sources, icon_items = [], []
     for c in sorted(chosen, key=lambda c: c["source"]["id"]):
         s = strip_private(c["source"])
         sm = c.get("smoke")
@@ -519,6 +521,16 @@ def main():
                 continue
             warn = sm["reason"]
         sources.append(normalize_source(c, s, config, warn))
+        icon_items.append((sources[-1], c["origin"] == "manual"))
+    icon_results = []
+    if args.icons_dir and args.smoke and config.get("icons", True):
+        import requests
+        import icons as icons_mod
+        get_html, get_image = icons_mod.make_fetchers(requests.Session())
+        icon_results = icons_mod.resolve_icons(
+            icon_items, args.icons_dir,
+            config.get("icon_base_url", "https://cdn.jsdelivr.net/gh/nlhaiuy/aniyuan@main/icons"),
+            get_html, get_image)
     ids = [s["id"] for s in sources]
     assert len(ids) == len(set(ids)), "出现重复 id：%s" % sorted({i for i in ids if ids.count(i) > 1})
 
@@ -543,6 +555,11 @@ def main():
             c["origin"], c["key"], c["version"], fmt_date(c["date"]) + ("（%s）" % c["date_basis"] if c.get("date_basis") else ""), label.get(c["status"], c["status"]),
             sm.get("status", "-") + ("（已剔除）" if c.get("dropped") else ""), sm.get("play", "-"),
             "是" if c.get("chosen") else "否", remark.replace("|", "/")))
+    if icon_results:
+        names = {"new": "新存", "same": "没变", "cached": "沿用上次", "kept": "没取到（保留原地址）", "skipped": "不处理"}
+        rep += ["", "## 站点图标", "", "| 源 | 结果 | 说明 |", "|---|---|---|"]
+        for sid, st, why in sorted(icon_results, key=lambda r: (r[1] in ("new", "same", "skipped"), r[0])):
+            rep.append("| %s | %s | %s |" % (sid, names.get(st, st), why.replace("|", "/")))
     with open(os.path.join(args.out, "report.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(rep) + "\n")
     with open(os.path.join(args.out, "report.json"), "w", encoding="utf-8") as f:

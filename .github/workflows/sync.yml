@@ -58,18 +58,20 @@ jobs:
           python tests/test_health.py
           python tests/test_normalize.py
           python tests/test_repair.py
+          python tests/test_icons.py
           python tests/test_live.py
           python tests/test_pipeline.py
 
       - name: 转换并做联网冒烟测试
-        run: python build.py --kazumi "$RUNNER_TEMP/KazumiRules" --anibaka "$RUNNER_TEMP/AniBakaRule" --easybangumi "$RUNNER_TEMP/EasyBangumi" --out dist.new --smoke --playcheck
+        run: python build.py --kazumi "$RUNNER_TEMP/KazumiRules" --anibaka "$RUNNER_TEMP/AniBakaRule" --easybangumi "$RUNNER_TEMP/EasyBangumi" --out dist.new --icons-dir icons --smoke --playcheck
 
       # 只打包要发布的几个文件（白名单），不带别的东西
       - name: 打包产物
         run: |
-          mkdir -p out/dist out/state
+          mkdir -p out/dist out/state out/icons
           cp dist.new/all.json dist.new/report.json dist.new/report.md out/dist/
           cp state/seen.json state/health.json out/state/
+          cp icons/* out/icons/ 2>/dev/null || true
 
       - uses: actions/upload-artifact@v4
         with:
@@ -106,6 +108,10 @@ jobs:
               sys.exit("新订阅条目数异常偏少，已中止，不覆盖旧文件")
           PY
 
+      # 图标是从第三方站点下载来的，发布前只放行小尺寸的真图片（按文件头判断），脚本、HTML、SVG 一律不收
+      - name: 检查图标
+        run: python icons.py --verify out/icons
+
       - name: 报告写入任务摘要
         run: cat out/dist/report.md >> "$GITHUB_STEP_SUMMARY"
 
@@ -113,9 +119,10 @@ jobs:
         run: |
           cp out/dist/all.json out/dist/report.json out/dist/report.md dist/
           cp out/state/seen.json out/state/health.json state/
+          mkdir -p icons && find icons -type f ! -name '.gitkeep' -delete && cp out/icons/* icons/ 2>/dev/null || true
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add dist state
+          git add dist state icons
           if git diff --cached --quiet; then
             echo "订阅没有变化"
           else

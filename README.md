@@ -119,6 +119,7 @@ git 提交日期会被“发布 / 整理”提交带偏（例如社区仓库一�
 | `fail_threshold` | 默认 `2`：连续明确失败几次才降级 / 加警告 / 剔除（以前通过过的候选，没到次数都算宽限期） |
 | `names` | `{"id": "显示名称"}`：手动指定某个源的名称，优先于自动规整 |
 | `smoke_keyword` | 冒烟测试用的搜索关键词 |
+| `icons` / `icon_base_url` | 默认 `true`：联网检测时给每个源找图标（顺序：首页 `<link rel="icon">` → 规则里原来的 `iconUrl` → `/favicon.ico`；下载时带站点自己的 Referer，绕过图床防盗链；只收 ≤300KB 的 PNG/ICO/JPEG/GIF/WebP），存进 `icons/`，`iconUrl` 改成 `icon_base_url/<id>.<扩展名>`。这次取不到就沿用上次存的，一直没取到才保留原地址。`manual/` 的源不动。设为 `false` 关闭 |
 | `auto_tier` | 默认 `true`：按联网检测结果给源自动分档（1 能播 / 2 搜索剧集通过但播放没结论 / 3 播放有疑点或没有结论 / 4 明确失败或推测未验证）。0 留给人工指定；`manual/` 里的源、`config.tiers` 点名的、tier 已被手调成非默认值的（baseline / overrides）都不动。没有联网检测结果时不分档。设为 `false` 关闭 |
 | `link_template_client_versions` | 默认 `">=6.3.0"`：用了 `linkTemplate` 的源自动加上 `clientVersions`（官方订阅仓库的要求，旧客户端不会拿到用不了的源）；设为 `""` 关闭 |
 
@@ -145,6 +146,7 @@ python tests/test_anx.py         # AniBaka / 纯纯看番转换 + 同站取新
 python tests/test_health.py      # 检测历史：连续失败才降级
 python tests/test_normalize.py   # id / 名称 / 描述规整
 python tests/test_repair.py      # 选择器自动修复：候选库和排序
+python tests/test_icons.py       # 站点图标：候选顺序、防盗链、文件头检查
 python tests/test_pipeline.py    # 整条流水线（本地模拟站点）
 python tests/test_live.py        # 自动修复 / 域名跳转 / 播放检测（本地模拟站点 + Chromium）
 ```
@@ -163,6 +165,8 @@ python tests/test_live.py        # 自动修复 / 域名跳转 / 播放检测（
 | `playcheck.py` | 无头浏览器播放检测 |
 | `health.py` | 检测历史：连续失败才降级 |
 | `normalize.py` | 输出前统一 id / 名称 / 描述格式 |
+| `icons.py` | 站点图标：像浏览器一样读首页 `<link rel="icon">`，带站点 Referer 下载，存进 `icons/` |
+| `icons/` | 自动维护的站点图标（`<id>.png` 等），订阅的 `iconUrl` 指向这里；发布前按文件头检查只含小尺寸真图片 |
 | `state/seen.json` | 各规则文件内容哈希和最后改动时间（自动维护） |
 | `state/health.json` | 各候选历次联网检测结果（自动维护，别手动删，删了会失去宽限期） |
 | `manual/` | 亲测可用的源，同站永远优先 |

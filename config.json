@@ -29,5 +29,8 @@
   "follow_upstream_domains": true,
   "_说明4": "follow_upstream_domains：手动/基线/手写的源，上游规则多数换了主域名时自动跟随（重新联网检测通过才采用）。",
   "browser_fallback": true,
-  "_说明5": "browser_fallback：requests 被 403/503 拦时，改用无头浏览器取页面（需要 --playcheck）。"
+  "_说明5": "browser_fallback：requests 被 403/503 拦时，改用无头浏览器取页面（需要 --playcheck）。",
+  "icons": true,
+  "icon_base_url": "https://cdn.jsdelivr.net/gh/nlhaiuy/aniyuan@main/icons",
+  "_说明6": "icons：联网检测时按浏览器的方式找站点图标，存进 icons/，订阅里的 iconUrl 改指向这个仓库（icon_base_url）；设为 false 关闭。manual/ 里的源图标不动。"
 }
