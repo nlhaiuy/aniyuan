@@ -82,8 +82,8 @@
 | baseline | ios_mifun | rev 7 | 2026-11-01（内容未变） | 回退基线 | ok | mismatch | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；页面出现了视频地址，但 matchVideoUrl 认不出来 |
 | anibaka | agekkkk | rev 3 | 2026-11-01（内容未变） | 无法转换 | - | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等） |
 | baseline | agekkkk | rev 3 | 2026-11-01（内容未变） | 回退基线 | blocked | - | 是 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；优先级自动设为 3（检测没有结论（blocked））；搜索页出现验证码/环境检查 |
-| anibaka | didahd | rev 7 | 2026-11-01（内容未变） | 有近似 | ok | none | 是 | AniBaka 播放步骤用了 maccmsVerify 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频；优先级自动设为 2（检测通过，播放检测：none）；等了 20 秒没有出现视频地址 |
-| baseline | didahd | rev 7 | 2026-11-01（内容未变） | 回退基线 | ok | none | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；域名已跳转，改用新域名 https://www.didahd.xyz（原 https://www.didahd.pro）；等了 20 秒没有出现视频地址 |
+| anibaka | didahd | rev 7 | 2026-11-01（内容未变） | 有近似 | ok | ok | 是 | AniBaka 播放步骤用了 maccmsVerify 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频；优先级自动设为 1（检测通过，播放检测：ok） |
+| baseline | didahd | rev 7 | 2026-11-01（内容未变） | 回退基线 | ok | ok | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；域名已跳转，改用新域名 https://www.didahd.xyz（原 https://www.didahd.pro） |
 | anibaka | anime7 | rev 6 | 2026-11-01（内容未变） | 完整 | ok | ok | 是 | 优先级自动设为 1（检测通过，播放检测：ok） |
 | baseline | anime7 | rev 6 | 2026-11-01（内容未变） | 回退基线 | blocked | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；HTTP 403 |
 | anibaka | hanimeone | rev 7 | 2026-11-01（内容未变） | 无法转换 | - | - | 否 | 章节步骤无法转换（需要 episodes 操作，实际是：jsonEpisodes, template）；baseline 里也没有这个源，已跳过 |
@@ -147,7 +147,7 @@
 | aniyuan-5dm | 没取到（保留原地址） | 试了 2 个候选地址都不是可用的图片，保留原来的 iconUrl |
 | aniyuan-9ciyuan | 没取到（保留原地址） | 试了 1 个候选地址都不是可用的图片，保留原来的 iconUrl |
 | aniyuan-age | 没取到（保留原地址） | 试了 1 个候选地址都不是可用的图片，保留原来的 iconUrl |
-| aniyuan-akianime | 没取到（保留原地址） | 试了 2 个候选地址都不是可用的图片，保留原来的 iconUrl |
+| aniyuan-akianime | 没取到（保留原地址） | 试了 3 个候选地址都不是可用的图片，保留原来的 iconUrl |
 | aniyuan-ant | 没取到（保留原地址） | 试了 1 个候选地址都不是可用的图片，保留原来的 iconUrl |
 | aniyuan-cyfz | 没取到（保留原地址） | 试了 2 个候选地址都不是可用的图片，保留原来的 iconUrl |
 | aniyuan-dalvdm | 没取到（保留原地址） | 试了 1 个候选地址都不是可用的图片，保留原来的 iconUrl |
@@ -166,7 +166,7 @@
 | aniyuan-didahd | 没变 | https://www.didahd.xyz/template/mytheme/statics/img/favicon.ico |
 | aniyuan-dm84 | 没变 | https://dmbus.cc/favicon.ico |
 | aniyuan-ezdmw | 没变 | https://www.ezdmw.org/Public/images/icon.png |
-| aniyuan-girigirilove | 新存 | https://ani.girigirilove.com/brand/icon.png |
+| aniyuan-girigirilove | 没变 | https://ani.girigirilove.com/brand/icon.png |
 | aniyuan-lm6 | 没变 | https://m.lm6.net/template/jable/statics/icon/favicon.ico |
 | aniyuan-lmm | 没变 | https://www.lmm85.com/template/jable/statics/icon/favicon.ico |
 | aniyuan-mgnacg | 没变 | https://r2img.nanoacg.com/favicon.png |
