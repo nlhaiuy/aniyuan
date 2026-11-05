@@ -978,7 +978,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 1,
+        "tier": 2,
         "channelTiers": {}
       },
       "clientVersions": ">=6.3.0"
@@ -1435,7 +1435,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 1,
+        "tier": 3,
         "channelTiers": {}
       }
     },
@@ -2697,7 +2697,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 1,
+          "tier": 2,
           "channelTiers": {}
         },
         "clientVersions": ">=6.3.0"
@@ -3154,7 +3154,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 1,
+          "tier": 3,
           "channelTiers": {}
         }
       },

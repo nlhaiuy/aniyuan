@@ -54,10 +54,10 @@
 | kazumi | ezdmw | 1.2 | 2026-08-16（内容未变） | 手写 | ok | none | 否 | 等了 20 秒没有出现视频地址 |
 | kazumi | giriGiriLove | 2.6 | 2026-10-22（内容未变） | 手写 | ok | ok | 是 |  |
 | kazumi | LMM | 2.3 | 2026-10-15（内容未变） | 完整 | ok | ok | 是 | 优先级自动设为 1（检测通过，播放检测：ok） |
-| kazumi | mgnacg | 1.2 | 2026-10-15（内容未变） | 完整 | ok | ok | 否 |  |
+| kazumi | mgnacg | 1.2 | 2026-10-15（内容未变） | 完整 | ok | none | 否 | 等了 20 秒没有出现视频地址 |
 | kazumi | moonci | 1.1 | 2026-10-19（内容未变） | 完整 | ok | ok | 否 |  |
 | kazumi | mutefun | 1.6 | 2026-10-31（内容未变） | 无法转换 | - | - | 否 | 搜索 XPath 无法转换：没有步骤 |
-| kazumi | MXdm | 2.4 | 2026-10-01（内容未变） | 完整 | ok | ok | 否 |  |
+| kazumi | MXdm | 2.4 | 2026-10-01（内容未变） | 完整 | unreachable | - | 否 | 请求失败：ConnectTimeout |
 | kazumi | sorani | 1.0 | 2026-07-13（内容未变） | 手写 | skipped | - | 否 | 手写配置，不做自动检测 |
 | kazumi | TvTFun | 1.3 | 2026-10-28（内容未变） | 完整 | ok | none | 是 | 优先级自动设为 2（检测通过，播放检测：none）；等了 20 秒没有出现视频地址 |
 | kazumi | xfdmneo | 1.1 | 2026-03-08（内容未变） | 完整 | ok | ok | 是 | 优先级自动设为 1（检测通过，播放检测：ok） |
@@ -105,7 +105,7 @@
 | anibaka | dm84 | rev 3 | 2026-11-01（内容未变） | 有近似 | ok | ok | 是 | searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）；AniBaka 播放步骤不是嗅探（fetch/json/regex/replace/select/setVar/template），已改成 WebView 嗅探，请在 Animeko 里试播确认；优先级自动设为 1（检测通过，播放检测：ok） |
 | baseline | dm84 | rev 3 | 2026-11-01（内容未变） | 回退基线 | fail | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器） |
 | anibaka | fsdm02 | rev 3 | 2026-09-30（内容未变） | 无法转换 | - | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）；baseline 里也没有这个源，已跳过 |
-| anibaka | mgnacg | rev 2 | 2026-11-01（内容未变） | 有近似 | ok | ok | 是 | AniBaka 播放步骤用了 playerDecrypt 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频；优先级自动设为 1（检测通过，播放检测：ok） |
+| anibaka | mgnacg | rev 2 | 2026-11-01（内容未变） | 有近似 | ok | none | 是 | AniBaka 播放步骤用了 playerDecrypt 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频；优先级自动设为 2（检测通过，播放检测：none）；等了 20 秒没有出现视频地址 |
 | baseline | mgnacg | rev 2 | 2026-11-01（内容未变） | 回退基线 | fail | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器） |
 | anibaka | moonci | rev 4 | 2026-11-01（内容未变） | 有近似 | ok | ok | 是 | searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）；优先级自动设为 1（检测通过，播放检测：ok） |
 | anibaka | silisili | rev 2 | 2026-11-01（内容未变） | 有近似 | fail | - | 是 | searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）；AniBaka 播放步骤用了 crypto 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频；搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器） |
@@ -129,7 +129,7 @@
 | easybangumi | kazumi-gpjda | 1.0 | 2026-07-10（内容未变） | 无法转换 | - | - | 否 | 规则使用 POST 搜索，Animeko 的 Web 数据源不支持 |
 | easybangumi | kazumi-lmm | 2.2 | 2026-10-14（内容未变） | 无法转换 | - | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
 | easybangumi | kazumi-mifun | 1.1.1 | 2026-10-20（内容未变） | 无法转换 | - | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
-| easybangumi | kazumi-mxdm | 2.3.1 | 2026-10-20（内容未变） | 完整 | ok | ok | 是 | 优先级自动设为 1（检测通过，播放检测：ok） |
+| easybangumi | kazumi-mxdm | 2.3.1 | 2026-10-20（内容未变） | 完整 | unreachable | - | 是 | 优先级自动设为 3（检测没有结论（unreachable））；请求失败：ConnectTimeout |
 | easybangumi | kazumi-omofun03 | 1.1 | 2026-07-27（内容未变） | 完整 | unreachable | - | 是 | 优先级自动设为 3（检测没有结论（unreachable））；请求失败：SSLError |
 | easybangumi | kazumi-sorani | 1.0 | 2026-07-27（内容未变） | 无法转换 | - | - | 否 | 接口型，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
 | easybangumi | kazumi-tvtfun | 1.1 | 2026-07-27（内容未变） | 无法转换 | - | - | 否 | 接口型，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
@@ -153,6 +153,7 @@
 | aniyuan-dalvdm | 没取到（保留原地址） | 试了 1 个候选地址都不是可用的图片，保留原来的 iconUrl |
 | aniyuan-gugu | 没取到（保留原地址） | 试了 2 个候选地址都不是可用的图片，保留原来的 iconUrl |
 | aniyuan-ios-mifun | 没取到（保留原地址） | 试了 2 个候选地址都不是可用的图片，保留原来的 iconUrl |
+| aniyuan-mxdm | 沿用上次 | 这次没取到，沿用上次存的图标（试了 1 个候选地址都不是可用的图片） |
 | aniyuan-omofun03 | 没取到（保留原地址） | 试了 2 个候选地址都不是可用的图片，保留原来的 iconUrl |
 | aniyuan-tvtfun | 没取到（保留原地址） | 试了 1 个候选地址都不是可用的图片，保留原来的 iconUrl |
 | aniyuan-xfdmneo | 没取到（保留原地址） | 试了 2 个候选地址都不是可用的图片，保留原来的 iconUrl |
@@ -171,7 +172,6 @@
 | aniyuan-lmm | 没变 | https://www.lmm85.com/template/jable/statics/icon/favicon.ico |
 | aniyuan-mgnacg | 没变 | https://r2img.nanoacg.com/favicon.png |
 | aniyuan-moonci | 没变 | https://www.moonci.com/template/conch/asset/img/favicon.png |
-| aniyuan-mxdm | 没变 | https://www.dcc3.com/favicon.ico |
 | aniyuan-silisili | 没变 | https://www.silisilifun.com/tgy/img/logo.png |
 | aniyuan-sorani | 没变 | https://www.sorani.net/favicon.ico |
 | aniyuan-xfdmnext | 没变 | https://next.xifanacg.com/favicon.ico?favicon.0dlvkfxcpy8s1.ico |
