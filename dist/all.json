@@ -1435,7 +1435,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 3,
+        "tier": 1,
         "channelTiers": {}
       }
     },
@@ -3154,7 +3154,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 3,
+          "tier": 1,
           "channelTiers": {}
         }
       },
