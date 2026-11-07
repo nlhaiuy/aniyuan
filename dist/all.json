@@ -1672,7 +1672,7 @@
       "version": 2,
       "arguments": {
         "name": "ylsp (ylys.cc)",
-        "description": "[自动检测未通过：HTTP 523] 站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
+        "description": "站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
         "iconUrl": "https://www.ylys.cc/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1713,7 +1713,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 4,
+        "tier": 3,
         "channelTiers": {}
       }
     }
@@ -3391,7 +3391,7 @@
         "version": 2,
         "arguments": {
           "name": "ylsp (ylys.cc)",
-          "description": "[自动检测未通过：HTTP 523] 站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
+          "description": "站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
           "iconUrl": "https://www.ylys.cc/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -3432,7 +3432,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 4,
+          "tier": 3,
           "channelTiers": {}
         }
       }
