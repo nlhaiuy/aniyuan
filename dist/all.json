@@ -7,51 +7,61 @@
       "version": 2,
       "arguments": {
         "name": "MuteFun动漫 (2kdm)",
-        "description": "[自动检测未通过：HTTP 404] MuteFun动漫网站-无声乐趣，提供日漫、美漫、特摄、日剧等高清在线观看。（来源：AniBaka 规则 2kdm rev 6，自动转换）",
+        "description": "MuteFun动漫网站-无声乐趣，提供日漫、美漫、特摄、日剧等高清在线观看。（来源：基线配置 2kdm）",
         "iconUrl": "https://image1.ljcdn.com/materials/cmsapi/1a5b58f50c23e5475dc6a8bb827035e2.png",
         "searchConfig": {
-          "searchUrl": "https://www.2kdm.com/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
+          "searchUrl": "https://www.2kdm.com/index.php/ajax/suggest?mid=1&wd={keyword}",
           "searchUseOnlyFirstWord": true,
           "searchRemoveSpecial": true,
-          "searchUseSubjectNamesCount": 1,
-          "rawBaseUrl": "https://www.2kdm.com",
-          "requestInterval": 3000,
+          "rawBaseUrl": "",
           "subjectFormatId": "json-path-indexed",
+          "selectorSubjectFormatA": {
+            "selectLists": "div.video-info-header > a",
+            "preferShorterName": true
+          },
+          "selectorSubjectFormatIndexed": {
+            "selectNames": "",
+            "selectLinks": "",
+            "preferShorterName": true
+          },
           "selectorSubjectFormatJsonPathIndexed": {
             "selectLinks": "$.list[*]['id']",
             "selectNames": "$.list[*]['name']",
-            "preferShorterName": true,
-            "linkTemplate": "/voddetail/{value}.html"
+            "linkTemplate": "/voddetail/{value}.html",
+            "preferShorterName": true
           },
           "channelFormatId": "index-grouped",
           "selectorChannelFormatFlattened": {
-            "selectChannelNames": ".module-tab-item[data-dropdown-value]",
-            "selectEpisodeLists": ".module-play-list",
-            "selectEpisodesFromList": "a"
+            "selectChannelNames": "#y-playList .module-tab-item:first-child span",
+            "matchChannelName": "",
+            "selectEpisodeLists": ".module-play-list-content",
+            "selectEpisodesFromList": "a",
+            "selectEpisodeLinksFromList": "",
+            "matchEpisodeSortFromName": "第\\s*(?<ep>.+)\\s*[话集]"
           },
-          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
-          "defaultResolution": "1080P",
-          "defaultSubtitleLanguage": "CHS",
-          "onlySupportsPlayers": [],
+          "selectorChannelFormatNoChannel": {
+            "selectEpisodes": ".module-play-list-content a.module-play-list-link",
+            "selectEpisodeLinks": "",
+            "matchEpisodeSortFromName": "第\\s*(?<ep>.+)\\s*[话集]"
+          },
           "filterByEpisodeSort": true,
-          "filterBySubjectName": true,
           "selectMedia": {
             "distinguishSubjectName": true,
             "distinguishChannelName": true
           },
           "matchVideo": {
-            "enableNestedUrl": false,
-            "matchNestedUrl": "$^",
-            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
-            "cookies": "quality=1080",
+            "enableNestedUrl": true,
+            "matchNestedUrl": "^https?://[^/]+/addons/dp/player/[^?]*\\.php\\?",
+            "matchVideoUrl": "(?<v>^https?://[^\\s]+\\.(mp4|m3u8)(\\?.*)?$)",
             "addHeadersToVideo": {
-              "referer": "https://www.2kdm.com/"
-            },
-            "scanDomMediaUrls": true
-          }
+              "referer": ""
+            }
+          },
+          "defaultResolution": "1080P",
+          "defaultSubtitleLanguage": "CHS",
+          "userAgent": ""
         },
-        "tier": 3,
-        "channelTiers": {}
+        "tier": 3
       },
       "clientVersions": ">=6.3.0"
     },
@@ -578,7 +588,7 @@
       "arguments": {
         "name": "嘀嗒影视 (Dida HD)",
         "description": "专注高分电影，高清HD在线，极速秒播不卡顿！（来源：AniBaka 规则 didahd rev 7，自动转换）",
-        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-didahd.ico",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-didahd.png",
         "searchConfig": {
           "searchUrl": "https://www.didahd.xyz/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
           "searchUseOnlyFirstWord": true,
@@ -1141,47 +1151,28 @@
       "version": 2,
       "arguments": {
         "name": "西瓜卡通",
-        "description": "西瓜卡通视频源，源网址www.xgcartoon.com。（来源：AniBaka 规则 xigua rev 9，自动转换）",
+        "description": "[匹配规则已自动修复] 西瓜卡通视频源，源网址www.xgcartoon.com。（来源：基线配置 xigua）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xigua.ico",
         "searchConfig": {
           "searchUrl": "https://www.xgcartoon.com/search?q={keyword}",
-          "searchUseOnlyFirstWord": true,
-          "searchRemoveSpecial": true,
-          "searchUseSubjectNamesCount": 1,
           "rawBaseUrl": "https://www.xgcartoon.com",
-          "requestInterval": 3000,
-          "subjectFormatId": "a",
-          "selectorSubjectFormatA": {
-            "selectLists": ".container.search a.topic-list-item",
-            "preferShorterName": true
+          "subjectFormatId": "indexed",
+          "selectorSubjectFormatIndexed": {
+            "selectNames": "a[class*=\"topic-list-item\"] [class*=\"h3\"]",
+            "selectLinks": "a[class*=\"topic-list-item\"]"
           },
           "channelFormatId": "no-channel",
           "selectorChannelFormatNoChannel": {
-            "selectEpisodes": ".detail-right__volumes a",
-            "selectEpisodeLinks": ""
-          },
-          "defaultResolution": "1080P",
-          "defaultSubtitleLanguage": "CHS",
-          "onlySupportsPlayers": [],
-          "filterByEpisodeSort": true,
-          "filterBySubjectName": true,
-          "selectMedia": {
-            "distinguishSubjectName": true,
-            "distinguishChannelName": false
+            "selectEpisodes": ".detail-right__volumes a"
           },
           "matchVideo": {
-            "enableNestedUrl": false,
-            "matchNestedUrl": "$^",
-            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
-            "cookies": "quality=1080",
             "addHeadersToVideo": {
               "referer": "https://www.xgcartoon.com/"
             },
-            "scanDomMediaUrls": true
+            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)"
           }
         },
-        "tier": 3,
-        "channelTiers": {}
+        "tier": 3
       }
     },
     {
@@ -1726,51 +1717,61 @@
         "version": 2,
         "arguments": {
           "name": "MuteFun动漫 (2kdm)",
-          "description": "[自动检测未通过：HTTP 404] MuteFun动漫网站-无声乐趣，提供日漫、美漫、特摄、日剧等高清在线观看。（来源：AniBaka 规则 2kdm rev 6，自动转换）",
+          "description": "MuteFun动漫网站-无声乐趣，提供日漫、美漫、特摄、日剧等高清在线观看。（来源：基线配置 2kdm）",
           "iconUrl": "https://image1.ljcdn.com/materials/cmsapi/1a5b58f50c23e5475dc6a8bb827035e2.png",
           "searchConfig": {
-            "searchUrl": "https://www.2kdm.com/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
+            "searchUrl": "https://www.2kdm.com/index.php/ajax/suggest?mid=1&wd={keyword}",
             "searchUseOnlyFirstWord": true,
             "searchRemoveSpecial": true,
-            "searchUseSubjectNamesCount": 1,
-            "rawBaseUrl": "https://www.2kdm.com",
-            "requestInterval": 3000,
+            "rawBaseUrl": "",
             "subjectFormatId": "json-path-indexed",
+            "selectorSubjectFormatA": {
+              "selectLists": "div.video-info-header > a",
+              "preferShorterName": true
+            },
+            "selectorSubjectFormatIndexed": {
+              "selectNames": "",
+              "selectLinks": "",
+              "preferShorterName": true
+            },
             "selectorSubjectFormatJsonPathIndexed": {
               "selectLinks": "$.list[*]['id']",
               "selectNames": "$.list[*]['name']",
-              "preferShorterName": true,
-              "linkTemplate": "/voddetail/{value}.html"
+              "linkTemplate": "/voddetail/{value}.html",
+              "preferShorterName": true
             },
             "channelFormatId": "index-grouped",
             "selectorChannelFormatFlattened": {
-              "selectChannelNames": ".module-tab-item[data-dropdown-value]",
-              "selectEpisodeLists": ".module-play-list",
-              "selectEpisodesFromList": "a"
+              "selectChannelNames": "#y-playList .module-tab-item:first-child span",
+              "matchChannelName": "",
+              "selectEpisodeLists": ".module-play-list-content",
+              "selectEpisodesFromList": "a",
+              "selectEpisodeLinksFromList": "",
+              "matchEpisodeSortFromName": "第\\s*(?<ep>.+)\\s*[话集]"
             },
-            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
-            "defaultResolution": "1080P",
-            "defaultSubtitleLanguage": "CHS",
-            "onlySupportsPlayers": [],
+            "selectorChannelFormatNoChannel": {
+              "selectEpisodes": ".module-play-list-content a.module-play-list-link",
+              "selectEpisodeLinks": "",
+              "matchEpisodeSortFromName": "第\\s*(?<ep>.+)\\s*[话集]"
+            },
             "filterByEpisodeSort": true,
-            "filterBySubjectName": true,
             "selectMedia": {
               "distinguishSubjectName": true,
               "distinguishChannelName": true
             },
             "matchVideo": {
-              "enableNestedUrl": false,
-              "matchNestedUrl": "$^",
-              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
-              "cookies": "quality=1080",
+              "enableNestedUrl": true,
+              "matchNestedUrl": "^https?://[^/]+/addons/dp/player/[^?]*\\.php\\?",
+              "matchVideoUrl": "(?<v>^https?://[^\\s]+\\.(mp4|m3u8)(\\?.*)?$)",
               "addHeadersToVideo": {
-                "referer": "https://www.2kdm.com/"
-              },
-              "scanDomMediaUrls": true
-            }
+                "referer": ""
+              }
+            },
+            "defaultResolution": "1080P",
+            "defaultSubtitleLanguage": "CHS",
+            "userAgent": ""
           },
-          "tier": 3,
-          "channelTiers": {}
+          "tier": 3
         },
         "clientVersions": ">=6.3.0"
       },
@@ -2297,7 +2298,7 @@
         "arguments": {
           "name": "嘀嗒影视 (Dida HD)",
           "description": "专注高分电影，高清HD在线，极速秒播不卡顿！（来源：AniBaka 规则 didahd rev 7，自动转换）",
-          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-didahd.ico",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-didahd.png",
           "searchConfig": {
             "searchUrl": "https://www.didahd.xyz/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
             "searchUseOnlyFirstWord": true,
@@ -2860,47 +2861,28 @@
         "version": 2,
         "arguments": {
           "name": "西瓜卡通",
-          "description": "西瓜卡通视频源，源网址www.xgcartoon.com。（来源：AniBaka 规则 xigua rev 9，自动转换）",
+          "description": "[匹配规则已自动修复] 西瓜卡通视频源，源网址www.xgcartoon.com。（来源：基线配置 xigua）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xigua.ico",
           "searchConfig": {
             "searchUrl": "https://www.xgcartoon.com/search?q={keyword}",
-            "searchUseOnlyFirstWord": true,
-            "searchRemoveSpecial": true,
-            "searchUseSubjectNamesCount": 1,
             "rawBaseUrl": "https://www.xgcartoon.com",
-            "requestInterval": 3000,
-            "subjectFormatId": "a",
-            "selectorSubjectFormatA": {
-              "selectLists": ".container.search a.topic-list-item",
-              "preferShorterName": true
+            "subjectFormatId": "indexed",
+            "selectorSubjectFormatIndexed": {
+              "selectNames": "a[class*=\"topic-list-item\"] [class*=\"h3\"]",
+              "selectLinks": "a[class*=\"topic-list-item\"]"
             },
             "channelFormatId": "no-channel",
             "selectorChannelFormatNoChannel": {
-              "selectEpisodes": ".detail-right__volumes a",
-              "selectEpisodeLinks": ""
-            },
-            "defaultResolution": "1080P",
-            "defaultSubtitleLanguage": "CHS",
-            "onlySupportsPlayers": [],
-            "filterByEpisodeSort": true,
-            "filterBySubjectName": true,
-            "selectMedia": {
-              "distinguishSubjectName": true,
-              "distinguishChannelName": false
+              "selectEpisodes": ".detail-right__volumes a"
             },
             "matchVideo": {
-              "enableNestedUrl": false,
-              "matchNestedUrl": "$^",
-              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
-              "cookies": "quality=1080",
               "addHeadersToVideo": {
                 "referer": "https://www.xgcartoon.com/"
               },
-              "scanDomMediaUrls": true
+              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)"
             }
           },
-          "tier": 3,
-          "channelTiers": {}
+          "tier": 3
         }
       },
       {
