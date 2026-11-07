@@ -26,6 +26,7 @@ PAGES = {
     "/p/captcha": "<html><body>请输入验证码</body></html>",
     "/p/mismatch": "<html><body><script>setTimeout(()=>fetch('/m/3.mp4?x=1'),300)</script></body></html>",
     "/p/dom": "<html><body><video src='/m/4.mp4'></video></body></html>",
+    "/p/mpd": "<html><body><script>setTimeout(()=>fetch('/m/9.mpd'),300)</script></body></html>",
 }
 
 class H(BaseHTTPRequestHandler):
@@ -137,6 +138,32 @@ try:
     check("scanDomMediaUrls 能从 <video> 取到 -> ok", play("/p/dom", scan=True, mv=r"$^") == "ok")
 finally:
     pc.close()
+
+# 6b. matchVideoUrl 修复：页面出现了视频地址但原来的正则认不出 -> 修好并重新检测通过才采用
+from aniyuan.build import run_playchecks
+pcr = PlayChecker()
+try:
+    c = dict(origin="kazumi", key="t", notes=[], source=src("a", "a"), smoke={"status": "ok", "episode_url": B + "/p/mismatch"})
+    c["source"]["arguments"]["searchConfig"]["matchVideo"]["matchVideoUrl"] = r"never\.flv"
+    run_playchecks([c], {"play_wait_ms": 6000}, pcr)
+    check("mismatch：自动修复 matchVideoUrl 后重新检测通过", c["smoke"]["play"] == "ok" and "repaired_match" in c["smoke"]
+          and c["source"]["arguments"]["searchConfig"]["matchVideo"]["matchVideoUrl"] != r"never\.flv"
+          and c["source"]["arguments"]["description"].startswith("[匹配规则已自动修复]") and any("matchVideoUrl" in n for n in c["notes"]))
+    check("mismatch 修复后不留内部字段", "media_urls" not in c["smoke"])
+    c = dict(origin="kazumi", key="t", notes=[], source=src("a", "a"), smoke={"status": "ok", "episode_url": B + "/p/mismatch"})
+    c["source"]["arguments"]["searchConfig"]["matchVideo"]["matchVideoUrl"] = r"never\.flv"
+    run_playchecks([c], {"play_wait_ms": 6000, "repair_match_video": False}, pcr)
+    check("repair_match_video=false：保持 mismatch、不改源", c["smoke"]["play"] == "mismatch"
+          and c["source"]["arguments"]["searchConfig"]["matchVideo"]["matchVideoUrl"] == r"never\.flv")
+    c = dict(origin="kazumi", key="t", notes=[], source=src("a", "a"), smoke={"status": "ok", "episode_url": B + "/p/mpd"})
+    c["source"]["arguments"]["searchConfig"]["matchVideo"]["matchVideoUrl"] = r"never\.flv"
+    run_playchecks([c], {"play_wait_ms": 6000}, pcr)
+    check("通用写法没有的 .mpd：用限定主域名的写法修好并通过", c["smoke"]["play"] == "ok" and "repaired_match" in c["smoke"])
+    c = dict(origin="kazumi", key="t", notes=[], source=src("a", "a"), smoke={"status": "ok", "episode_url": B + "/p/none"})
+    run_playchecks([c], {"play_wait_ms": 3000}, pcr)
+    check("没抓到视频（none）不会触发 matchVideoUrl 修复", c["smoke"]["play"] == "none" and not c["notes"])
+finally:
+    pcr.close()
 
 # 7. 合并时播放结果的优先级
 def cand(origin, date, sm):

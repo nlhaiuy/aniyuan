@@ -28,9 +28,11 @@ from .convert.anibaka import convert_anx, site_host, source_id
 from .convert.kazumi import convert_rule
 from .convert.easybangumi import convert_extension
 from .check.domains import follow_upstream, host_of
-from .check.health import DEFAULT_THRESHOLD, auto_tier, confirmed_fail, smoke_tier, update_health
+from .check import network, ua as ua_mod
+from .check.health import (DEFAULT_CARRY_DAYS, DEFAULT_THRESHOLD, auto_tier, blind_spots, confirmed_fail, smoke_tier,
+                           update_health)
 from .normalize import normalize_source
-from .check.repair import brittle, mine_presets, repair_source
+from .check.repair import brittle, mine_presets, repair_match_video, repair_source
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # 仓库根目录（config.json、baseline/、state/ 等所在）
 
@@ -114,13 +116,14 @@ def rewrite_origin(source, old_origin, new_origin):
 
 def probe(c, keyword, session, presets, config):
     """联网检测一个候选：必要时自动修复选择器、跟随域名跳转。结果写进 c["smoke"]。"""
-    from .check.smoke import HEADERS, _blocked, check_source
+    from .check.smoke import _blocked, check_source
     ctx = {}
     r = check_source(c["source"], keyword, session=session, ctx=ctx)
 
     def fetch(url):
         try:
-            resp = session.get(url, headers=HEADERS, timeout=15)
+            resp = session.get(url, headers=ua_mod.request_headers(c["source"]["arguments"]["searchConfig"].get("userAgent")),
+                               timeout=15)
             return resp.text if resp.status_code == 200 and not _blocked(resp.text) else None
         except Exception:
             return None
@@ -173,11 +176,29 @@ def _check(source, config, session):
 
 
 def run_playchecks(cands, config, pc):
-    """对检测通过的候选逐个做无头浏览器播放检测（耗时，约 20~30 秒一个）。"""
+    """对检测通过的候选逐个做无头浏览器播放检测（耗时，约 20~30 秒一个）。
+    页面里出现了视频地址但 matchVideoUrl 认不出（mismatch）时，试着修 matchVideoUrl 并重新检测。"""
+    from .convert.kazumi import MATCH_VIDEO_URL
+    wait = config.get("play_wait_ms", 20000)
     todo = [c for c in cands if (c.get("smoke") or {}).get("status") == "ok" and c["smoke"].get("episode_url")]
     for c in todo[: config.get("play_check_max", 80)]:
         try:
-            c["smoke"].update(pc.check(c["source"], c["smoke"]["episode_url"], config.get("play_wait_ms", 20000)))
+            res = pc.check(c["source"], c["smoke"]["episode_url"], wait)
+            if res.get("play") == "mismatch" and config.get("repair", True) and config.get("repair_match_video", True):
+                new, why = repair_match_video(c["source"], res.get("media_urls") or [], MATCH_VIDEO_URL)
+                if new:
+                    res2 = pc.check(new, c["smoke"]["episode_url"], wait)   # 改完必须重新检测通过才采用
+                    if res2.get("play") == "ok":
+                        c["source"] = new
+                        c["notes"].append("已自动修复 matchVideoUrl：" + why)
+                        res2["repaired_match"] = why
+                        res = res2
+                    else:
+                        res["play_reason"] += "（自动修复 matchVideoUrl 后重新检测仍是 %s，保持原样）" % res2.get("play")
+                else:
+                    res["play_reason"] += "（自动修复 matchVideoUrl 也失败：%s）" % why
+            res.pop("media_urls", None)
+            c["smoke"].update(res)
         except Exception as e:
             c["smoke"].update({"play": "error", "play_reason": "检测出错：%s" % type(e).__name__})
 
@@ -414,6 +435,10 @@ def main():
         ap.error("至少给一个 --kazumi / --anibaka / --easybangumi")
 
     config = load_json(args.config) if os.path.exists(args.config) else {}
+    ua_mod.reset()
+    ua_mod.configure(config)
+    proxy = network.proxy_url()
+    ua_audit = []
     baseline = {}
     if os.path.exists(args.baseline):
         baseline = {s["id"]: s for s in load_json(args.baseline)["mediaSources"]}
@@ -439,14 +464,15 @@ def main():
         pass
 
     if args.smoke:
-        import requests
         from .check import smoke as smoke_mod
-        session = requests.Session()
+        session = network.new_session(proxy)
+        if proxy:
+            print("检测走出口代理：%s" % network.describe(proxy))
         presets = mine_presets(args.anibaka)
         if args.playcheck:   # 浏览器启动一次：既用于 403 回退，也用于播放检测
             try:
                 from .check.playcheck import PlayChecker
-                pc = PlayChecker()
+                pc = PlayChecker(proxy)
                 if config.get("browser_fallback", True):
                     smoke_mod.set_browser_fetcher(pc.fetch)
             except Exception as e:  # 没装浏览器就跳过，不影响其它流程
@@ -456,6 +482,9 @@ def main():
             if pc:
                 pc.close()
         try:
+            ua_audit = ua_mod.audit(pc)   # UA 体检：真的发请求，核对 requests 和浏览器发出去的 UA / 客户端提示一致
+            for name, ok, detail in ua_audit:
+                print("UA 体检 %s：%s（%s）" % ("通过" if ok else "未通过", name, detail), file=sys.stderr)
             for c in cands:
                 if c["source"] is None:
                     continue
@@ -475,7 +504,8 @@ def main():
 
     if args.smoke:   # 没联网检测时不动历史
         history = load_json(args.health) if os.path.exists(args.health) else {}
-        new_health = update_health(cands, history, int(time.time()), config.get("fail_threshold", DEFAULT_THRESHOLD))
+        new_health = update_health(cands, history, int(time.time()), config.get("fail_threshold", DEFAULT_THRESHOLD),
+                                   config.get("blind_carry_days", DEFAULT_CARRY_DAYS))
         os.makedirs(os.path.dirname(os.path.abspath(args.health)), exist_ok=True)
         with open(args.health, "w", encoding="utf-8") as f:
             json.dump(new_health, f, ensure_ascii=False, indent=1, sort_keys=True)
@@ -500,11 +530,10 @@ def main():
         sources.append(normalize_source(c, s, config, warn))
     icon_results = []
     if args.icons_dir and args.smoke and config.get("icons", True):
-        import requests
         from . import icons as icons_mod
         try:
             get_html, get_image = icons_mod.make_fetchers(
-                requests.Session(), browser_bytes=(pc.fetch_bytes if pc and config.get("browser_fallback", True) else None))
+                network.new_session(proxy), browser_bytes=(pc.fetch_bytes if pc and config.get("browser_fallback", True) else None))
             icon_results = icons_mod.resolve_icons(
                 sources, args.icons_dir,
                 config.get("icon_base_url", "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons"),
@@ -524,7 +553,10 @@ def main():
 
     label = {"ok": "完整", "partial": "有近似", "unsupported": "无法转换", "override": "手写", "missing": "缺文件",
              "baseline": "回退基线"}
-    rep = ["# 订阅转换报告", "", "写入订阅 **%d** 个数据源（候选 %d 个，同站点合并后）。" % (len(sources), len(cands)), "",
+    rep = ["# 订阅转换报告", "", "写入订阅 **%d** 个数据源（候选 %d 个，同站点合并后）。" % (len(sources), len(cands)), ""]
+    if args.smoke:
+        rep += ["检测出口：%s。" % ("代理 " + network.describe(proxy) if proxy else "GitHub 海外服务器（国内站可能打不开或被拦）"), ""]
+    rep += [
            "## 同站点取舍", "", "| 站点 | 最终 id | 采用 | 理由 | 候选（最后修改） |", "|---|---|---|---|---|"]
     for d in decisions:
         rep.append("| %s | %s | %s | %s | %s |" % (d["site"], d["id"], d["winner"], d["reason"], "<br>".join(d["members"])))
@@ -537,6 +569,18 @@ def main():
             c["origin"], c["key"], c["version"], fmt_date(c["date"]) + ("（%s）" % c["date_basis"] if c.get("date_basis") else ""), label.get(c["status"], c["status"]),
             sm.get("status", "-") + ("（已剔除）" if c.get("dropped") else ""), sm.get("play", "-"),
             "是" if c.get("chosen") else "否", remark.replace("|", "/")))
+    if args.smoke:
+        blind = blind_spots([c for c in cands if c.get("chosen")])
+        if blind:
+            rep += ["", "## 海外盲区", "",
+                    "最终入选的源里，有 %d 个这次在海外检测不出结论（被拦 / 打不开），不等于站点坏了：" % len(blind), "",
+                    "| 候选 | 状态 | 排名依据 |", "|---|---|---|"]
+            rep += ["| %s | %s | %s |" % b for b in blind]
+            if not proxy:
+                rep += ["", "想看到国内视角的结果：给工作流配置 `ANIYUAN_PROXY`（国内出口的代理），见 README。"]
+        if ua_audit:
+            rep += ["", "## UA 体检", "", "| 检查项 | 结果 | 说明 |", "|---|---|---|"]
+            rep += ["| %s | %s | %s |" % (n, "通过" if ok else "**未通过**", d.replace("|", "/")) for n, ok, d in ua_audit]
     if icon_results:
         names = {"new": "新存", "same": "没变", "cached": "沿用上次", "kept": "没取到（保留原地址）"}
         rep += ["", "## 站点图标", "", "| 源 | 结果 | 说明 |", "|---|---|---|"]

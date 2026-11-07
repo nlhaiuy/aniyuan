@@ -10,9 +10,9 @@ from urllib.parse import quote, urljoin, urlparse
 import requests
 from bs4 import BeautifulSoup
 
+from . import ua as ua_mod
+
 BLOCK_WORDS = ["验证码", "安全验证", "检查环境", "请输入验证", "Just a moment", "cf-challenge", "人机验证"]
-HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-           "Accept-Language": "zh-CN,zh;q=0.9"}
 
 
 FETCHER = None   # 可选：requests 被 403/503 拦时，改用无头浏览器取页面（见 playcheck.BrowserFetcher）
@@ -33,11 +33,12 @@ class _BrowserResp:
         return json.loads(self.text)
 
 
-def _get(url, session, timeout):
-    r = session.get(url, headers=HEADERS, timeout=timeout, allow_redirects=True)
+def _get(url, session, timeout, ua=None):
+    """ua：源自己在 searchConfig.userAgent 里指定的 UA（Animeko 就是用它请求的），空则用统一 UA（见 ua.py）。"""
+    r = session.get(url, headers=ua_mod.request_headers(ua), timeout=timeout, allow_redirects=True)
     if r.status_code in (403, 503) and FETCHER:
         try:
-            got = FETCHER(url)
+            got = FETCHER(url, ua=ua)
         except Exception:
             got = None
         if got and got[0] == 200 and not _blocked(got[1]):
@@ -71,13 +72,13 @@ def _host(url):
     return re.sub(r"^(www|m)\.", "", (urlparse(url).netloc or "").lower())
 
 
-def _search_subjects(sc, keyword, session, timeout, ctx=None):
+def _search_subjects(sc, keyword, session, timeout, ctx=None, ua=None):
     """返回 (subjects[(name, url)], reason|None)；reason 非空表示没成功。"""
     ctx = ctx if ctx is not None else {}
     url = sc["searchUrl"].replace("{keyword}", quote(keyword))
     ctx["search_url"] = url
     try:
-        r = _get(url, session, timeout)
+        r = _get(url, session, timeout, ua)
     except requests.RequestException as e:
         return [], ("unreachable", "请求失败：%s" % type(e).__name__)
     ctx["search_html"], ctx["search_final_url"] = r.text, r.url
@@ -162,7 +163,8 @@ def check_source(source, keyword="葬送的芙莉莲", timeout=15, session=None,
     sc = a.get("searchConfig", {})
     if source.get("factoryId") != "web-selector" or "searchUrl" not in sc:
         return {"status": "skipped", "reason": "手写配置，不做自动检测"}
-    subs, bad = _search_subjects(sc, keyword, session, timeout, ctx)
+    ua = sc.get("userAgent") or None
+    subs, bad = _search_subjects(sc, keyword, session, timeout, ctx, ua)
     ctx["subs"] = subs
     if bad:
         return {"status": bad[0], "reason": bad[1]}
@@ -184,13 +186,13 @@ def check_source(source, keyword="葬送的芙莉莲", timeout=15, session=None,
         for tpl in variants:
             url = pick[1]
             if tpl:
-                id_val = _extract_id(sc, keyword, session, timeout, pick[0])
+                id_val = _extract_id(sc, keyword, session, timeout, pick[0], ua)
                 if id_val is None:
                     break
                 url = urljoin(sc.get("rawBaseUrl") or sc["searchUrl"], tpl.replace("{value}", str(id_val)))
             ctx["detail_url"] = url
             try:
-                r = _get(url, session, timeout)
+                r = _get(url, session, timeout, ua)
             except requests.RequestException as e:
                 last = "详情页请求失败：%s" % type(e).__name__
                 continue
@@ -214,10 +216,10 @@ def check_source(source, keyword="葬送的芙莉莲", timeout=15, session=None,
     return {"status": "fail", "reason": last or "详情页没有找到剧集", "stage": "episodes"}
 
 
-def _extract_id(sc, keyword, session, timeout, name):
+def _extract_id(sc, keyword, session, timeout, name, ua=None):
     url = sc["searchUrl"].replace("{keyword}", quote(keyword))
     try:
-        data = _get(url, session, timeout).json()
+        data = _get(url, session, timeout, ua).json()
         jp = sc["selectorSubjectFormatJsonPathIndexed"]
         ids = eval_simple_jsonpath(data, jp["selectLinks"])
         names = eval_simple_jsonpath(data, jp["selectNames"])

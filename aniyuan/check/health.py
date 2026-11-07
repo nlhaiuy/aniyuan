@@ -6,22 +6,29 @@
   play     最近一次检测通过时的播放检测结果（用来在宽限期内维持原来的排名）
 blocked / unreachable / skipped / 没检测 都不算失败，也不会清零，记录原样保留。
 
+海外盲区（carry）：检测跑在海外服务器上，国内站常常打不开（unreachable）或被 403 / 验证码拦住（blocked），
+这不代表站坏了。以前通过过、且 carry_days（默认 14）天内通过的，这次被拦就按上次通过的成绩排名分档，
+不让“偶然看不见”把它压到没结论那一档；超过期限还看不见，就回到没结论（站可能真的挂了）。
+
 宽限期（grace）：这次 fail，但以前通过过，且连续失败次数还没到阈值（config.fail_threshold，默认 2）。
 宽限期内按“上次通过”的成绩排名、不加警告前缀、不被 drop_failed 剔除；到阈值才真正降级。
 一直没通过过的候选（没有 last_ok）第一次失败就算数。
 """
 
 DEFAULT_THRESHOLD = 2
+DEFAULT_CARRY_DAYS = 14   # 海外盲区：被拦 / 打不开时，最多沿用多少天内的“上次通过”成绩
+DAY = 86400
 # 检测通过后按播放检测结果排名：能播 > 没检测 > 没抓到 > 认不出（和 build.merge 里一致）
 PLAY_TIER = {"ok": 3, "error": 2, "none": 1.8, "blocked": 1.6, "mismatch": 1.5}
-KEEP = ("fails", "last_ok", "last_fail", "play", "last")
+KEEP = ("fails", "last_ok", "last_fail", "play", "last", "blind")
+BLIND = ("blocked", "unreachable")
 
 
 def cand_key(c):
     return "%s:%s" % (c["origin"], c["key"])
 
 
-def update_health(cands, history, now, threshold=DEFAULT_THRESHOLD):
+def update_health(cands, history, now, threshold=DEFAULT_THRESHOLD, carry_days=DEFAULT_CARRY_DAYS):
     """按这次的检测结果更新历史，并给每个候选写上 c["health"]。返回新的历史（只保留这次出现的候选）。"""
     new = {}
     for c in cands:
@@ -36,10 +43,19 @@ def update_health(cands, history, now, threshold=DEFAULT_THRESHOLD):
         elif st == "fail":
             rec["fails"] = int(rec.get("fails", 0)) + 1
             rec["last_fail"] = now
+        if st in BLIND:
+            rec["blind"] = int(rec.get("blind", 0)) + 1
+        elif st:
+            rec["blind"] = 0
         if st:
             rec["last"] = st
         grace = bool(st == "fail" and rec.get("last_ok") and rec["fails"] < threshold)
-        c["health"] = dict(rec, grace=grace)
+        age = (now - rec["last_ok"]) / DAY if rec.get("last_ok") else None
+        carry = bool(st in BLIND and age is not None and age <= carry_days)
+        c["health"] = dict(rec, grace=grace, carry=carry, carry_age=round(age, 1) if carry else None)
+        if carry:
+            c["notes"].append("海外检测%s（连续 %d 次），%.0f 天前通过过，暂按上次的成绩排名" % (
+                "被拦" if st == "blocked" else "打不开", rec["blind"], age))
         if grace:
             c["notes"].append("自动检测未通过（连续 %d/%d 次），以前通过过，暂不降级、不加警告" % (rec["fails"], threshold))
         if rec:
@@ -71,6 +87,9 @@ def auto_tier(c):
         if not h.get("grace"):
             return 4, "检测明确失败"
         play, basis = h.get("play"), "检测未通过但在宽限期内，按上次通过的成绩"
+    elif (c.get("health") or {}).get("carry"):
+        h = c["health"]
+        play, basis = h.get("play"), "海外检测%s，沿用 %s 天前通过时的成绩" % ("被拦" if st == "blocked" else "打不开", h.get("carry_age"))
     else:
         return (4, "搜索地址是推测的且没验证过") if c.get("guess") else (3, "检测没有结论（%s）" % st)
     t = PLAY_TIER.get(play, 2)
@@ -88,4 +107,24 @@ def smoke_tier(c):
     if st == "fail":
         h = c.get("health") or {}
         return PLAY_TIER.get(h.get("play"), 2) if h.get("grace") else 0
+    if st in BLIND and (c.get("health") or {}).get("carry"):
+        return PLAY_TIER.get(c["health"].get("play"), 2)
     return None   # 交给调用方：推测的搜索地址排后面，其余为 1
+
+
+def blind_spots(cands):
+    """海外盲区清单：检测被拦 / 打不开的候选 -> [(来源:规则, 状态, 说明)]。没做联网检测的不算。"""
+    out = []
+    for c in cands:
+        st = (c.get("smoke") or {}).get("status")
+        if st not in BLIND or c.get("source") is None:
+            continue
+        h = c.get("health") or {}
+        if h.get("carry"):
+            note = "沿用 %s 天前通过时的成绩" % h.get("carry_age")
+        elif h.get("last_ok"):
+            note = "以前通过过，但已超过沿用期限"
+        else:
+            note = "从没检测通过过，没有可沿用的成绩"
+        out.append((cand_key(c), st, note))
+    return out

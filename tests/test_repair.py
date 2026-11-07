@@ -47,4 +47,35 @@ sc = (new or {}).get("arguments", {}).get("searchConfig", {})
 check("端到端修复：搜索和剧集选择器都改了", bool(new) and sc.get("subjectFormatId") == "a"
       and sc.get("selectorChannelFormatNoChannel", {}).get("selectEpisodes") == ".jisu a" and fetched == ["https://e.com/zzz/9.html"])
 check("端到端修复：不改原对象", src["arguments"]["searchConfig"] == {"subjectFormatId": "indexed"})
+
+# 7. matchVideoUrl 修复
+from aniyuan.check.repair import propose_match_video, repair_match_video
+from aniyuan.convert.kazumi import MATCH_VIDEO_URL as DEFAULT_MV
+from aniyuan.check.playcheck import to_py_regex
+import re as _re
+def mv_ok(pat, url): return bool(_re.search(to_py_regex(pat), url))
+pat, why = propose_match_video(r"never\.flv", ["https://v.cdn1.example.com/a/index.m3u8?x=1"], DEFAULT_MV)
+check("matchVideoUrl：通用写法认得出就用通用写法", pat == DEFAULT_MV and mv_ok(pat, "https://v.cdn1.example.com/a/index.m3u8?x=1"))
+pat, why = propose_match_video("", ["https://x.example.com/p/vid?id=1"], DEFAULT_MV)
+check("matchVideoUrl：既没有后缀又不是已知形态 -> 不乱改", pat is None)
+pat, why = propose_match_video("", ["https://x.example.com/a/b.ts"], DEFAULT_MV)
+check("matchVideoUrl：只有 .ts 分片 -> 不采用", pat is None)
+pat, why = propose_match_video("", [], DEFAULT_MV)
+check("matchVideoUrl：没有观察到的地址 -> 不改", pat is None)
+# 地址里还嵌着别的 http://（嵌套地址）属于 matchNestedUrl 的事，不在这里乱猜
+pat, why = propose_match_video(r"never\.flv", ["https://p.example.org/x?redirect=http://q.example.org/a.mpd"], DEFAULT_MV)
+check("matchVideoUrl：嵌套地址不乱猜", pat is None)
+# 写得太宽的会被拒绝：模拟旧写法 .* 并上通用写法其实不会变窄，所以检查“限定写法不认 ts/图片/脚本”
+pat, why = propose_match_video("", ["https://cdn.example.com/hls/index.mpd"], DEFAULT_MV)
+check("matchVideoUrl：.mpd 这类通用写法没有的后缀，用限定主域名的写法", bool(pat) and mv_ok(pat, "https://cdn.example.com/hls/index.mpd")
+      and not mv_ok(pat, "https://cdn.example.com/hls/seg001.ts") and not mv_ok(pat, "https://cdn.example.com/cover.jpg"))
+pat, why = propose_match_video("", ["http://127.0.0.1:8080/m/9.mpd"], DEFAULT_MV)
+check("matchVideoUrl：带端口的 IP 主机也能写出限定写法", bool(pat) and mv_ok(pat, "http://127.0.0.1:8080/m/9.mpd") and not mv_ok(pat, "http://127.0.0.1:8080/m/a.ts"))
+src = {"arguments": {"description": "d", "searchConfig": {"matchVideo": {"matchVideoUrl": r"never\.flv", "cookies": "q=1"}}}}
+new, why = repair_match_video(src, ["https://v.example.com/a.m3u8"], DEFAULT_MV)
+check("repair_match_video：只改 matchVideoUrl，其余字段保留，描述带标记，不改原对象",
+      new and new["arguments"]["searchConfig"]["matchVideo"]["matchVideoUrl"] == DEFAULT_MV
+      and new["arguments"]["searchConfig"]["matchVideo"]["cookies"] == "q=1" and new["arguments"]["description"].startswith("[匹配规则已自动修复]")
+      and src["arguments"]["searchConfig"]["matchVideo"]["matchVideoUrl"] == r"never\.flv")
+check("repair_match_video：没有 matchVideo 的源不动", repair_match_video({"arguments": {"searchConfig": {}}}, ["https://v/a.m3u8"], DEFAULT_MV)[0] is None)
 sys.exit(1 if bad else 0)

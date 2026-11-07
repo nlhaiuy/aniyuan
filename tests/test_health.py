@@ -109,4 +109,45 @@ check("自动分档写进备注", any("优先级自动设为 1" in n for n in cs
 cs = [tcand("ok", "ok", key="a")]
 apply_auto_tier(cs, {"auto_tier": False})
 check("auto_tier=false 关闭", cs[0]["source"]["arguments"]["tier"] == 4)
+
+# ---- 海外盲区：被拦 / 打不开时，沿用最近通过时的成绩 ----
+from aniyuan.check.health import blind_spots, DAY
+NOW = 1_000_000_000
+okhist = {"anibaka:b": {"fails": 0, "last_ok": NOW - 3 * DAY, "play": "ok"}}
+c = cand("anibaka", "b", "b.com", 1, "anibaka-b", "blocked")
+hh = update_health([c], okhist, NOW)
+check("被拦且 3 天前通过过：进入沿用", c["health"]["carry"] and c["health"]["carry_age"] == 3.0 and hh["anibaka:b"]["blind"] == 1)
+check("沿用会在备注里说明", any("暂按上次的成绩" in n for n in c["notes"]))
+check("沿用时按上次播放成绩分档（能播 -> 1）", auto_tier(c)[0] == 1 and "沿用" in auto_tier(c)[1])
+c = cand("anibaka", "b", "b.com", 1, "anibaka-b", "unreachable")
+update_health([c], okhist, NOW)
+check("打不开同样沿用", c["health"]["carry"] and auto_tier(c)[0] == 1)
+old = {"anibaka:b": {"fails": 0, "last_ok": NOW - 30 * DAY, "play": "ok"}}
+c = cand("anibaka", "b", "b.com", 1, "anibaka-b", "blocked")
+update_health([c], old, NOW)
+check("超过 14 天没通过：不再沿用，回到没结论（3）", not c["health"]["carry"] and auto_tier(c)[0] == 3)
+c = cand("anibaka", "b", "b.com", 1, "anibaka-b", "blocked")
+update_health([c], old, NOW, carry_days=60)
+check("沿用天数可配置", c["health"]["carry"])
+c = cand("anibaka", "n", "n.com", 1, "anibaka-n", "blocked")
+update_health([c], {}, NOW)
+check("从没通过过的没有可沿用的成绩", not c["health"]["carry"] and auto_tier(c)[0] == 3)
+c = cand("anibaka", "b", "b.com", 1, "anibaka-b", "ok", "ok")
+hh = update_health([c], {"anibaka:b": {"fails": 0, "last_ok": 1, "play": "ok", "blind": 4}}, NOW)
+check("一次检测通过，海外盲区计数清零", hh["anibaka:b"]["blind"] == 0 and not c["health"]["carry"])
+# 合并：最新的被拦、旧来源实测通过但播放没抓到 -> 沿用的“能播”成绩应该胜过旧来源的“没抓到”
+new = cand("anibaka", "a", "t.com", 200, "anibaka-a", "blocked")
+old_c = cand("kazumi", "A", "t.com", 100, "kazumi-a", "ok", "none")
+update_health([new, old_c], {"anibaka:a": {"fails": 0, "last_ok": NOW - DAY, "play": "ok"}}, NOW)
+ch, d = merge([new, old_c], {})
+check("合并：被拦但最近能播的最新来源，胜过只能‘没抓到’的旧来源", ch[0]["origin"] == "anibaka")
+new = cand("anibaka", "a", "t.com", 200, "anibaka-a", "blocked")
+old_c = cand("kazumi", "A", "t.com", 100, "kazumi-a", "ok", "ok")
+update_health([new, old_c], {}, NOW)
+ch, d = merge([new, old_c], {})
+check("合并：被拦且没有可沿用的成绩时，仍让实测通过的旧来源胜（原行为不变）", ch[0]["origin"] == "kazumi")
+ch_c = cand("anibaka", "z", "z.com", 1, "anibaka-z", "blocked"); update_health([ch_c], okhist and {"anibaka:z": {"last_ok": NOW - DAY, "play": "ok"}}, NOW)
+ch_c["chosen"] = True
+bs = blind_spots([ch_c, cand("anibaka", "q", "q.com", 1, "anibaka-q", "ok")])
+check("海外盲区清单只列被拦 / 打不开的", len(bs) == 1 and bs[0][1] == "blocked" and "沿用" in bs[0][2])
 sys.exit(1 if bad else 0)

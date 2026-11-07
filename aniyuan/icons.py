@@ -163,6 +163,7 @@ def make_fetchers(session, timeout=15, browser_bytes=None):
     """真实网络用的两个抓取函数（测试里换成假的）。
     browser_bytes(url, referer) -> bytes|None：requests 没拿到真图片时的回退（用真浏览器，见 playcheck.PlayChecker.fetch_bytes）。"""
     from .check import smoke
+    from .check import ua as ua_mod
 
     def get_html(url):
         try:
@@ -174,7 +175,7 @@ def make_fetchers(session, timeout=15, browser_bytes=None):
     def get_image(url, referer):
         data = None
         try:
-            r = session.get(url, headers=dict(smoke.HEADERS, Referer=referer, Accept="image/*,*/*;q=0.8"),
+            r = session.get(url, headers=dict(ua_mod.request_headers(), Referer=referer, Accept="image/*,*/*;q=0.8"),
                             timeout=timeout, allow_redirects=True, stream=True)
             if r.status_code == 200:
                 data = r.raw.read(MAX_BYTES + 1, decode_content=True)

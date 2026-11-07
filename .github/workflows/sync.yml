@@ -58,11 +58,15 @@ jobs:
           python tests/test_health.py
           python tests/test_normalize.py
           python tests/test_repair.py
+          python tests/test_ua.py
           python tests/test_icons.py
           python tests/test_live.py
           python tests/test_pipeline.py
 
       - name: 转换并做联网冒烟测试
+        env:
+          # 可选：国内出口的代理（Settings → Secrets → Actions 里添加 ANIYUAN_PROXY）。没配置就是空串，走 GitHub 海外出口
+          ANIYUAN_PROXY: ${{ secrets.ANIYUAN_PROXY }}
         run: python -m aniyuan --kazumi "$RUNNER_TEMP/KazumiRules" --anibaka "$RUNNER_TEMP/AniBakaRule" --easybangumi "$RUNNER_TEMP/EasyBangumi" --out dist.new --icons-dir icons --smoke --playcheck
 
       # 只打包要发布的几个文件（白名单），不带别的东西

@@ -69,7 +69,26 @@ git 提交日期会被“发布 / 整理”提交带偏（例如社区仓库一�
 4. **跟随域名跳转**：搜索被跳转到新域名、且之后一切正常，就把源里的旧域名整体换成新域名。
 5. **播放检测**：用无头浏览器（Chromium）打开第一集的播放页，监听页面和 iframe 的请求、`<video>` 元素，用**这个源自己的 `matchVideoUrl`** 去匹配。结果：`ok` 能播且正则认得出；`mismatch` 视频地址出现了但正则认不出（配置要改）；`none` 没抓到（可能要点击/登录，不一定坏）；`blocked` 验证码；`error`。
 
+6. **自动修复 matchVideoUrl**：播放检测得到 `mismatch`（页面里出现了视频地址、源的 `matchVideoUrl` 却认不出）时，按页面里实际出现的地址换一条能认出的写法：先试转换器的通用写法，再试“原写法 + 通用写法”，最后按观察到的地址写一条限定主域名和后缀的（只固定主域名，子域名放开）。每条都要认得出至少一个观察到的视频地址、并且不认 `.ts` 分片 / 图片 / 脚本这类明显不是视频的地址；改完**必须重新播放检测通过**才采用，描述前会加 `[匹配规则已自动修复]`。嵌套着别的 `http://` 的地址属于 `matchNestedUrl` 的范畴，不会乱猜。可用 `repair_match_video: false` 关闭。
+
 这些结果直接参与“同站取舍”：能播 > 没检测 > 没抓到 > 认不出 > 没结论 > 明确失败。
+
+### 统一 UA 与 UA 体检
+
+整条检测流程（requests、无头浏览器、图标下载）只用 `aniyuan/check/ua.py` 里的一个 UA：
+
+- 以前 requests 和浏览器各写了一份 `Chrome/120`，而无头浏览器发请求时 `Sec-CH-UA` 客户端提示写的是真实版本、还带着 `HeadlessChrome`，UA 与客户端提示自相矛盾，正是 Cloudflare 一类最容易识别的特征。现在 UA 的 Chrome 大版本取实际启动的 Chromium，`Sec-CH-UA` / `navigator.userAgentData` 同步成同一个版本、去掉 `HeadlessChrome`。
+- 源自己在 `searchConfig.userAgent` 里写了 UA 的（Animeko 就是用它请求的），检测时照源的来；没写的才用统一 UA。`config.json` 的 `user_agent` 可整体覆盖。
+- **体检**：每次联网检测开头会起一个本机回显服务，真的发一次 requests 和一次浏览器请求，核对发出去的 UA 一致、客户端提示版本与 UA 一致、没有 `HeadlessChrome`，结果写进报告的“UA 体检”一节（不联网）。
+
+### 海外盲区
+
+检测跑在 GitHub 的海外服务器上，国内站常常打不开（`unreachable`）或被 403 / 验证码拦住（`blocked`），这类结果没有结论，以前一律排在“没结论”那一档（报告里 16 个候选是这样）。两项补救：
+
+1. **沿用上次通过的成绩**：以前通过过、且 `blind_carry_days`（默认 14）天内通过的候选，这次被拦 / 打不开时，按上次通过时的播放成绩排名分档，不会因为“这次看不见”掉到没结论；超期还看不见就回到没结论（站可能真的挂了）。`state/health.json` 里为此多记了连续“看不见”的次数 `blind`。
+2. **国内出口代理（可选）**：把能走国内出口的代理放进环境变量 `ANIYUAN_PROXY`（如 `http://用户:密码@主机:端口`，也支持 `socks5://`），requests、无头浏览器、图标下载就都走它，等于换成国内视角检测。在 GitHub 上：**Settings → Secrets and variables → Actions → New repository secret**，名字 `ANIYUAN_PROXY`；不配置就和以前一样。代理地址可能带账号密码，所以只读环境变量，不写进 `config.json`（仓库是公开的），报告里也只显示主机和端口。
+
+报告里新增“海外盲区”一节，列出最终入选的源中哪些这次没法在海外检测，以及各自的排名依据。
 
 ## 转换范围
 
@@ -94,7 +113,7 @@ git 提交日期会被“发布 / 整理”提交带偏（例如社区仓库一�
 - 播放检测用的是无头浏览器，不等于 Animeko 的 WebView：有的站需要点击、登录、特定 UA 才出视频，会显示 `none`，不代表一定不能播；`ok` 也只代表抓到了视频地址，最终仍请在 Animeko 里试播。
 - 播放一律用 Animeko 的 WebView 嗅探。AniBaka 里靠站内解密/接口取直链的（silisili、lm6、dm84 等）可能拿不到视频，报告里会标“有近似”。
 - Kazumi / 纯纯看番的规则没有线路名，转出来的源所有线路合并为一条。
-- 检测在 GitHub 海外服务器上跑，访问不了的国内站标 `unreachable`（没有结论，不会被降级也不会被修复），不代表配置错误；有验证码或被 403 拦住的标 `blocked`。这两类只在报告里记录，**不会**往订阅的描述里加警告（多半是海外服务器的问题）。只有页面能打开、但选择器确实没选中结果的（`fail`），且已连续失败到 `fail_threshold` 次（见上面的检测历史）才**只标记不剔除**：在描述前加 `[自动检测未通过：原因]`。
+- 检测默认在 GitHub 海外服务器上跑（可用 `ANIYUAN_PROXY` 换成国内出口，见“海外盲区”），访问不了的国内站标 `unreachable`（没有结论，不会被降级也不会被修复），不代表配置错误；有验证码或被 403 拦住的标 `blocked`。这两类只在报告里记录，**不会**往订阅的描述里加警告（多半是海外服务器的问题）。只有页面能打开、但选择器确实没选中结果的（`fail`），且已连续失败到 `fail_threshold` 次（见上面的检测历史）才**只标记不剔除**：在描述前加 `[自动检测未通过：原因]`。
 - `overrides/` 手写配置不会跟着上游更新，上游版本变了报告里会提醒核对。
 - 首次运行没有哈希记录，日期仍用 git 日期（社区仓库的日期可能偏新），之后才会按内容变化校正；遇到取新取错的站用 `prefer` 指定。
 
@@ -120,6 +139,9 @@ git 提交日期会被“发布 / 整理”提交带偏（例如社区仓库一�
 | `smoke_keyword` | 冒烟测试用的搜索关键词 |
 | `icons` / `icon_base_url` | 默认 `true`：联网检测时给每个源找图标（顺序：首页 `<link rel="icon">` → 规则里原来的 `iconUrl` → `/favicon.ico`；下载时带站点自己的 Referer，绕过图床防盗链；requests 拿不到真图片（403、防盗链、Cloudflare 一类）时，用无头浏览器再试一次（先打开站点首页拿 cookie，再请求图片；需要 `--playcheck` 且 `browser_fallback` 没关；连首页都打不开的主机只试一次）；只收 ≤300KB 的 PNG/ICO/JPEG/GIF/WebP），存进 `icons/`，`iconUrl` 改成 `icon_base_url/<id>.<扩展名>`。这次取不到就沿用上次存的，一直没取到才保留原地址。设为 `false` 关闭 |
 | `auto_tier` | 默认 `true`：按联网检测结果给源自动分档（1 能播 / 2 搜索剧集通过但播放没结论 / 3 播放有疑点或没有结论 / 4 明确失败或推测未验证）。0 留给人工指定；`config.tiers` 点名的、tier 已被手调成非默认值的（baseline / overrides）都不动。没有联网检测结果时不分档。设为 `false` 关闭 |
+| `user_agent` | 默认 `""`（自动）：统一检测用的 UA；留空时 Chrome 大版本跟随实际启动的浏览器，也可填一个完整 UA 整体覆盖 |
+| `blind_carry_days` | 默认 `14`：检测被拦 / 打不开时，以前通过过的候选在这么多天内沿用上次通过的成绩排名分档；`0` 关闭 |
+| `repair_match_video` | 默认 `true`：播放检测 `mismatch` 时自动修 `matchVideoUrl`，重新检测通过才采用 |
 | `link_template_client_versions` | 默认 `">=6.3.0"`：用了 `linkTemplate` 的源自动加上 `clientVersions`（官方订阅仓库的要求，旧客户端不会拿到用不了的源）；设为 `""` 关闭 |
 
 `overrides/<Kazumi规则名>.json`：完整的 Animeko 数据源对象，优先于自动转换。`_kazumiVersion` 记录它基于的 Kazumi 规则版本。
@@ -144,7 +166,8 @@ python tests/test_xpath2css.py   # XPath → CSS 翻译器
 python tests/test_anx.py         # AniBaka / 纯纯看番转换 + 同站取新
 python tests/test_health.py      # 检测历史：连续失败才降级
 python tests/test_normalize.py   # id / 名称 / 描述规整
-python tests/test_repair.py      # 选择器自动修复：候选库和排序
+python tests/test_repair.py      # 选择器自动修复：候选库和排序；matchVideoUrl 修复
+python tests/test_ua.py          # 统一 UA、UA 体检、出口代理（本机回显服务 + Chromium）
 python tests/test_icons.py       # 站点图标：候选顺序、防盗链、文件头检查
 python tests/test_pipeline.py    # 整条流水线（本地模拟站点）
 python tests/test_live.py        # 自动修复 / 域名跳转 / 播放检测（本地模拟站点 + Chromium）
@@ -165,7 +188,9 @@ aniyuan/                 # 程序（python -m aniyuan 运行）
 └── check/               # 联网检测与自动修复
     ├── smoke.py         #   联网冒烟测试
     ├── playcheck.py     #   无头浏览器：播放检测、403 回退、图标下载回退
-    ├── repair.py        #   选择器自动修复
+    ├── repair.py        #   选择器自动修复、matchVideoUrl 自动修复
+    ├── ua.py            #   统一 UA、客户端提示、UA 体检
+    ├── network.py       #   可选的出口代理（ANIYUAN_PROXY）
     ├── health.py        #   检测历史（连续失败才降级）、按结果自动分档
     └── domains.py       #   静态源跟随上游域名
 baseline/anibaka.json    # AniBaka 规则转不了时的回退配置
