@@ -1141,47 +1141,28 @@
       "version": 2,
       "arguments": {
         "name": "西瓜卡通",
-        "description": "西瓜卡通视频源，源网址www.xgcartoon.com。（来源：AniBaka 规则 xigua rev 9，自动转换）",
+        "description": "[匹配规则已自动修复] 西瓜卡通视频源，源网址www.xgcartoon.com。（来源：基线配置 xigua）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xigua.ico",
         "searchConfig": {
           "searchUrl": "https://www.xgcartoon.com/search?q={keyword}",
-          "searchUseOnlyFirstWord": true,
-          "searchRemoveSpecial": true,
-          "searchUseSubjectNamesCount": 1,
           "rawBaseUrl": "https://www.xgcartoon.com",
-          "requestInterval": 3000,
-          "subjectFormatId": "a",
-          "selectorSubjectFormatA": {
-            "selectLists": ".container.search a.topic-list-item",
-            "preferShorterName": true
+          "subjectFormatId": "indexed",
+          "selectorSubjectFormatIndexed": {
+            "selectNames": "a[class*=\"topic-list-item\"] [class*=\"h3\"]",
+            "selectLinks": "a[class*=\"topic-list-item\"]"
           },
           "channelFormatId": "no-channel",
           "selectorChannelFormatNoChannel": {
-            "selectEpisodes": ".detail-right__volumes a",
-            "selectEpisodeLinks": ""
-          },
-          "defaultResolution": "1080P",
-          "defaultSubtitleLanguage": "CHS",
-          "onlySupportsPlayers": [],
-          "filterByEpisodeSort": true,
-          "filterBySubjectName": true,
-          "selectMedia": {
-            "distinguishSubjectName": true,
-            "distinguishChannelName": false
+            "selectEpisodes": ".detail-right__volumes a"
           },
           "matchVideo": {
-            "enableNestedUrl": false,
-            "matchNestedUrl": "$^",
-            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
-            "cookies": "quality=1080",
             "addHeadersToVideo": {
               "referer": "https://www.xgcartoon.com/"
             },
-            "scanDomMediaUrls": true
+            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)"
           }
         },
-        "tier": 3,
-        "channelTiers": {}
+        "tier": 3
       }
     },
     {
@@ -1672,7 +1653,7 @@
       "version": 2,
       "arguments": {
         "name": "ylsp (ylys.cc)",
-        "description": "站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
+        "description": "[自动检测未通过：HTTP 523] 站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
         "iconUrl": "https://www.ylys.cc/favicon.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1713,7 +1694,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 3,
+        "tier": 4,
         "channelTiers": {}
       }
     }
@@ -2860,47 +2841,28 @@
         "version": 2,
         "arguments": {
           "name": "西瓜卡通",
-          "description": "西瓜卡通视频源，源网址www.xgcartoon.com。（来源：AniBaka 规则 xigua rev 9，自动转换）",
+          "description": "[匹配规则已自动修复] 西瓜卡通视频源，源网址www.xgcartoon.com。（来源：基线配置 xigua）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xigua.ico",
           "searchConfig": {
             "searchUrl": "https://www.xgcartoon.com/search?q={keyword}",
-            "searchUseOnlyFirstWord": true,
-            "searchRemoveSpecial": true,
-            "searchUseSubjectNamesCount": 1,
             "rawBaseUrl": "https://www.xgcartoon.com",
-            "requestInterval": 3000,
-            "subjectFormatId": "a",
-            "selectorSubjectFormatA": {
-              "selectLists": ".container.search a.topic-list-item",
-              "preferShorterName": true
+            "subjectFormatId": "indexed",
+            "selectorSubjectFormatIndexed": {
+              "selectNames": "a[class*=\"topic-list-item\"] [class*=\"h3\"]",
+              "selectLinks": "a[class*=\"topic-list-item\"]"
             },
             "channelFormatId": "no-channel",
             "selectorChannelFormatNoChannel": {
-              "selectEpisodes": ".detail-right__volumes a",
-              "selectEpisodeLinks": ""
-            },
-            "defaultResolution": "1080P",
-            "defaultSubtitleLanguage": "CHS",
-            "onlySupportsPlayers": [],
-            "filterByEpisodeSort": true,
-            "filterBySubjectName": true,
-            "selectMedia": {
-              "distinguishSubjectName": true,
-              "distinguishChannelName": false
+              "selectEpisodes": ".detail-right__volumes a"
             },
             "matchVideo": {
-              "enableNestedUrl": false,
-              "matchNestedUrl": "$^",
-              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
-              "cookies": "quality=1080",
               "addHeadersToVideo": {
                 "referer": "https://www.xgcartoon.com/"
               },
-              "scanDomMediaUrls": true
+              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)"
             }
           },
-          "tier": 3,
-          "channelTiers": {}
+          "tier": 3
         }
       },
       {
@@ -3391,7 +3353,7 @@
         "version": 2,
         "arguments": {
           "name": "ylsp (ylys.cc)",
-          "description": "站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
+          "description": "[自动检测未通过：HTTP 523] 站点 ylys.cc。（来源：纯纯看番社区源 kazumi-ylsp v1.1，自动转换）",
           "iconUrl": "https://www.ylys.cc/favicon.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -3432,7 +3394,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 3,
+          "tier": 4,
           "channelTiers": {}
         }
       }
