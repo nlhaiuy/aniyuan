@@ -978,7 +978,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 2,
+        "tier": 1,
         "channelTiers": {}
       },
       "clientVersions": ">=6.3.0"
@@ -1141,28 +1141,47 @@
       "version": 2,
       "arguments": {
         "name": "西瓜卡通",
-        "description": "[匹配规则已自动修复] 西瓜卡通视频源，源网址www.xgcartoon.com。（来源：基线配置 xigua）",
+        "description": "西瓜卡通视频源，源网址www.xgcartoon.com。（来源：AniBaka 规则 xigua rev 9，自动转换）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xigua.ico",
         "searchConfig": {
           "searchUrl": "https://www.xgcartoon.com/search?q={keyword}",
+          "searchUseOnlyFirstWord": true,
+          "searchRemoveSpecial": true,
+          "searchUseSubjectNamesCount": 1,
           "rawBaseUrl": "https://www.xgcartoon.com",
-          "subjectFormatId": "indexed",
-          "selectorSubjectFormatIndexed": {
-            "selectNames": "a[class*=\"topic-list-item\"] [class*=\"h3\"]",
-            "selectLinks": "a[class*=\"topic-list-item\"]"
+          "requestInterval": 3000,
+          "subjectFormatId": "a",
+          "selectorSubjectFormatA": {
+            "selectLists": ".container.search a.topic-list-item",
+            "preferShorterName": true
           },
           "channelFormatId": "no-channel",
           "selectorChannelFormatNoChannel": {
-            "selectEpisodes": ".detail-right__volumes a"
+            "selectEpisodes": ".detail-right__volumes a",
+            "selectEpisodeLinks": ""
+          },
+          "defaultResolution": "1080P",
+          "defaultSubtitleLanguage": "CHS",
+          "onlySupportsPlayers": [],
+          "filterByEpisodeSort": true,
+          "filterBySubjectName": true,
+          "selectMedia": {
+            "distinguishSubjectName": true,
+            "distinguishChannelName": false
           },
           "matchVideo": {
+            "enableNestedUrl": false,
+            "matchNestedUrl": "$^",
+            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
+            "cookies": "quality=1080",
             "addHeadersToVideo": {
               "referer": "https://www.xgcartoon.com/"
             },
-            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)"
+            "scanDomMediaUrls": true
           }
         },
-        "tier": 3
+        "tier": 3,
+        "channelTiers": {}
       }
     },
     {
@@ -2678,7 +2697,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 2,
+          "tier": 1,
           "channelTiers": {}
         },
         "clientVersions": ">=6.3.0"
@@ -2841,28 +2860,47 @@
         "version": 2,
         "arguments": {
           "name": "西瓜卡通",
-          "description": "[匹配规则已自动修复] 西瓜卡通视频源，源网址www.xgcartoon.com。（来源：基线配置 xigua）",
+          "description": "西瓜卡通视频源，源网址www.xgcartoon.com。（来源：AniBaka 规则 xigua rev 9，自动转换）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xigua.ico",
           "searchConfig": {
             "searchUrl": "https://www.xgcartoon.com/search?q={keyword}",
+            "searchUseOnlyFirstWord": true,
+            "searchRemoveSpecial": true,
+            "searchUseSubjectNamesCount": 1,
             "rawBaseUrl": "https://www.xgcartoon.com",
-            "subjectFormatId": "indexed",
-            "selectorSubjectFormatIndexed": {
-              "selectNames": "a[class*=\"topic-list-item\"] [class*=\"h3\"]",
-              "selectLinks": "a[class*=\"topic-list-item\"]"
+            "requestInterval": 3000,
+            "subjectFormatId": "a",
+            "selectorSubjectFormatA": {
+              "selectLists": ".container.search a.topic-list-item",
+              "preferShorterName": true
             },
             "channelFormatId": "no-channel",
             "selectorChannelFormatNoChannel": {
-              "selectEpisodes": ".detail-right__volumes a"
+              "selectEpisodes": ".detail-right__volumes a",
+              "selectEpisodeLinks": ""
+            },
+            "defaultResolution": "1080P",
+            "defaultSubtitleLanguage": "CHS",
+            "onlySupportsPlayers": [],
+            "filterByEpisodeSort": true,
+            "filterBySubjectName": true,
+            "selectMedia": {
+              "distinguishSubjectName": true,
+              "distinguishChannelName": false
             },
             "matchVideo": {
+              "enableNestedUrl": false,
+              "matchNestedUrl": "$^",
+              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
+              "cookies": "quality=1080",
               "addHeadersToVideo": {
                 "referer": "https://www.xgcartoon.com/"
               },
-              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)"
+              "scanDomMediaUrls": true
             }
           },
-          "tier": 3
+          "tier": 3,
+          "channelTiers": {}
         }
       },
       {
