@@ -66,7 +66,7 @@
 | kazumi | xfdmnext | 1.1 | 2026-10-01（内容未变） | 手写 | skipped | - | 是 | 手写配置，不做自动检测 |
 | anibaka | 7sefun | rev 9 | 2026-11-01（内容未变） | 完整 | ok | ok | 是 | 优先级自动设为 1（检测通过，播放检测：ok） |
 | baseline | 7sefun | rev 9 | 2026-11-01（内容未变） | 回退基线 | ok | ok | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较 |
-| anibaka | cyfz | rev 7 | 2026-11-01（内容未变） | 完整 | blocked | - | 是 | 海外检测被拦（连续 4 次），6 天前通过过，暂按上次的成绩排名；HTTP 403 |
+| anibaka | cyfz | rev 7 | 2026-11-01（内容未变） | 完整 | ok | ok | 是 |  |
 | baseline | cyfz | rev 7 | 2026-11-01（内容未变） | 回退基线 | blocked | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；HTTP 403 |
 | anibaka | 5dm | rev 1 | 2026-10-07（内容未变） | 完整 | blocked | - | 是 | 优先级自动设为 3（检测没有结论（blocked））；HTTP 403 |
 | baseline | 5dm | rev 1 | 2026-10-07（内容未变） | 回退基线 | blocked | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；HTTP 403 |
@@ -81,7 +81,7 @@
 | baseline | animoe | rev 5 | 2026-11-01（内容未变） | 回退基线 | blocked | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；HTTP 403 |
 | anibaka | tvtfun | rev 13 | 2026-11-01（内容未变） | 无法转换 | - | - | 否 | 章节步骤无法转换（需要 episodes 操作，实际是：fetch, jsonEpisodes, regex）；baseline 里也没有这个源，已跳过 |
 | anibaka | ios_mifun | rev 7 | 2026-11-01（内容未变） | 完整 | ok | ok | 是 |  |
-| baseline | ios_mifun | rev 7 | 2026-11-01（内容未变） | 回退基线 | ok | ok | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；已自动修复 matchVideoUrl：matchVideoUrl 改为通用写法（认出 1/1 个视频地址，例：https://groupvideo.photo.qq.com/1071_0bc3bubemaac7yagxva7fnss2dieiygqersa.f0.mp4?dis_k=e32） |
+| baseline | ios_mifun | rev 7 | 2026-11-01（内容未变） | 回退基线 | ok | ok | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；已自动修复 matchVideoUrl：matchVideoUrl 改为通用写法（认出 1/1 个视频地址，例：https://groupvideo.photo.qq.com/1071_0bc3bubemaac7yagxva7fnss2dieiygqersa.f0.mp4?dis_k=c26） |
 | anibaka | agekkkk | rev 3 | 2026-11-01（内容未变） | 无法转换 | - | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等） |
 | baseline | agekkkk | rev 3 | 2026-11-01（内容未变） | 回退基线 | blocked | - | 是 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；优先级自动设为 3（检测没有结论（blocked））；搜索页出现验证码/环境检查 |
 | anibaka | didahd | rev 7 | 2026-11-01（内容未变） | 有近似 | ok | ok | 是 | AniBaka 播放步骤用了 maccmsVerify 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频；优先级自动设为 1（检测通过，播放检测：ok） |
@@ -143,12 +143,11 @@
 
 ## 海外盲区
 
-最终入选的源里，有 10 个这次在海外检测不出结论（被拦 / 打不开），不等于站点坏了：
+最终入选的源里，有 9 个这次在海外检测不出结论（被拦 / 打不开），不等于站点坏了：
 
 | 候选 | 状态 | 排名依据 |
 |---|---|---|
 | kazumi:dalvdm | blocked | 从没检测通过过，没有可沿用的成绩 |
-| anibaka:cyfz | blocked | 沿用 5.8 天前通过时的成绩 |
 | anibaka:5dm | blocked | 从没检测通过过，没有可沿用的成绩 |
 | baseline:ani_pekolove | blocked | 从没检测通过过，没有可沿用的成绩 |
 | anibaka:animoe | blocked | 从没检测通过过，没有可沿用的成绩 |
@@ -164,10 +163,10 @@
 
 | 检查项 | 结果 | 说明 |
 |---|---|---|
-| requests 的 UA 与统一 UA 一致 | 通过 | 发出：Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 |
-| 浏览器的 UA 与统一 UA 一致 | 通过 | 发出：Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 |
-| 浏览器的客户端提示（Sec-CH-UA）版本与 UA 一致 | 通过 | UA 写 Chrome/156，Sec-CH-UA 写 "Chromium";v="156", "Google Chrome";v="156", "Not_A Brand";v="24" |
-| 浏览器没有暴露 HeadlessChrome 品牌 | 通过 | "Chromium";v="156", "Google Chrome";v="156", "Not_A Brand";v="24" |
+| requests 的 UA 与统一 UA 一致 | 通过 | 发出：Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36 |
+| 浏览器的 UA 与统一 UA 一致 | 通过 | 发出：Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36 |
+| 浏览器的客户端提示（Sec-CH-UA）版本与 UA 一致 | 通过 | UA 写 Chrome/158，Sec-CH-UA 写 "Chromium";v="158", "Google Chrome";v="158", "Not_A Brand";v="24" |
+| 浏览器没有暴露 HeadlessChrome 品牌 | 通过 | "Chromium";v="158", "Google Chrome";v="158", "Not_A Brand";v="24" |
 
 ## 站点图标
 
