@@ -357,13 +357,13 @@
         "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://v16m-default.akamaized.net/52ec839aac0753ed8d21ab6c0510c9b9/6af420ba/video/tos/alisg/tos-alisg-ve-0051c001-sg/o0U6ZBsXyvaz3aEanxZtjAA4iiwwIYWAkI92z/"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=9eb282cb8eb514ad09a1d5344568c82c&dis_t=1794383441"
       },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -393,16 +393,15 @@
         "reason": "搜到 4 个条目，详情页选出 10 个剧集链接",
         "episode_count": 10,
         "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=qR0CPsaFq1wsvFAWcvCP-A-fR_bOFSJI_LuwTPBYo_A%3D%3A1794304800"
+        "play": "none",
+        "play_reason": "等了 20 秒没有出现视频地址"
       },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
-        "play": "ok",
+        "last_ok": 1794383772,
+        "play": "none",
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -431,7 +430,7 @@
         "reason": "HTTP 403"
       },
       "health": {
-        "blind": 5,
+        "blind": 6,
         "last": "blocked",
         "grace": false,
         "carry": false,
@@ -469,7 +468,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -510,7 +509,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -541,7 +540,7 @@
         "reason": "HTTP 403"
       },
       "health": {
-        "blind": 5,
+        "blind": 6,
         "last": "blocked",
         "grace": false,
         "carry": false,
@@ -574,13 +573,13 @@
         "episode_url": "https://dmbus.cc/p/5963-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://hhjx.hhplayer.com/playlist/8298df34c8e87d6dc0af170f24ea0812cda7f688524f9df3.m3u8?expires=1794375030&sign=e35d193a1f96757794f42d8de3885082f66991c036839cec87285e0b19e92635"
+        "media": "https://hhjx.hhplayer.com/playlist/8298df34c8e87d6dc0af170f24ea0812cda7f688524f9df3.m3u8?expires=1794464360&sign=e9f9b7dbe9df6d165d31f1e59d5fa65c22c4b439067bf4dc0c269ba3c87b9a74"
       },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -617,7 +616,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "none",
         "grace": false,
         "carry": false,
@@ -655,7 +654,7 @@
         "fails": 0,
         "last": "ok",
         "last_fail": 1793710079,
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -689,13 +688,13 @@
         "episode_url": "https://www.lmm85.com/play/7817_1_1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=fbe3269a695c04263791189a3159a90d&dis_t=1794299544"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=9eb282cb8eb514ad09a1d5344568c82c&dis_t=1794383441"
       },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -729,13 +728,13 @@
         "template": "/media/{value}.html",
         "play": "ok",
         "play_reason": "scanDomMediaUrls 能从 <video> 取到地址",
-        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=y8McQchhG9JyMZeLmVZepXAaeohHBs2Hi6hmyDG8gQw=:1794303149"
+        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=LThll3sExrACD2o40SGZZlbGuDx-ILyCU_jVb89JBmo=:1794387107"
       },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -764,16 +763,15 @@
         "reason": "搜到 2 个条目，详情页选出 30 个剧集链接",
         "episode_count": 30,
         "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=qR0CPsaFq1wsvFAWcvCP-A-fR_bOFSJI_LuwTPBYo_A%3D%3A1794304800"
+        "play": "none",
+        "play_reason": "等了 20 秒没有出现视频地址"
       },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
-        "play": "ok",
+        "last_ok": 1794383772,
+        "play": "none",
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -829,7 +827,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -886,9 +884,9 @@
       "date_basis": "内容未变",
       "smoke": {
         "status": "ok",
-        "reason": "搜到 3 个条目，详情页选出 10 个剧集链接",
-        "episode_count": 10,
-        "episode_url": "https://www.tvtfun.net/watch/515759/1?line=cmv50nu3r000crfl05aadnnll",
+        "reason": "搜到 3 个条目，详情页选出 28 个剧集链接",
+        "episode_count": 28,
+        "episode_url": "https://www.tvtfun.net/watch/400602/1?line=cmv50nu3r000crfl05aadnnll",
         "play": "none",
         "play_reason": "等了 20 秒没有出现视频地址"
       },
@@ -896,7 +894,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "none",
         "grace": false,
         "carry": false,
@@ -937,7 +935,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -1000,13 +998,13 @@
         "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://v16m-default.akamaized.net/52ec839aac0753ed8d21ab6c0510c9b9/6af420ba/video/tos/alisg/tos-alisg-ve-0051c001-sg/o0U6ZBsXyvaz3aEanxZtjAA4iiwwIYWAkI92z/"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=9eb282cb8eb514ad09a1d5344568c82c&dis_t=1794383441"
       },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -1039,14 +1037,14 @@
         "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://v16m-default.akamaized.net/52ec839aac0753ed8d21ab6c0510c9b9/6af420ba/video/tos/alisg/tos-alisg-ve-0051c001-sg/o0U6ZBsXyvaz3aEanxZtjAA4iiwwIYWAkI92z/"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=9eb282cb8eb514ad09a1d5344568c82c&dis_t=1794383441"
       },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
         "last_fail": 1794036036,
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -1059,7 +1057,9 @@
       "key": "cyfz",
       "version": "rev 7",
       "status": "ok",
-      "notes": [],
+      "notes": [
+        "海外检测被拦（连续 1 次），1 天前通过过，暂按上次的成绩排名"
+      ],
       "info": [],
       "guess": false,
       "date": 1793543658,
@@ -1070,23 +1070,18 @@
       ],
       "date_basis": "内容未变",
       "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 24 个剧集链接",
-        "episode_count": 24,
-        "episode_url": "https://www.cyfz.top/vodplay/1029-1-1.html",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://player.0072233.xyz/player/ec.php?code=cyfz&if=1&url=https://ossvod.manzhanw.top/d/%E6%AC%A1%E5%85%83fun/%E8%80%81%E7%95%AA/2023/10/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2/01.m3u"
+        "status": "blocked",
+        "reason": "HTTP 403"
       },
       "health": {
-        "blind": 0,
+        "blind": 1,
         "fails": 0,
-        "last": "ok",
+        "last": "blocked",
         "last_ok": 1794299734,
         "play": "ok",
         "grace": false,
-        "carry": false,
-        "carry_age": null
+        "carry": true,
+        "carry_age": 1.0
       },
       "site": "cyfz.top",
       "chosen": true
@@ -1113,7 +1108,7 @@
         "reason": "HTTP 403"
       },
       "health": {
-        "blind": 5,
+        "blind": 6,
         "fails": 14,
         "last": "blocked",
         "last_fail": 1793952282,
@@ -1145,7 +1140,7 @@
         "reason": "HTTP 403"
       },
       "health": {
-        "blind": 5,
+        "blind": 6,
         "last": "blocked",
         "grace": false,
         "carry": false,
@@ -1176,7 +1171,7 @@
         "reason": "HTTP 403"
       },
       "health": {
-        "blind": 5,
+        "blind": 6,
         "last": "blocked",
         "grace": false,
         "carry": false,
@@ -1226,7 +1221,7 @@
         "reason": "搜索页出现验证码/环境检查"
       },
       "health": {
-        "blind": 5,
+        "blind": 6,
         "last": "blocked",
         "grace": false,
         "carry": false,
@@ -1260,13 +1255,13 @@
         "episode_url": "https://m.lm6.net/play/7817_1_1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=fbe3269a695c04263791189a3159a90d&dis_t=1794299544"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=9eb282cb8eb514ad09a1d5344568c82c&dis_t=1794383441"
       },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -1299,9 +1294,9 @@
       },
       "health": {
         "blind": 0,
-        "fails": 19,
+        "fails": 20,
         "last": "fail",
-        "last_fail": 1794299734,
+        "last_fail": 1794383772,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -1358,7 +1353,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -1391,9 +1386,9 @@
       },
       "health": {
         "blind": 0,
-        "fails": 10,
+        "fails": 11,
         "last": "fail",
-        "last_fail": 1794299734,
+        "last_fail": 1794383772,
         "last_ok": 1793708000,
         "play": "none",
         "grace": false,
@@ -1424,7 +1419,7 @@
         "reason": "HTTP 403"
       },
       "health": {
-        "blind": 5,
+        "blind": 6,
         "last": "blocked",
         "grace": false,
         "carry": false,
@@ -1455,7 +1450,7 @@
         "reason": "HTTP 403"
       },
       "health": {
-        "blind": 5,
+        "blind": 6,
         "last": "blocked",
         "grace": false,
         "carry": false,
@@ -1511,7 +1506,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -1527,7 +1522,7 @@
       "status": "baseline",
       "notes": [
         "用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较",
-        "已自动修复 matchVideoUrl：matchVideoUrl 改为通用写法（认出 1/1 个视频地址，例：https://groupvideo.photo.qq.com/1071_0bc3bubemaac7yagxva7fnss2dieiygqersa.f0.mp4?dis_k=c26）"
+        "已自动修复 matchVideoUrl：matchVideoUrl 改为通用写法（认出 1/1 个视频地址，例：https://groupvideo.photo.qq.com/1071_0bc3bubemaac7yagxva7fnss2dieiygqersa.f0.mp4?dis_k=e17）"
       ],
       "info": [],
       "guess": false,
@@ -1546,13 +1541,13 @@
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
         "media": "https://data.m3u8.in/player/?url=video__4AE23A683C97675FAB32D42AA6490E41CC30962D1581B8D4358EB60B9580CD6D4E5D72CE3FCB0FC6CAB6DF25E0EC7E81",
-        "repaired_match": "matchVideoUrl 改为通用写法（认出 1/1 个视频地址，例：https://groupvideo.photo.qq.com/1071_0bc3bubemaac7yagxva7fnss2dieiygqersa.f0.mp4?dis_k=c26）"
+        "repaired_match": "matchVideoUrl 改为通用写法（认出 1/1 个视频地址，例：https://groupvideo.photo.qq.com/1071_0bc3bubemaac7yagxva7fnss2dieiygqersa.f0.mp4?dis_k=e17）"
       },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -1602,7 +1597,7 @@
         "reason": "搜索页出现验证码/环境检查"
       },
       "health": {
-        "blind": 5,
+        "blind": 6,
         "last": "blocked",
         "grace": false,
         "carry": false,
@@ -1642,7 +1637,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -1675,16 +1670,15 @@
         "episode_count": 42,
         "episode_url": "https://www.didahd.xyz/play/2638-8-1.html",
         "final_origin": "https://www.didahd.xyz",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://psstatic.cdn.bcebos.com/basics/chat/afx%202_1750155358000.mp4"
+        "play": "none",
+        "play_reason": "等了 20 秒没有出现视频地址"
       },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
-        "play": "ok",
+        "last_ok": 1794383772,
+        "play": "none",
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -1721,7 +1715,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -1761,7 +1755,7 @@
         "fails": 0,
         "last": "ok",
         "last_fail": 1794023601,
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -1832,9 +1826,9 @@
       },
       "health": {
         "blind": 0,
-        "fails": 19,
+        "fails": 20,
         "last": "fail",
-        "last_fail": 1794299734,
+        "last_fail": 1794383772,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -1904,7 +1898,7 @@
         "reason": "HTTP 403"
       },
       "health": {
-        "blind": 5,
+        "blind": 6,
         "last": "blocked",
         "grace": false,
         "carry": false,
@@ -1935,7 +1929,7 @@
         "reason": "HTTP 403"
       },
       "health": {
-        "blind": 5,
+        "blind": 6,
         "last": "blocked",
         "grace": false,
         "carry": false,
@@ -1974,7 +1968,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -2015,7 +2009,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -2044,9 +2038,9 @@
       },
       "health": {
         "blind": 0,
-        "fails": 12,
+        "fails": 13,
         "last": "fail",
-        "last_fail": 1794299734,
+        "last_fail": 1794383772,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -2077,9 +2071,9 @@
       },
       "health": {
         "blind": 0,
-        "fails": 14,
+        "fails": 15,
         "last": "fail",
-        "last_fail": 1794299734,
+        "last_fail": 1794383772,
         "last_ok": 1793344459,
         "play": "ok",
         "grace": false,
@@ -2109,9 +2103,9 @@
       },
       "health": {
         "blind": 0,
-        "fails": 19,
+        "fails": 20,
         "last": "fail",
-        "last_fail": 1794299734,
+        "last_fail": 1794383772,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -2142,9 +2136,9 @@
       },
       "health": {
         "blind": 0,
-        "fails": 19,
+        "fails": 20,
         "last": "fail",
-        "last_fail": 1794299734,
+        "last_fail": 1794383772,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -2237,13 +2231,13 @@
         "episode_url": "https://dmbus.cc/p/5963-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://hhjx.hhplayer.com/playlist/8298df34c8e87d6dc0af170f24ea0812cda7f688524f9df3.m3u8?expires=1794375030&sign=e35d193a1f96757794f42d8de3885082f66991c036839cec87285e0b19e92635"
+        "media": "https://hhjx.hhplayer.com/playlist/8298df34c8e87d6dc0af170f24ea0812cda7f688524f9df3.m3u8?expires=1794464360&sign=e9f9b7dbe9df6d165d31f1e59d5fa65c22c4b439067bf4dc0c269ba3c87b9a74"
       },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -2276,9 +2270,9 @@
       },
       "health": {
         "blind": 0,
-        "fails": 19,
+        "fails": 20,
         "last": "fail",
-        "last_fail": 1794299734,
+        "last_fail": 1794383772,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -2330,13 +2324,13 @@
         "episode_url": "https://www.mgnacg.com/bangumi/1545-2-1/",
         "play": "ok",
         "play_reason": "scanDomMediaUrls 能从 <video> 取到地址",
-        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=CzSvXuchxodNXTf8RX4m8HUEhL8aLJI9m3FDgqZAm9Y=:1794303291"
+        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=cOhIa0yYcZpspgIG1_rsncrGLu9Yrq73GrTKVZiaBMQ=:1794387330"
       },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -2369,9 +2363,9 @@
       },
       "health": {
         "blind": 0,
-        "fails": 19,
+        "fails": 20,
         "last": "fail",
-        "last_fail": 1794299734,
+        "last_fail": 1794383772,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -2403,13 +2397,13 @@
         "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=qR0CPsaFq1wsvFAWcvCP-A-fR_bOFSJI_LuwTPBYo_A%3D%3A1794304800"
+        "media": "https://apn.moedot.net/d/wo/2601/%E8%8A%99%E8%8E%89%E8%8E%B201z.mp4?sign=brKr0-6E9jjpXLfkGKasetCqsL2KeVYvx6oe8kvvgVM%3D%3A1794398400"
       },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -2443,9 +2437,9 @@
       },
       "health": {
         "blind": 0,
-        "fails": 19,
+        "fails": 20,
         "last": "fail",
-        "last_fail": 1794299734,
+        "last_fail": 1794383772,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -2477,9 +2471,9 @@
       },
       "health": {
         "blind": 0,
-        "fails": 19,
+        "fails": 20,
         "last": "fail",
-        "last_fail": 1794299734,
+        "last_fail": 1794383772,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -2536,7 +2530,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "none",
         "grace": false,
         "carry": false,
@@ -2568,7 +2562,7 @@
         "reason": "HTTP 403"
       },
       "health": {
-        "blind": 5,
+        "blind": 6,
         "last": "blocked",
         "grace": false,
         "carry": false,
@@ -2598,7 +2592,7 @@
         "reason": "HTTP 403"
       },
       "health": {
-        "blind": 5,
+        "blind": 6,
         "last": "blocked",
         "grace": false,
         "carry": false,
@@ -2773,13 +2767,13 @@
         "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://v16m-default.akamaized.net/52ec839aac0753ed8d21ab6c0510c9b9/6af420ba/video/tos/alisg/tos-alisg-ve-0051c001-sg/o0U6ZBsXyvaz3aEanxZtjAA4iiwwIYWAkI92z/"
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=9eb282cb8eb514ad09a1d5344568c82c&dis_t=1794383441"
       },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -2811,7 +2805,7 @@
         "reason": "HTTP 403"
       },
       "health": {
-        "blind": 5,
+        "blind": 6,
         "last": "blocked",
         "grace": false,
         "carry": false,
@@ -2850,7 +2844,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -2882,7 +2876,7 @@
         "reason": "请求失败：ConnectionError"
       },
       "health": {
-        "blind": 5,
+        "blind": 6,
         "last": "unreachable",
         "grace": false,
         "carry": false,
@@ -2925,7 +2919,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -3024,7 +3018,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1794299734,
+        "last_ok": 1794383772,
         "play": "ok",
         "grace": false,
         "carry": false,
@@ -3057,7 +3051,7 @@
         "reason": "请求失败：SSLError"
       },
       "health": {
-        "blind": 5,
+        "blind": 6,
         "last": "unreachable",
         "grace": false,
         "carry": false,
@@ -3129,9 +3123,9 @@
       },
       "health": {
         "blind": 0,
-        "fails": 15,
+        "fails": 16,
         "last": "fail",
-        "last_fail": 1794299734,
+        "last_fail": 1794383772,
         "grace": false,
         "carry": false,
         "carry_age": null

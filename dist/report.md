@@ -47,7 +47,7 @@
 | 来源 | 规则 | 版本 | 修改日期（依据） | 转换 | 自动检测 | 播放 | 采用 | 备注 |
 |---|---|---|---|---|---|---|---|---|
 | kazumi | 7sefun | 1.3 | 2026-08-10（内容未变） | 有近似 | ok | ok | 否 | 末尾 text() 已改为取元素全部文本 |
-| kazumi | aafun | 1.2 | 2026-08-21（内容未变） | 完整 | ok | ok | 否 |  |
+| kazumi | aafun | 1.2 | 2026-08-21（内容未变） | 完整 | ok | none | 否 | 等了 20 秒没有出现视频地址 |
 | kazumi | AGE | 1.6 | 2026-10-28（内容未变） | 完整 | blocked | - | 否 | HTTP 403 |
 | kazumi | akianime | 1.4 | 2026-08-17（内容未变） | 完整 | ok | ok | 否 |  |
 | kazumi | baimao | 1.0 | 2026-01-28（内容未变） | 完整 | ok | ok | 否 | 域名已跳转，改用新域名 https://www.bmddm.com（原 https://www.baimaodm.com） |
@@ -57,7 +57,7 @@
 | kazumi | giriGiriLove | 2.6 | 2026-10-22（内容未变） | 手写 | ok | ok | 是 |  |
 | kazumi | LMM | 2.3 | 2026-10-15（内容未变） | 完整 | ok | ok | 是 | 优先级自动设为 1（检测通过，播放检测：ok） |
 | kazumi | mgnacg | 1.2 | 2026-10-15（内容未变） | 完整 | ok | ok | 否 |  |
-| kazumi | moonci | 1.1 | 2026-10-19（内容未变） | 完整 | ok | ok | 否 |  |
+| kazumi | moonci | 1.1 | 2026-10-19（内容未变） | 完整 | ok | none | 否 | 等了 20 秒没有出现视频地址 |
 | kazumi | mutefun | 1.6 | 2026-10-31（内容未变） | 无法转换 | - | - | 否 | 搜索 XPath 无法转换：没有步骤 |
 | kazumi | MXdm | 2.4 | 2026-10-01（内容未变） | 完整 | ok | ok | 否 |  |
 | kazumi | sorani | 1.0 | 2026-07-13（内容未变） | 手写 | skipped | - | 否 | 手写配置，不做自动检测 |
@@ -66,7 +66,7 @@
 | kazumi | xfdmnext | 1.1 | 2026-10-01（内容未变） | 手写 | skipped | - | 是 | 手写配置，不做自动检测 |
 | anibaka | 7sefun | rev 9 | 2026-11-01（内容未变） | 完整 | ok | ok | 是 | 优先级自动设为 1（检测通过，播放检测：ok） |
 | baseline | 7sefun | rev 9 | 2026-11-01（内容未变） | 回退基线 | ok | ok | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较 |
-| anibaka | cyfz | rev 7 | 2026-11-01（内容未变） | 完整 | ok | ok | 是 |  |
+| anibaka | cyfz | rev 7 | 2026-11-01（内容未变） | 完整 | blocked | - | 是 | 海外检测被拦（连续 1 次），1 天前通过过，暂按上次的成绩排名；HTTP 403 |
 | baseline | cyfz | rev 7 | 2026-11-01（内容未变） | 回退基线 | blocked | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；HTTP 403 |
 | anibaka | 5dm | rev 1 | 2026-10-07（内容未变） | 完整 | blocked | - | 是 | 优先级自动设为 3（检测没有结论（blocked））；HTTP 403 |
 | baseline | 5dm | rev 1 | 2026-10-07（内容未变） | 回退基线 | blocked | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；HTTP 403 |
@@ -81,11 +81,11 @@
 | baseline | animoe | rev 5 | 2026-11-01（内容未变） | 回退基线 | blocked | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；HTTP 403 |
 | anibaka | tvtfun | rev 13 | 2026-11-01（内容未变） | 无法转换 | - | - | 否 | 章节步骤无法转换（需要 episodes 操作，实际是：fetch, jsonEpisodes, regex）；baseline 里也没有这个源，已跳过 |
 | anibaka | ios_mifun | rev 7 | 2026-11-01（内容未变） | 完整 | ok | ok | 是 |  |
-| baseline | ios_mifun | rev 7 | 2026-11-01（内容未变） | 回退基线 | ok | ok | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；已自动修复 matchVideoUrl：matchVideoUrl 改为通用写法（认出 1/1 个视频地址，例：https://groupvideo.photo.qq.com/1071_0bc3bubemaac7yagxva7fnss2dieiygqersa.f0.mp4?dis_k=c26） |
+| baseline | ios_mifun | rev 7 | 2026-11-01（内容未变） | 回退基线 | ok | ok | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；已自动修复 matchVideoUrl：matchVideoUrl 改为通用写法（认出 1/1 个视频地址，例：https://groupvideo.photo.qq.com/1071_0bc3bubemaac7yagxva7fnss2dieiygqersa.f0.mp4?dis_k=e17） |
 | anibaka | agekkkk | rev 3 | 2026-11-01（内容未变） | 无法转换 | - | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等） |
 | baseline | agekkkk | rev 3 | 2026-11-01（内容未变） | 回退基线 | blocked | - | 是 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；优先级自动设为 3（检测没有结论（blocked））；搜索页出现验证码/环境检查 |
 | anibaka | didahd | rev 7 | 2026-11-01（内容未变） | 有近似 | ok | ok | 是 | AniBaka 播放步骤用了 maccmsVerify 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频；优先级自动设为 1（检测通过，播放检测：ok） |
-| baseline | didahd | rev 7 | 2026-11-01（内容未变） | 回退基线 | ok | ok | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；域名已跳转，改用新域名 https://www.didahd.xyz（原 https://www.didahd.pro） |
+| baseline | didahd | rev 7 | 2026-11-01（内容未变） | 回退基线 | ok | none | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；域名已跳转，改用新域名 https://www.didahd.xyz（原 https://www.didahd.pro）；等了 20 秒没有出现视频地址 |
 | anibaka | anime7 | rev 6 | 2026-11-01（内容未变） | 完整 | ok | ok | 是 | 优先级自动设为 1（检测通过，播放检测：ok） |
 | baseline | anime7 | rev 6 | 2026-11-01（内容未变） | 回退基线 | ok | ok | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较 |
 | anibaka | hanimeone | rev 7 | 2026-11-01（内容未变） | 无法转换 | - | - | 否 | 章节步骤无法转换（需要 episodes 操作，实际是：jsonEpisodes, template）；baseline 里也没有这个源，已跳过 |
@@ -143,11 +143,12 @@
 
 ## 海外盲区
 
-最终入选的源里，有 9 个这次在海外检测不出结论（被拦 / 打不开），不等于站点坏了：
+最终入选的源里，有 10 个这次在海外检测不出结论（被拦 / 打不开），不等于站点坏了：
 
 | 候选 | 状态 | 排名依据 |
 |---|---|---|
 | kazumi:dalvdm | blocked | 从没检测通过过，没有可沿用的成绩 |
+| anibaka:cyfz | blocked | 沿用 1.0 天前通过时的成绩 |
 | anibaka:5dm | blocked | 从没检测通过过，没有可沿用的成绩 |
 | baseline:ani_pekolove | blocked | 从没检测通过过，没有可沿用的成绩 |
 | anibaka:animoe | blocked | 从没检测通过过，没有可沿用的成绩 |
