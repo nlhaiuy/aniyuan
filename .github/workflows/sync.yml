@@ -63,10 +63,56 @@ jobs:
           python tests/test_live.py
           python tests/test_pipeline.py
 
+      # 可选：Secret VMESS_LINK 里放一个或多个 vmess:// 链接（一行一个，必须是国内出口的节点）。
+      # 用 xray 在 runner 上起本地 socks5，按顺序试，第一个能连通的就用；都不通或没配置就走海外出口。
+      # 链接只经 Secret 传入，日志里不打印内容。
+      - name: 启动 vmess 代理（可选）
+        env:
+          VMESS_LINK: ${{ secrets.VMESS_LINK }}
+        run: |
+          [ -z "$VMESS_LINK" ] && exit 0
+          curl -sSL --fail -o "$RUNNER_TEMP/x.zip" https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip
+          unzip -q -o "$RUNNER_TEMP/x.zip" xray -d "$RUNNER_TEMP"
+          cat > "$RUNNER_TEMP/mkcfg.py" <<'PY'
+          import sys, json, base64
+          s = sys.argv[1].strip().removeprefix("vmess://")
+          s += "=" * (-len(s) % 4)
+          v = json.loads(base64.b64decode(s))
+          net = v.get("net") or "tcp"
+          ss = {"network": net, "security": "tls" if v.get("tls") == "tls" else "none"}
+          if ss["security"] == "tls":
+              ss["tlsSettings"] = {"serverName": v.get("sni") or v.get("host") or v["add"]}
+          if net == "ws":
+              ss["wsSettings"] = {"path": v.get("path") or "/", "headers": {"Host": v.get("host") or ""}}
+          cfg = {"inbounds": [{"listen": "127.0.0.1", "port": 10808, "protocol": "socks", "settings": {"udp": False}}],
+                 "outbounds": [{"protocol": "vmess", "settings": {"vnext": [{"address": v["add"], "port": int(v["port"]),
+                   "users": [{"id": v["id"], "alterId": int(v.get("aid") or 0), "security": "auto"}]}]}, "streamSettings": ss}]}
+          json.dump(cfg, open(sys.argv[2], "w"))
+          PY
+          n=0
+          while IFS= read -r line; do
+            line="${line%$'\r'}"
+            [ -z "$line" ] && continue
+            n=$((n+1))
+            python "$RUNNER_TEMP/mkcfg.py" "$line" "$RUNNER_TEMP/xray.json" 2>/dev/null || { echo "第 $n 个链接解析失败"; continue; }
+            "$RUNNER_TEMP/xray" run -c "$RUNNER_TEMP/xray.json" >/dev/null 2>&1 &
+            pid=$!
+            sleep 2
+            if curl -s -o /dev/null -m 10 --socks5-hostname 127.0.0.1:10808 https://www.baidu.com; then
+              echo "第 $n 个 vmess 节点可用"
+              echo "ANIYUAN_PROXY=socks5h://127.0.0.1:10808" >> "$GITHUB_ENV"
+              exit 0
+            fi
+            echo "第 $n 个 vmess 节点不通，换下一个"
+            kill $pid 2>/dev/null || true
+            sleep 1
+          done <<< "$VMESS_LINK"
+          echo "没有可用的 vmess 节点，走海外出口"
+
       - name: 转换并做联网冒烟测试
         env:
-          # 可选：国内出口的代理（Settings → Secrets → Actions 里添加 ANIYUAN_PROXY）。没配置就是空串，走 GitHub 海外出口
-          ANIYUAN_PROXY: ${{ secrets.ANIYUAN_PROXY }}
+          # 优先用上一步起的 vmess 本地代理；否则用 Secret ANIYUAN_PROXY（http/socks5 地址）；都没有就是空串，走 GitHub 海外出口
+          ANIYUAN_PROXY: ${{ env.ANIYUAN_PROXY || secrets.ANIYUAN_PROXY }}
         run: python -m aniyuan --kazumi "$RUNNER_TEMP/KazumiRules" --anibaka "$RUNNER_TEMP/AniBakaRule" --easybangumi "$RUNNER_TEMP/EasyBangumi" --out dist.new --icons-dir icons --smoke --playcheck
 
       # 只打包要发布的几个文件（白名单），不带别的东西

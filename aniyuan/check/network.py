@@ -33,7 +33,8 @@ def playwright_proxy(proxy):
     p = urlparse(proxy)
     if not p.hostname:
         return None
-    d = {"server": "%s://%s%s" % (p.scheme or "http", p.hostname, (":%d" % p.port) if p.port else "")}
+    scheme = "socks5" if p.scheme == "socks5h" else (p.scheme or "http")   # Chromium 不认 socks5h，它本来就让代理解析域名
+    d = {"server": "%s://%s%s" % (scheme, p.hostname, (":%d" % p.port) if p.port else "")}
     if p.username:
         d["username"] = unquote(p.username)
     if p.password:
