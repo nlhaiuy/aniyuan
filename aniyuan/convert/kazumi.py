@@ -217,6 +217,7 @@ def convert_rule(rule, config=None):
 #   * 带线路的接口用 grouped 通道，没有线路名的用 no-channel；
 #   * 剧集类型映射 typeMapping、名称模板 nameTemplate、autoMatch 用官方一致的默认值。
 # 转不了的（如章节是 "a$b#c$d" 这种分隔字符串）明确写出原因。
+# json-api 必须有 play（取视频地址的请求），这里补不出来，由 official.py 借官方订阅里同一接口的源。
 
 DEFAULT_PAGE_SIZE = 24
 EPISODE_TYPE_MAPPING = "main=MainStory\nsp=SP\nova=OVA\noad=OAD\nmovie=MainStory\nex=SP"
@@ -347,7 +348,7 @@ def convert_api_rule(rule, config, res, origin):
 
     name = rule.get("name", "")
     tier = (config.get("tiers") or {}).get(name, config.get("default_tier", 4))
-    res.notes.append("Kazumi 规则里没有播放接口，生成的 json-api 源没有 play 配置，能否播放请在 Animeko 里试播确认")
+    res.notes.append("Kazumi 规则里没有播放接口（没有 play）；build 会去官方订阅里找同一接口的源借 play，借不到就不输出")
     res.source = {
         "id": "kazumi-" + slugify(name),
         "factoryId": "json-api",

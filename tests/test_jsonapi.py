@@ -123,5 +123,59 @@ r = smoke.check_source(dead, "芙莉莲", session=s)
 check("接口连不上：unreachable", r["status"] == "unreachable")
 
 srv.shutdown()
+
+# ---------- 借鉴官方订阅的 play ----------
+import copy, tempfile
+from aniyuan import official
+
+OFF = {"id": "official-demo", "factoryId": "json-api", "version": 1, "arguments": {"name": "官方 Demo", "searchConfig": {
+    "baseUrl": "https://api.demo.cc", "headers": "apikey: k",
+    "search": {"request": {"url": "https://api.demo.cc/rpc/search", "method": "POST", "body": '{"term":"{keyword}","page":{page}}', "headers": ""},
+               "pageSize": 50, "selectItems": "$[*]", "selectName": "$.title", "selectId": "$.id", "subjectUrlTemplate": "x"},
+    "subject": {"request": {"url": "https://api.demo.cc/rpc/detail", "method": "POST", "body": '{"p_id":{id}}', "headers": ""},
+                "channelFormatId": "grouped", "channelFormatGrouped": {"selectChannels": "$.sources[*]", "selectChannelName": "$.name"},
+                "episodes": {"selectEpisodes": "$.episodes[*]", "selectName": "$.title", "selectId": "$.id", "selectSort": "$.no",
+                             "selectType": "$.kind", "typeMapping": "main=MainStory", "nameTemplate": "{sort} {name}", "episodeUrlTemplate": "y"}},
+    "play": {"request": {"url": "https://api.demo.cc/play", "method": "POST", "body": '{"episode_id":{id}}', "headers": ""},
+             "selectCandidates": "$.c[*]", "selectCandidateChannel": "$.n", "selectVideoUrl": "$.url"}}}}
+
+def cand_of(r):
+    res = kazumi.convert_rule(r, {})
+    return {"source": res.source, "notes": list(res.notes), "status": res.status}
+
+c = cand_of(rule())
+official.apply([c], [OFF])
+sc = c["source"]["arguments"]["searchConfig"]
+check("同一接口：借官方的 play", sc["play"] == OFF["arguments"]["searchConfig"]["play"])
+check("同一接口：请求体改用官方的（id 不带引号）", sc["subject"]["request"]["body"] == '{"p_id":{id}}')
+check("借了搜索请求体就跟着用官方的 pageSize", sc["search"]["pageSize"] == 50 and "{page}" in sc["search"]["request"]["body"])
+check("缺的序号 / 类型字段借官方", sc["subject"]["episodes"]["selectSort"] == "$.no" and sc["subject"]["episodes"]["typeMapping"] == "main=MainStory")
+check("借到后备注里写明来源，不再有「没有播放接口」", any("借鉴自官方" in n for n in c["notes"]) and not any("没有播放接口" in n for n in c["notes"]))
+check("线路、地址等自己的字段不被覆盖", sc["subject"]["episodes"]["episodeUrlTemplate"] == "https://www.demo.net/anime/{subjectId}/play/{id}")
+
+other = copy.deepcopy(OFF)
+other["arguments"]["searchConfig"]["subject"]["request"]["url"] = "https://api.demo.cc/rpc/other"
+c = cand_of(rule()); official.apply([c], [other])
+check("接口地址不同：不借，源不输出", c["source"] is None and c["status"] == "unsupported" and "play" in c["notes"][-1])
+
+other = copy.deepcopy(OFF)
+other["arguments"]["searchConfig"]["subject"]["episodes"]["selectId"] = "$.eid"
+c = cand_of(rule()); official.apply([c], [other])
+check("剧集 id 取值路径不同：不借（id 不是同一个东西）", c["source"] is None)
+
+c = cand_of(rule()); official.apply([c], [])
+check("没有官方源：json-api 缺 play 不输出", c["source"] is None and c["status"] == "unsupported")
+
+web = {"source": {"factoryId": "web-selector", "arguments": {"searchConfig": {}}}, "notes": [], "status": "ok"}
+official.apply([web], [])
+check("web-selector 源不受影响", web["source"] is not None and web["status"] == "ok")
+
+tmp = tempfile.mkdtemp()
+os.makedirs(os.path.join(tmp, "subs", "api", "t0")); os.makedirs(os.path.join(tmp, "subs", "web", "t0"))
+json.dump(OFF, open(os.path.join(tmp, "subs", "api", "t0", "a.json"), "w", encoding="utf-8"), ensure_ascii=False)
+json.dump({"id": "w", "factoryId": "web-selector", "arguments": {}}, open(os.path.join(tmp, "subs", "web", "t0", "w.json"), "w"))
+open(os.path.join(tmp, "subs", "api", "t0", "broken.json"), "w").write("{not json")
+loaded = official.load(tmp)
+check("load：只读 subs/api 下有 play 的 json-api 源，坏文件跳过", len(loaded) == 1 and loaded[0]["id"] == "official-demo")
 print("\n%d 项未通过" % bad if bad else "\n全部通过")
 sys.exit(1 if bad else 0)
