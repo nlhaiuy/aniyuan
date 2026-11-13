@@ -7,7 +7,7 @@
       "version": 2,
       "arguments": {
         "name": "MuteFun动漫 (2kdm)",
-        "description": "[自动检测未通过：HTTP 404] MuteFun动漫网站-无声乐趣，提供日漫、美漫、特摄、日剧等高清在线观看。（来源：AniBaka 规则 2kdm rev 6，自动转换）",
+        "description": "MuteFun动漫网站-无声乐趣，提供日漫、美漫、特摄、日剧等高清在线观看。（来源：AniBaka 规则 2kdm rev 6，自动转换）",
         "iconUrl": "https://image1.ljcdn.com/materials/cmsapi/1a5b58f50c23e5475dc6a8bb827035e2.png",
         "searchConfig": {
           "searchUrl": "https://www.2kdm.com/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
@@ -62,7 +62,7 @@
       "arguments": {
         "name": "五弹幕 (5DM)",
         "description": "五弹幕动漫源，支持番剧搜索、多线路分集与播放解析。搜索遇到站点验证时使用 WebView。（来源：AniBaka 规则 5dm rev 1，自动转换）",
-        "iconUrl": "https://www.5dm.dev/wp-content/themes/5dm-next/assets/brand/mascot-face-32.png",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-5dm.png",
         "searchConfig": {
           "searchUrl": "https://www.5dm.dev/?s={keyword}&cat=-1%2C4%2C3%2C11",
           "searchUseOnlyFirstWord": true,
@@ -112,60 +112,48 @@
       "version": 2,
       "arguments": {
         "name": "七色番",
-        "description": "七色番提供最新番剧TV、剧场版在线高速播放，每日及时更新，是动漫迷的不二选择！（来源：基线配置 7sefun）",
+        "description": "七色番提供最新番剧TV、剧场版在线高速播放，每日及时更新，是动漫迷的不二选择！（来源：AniBaka 规则 7sefun rev 9，自动转换）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-7sefun.ico",
         "searchConfig": {
           "searchUrl": "https://www.7sefun.top/vodsearch/-------------.html?wd={keyword}",
           "searchUseOnlyFirstWord": true,
           "searchRemoveSpecial": true,
           "searchUseSubjectNamesCount": 1,
-          "rawBaseUrl": "",
+          "rawBaseUrl": "https://www.7sefun.top",
           "requestInterval": 3000,
-          "searchCacheTtl": 7200000,
-          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-          "subjectFormatId": "indexed",
-          "selectorSubjectFormatIndexed": {
-            "selectNames": "div.video.anim > div.video-by",
-            "selectLinks": "div.video.anim > a",
-            "linkTemplate": null,
+          "subjectFormatId": "a",
+          "selectorSubjectFormatA": {
+            "selectLists": "a.video-wrapper[href^=\"/voddetail/\"]",
             "preferShorterName": true
           },
-          "channelFormatId": "index-grouped",
-          "selectorChannelFormatFlattened": {
-            "selectChannelNames": "div.chat-header.anim > span",
-            "matchChannelName": "",
-            "selectEpisodeLists": "div.message-container.vod-play-list-container",
-            "selectEpisodesFromList": "span > a",
-            "selectEpisodeLinksFromList": "",
-            "matchEpisodeSortFromName": "第\\s*(?<ep>.+)\\s*[话集]"
+          "channelFormatId": "no-channel",
+          "selectorChannelFormatNoChannel": {
+            "selectEpisodes": ".vod-play-list-container a",
+            "selectEpisodeLinks": ""
           },
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
           "defaultResolution": "1080P",
           "defaultSubtitleLanguage": "CHS",
           "onlySupportsPlayers": [],
           "filterByEpisodeSort": true,
+          "filterBySubjectName": true,
           "selectMedia": {
             "distinguishSubjectName": true,
-            "distinguishChannelName": true
+            "distinguishChannelName": false
           },
           "matchVideo": {
-            "enableNestedUrl": true,
+            "enableNestedUrl": false,
             "matchNestedUrl": "$^",
-            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http)(?!.*jxdunrui\\.top).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/(?!.*jxdunrui\\.top).+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/)|(\\/video\\/.*mime_type=video)",
+            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
             "cookies": "quality=1080",
             "addHeadersToVideo": {
               "referer": "https://www.7sefun.top/"
-            }
-          },
-          "autoMatch": {
-            "enabled": true,
-            "searchUseOnlyFirstWord": true,
-            "searchRemoveSpecial": true,
-            "searchUseSubjectNamesCount": 1,
-            "preferShorterName": true,
-            "filterByEpisodeSort": true
+            },
+            "scanDomMediaUrls": true
           }
         },
-        "tier": 1
+        "tier": 2,
+        "channelTiers": {}
       }
     },
     {
@@ -175,7 +163,7 @@
       "arguments": {
         "name": "AGE动漫",
         "description": "AGE动漫视频源，源网址www.agedm.io。（来源：AniBaka 规则 age rev 7，自动转换）",
-        "iconUrl": "https://www.agedm.io/favicon.ico",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-age.ico",
         "searchConfig": {
           "searchUrl": "https://www.agedm.io/search?query={keyword}",
           "searchUseOnlyFirstWord": true,
@@ -537,7 +525,7 @@
       "arguments": {
         "name": "dalvdm (sbdl.cc)",
         "description": "站点 sbdl.cc。（来源：Kazumi 规则 dalvdm v1.2，自动转换）",
-        "iconUrl": "https://www.sbdl.cc/favicon.ico",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-dalvdm.png",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
           "searchRemoveSpecial": true,
@@ -578,7 +566,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 3,
+        "tier": 2,
         "channelTiers": {}
       },
       "clientVersions": ">=6.3.0"
@@ -722,7 +710,7 @@
       "version": 2,
       "arguments": {
         "name": "girigiri愛動漫",
-        "description": "站点 ani.girigirilove.com。（来源：Kazumi 规则 giriGiriLove v2.6，手写配置）",
+        "description": "站点 ani.girigirilove.com。（来源：Kazumi 规则 giriGiriLove v2.7，手写配置）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-girigirilove.png",
         "searchConfig": {
           "searchUrl": "https://m3u8.girigirilove.com/api.php/Vod/get_list?offset=0&limit=24&vod_name={keyword}",
@@ -1202,8 +1190,8 @@
       "version": 2,
       "arguments": {
         "name": "9ciyuan (jcydm1.com)",
-        "description": "站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
-        "iconUrl": "https://www.jcydm1.com/favicon.ico",
+        "description": "[选择器已自动修复] 站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-9ciyuan.png",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
           "searchRemoveSpecial": true,
@@ -1211,7 +1199,7 @@
           "rawBaseUrl": "",
           "requestInterval": 3000,
           "searchUrl": "https://www.jcydm1.com/index.php/vod/search.html?wd={keyword}",
-          "subjectFormatId": "indexed",
+          "subjectFormatId": "a",
           "selectorSubjectFormatIndexed": {
             "selectNames": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(2) > div:nth-of-type(1) > a > strong",
             "selectLinks": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(3) > a:nth-of-type(2)",
@@ -1219,7 +1207,7 @@
           },
           "channelFormatId": "no-channel",
           "selectorChannelFormatNoChannel": {
-            "selectEpisodes": "div > div:nth-of-type(2) > div > div:nth-of-type(2) > div[id=\"panel1\"] div > div > a",
+            "selectEpisodes": "#panel1 a",
             "selectEpisodeLinks": "",
             "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
           },
@@ -1241,9 +1229,13 @@
               "referer": ""
             },
             "scanDomMediaUrls": true
+          },
+          "selectorSubjectFormatA": {
+            "selectLists": ".module-card-item-title a[href*='/vod/']",
+            "preferShorterName": true
           }
         },
-        "tier": 3,
+        "tier": 1,
         "channelTiers": {}
       }
     },
@@ -1254,7 +1246,7 @@
       "arguments": {
         "name": "ant (mayi520.org)",
         "description": "站点 mayi520.org。（来源：纯纯看番社区源 kazumi-ant v0.0.3，自动转换）",
-        "iconUrl": "https://www.mayi520.org/favicon.ico",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-ant.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
           "searchRemoveSpecial": true,
@@ -1294,7 +1286,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 3,
+        "tier": 1,
         "channelTiers": {}
       }
     },
@@ -1562,7 +1554,7 @@
       "arguments": {
         "name": "xfdmneo (dm1.xfdm.pro)",
         "description": "站点 dm1.xfdm.pro。（来源：Kazumi 规则 xfdmneo v1.1，自动转换）",
-        "iconUrl": "https://dm1.xfdm.pro/favicon.ico",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xfdmneo.png",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
           "searchRemoveSpecial": true,
@@ -1738,7 +1730,7 @@
         "version": 2,
         "arguments": {
           "name": "MuteFun动漫 (2kdm)",
-          "description": "[自动检测未通过：HTTP 404] MuteFun动漫网站-无声乐趣，提供日漫、美漫、特摄、日剧等高清在线观看。（来源：AniBaka 规则 2kdm rev 6，自动转换）",
+          "description": "MuteFun动漫网站-无声乐趣，提供日漫、美漫、特摄、日剧等高清在线观看。（来源：AniBaka 规则 2kdm rev 6，自动转换）",
           "iconUrl": "https://image1.ljcdn.com/materials/cmsapi/1a5b58f50c23e5475dc6a8bb827035e2.png",
           "searchConfig": {
             "searchUrl": "https://www.2kdm.com/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
@@ -1793,7 +1785,7 @@
         "arguments": {
           "name": "五弹幕 (5DM)",
           "description": "五弹幕动漫源，支持番剧搜索、多线路分集与播放解析。搜索遇到站点验证时使用 WebView。（来源：AniBaka 规则 5dm rev 1，自动转换）",
-          "iconUrl": "https://www.5dm.dev/wp-content/themes/5dm-next/assets/brand/mascot-face-32.png",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-5dm.png",
           "searchConfig": {
             "searchUrl": "https://www.5dm.dev/?s={keyword}&cat=-1%2C4%2C3%2C11",
             "searchUseOnlyFirstWord": true,
@@ -1843,60 +1835,48 @@
         "version": 2,
         "arguments": {
           "name": "七色番",
-          "description": "七色番提供最新番剧TV、剧场版在线高速播放，每日及时更新，是动漫迷的不二选择！（来源：基线配置 7sefun）",
+          "description": "七色番提供最新番剧TV、剧场版在线高速播放，每日及时更新，是动漫迷的不二选择！（来源：AniBaka 规则 7sefun rev 9，自动转换）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-7sefun.ico",
           "searchConfig": {
             "searchUrl": "https://www.7sefun.top/vodsearch/-------------.html?wd={keyword}",
             "searchUseOnlyFirstWord": true,
             "searchRemoveSpecial": true,
             "searchUseSubjectNamesCount": 1,
-            "rawBaseUrl": "",
+            "rawBaseUrl": "https://www.7sefun.top",
             "requestInterval": 3000,
-            "searchCacheTtl": 7200000,
-            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "subjectFormatId": "indexed",
-            "selectorSubjectFormatIndexed": {
-              "selectNames": "div.video.anim > div.video-by",
-              "selectLinks": "div.video.anim > a",
-              "linkTemplate": null,
+            "subjectFormatId": "a",
+            "selectorSubjectFormatA": {
+              "selectLists": "a.video-wrapper[href^=\"/voddetail/\"]",
               "preferShorterName": true
             },
-            "channelFormatId": "index-grouped",
-            "selectorChannelFormatFlattened": {
-              "selectChannelNames": "div.chat-header.anim > span",
-              "matchChannelName": "",
-              "selectEpisodeLists": "div.message-container.vod-play-list-container",
-              "selectEpisodesFromList": "span > a",
-              "selectEpisodeLinksFromList": "",
-              "matchEpisodeSortFromName": "第\\s*(?<ep>.+)\\s*[话集]"
+            "channelFormatId": "no-channel",
+            "selectorChannelFormatNoChannel": {
+              "selectEpisodes": ".vod-play-list-container a",
+              "selectEpisodeLinks": ""
             },
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             "defaultResolution": "1080P",
             "defaultSubtitleLanguage": "CHS",
             "onlySupportsPlayers": [],
             "filterByEpisodeSort": true,
+            "filterBySubjectName": true,
             "selectMedia": {
               "distinguishSubjectName": true,
-              "distinguishChannelName": true
+              "distinguishChannelName": false
             },
             "matchVideo": {
-              "enableNestedUrl": true,
+              "enableNestedUrl": false,
               "matchNestedUrl": "$^",
-              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http)(?!.*jxdunrui\\.top).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/(?!.*jxdunrui\\.top).+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/)|(\\/video\\/.*mime_type=video)",
+              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
               "cookies": "quality=1080",
               "addHeadersToVideo": {
                 "referer": "https://www.7sefun.top/"
-              }
-            },
-            "autoMatch": {
-              "enabled": true,
-              "searchUseOnlyFirstWord": true,
-              "searchRemoveSpecial": true,
-              "searchUseSubjectNamesCount": 1,
-              "preferShorterName": true,
-              "filterByEpisodeSort": true
+              },
+              "scanDomMediaUrls": true
             }
           },
-          "tier": 1
+          "tier": 2,
+          "channelTiers": {}
         }
       },
       {
@@ -1906,7 +1886,7 @@
         "arguments": {
           "name": "AGE动漫",
           "description": "AGE动漫视频源，源网址www.agedm.io。（来源：AniBaka 规则 age rev 7，自动转换）",
-          "iconUrl": "https://www.agedm.io/favicon.ico",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-age.ico",
           "searchConfig": {
             "searchUrl": "https://www.agedm.io/search?query={keyword}",
             "searchUseOnlyFirstWord": true,
@@ -2268,7 +2248,7 @@
         "arguments": {
           "name": "dalvdm (sbdl.cc)",
           "description": "站点 sbdl.cc。（来源：Kazumi 规则 dalvdm v1.2，自动转换）",
-          "iconUrl": "https://www.sbdl.cc/favicon.ico",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-dalvdm.png",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
             "searchRemoveSpecial": true,
@@ -2309,7 +2289,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 3,
+          "tier": 2,
           "channelTiers": {}
         },
         "clientVersions": ">=6.3.0"
@@ -2453,7 +2433,7 @@
         "version": 2,
         "arguments": {
           "name": "girigiri愛動漫",
-          "description": "站点 ani.girigirilove.com。（来源：Kazumi 规则 giriGiriLove v2.6，手写配置）",
+          "description": "站点 ani.girigirilove.com。（来源：Kazumi 规则 giriGiriLove v2.7，手写配置）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-girigirilove.png",
           "searchConfig": {
             "searchUrl": "https://m3u8.girigirilove.com/api.php/Vod/get_list?offset=0&limit=24&vod_name={keyword}",
@@ -2933,8 +2913,8 @@
         "version": 2,
         "arguments": {
           "name": "9ciyuan (jcydm1.com)",
-          "description": "站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
-          "iconUrl": "https://www.jcydm1.com/favicon.ico",
+          "description": "[选择器已自动修复] 站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-9ciyuan.png",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
             "searchRemoveSpecial": true,
@@ -2942,7 +2922,7 @@
             "rawBaseUrl": "",
             "requestInterval": 3000,
             "searchUrl": "https://www.jcydm1.com/index.php/vod/search.html?wd={keyword}",
-            "subjectFormatId": "indexed",
+            "subjectFormatId": "a",
             "selectorSubjectFormatIndexed": {
               "selectNames": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(2) > div:nth-of-type(1) > a > strong",
               "selectLinks": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(3) > a:nth-of-type(2)",
@@ -2950,7 +2930,7 @@
             },
             "channelFormatId": "no-channel",
             "selectorChannelFormatNoChannel": {
-              "selectEpisodes": "div > div:nth-of-type(2) > div > div:nth-of-type(2) > div[id=\"panel1\"] div > div > a",
+              "selectEpisodes": "#panel1 a",
               "selectEpisodeLinks": "",
               "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
             },
@@ -2972,9 +2952,13 @@
                 "referer": ""
               },
               "scanDomMediaUrls": true
+            },
+            "selectorSubjectFormatA": {
+              "selectLists": ".module-card-item-title a[href*='/vod/']",
+              "preferShorterName": true
             }
           },
-          "tier": 3,
+          "tier": 1,
           "channelTiers": {}
         }
       },
@@ -2985,7 +2969,7 @@
         "arguments": {
           "name": "ant (mayi520.org)",
           "description": "站点 mayi520.org。（来源：纯纯看番社区源 kazumi-ant v0.0.3，自动转换）",
-          "iconUrl": "https://www.mayi520.org/favicon.ico",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-ant.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
             "searchRemoveSpecial": true,
@@ -3025,7 +3009,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 3,
+          "tier": 1,
           "channelTiers": {}
         }
       },
@@ -3293,7 +3277,7 @@
         "arguments": {
           "name": "xfdmneo (dm1.xfdm.pro)",
           "description": "站点 dm1.xfdm.pro。（来源：Kazumi 规则 xfdmneo v1.1，自动转换）",
-          "iconUrl": "https://dm1.xfdm.pro/favicon.ico",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xfdmneo.png",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
             "searchRemoveSpecial": true,
