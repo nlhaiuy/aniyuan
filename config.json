@@ -10,9 +10,7 @@
     "m3u8.girigirilove.com": "ani.girigirilove.com",
     "2kdm.com": "mutedm.com"
   },
-  "prefer": {
-    "ani.girigirilove.com": "kazumi"
-  },
+  "prefer": {},
   "prefer_baseline": [],
   "_说明2": "prefer：{站点主机名: kazumi|anibaka} 强制取某一边；prefer_baseline：这些 AniBaka 规则直接用 baseline 里手调过的配置；select_by_smoke：同站有多个来源时先看联网检测结果（通过>无结论>失败），同档再比时间；site_aliases：{主机名: 规范主机名} 手动并站。",
   "easybangumi_channels": [
@@ -35,7 +33,6 @@
   "icons": true,
   "icon_base_url": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons",
   "_说明6": "icons：联网检测时按浏览器的方式找站点图标，存进 icons/，订阅里的 iconUrl 改指向这个仓库（icon_base_url）；设为 false 关闭。",
-  "_说明7": "girigiri：overrides/giriGiriLove.json 里是亲测可用的配置（走 m3u8.girigirilove.com 的接口）；自动转换出来的另外两个版本选择器都对不上，所以用 prefer 固定取 overrides 这一份。",
   "user_agent": "",
   "_说明8": "user_agent：整条检测流程（requests、无头浏览器、图标下载）统一用的 UA，留空=自动（Chrome 大版本跟随实际启动的浏览器，浏览器的 Sec-CH-UA 客户端提示同步，去掉 HeadlessChrome）；源自己在 searchConfig.userAgent 里写了 UA 的，检测时照源的来。",
   "blind_carry_days": 14,

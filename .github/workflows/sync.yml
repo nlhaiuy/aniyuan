@@ -9,7 +9,6 @@ on:
       - "aniyuan/**"
       - "requirements.txt"
       - "config.json"
-      - "overrides/**"
       - "baseline/**"
       - ".github/workflows/sync.yml"
 
@@ -60,6 +59,7 @@ jobs:
           python tests/test_repair.py
           python tests/test_ua.py
           python tests/test_icons.py
+          python tests/test_jsonapi.py
           python tests/test_live.py
           python tests/test_pipeline.py
 

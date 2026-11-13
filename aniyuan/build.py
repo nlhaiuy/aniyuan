@@ -492,6 +492,9 @@ def main():
                 r = c["smoke"]
                 if r.get("template"):
                     c["source"]["arguments"]["searchConfig"]["selectorSubjectFormatJsonPathIndexed"]["linkTemplate"] = r["template"]
+                if r.get("subject_body"):   # json-api：章节请求体里的 id 不带引号才通过
+                    c["source"]["arguments"]["searchConfig"]["subject"]["request"]["body"] = r["subject_body"]
+                    c["notes"].append("章节接口的 id 参数改成不带引号的写法（带引号被接口拒绝）")
                 time.sleep(1)
             if config.get("follow_upstream_domains", True):
                 for key, old, new, ok in follow_upstream(cands, lambda src: _check(src, config, session)):

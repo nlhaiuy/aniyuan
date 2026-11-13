@@ -161,6 +161,8 @@ def check_source(source, keyword="葬送的芙莉莲", timeout=15, session=None,
     ctx = ctx if ctx is not None else {}
     a = source["arguments"]
     sc = a.get("searchConfig", {})
+    if source.get("factoryId") == "json-api" and isinstance(sc.get("search"), dict) and isinstance(sc.get("subject"), dict):
+        return check_json_api(sc, keyword, session, timeout)
     if source.get("factoryId") != "web-selector" or "searchUrl" not in sc:
         return {"status": "skipped", "reason": "手写配置，不做自动检测"}
     ua = sc.get("userAgent") or None
@@ -229,3 +231,111 @@ def _extract_id(sc, keyword, session, timeout, name, ua=None):
         return ids[0] if ids else None
     except Exception:
         return None
+
+
+# ---------------------------- json-api 数据源 ----------------------------
+
+def _header_dict(text):
+    out = {}
+    for line in (text or "").splitlines():
+        if ":" in line:
+            k, v = line.split(":", 1)
+            if k.strip():
+                out[k.strip()] = v.strip()
+    return out
+
+
+def _api_call(session, sc, req, repl, timeout, body_override=None):
+    """按 json-api 的 request（url / method / body / headers）发请求。repl：{keyword}/{id}/{page}/{pageSize} 的值。
+    url 里的值做 URL 编码；body 是 JSON 文本，字符串值做 JSON 转义，数字原样写进去。"""
+    import json
+    from urllib.parse import quote as q
+    url, body = req.get("url", ""), req.get("body", "") if body_override is None else body_override
+    for k, v in repl.items():
+        url = url.replace("{%s}" % k, q(str(v), safe=""))
+        body = body.replace("{%s}" % k, json.dumps(v)[1:-1] if isinstance(v, str) else str(v))
+    if not re.match(r"^https?://", url):
+        url = urljoin(sc.get("baseUrl", "") + "/", url.lstrip("/"))
+    headers = dict(ua_mod.request_headers(None))
+    headers.update(_header_dict(sc.get("headers")))
+    headers.update(_header_dict(req.get("headers")))
+    if str(req.get("method", "GET")).upper() == "POST":
+        headers.setdefault("Content-Type", "application/json")
+        return session.post(url, data=body.encode("utf-8"), headers=headers, timeout=timeout)
+    return session.get(url, headers=headers, timeout=timeout)
+
+
+def _api_json(r):
+    """返回 (data, bad)；bad 是 (status, reason) 或 None。"""
+    if r.status_code != 200:
+        return None, ("blocked" if r.status_code in (403, 429, 503) else "fail", "HTTP %d" % r.status_code)
+    try:
+        return r.json(), None
+    except ValueError:
+        return None, ("blocked" if _blocked(r.text) else "fail", "返回的不是 JSON")
+
+
+def _count_api_episodes(sc, data):
+    sub = sc["subject"]
+    ep = sub["episodes"]
+    if sub.get("channelFormatId") == "grouped":
+        chans = eval_simple_jsonpath(data, sub["channelFormatGrouped"]["selectChannels"])
+        return sum(len(eval_simple_jsonpath(c, ep["selectEpisodes"])) for c in chans)
+    return len(eval_simple_jsonpath(data, ep["selectEpisodes"]))
+
+
+def check_json_api(sc, keyword, session, timeout=15):
+    """json-api 数据源：搜索接口 -> 条目详情接口 -> 数出剧集。不做播放检测（Kazumi 规则里没有播放接口）。
+    章节请求体里的 id 带引号被接口拒绝（4xx）时，自动试不带引号的写法，通过了就把修正后的 body 放在结果里（subject_body）。"""
+    search, sub = sc["search"], sc["subject"]
+    size = search.get("pageSize") or 24
+    try:
+        r = _api_call(session, sc, search["request"], {"keyword": keyword, "page": 1, "pageSize": size}, timeout)
+    except requests.RequestException as e:
+        return {"status": "unreachable", "reason": "请求失败：%s" % type(e).__name__}
+    data, bad = _api_json(r)
+    if bad:
+        return {"status": bad[0], "reason": "搜索接口：" + bad[1]}
+    try:   # selectName / selectId 是相对每个条目的路径
+        ids, names = [], []
+        for item in eval_simple_jsonpath(data, search["selectItems"]):
+            i, n = eval_simple_jsonpath(item, search["selectId"]), eval_simple_jsonpath(item, search["selectName"])
+            if i and n:
+                ids.append(i[0]); names.append(n[0])
+    except ValueError as e:
+        return {"status": "fail", "reason": str(e)}
+    if not ids:
+        return {"status": "fail", "reason": "搜索接口能打开，但选择路径没有选中结果", "stage": "search"}
+    order = [i for i, n in enumerate(names) if keyword[:3] in str(n)] or [0]
+    picks = (order + [i for i in range(len(ids)) if i not in order])[:3]
+    last = ""
+    for i in picks:
+        sid = ids[i]
+        bodies = [None]
+        body = sub["request"].get("body", "")
+        if isinstance(sid, int) and '"{id}"' in body:
+            bodies.append(body.replace('"{id}"', "{id}"))
+        for variant in bodies:
+            try:
+                r = _api_call(session, sc, sub["request"], {"id": sid}, timeout, body_override=variant)
+            except requests.RequestException as e:
+                last = "详情接口请求失败：%s" % type(e).__name__
+                continue
+            data, bad = _api_json(r)
+            if bad:
+                last = "详情接口：" + bad[1]
+                if bad[0] == "blocked":
+                    return {"status": "blocked", "reason": last}
+                continue
+            try:
+                n = _count_api_episodes(sc, data)
+            except ValueError as e:
+                return {"status": "fail", "reason": str(e)}
+            if n:
+                res = {"status": "ok", "reason": "搜到 %d 个条目，详情接口选出 %d 个剧集" % (len(ids), n),
+                       "episode_count": n}
+                if variant is not None:
+                    res["subject_body"] = variant
+                return res
+            last = "详情接口能打开，但选择路径没有选中剧集"
+    return {"status": "fail", "reason": last or "详情接口没有返回剧集", "stage": "episodes"}
