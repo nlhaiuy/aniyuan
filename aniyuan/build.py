@@ -418,6 +418,7 @@ def main():
     ap.add_argument("--kazumi", help="KazumiRules 仓库目录")
     ap.add_argument("--anibaka", help="AniBakaRule 仓库目录")
     ap.add_argument("--easybangumi", help="CommunityJsExtensionEasyBangumi 仓库目录")
+    ap.add_argument("--official", help="官方订阅 animeko-subs 仓库目录（json-api 源缺 play 时借鉴它的写法）")
     ap.add_argument("--out", default="dist")
     ap.add_argument("--config", default=os.path.join(ROOT, "config.json"))
     ap.add_argument("--overrides", default=os.path.join(ROOT, "overrides"))
@@ -450,6 +451,9 @@ def main():
         cands += collect_anibaka(args.anibaka, baseline, config)
     if args.easybangumi:
         cands += collect_easybangumi(args.easybangumi, config)
+
+    from . import official as official_mod
+    official_mod.apply(cands, official_mod.load(args.official) if args.official else [])   # json-api 必须有 play：借官方的，借不到就不输出
 
     state = load_json(args.state) if os.path.exists(args.state) else {}
     new_state = apply_state(cands, state, int(time.time()))

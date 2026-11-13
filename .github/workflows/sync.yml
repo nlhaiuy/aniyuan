@@ -49,6 +49,7 @@ jobs:
           git clone https://github.com/Predidit/KazumiRules.git "$RUNNER_TEMP/KazumiRules"
           git clone https://github.com/AniBakaBaka/AniBakaRule.git "$RUNNER_TEMP/AniBakaRule"
           git clone https://github.com/easybangumiorg/CommunityJsExtensionEasyBangumi.git "$RUNNER_TEMP/EasyBangumi"
+          git clone --depth 1 https://github.com/creamycake-anime/animeko-subs.git "$RUNNER_TEMP/animeko-subs"
 
       - name: 自测（翻译器 + 整条流水线）
         run: |
@@ -113,7 +114,7 @@ jobs:
         env:
           # 优先用上一步起的 vmess 本地代理；否则用 Secret ANIYUAN_PROXY（http/socks5 地址）；都没有就是空串，走 GitHub 海外出口
           ANIYUAN_PROXY: ${{ env.ANIYUAN_PROXY || secrets.ANIYUAN_PROXY }}
-        run: python -m aniyuan --kazumi "$RUNNER_TEMP/KazumiRules" --anibaka "$RUNNER_TEMP/AniBakaRule" --easybangumi "$RUNNER_TEMP/EasyBangumi" --out dist.new --icons-dir icons --smoke --playcheck
+        run: python -m aniyuan --kazumi "$RUNNER_TEMP/KazumiRules" --anibaka "$RUNNER_TEMP/AniBakaRule" --easybangumi "$RUNNER_TEMP/EasyBangumi" --official "$RUNNER_TEMP/animeko-subs" --out dist.new --icons-dir icons --smoke --playcheck
 
       # 只打包要发布的几个文件（白名单），不带别的东西
       - name: 打包产物
