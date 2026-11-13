@@ -1,6 +1,6 @@
 # 订阅转换报告
 
-写入订阅 **33** 个数据源（候选 94 个，同站点合并后）。
+写入订阅 **32** 个数据源（候选 94 个，同站点合并后）。
 
 检测出口：代理 socks5h://127.0.0.1:10808。
 
@@ -9,10 +9,10 @@
 | 站点 | 最终 id | 采用 | 理由 | 候选（最后修改） |
 |---|---|---|---|---|
 | 5dm.dev | anibaka-5dm | anibaka:5dm | 更新（2026-10-07） | anibaka:5dm(2026-10-07)<br>baseline:5dm(2026-10-07) |
-| 7sefun.top | anibaka-7sefun | anibaka:7sefun | 更新（2026-11-01） | anibaka:7sefun(2026-11-01)<br>baseline:7sefun(2026-11-01)<br>easybangumi:kazumi-7sefun(2026-10-20)<br>kazumi:7sefun(2026-08-10) |
+| 7sefun.top | anibaka-7sefun | anibaka:7sefun | 更新（2026-11-01） | anibaka:7sefun(2026-11-01)<br>easybangumi:kazumi-7sefun(2026-10-20)<br>kazumi:7sefun(2026-08-10)<br>baseline:7sefun(2026-11-01) |
 | agedm.io | anibaka-age | anibaka:age | 更新（2026-11-01） | anibaka:age(2026-11-01)<br>baseline:age(2026-11-01)<br>kazumi:AGE(2026-10-28) |
 | akianime.cc | anibaka-akianime | anibaka:akianime | 更新（2026-11-01） | anibaka:akianime(2026-11-01)<br>baseline:akianime(2026-11-01)<br>kazumi:akianime(2026-08-17) |
-| ani.girigirilove.com | anibaka-girigirilove | kazumi:giriGiriLove | config.prefer 指定 kazumi | kazumi:giriGiriLove(2026-11-13)<br>baseline:girigirilove(2026-11-01) |
+| ani.girigirilove.com | anibaka-girigirilove | baseline:girigirilove | 只有这一个来源 | baseline:girigirilove(2026-11-01) |
 | ani.pekolove.net | anibaka-ani-pekolove | baseline:ani_pekolove | 只有这一个来源 | baseline:ani_pekolove(2026-11-01) |
 | anime7.top | anibaka-anime7 | anibaka:anime7 | 更新（2026-11-01） | anibaka:anime7(2026-11-01)<br>baseline:anime7(2026-11-01)<br>easybangumi:kazumi-anime7(2026-10-20) |
 | animoe.org | anibaka-animoe | anibaka:animoe | 更新（2026-11-01） | anibaka:animoe(2026-11-01)<br>baseline:animoe(2026-11-01) |
@@ -21,51 +21,50 @@
 | cyfz.top | anibaka-cyfz | anibaka:cyfz | 更新（2026-11-01） | anibaka:cyfz(2026-11-01)<br>baseline:cyfz(2026-11-01) |
 | dcc3.com | kazumi-mxdm | easybangumi:kazumi-mxdm | 更新（2026-10-20） | easybangumi:kazumi-mxdm(2026-10-20)<br>kazumi:MXdm(2026-10-01) |
 | didahd.xyz | anibaka-didahd | anibaka:didahd | 更新（2026-11-01） | anibaka:didahd(2026-11-01)<br>baseline:didahd(2026-11-01) |
-| dm1.xfdm.pro | kazumi-xfdmneo | kazumi:xfdmneo | 只有这一个来源；自动检测本次未通过，但以前通过过，暂不降级 | kazumi:xfdmneo(2026-03-08) |
+| dm1.xfdm.pro | kazumi-xfdmneo | kazumi:xfdmneo | 只有这一个来源 | kazumi:xfdmneo(2026-03-08) |
 | dmbus.cc | anibaka-dm84 | anibaka:dm84 | 更新（2026-11-01） | anibaka:dm84(2026-11-01)<br>kazumi:DM84(2026-02-02)<br>baseline:dm84(2026-11-01) |
-| ezdmw.org | anibaka-ezdmw | baseline:ezdmw | 更新（2026-11-01） | baseline:ezdmw(2026-11-01)<br>kazumi:ezdmw(2026-08-16) |
+| ezdmw.org | anibaka-ezdmw | baseline:ezdmw | 只有这一个来源 | baseline:ezdmw(2026-11-01) |
 | gugu3.com | anibaka-gugu | anibaka:gugu | 更新（2026-09-30） | anibaka:gugu(2026-09-30)<br>baseline:gugu(2026-09-30) |
 | ios.mifun.org | anibaka-ios-mifun | anibaka:ios_mifun | 更新（2026-11-01） | anibaka:ios_mifun(2026-11-01)<br>baseline:ios_mifun(2026-11-01) |
-| jcydm1.com | kazumi-9ciyuan | easybangumi:kazumi-9ciyuan | 只有这一个来源 | easybangumi:kazumi-9ciyuan(2026-10-20) |
+| jcydm1.com | kazumi-9ciyuan | easybangumi:kazumi-9ciyuan | 只有这一个来源；自动检测本次未通过，但以前通过过，暂不降级 | easybangumi:kazumi-9ciyuan(2026-10-20) |
 | lm6.net | anibaka-lm6 | anibaka:lm6 | 更新（2026-08-06） | anibaka:lm6(2026-08-06)<br>baseline:lm6(2026-08-06) |
 | lmm22.com | kazumi-lmm | kazumi:LMM | 只有这一个来源 | kazumi:LMM(2026-11-13) |
 | mayi520.org | kazumi-ant | easybangumi:kazumi-ant | 只有这一个来源 | easybangumi:kazumi-ant(2026-10-20) |
 | mgnacg.com | anibaka-mgnacg | anibaka:mgnacg | 更新（2026-11-01） | anibaka:mgnacg(2026-11-01)<br>kazumi:mgnacg(2026-10-15)<br>baseline:mgnacg(2026-11-01) |
-| moonci.com | anibaka-moonci | anibaka:moonci | 更新（2026-11-01） | anibaka:moonci(2026-11-01)<br>kazumi:aafun(2026-08-21)<br>kazumi:moonci(2026-10-19) |
+| moonci.com | anibaka-moonci | anibaka:moonci | 更新（2026-11-01） | anibaka:moonci(2026-11-01)<br>kazumi:moonci(2026-10-19)<br>kazumi:aafun(2026-08-21) |
 | mutedm.com | anibaka-2kdm | anibaka:2kdm | 更新（2026-11-01） | anibaka:2kdm(2026-11-01)<br>baseline:2kdm(2026-11-01) |
-| next.xifanacg.com | kazumi-xfdmnext | kazumi:xfdmnext | 只有这一个来源 | kazumi:xfdmnext(2026-10-01) |
 | omofun03.top | kazumi-omofun03 | easybangumi:kazumi-omofun03 | 只有这一个来源 | easybangumi:kazumi-omofun03(2026-07-27) |
 | sbdl.cc | anibaka-dalvdm | kazumi:dalvdm | 更新（2026-10-15） | kazumi:dalvdm(2026-10-15)<br>anibaka:dalvdm(2026-10-07)<br>baseline:dalvdm(2026-10-07) |
 | silisilifun.com | anibaka-silisili | anibaka:silisili | 更新（2026-11-01） | anibaka:silisili(2026-11-01)<br>baseline:silisili(2026-11-01) |
-| sorani.net | anibaka-sorani | baseline:sorani | 更新（2026-10-07） | baseline:sorani(2026-10-07)<br>kazumi:sorani(2026-07-13) |
+| sorani.net | anibaka-sorani | baseline:sorani | 只有这一个来源 | baseline:sorani(2026-10-07) |
 | tvtfun.net | kazumi-tvtfun | kazumi:TvTFun | 只有这一个来源 | kazumi:TvTFun(2026-10-28) |
-| xgcartoon.com | anibaka-xigua | anibaka:xigua | 更新（2026-11-01）；自动检测本次未通过，但以前通过过，暂不降级 | anibaka:xigua(2026-11-01)<br>baseline:xigua(2026-11-01) |
+| xgcartoon.com | anibaka-xigua | anibaka:xigua | 更新（2026-11-01） | anibaka:xigua(2026-11-01)<br>baseline:xigua(2026-11-01) |
 | ylys.cc | kazumi-ylsp | easybangumi:kazumi-ylsp | 只有这一个来源 | easybangumi:kazumi-ylsp(2026-07-27) |
 
 ## 全部候选
 
 | 来源 | 规则 | 版本 | 修改日期（依据） | 转换 | 自动检测 | 播放 | 采用 | 备注 |
 |---|---|---|---|---|---|---|---|---|
-| kazumi | 7sefun | 1.3 | 2026-08-10（内容未变） | 有近似 | ok | none | 否 | 末尾 text() 已改为取元素全部文本；等了 20 秒没有出现视频地址 |
+| kazumi | 7sefun | 1.3 | 2026-08-10（内容未变） | 有近似 | ok | ok | 否 | 末尾 text() 已改为取元素全部文本 |
 | kazumi | aafun | 1.2 | 2026-08-21（内容未变） | 完整 | ok | ok | 否 |  |
 | kazumi | AGE | 1.6 | 2026-10-28（内容未变） | 完整 | unreachable | - | 否 | 请求失败：SSLError |
 | kazumi | akianime | 1.4 | 2026-08-17（内容未变） | 完整 | ok | ok | 否 | 已自动修复选择器：搜索选择器改为 .vod-detail a[href]（命中 2/31）；剧集选择器改为 .anthology-list-box a（84 集） |
 | kazumi | baimao | 1.0 | 2026-01-28（内容未变） | 完整 | ok | ok | 否 | 域名已跳转，改用新域名 https://www.bmddm.com（原 https://www.baimaodm.com） |
 | kazumi | dalvdm | 1.2 | 2026-10-15（内容未变） | 完整 | ok | none | 是 | 优先级自动设为 2（检测通过，播放检测：none）；等了 20 秒没有出现视频地址 |
 | kazumi | DM84 | 1.4 | 2026-02-02（内容未变） | 完整 | ok | ok | 否 |  |
-| kazumi | ezdmw | 1.2 | 2026-08-16（内容未变） | 手写 | ok | none | 否 | 等了 20 秒没有出现视频地址 |
-| kazumi | giriGiriLove | 2.7 | 2026-11-13（内容已变） | 手写 | ok | ok | 是 | 手写配置基于 Kazumi v2.6，规则已更新到 v2.7，请核对是否需要同步修改 |
+| kazumi | ezdmw | 1.2 | 2026-08-16（内容未变） | 无法转换 | - | - | 否 | 章节 XPath 无法转换：并集 / |
+| kazumi | giriGiriLove | 2.7 | 2026-11-13（内容未变） | 无法转换 | - | - | 否 | 章节来自接口（chapterApiConfig），无法推出 Animeko 需要的播放接口，需要手写 override |
 | kazumi | LMM | 2.4 | 2026-11-13（内容未变） | 完整 | ok | ok | 是 | 优先级自动设为 1（检测通过，播放检测：ok） |
 | kazumi | mgnacg | 1.2 | 2026-10-15（内容未变） | 完整 | ok | ok | 否 |  |
-| kazumi | moonci | 1.1 | 2026-10-19（内容未变） | 完整 | ok | none | 否 | 等了 20 秒没有出现视频地址 |
+| kazumi | moonci | 1.1 | 2026-10-19（内容未变） | 完整 | ok | ok | 否 |  |
 | kazumi | mutefun | 1.6 | 2026-10-31（内容未变） | 无法转换 | - | - | 否 | 搜索 XPath 无法转换：没有步骤 |
 | kazumi | MXdm | 2.4 | 2026-10-01（内容未变） | 完整 | ok | ok | 否 |  |
-| kazumi | sorani | 1.0 | 2026-07-13（内容未变） | 手写 | skipped | - | 否 | 手写配置，不做自动检测 |
+| kazumi | sorani | 1.0 | 2026-07-13（内容未变） | 无法转换 | - | - | 否 | 章节来自接口（chapterApiConfig），无法推出 Animeko 需要的播放接口，需要手写 override |
 | kazumi | TvTFun | 1.3 | 2026-10-28（内容未变） | 完整 | ok | none | 是 | 优先级自动设为 2（检测通过，播放检测：none）；等了 20 秒没有出现视频地址 |
-| kazumi | xfdmneo | 1.1 | 2026-03-08（内容未变） | 完整 | fail | - | 是 | 自动检测未通过（连续 1/2 次），以前通过过，暂不降级、不加警告；优先级自动设为 1（检测未通过但在宽限期内，按上次通过的成绩，播放检测：ok）；搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器） |
-| kazumi | xfdmnext | 1.1 | 2026-10-01（内容未变） | 手写 | skipped | - | 是 | 手写配置，不做自动检测 |
-| anibaka | 7sefun | rev 9 | 2026-11-01（内容未变） | 完整 | ok | none | 是 | 优先级自动设为 2（检测通过，播放检测：none）；等了 20 秒没有出现视频地址 |
-| baseline | 7sefun | rev 9 | 2026-11-01（内容未变） | 回退基线 | ok | none | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；等了 20 秒没有出现视频地址 |
+| kazumi | xfdmneo | 1.1 | 2026-03-08（内容未变） | 完整 | fail | - | 是 | 搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器） |
+| kazumi | xfdmnext | 1.1 | 2026-10-01（内容未变） | 无法转换 | - | - | 否 | 章节来自接口（chapterApiConfig），无法推出 Animeko 需要的播放接口，需要手写 override |
+| anibaka | 7sefun | rev 9 | 2026-11-01（内容未变） | 完整 | ok | ok | 是 | 优先级自动设为 1（检测通过，播放检测：ok） |
+| baseline | 7sefun | rev 9 | 2026-11-01（内容未变） | 回退基线 | fail | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；自动检测未通过（连续 1/2 次），以前通过过，暂不降级、不加警告；搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器） |
 | anibaka | cyfz | rev 7 | 2026-11-01（内容未变） | 完整 | ok | ok | 是 |  |
 | baseline | cyfz | rev 7 | 2026-11-01（内容未变） | 回退基线 | fail | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器） |
 | anibaka | 5dm | rev 1 | 2026-10-07（内容未变） | 完整 | blocked | - | 是 | 优先级自动设为 3（检测没有结论（blocked））；HTTP 403 |
@@ -76,28 +75,28 @@
 | baseline | lm6 | rev 5 | 2026-08-06（内容未变） | 回退基线 | fail | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器） |
 | anibaka | aniwatch | rev 5 | 2026-11-01（内容未变） | 无法转换 | - | - | 否 | 章节步骤无法转换（需要 episodes 操作，实际是：fetch, jsonEpisodes, regex）；baseline 里也没有这个源，已跳过 |
 | anibaka | akianime | rev 7 | 2026-11-01（内容未变） | 有近似 | ok | ok | 是 | searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName） |
-| baseline | akianime | rev 7 | 2026-11-01（内容未变） | 回退基线 | ok | ok | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较 |
+| baseline | akianime | rev 7 | 2026-11-01（内容未变） | 回退基线 | fail | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；自动检测未通过（连续 1/2 次），以前通过过，暂不降级、不加警告；搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实详情页上没找到合适的剧集列表选择器） |
 | anibaka | animoe | rev 5 | 2026-11-01（内容未变） | 有近似 | ok | ok | 是 | AniBaka 播放步骤不是嗅探（playerAaaa/regex），已改成 WebView 嗅探，请在 Animeko 里试播确认 |
 | baseline | animoe | rev 5 | 2026-11-01（内容未变） | 回退基线 | blocked | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；搜索页出现验证码/环境检查 |
 | anibaka | tvtfun | rev 13 | 2026-11-01（内容未变） | 无法转换 | - | - | 否 | 章节步骤无法转换（需要 episodes 操作，实际是：fetch, jsonEpisodes, regex）；baseline 里也没有这个源，已跳过 |
 | anibaka | ios_mifun | rev 7 | 2026-11-01（内容未变） | 完整 | ok | ok | 是 |  |
-| baseline | ios_mifun | rev 7 | 2026-11-01（内容未变） | 回退基线 | ok | ok | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；已自动修复 matchVideoUrl：matchVideoUrl 改为通用写法（认出 1/1 个视频地址，例：https://groupvideo.photo.qq.com/1071_0bc3bubemaac7yagxva7fnss2dieiygqersa.f0.mp4?dis_k=683） |
+| baseline | ios_mifun | rev 7 | 2026-11-01（内容未变） | 回退基线 | ok | ok | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；已自动修复 matchVideoUrl：matchVideoUrl 改为通用写法（认出 1/1 个视频地址，例：https://groupvideo.photo.qq.com/1071_0bc3bubemaac7yagxva7fnss2dieiygqersa.f0.mp4?dis_k=dee） |
 | anibaka | agekkkk | rev 3 | 2026-11-01（内容未变） | 无法转换 | - | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等） |
 | baseline | agekkkk | rev 3 | 2026-11-01（内容未变） | 回退基线 | blocked | - | 是 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；优先级自动设为 3（检测没有结论（blocked））；搜索页出现验证码/环境检查 |
 | anibaka | didahd | rev 7 | 2026-11-01（内容未变） | 有近似 | ok | ok | 是 | AniBaka 播放步骤用了 maccmsVerify 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频；优先级自动设为 1（检测通过，播放检测：ok） |
 | baseline | didahd | rev 7 | 2026-11-01（内容未变） | 回退基线 | ok | ok | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；域名已跳转，改用新域名 https://www.didahd.xyz（原 https://www.didahd.pro） |
 | anibaka | anime7 | rev 6 | 2026-11-01（内容未变） | 完整 | ok | ok | 是 | 优先级自动设为 1（检测通过，播放检测：ok） |
-| baseline | anime7 | rev 6 | 2026-11-01（内容未变） | 回退基线 | ok | ok | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；已自动修复 matchVideoUrl：matchVideoUrl 改为通用写法（认出 1/1 个视频地址，例：https://vip.dyttzyplay.com/?url=https://vip.dytt-cinema.com/20260116/45690_89409c42/index.） |
+| baseline | anime7 | rev 6 | 2026-11-01（内容未变） | 回退基线 | ok | ok | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较 |
 | anibaka | hanimeone | rev 7 | 2026-11-01（内容未变） | 无法转换 | - | - | 否 | 章节步骤无法转换（需要 episodes 操作，实际是：jsonEpisodes, template）；baseline 里也没有这个源，已跳过 |
 | anibaka | girigirilove | rev 5 | 2026-11-01（内容未变） | 无法转换 | - | - | 否 | 章节步骤无法转换（需要 episodes 操作，实际是：fetch, maccmsApiEpisodes, regex, template） |
-| baseline | girigirilove | rev 5 | 2026-11-01（内容未变） | 回退基线 | fail | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器） |
+| baseline | girigirilove | rev 5 | 2026-11-01（内容未变） | 回退基线 | fail | - | 是 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器） |
 | anibaka | girigirilove_beta | rev 2 | 2026-11-01（内容未变） | 无法转换 | - | - | 否 | 章节步骤无法转换（需要 episodes 操作，实际是：fetch, maccmsApiEpisodes, regex, template）；baseline 里也没有这个源，已跳过 |
 | anibaka | xifanacg | rev 5 | 2026-09-30（内容未变） | 无法转换 | - | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）；baseline 里也没有这个源，已跳过 |
 | anibaka | age | rev 7 | 2026-11-01（内容未变） | 有近似 | unreachable | - | 是 | searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）；优先级自动设为 3（检测没有结论（unreachable））；请求失败：SSLError |
 | baseline | age | rev 7 | 2026-11-01（内容未变） | 回退基线 | unreachable | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；请求失败：SSLError |
-| anibaka | xigua | rev 9 | 2026-11-01（内容未变） | 有近似 | fail | - | 是 | searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）；AniBaka 播放步骤不是嗅探（json/regex/template），已改成 WebView 嗅探，请在 Animeko 里试播确认；自动检测未通过（连续 1/2 次），以前通过过，暂不降级、不加警告；HTTP 502 |
-| baseline | xigua | rev 9 | 2026-11-01（内容未变） | 回退基线 | fail | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；自动检测未通过（连续 1/2 次），以前通过过，暂不降级、不加警告；HTTP 502 |
-| anibaka | 2kdm | rev 6 | 2026-11-01（内容未变） | 完整 | unreachable | - | 是 | 请求失败：ReadTimeout |
+| anibaka | xigua | rev 9 | 2026-11-01（内容未变） | 有近似 | fail | - | 是 | searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）；AniBaka 播放步骤不是嗅探（json/regex/template），已改成 WebView 嗅探，请在 Animeko 里试播确认；HTTP 502 |
+| baseline | xigua | rev 9 | 2026-11-01（内容未变） | 回退基线 | fail | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；HTTP 502 |
+| anibaka | 2kdm | rev 6 | 2026-11-01（内容未变） | 完整 | fail | - | 是 | HTTP 404 |
 | baseline | 2kdm | rev 6 | 2026-11-01（内容未变） | 回退基线 | fail | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；HTTP 404 |
 | anibaka | gugu | rev 4 | 2026-09-30（内容未变） | 完整 | fail | - | 是 | HTTP 404 |
 | baseline | gugu | rev 4 | 2026-09-30（内容未变） | 回退基线 | fail | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；HTTP 404 |
@@ -107,9 +106,9 @@
 | anibaka | dm84 | rev 3 | 2026-11-01（内容未变） | 有近似 | ok | ok | 是 | searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）；AniBaka 播放步骤不是嗅探（fetch/json/regex/replace/select/setVar/template），已改成 WebView 嗅探，请在 Animeko 里试播确认；优先级自动设为 1（检测通过，播放检测：ok） |
 | baseline | dm84 | rev 3 | 2026-11-01（内容未变） | 回退基线 | fail | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器） |
 | anibaka | fsdm02 | rev 3 | 2026-09-30（内容未变） | 无法转换 | - | - | 否 | 搜索步骤无法转换（POST/JSON 接口、磁力站、需要嗅探搜索页等）；baseline 里也没有这个源，已跳过 |
-| anibaka | mgnacg | rev 2 | 2026-11-01（内容未变） | 有近似 | unreachable | - | 是 | AniBaka 播放步骤用了 playerDecrypt 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频；海外检测打不开（连续 1 次），0 天前通过过，暂按上次的成绩排名；优先级自动设为 1（海外检测打不开，沿用 0.3 天前通过时的成绩，播放检测：ok）；请求失败：ReadTimeout |
+| anibaka | mgnacg | rev 2 | 2026-11-01（内容未变） | 有近似 | ok | ok | 是 | AniBaka 播放步骤用了 playerDecrypt 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频；优先级自动设为 1（检测通过，播放检测：ok） |
 | baseline | mgnacg | rev 2 | 2026-11-01（内容未变） | 回退基线 | fail | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器） |
-| anibaka | moonci | rev 4 | 2026-11-01（内容未变） | 有近似 | blocked | - | 是 | searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）；海外检测被拦（连续 1 次），0 天前通过过，暂按上次的成绩排名；优先级自动设为 1（海外检测被拦，沿用 0.3 天前通过时的成绩，播放检测：ok）；HTTP 403 |
+| anibaka | moonci | rev 4 | 2026-11-01（内容未变） | 有近似 | ok | ok | 是 | searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）；优先级自动设为 1（检测通过，播放检测：ok） |
 | anibaka | silisili | rev 2 | 2026-11-01（内容未变） | 有近似 | fail | - | 是 | searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）；AniBaka 播放步骤用了 crypto 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频；搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器） |
 | baseline | silisili | rev 2 | 2026-11-01（内容未变） | 回退基线 | fail | - | 否 | 用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较；搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器） |
 | anibaka | ezdmw | rev 5 | 2026-11-01（内容未变） | 无法转换 | - | - | 否 | searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）；章节步骤无法转换（需要 episodes 操作，实际是：episodes） |
@@ -123,9 +122,9 @@
 | easybangumi | girigirilove-beta | 1.0 | 2026-10-14（内容未变） | 无法转换 | - | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
 | easybangumi | girigirilove-v2 | 1.6 | 2026-10-25（内容未变） | 无法转换 | - | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
 | easybangumi | girigirilove | 1.5 | 2026-07-15（内容未变） | 无法转换 | - | - | 否 | 手写 JS 逻辑，没有可提取的 Kazumi 规则常量（缺 SEARCH_URL/SEARCH_LIST_XPATH） |
-| easybangumi | kazumi-7sefun | 1.2.1 | 2026-10-20（内容未变） | 有近似 | ok | none | 否 | 末尾 text() 已改为取元素全部文本；等了 20 秒没有出现视频地址 |
-| easybangumi | kazumi-9ciyuan | 1.3.1 | 2026-10-20（内容未变） | 完整 | ok | ok | 是 | 已自动修复选择器：搜索选择器改为 .module-card-item-title a[href*='/vod/']（命中 3/3）；剧集选择器改为 #panel1 a（30 集）；优先级自动设为 1（检测通过，播放检测：ok） |
-| easybangumi | kazumi-anime7 | 1.0.1 | 2026-10-20（内容未变） | 完整 | ok | ok | 否 | 已自动修复选择器：搜索选择器改为 .hl-item-title a[href*='/vod-detail/']（命中 3/3）；剧集选择器改为 .hl-plays-list a（10 集） |
+| easybangumi | kazumi-7sefun | 1.2.1 | 2026-10-20（内容未变） | 有近似 | ok | ok | 否 | 末尾 text() 已改为取元素全部文本 |
+| easybangumi | kazumi-9ciyuan | 1.3.1 | 2026-10-20（内容未变） | 完整 | fail | - | 是 | 自动检测未通过（连续 1/2 次），以前通过过，暂不降级、不加警告；优先级自动设为 1（检测未通过但在宽限期内，按上次通过的成绩，播放检测：ok）；搜索页能打开，但选择器没有选中任何结果（自动修复也失败：修复后的选择器仍未通过：搜索页能打开，但选择器没有选中任何结果） |
+| easybangumi | kazumi-anime7 | 1.0.1 | 2026-10-20（内容未变） | 完整 | ok | ok | 否 |  |
 | easybangumi | kazumi-ant | 0.0.3 | 2026-10-20（内容未变） | 完整 | ok | ok | 是 | 优先级自动设为 1（检测通过，播放检测：ok） |
 | easybangumi | kazumi-baimao | 1.0.1 | 2026-10-20（内容未变） | 完整 | ok | ok | 是 | 域名已跳转，改用新域名 https://www.bmddm.com（原 https://www.baimaodm.com）；优先级自动设为 1（检测通过，播放检测：ok） |
 | easybangumi | kazumi-gpjda | 1.0 | 2026-07-10（内容未变） | 无法转换 | - | - | 否 | 规则使用 POST 搜索，Animeko 的 Web 数据源不支持 |
@@ -143,7 +142,7 @@
 
 ## 海外盲区
 
-最终入选的源里，有 8 个这次在海外检测不出结论（被拦 / 打不开），不等于站点坏了：
+最终入选的源里，有 5 个这次在海外检测不出结论（被拦 / 打不开），不等于站点坏了：
 
 | 候选 | 状态 | 排名依据 |
 |---|---|---|
@@ -151,9 +150,6 @@
 | baseline:ani_pekolove | blocked | 从没检测通过过，没有可沿用的成绩 |
 | baseline:agekkkk | blocked | 从没检测通过过，没有可沿用的成绩 |
 | anibaka:age | unreachable | 从没检测通过过，没有可沿用的成绩 |
-| anibaka:2kdm | unreachable | 从没检测通过过，没有可沿用的成绩 |
-| anibaka:mgnacg | unreachable | 沿用 0.3 天前通过时的成绩 |
-| anibaka:moonci | blocked | 沿用 0.3 天前通过时的成绩 |
 | easybangumi:kazumi-omofun03 | unreachable | 从没检测通过过，没有可沿用的成绩 |
 
 ## UA 体检
@@ -173,20 +169,21 @@
 | aniyuan-gugu | 没取到（保留原地址） | 试了 2 个候选地址都不是可用的图片，保留原来的 iconUrl |
 | aniyuan-ios-mifun | 没取到（保留原地址） | 试了 2 个候选地址都不是可用的图片，保留原来的 iconUrl |
 | aniyuan-omofun03 | 没取到（保留原地址） | 试了 2 个候选地址都不是可用的图片，保留原来的 iconUrl |
+| aniyuan-sorani | 沿用上次 | 这次没取到，沿用上次存的图标（试了 1 个候选地址都不是可用的图片） |
 | aniyuan-tvtfun | 没取到（保留原地址） | 试了 1 个候选地址都不是可用的图片，保留原来的 iconUrl |
 | aniyuan-xigua | 沿用上次 | 这次没取到，沿用上次存的图标（试了 2 个候选地址都不是可用的图片） |
 | aniyuan-ylsp | 没取到（保留原地址） | 试了 1 个候选地址都不是可用的图片，保留原来的 iconUrl |
-| aniyuan-5dm | 新存 | https://www.5dm.dev/wp-content/themes/5dm-next/assets/brand/mascot-face-32.png |
+| aniyuan-5dm | 没变 | https://www.5dm.dev/wp-content/themes/5dm-next/assets/brand/mascot-face-32.png |
 | aniyuan-7sefun | 没变 | https://www.7sefun.top/pc/img/favicon.ico |
-| aniyuan-9ciyuan | 新存 | https://www.jcydm1.com/upload/mxprocms/20241012-1/5ba127dcfd607d60e83d5f984f821ef0.png |
-| aniyuan-age | 新存 | https://www.agedm.io/favicon.ico |
+| aniyuan-9ciyuan | 没变 | https://www.jcydm1.com/upload/mxprocms/20241012-1/5ba127dcfd607d60e83d5f984f821ef0.png |
+| aniyuan-age | 没变 | https://www.agedm.io/favicon.ico |
 | aniyuan-agekkkk | 没变 | https://cn.agekkkk.com/template/the4/statics/img/favicon.ico |
 | aniyuan-ani-pekolove | 没变 | https://ani.pekolove.net/wp-content/uploads/cropped-acglogo2-2-32x32.png |
 | aniyuan-anime7 | 没变 | https://ani7.b-cdn.net/upload/logo/icon.png |
 | aniyuan-animoe | 没变 | https://github.elemecdn.com/mstatic616/images/logo/favicon.png |
-| aniyuan-ant | 新存 | https://xcdn.khfed.com:8443/mayi/statics/img/favicon.ico |
+| aniyuan-ant | 没变 | https://xcdn.khfed.com:8443/mayi/statics/img/favicon.ico |
 | aniyuan-baimao | 没变 | https://www.bmddm.com/hdst/hm_pic/favicon.ico |
-| aniyuan-dalvdm | 新存 | https://www.sbdl.cc/template/mizhiady/statics/images/favicon.png |
+| aniyuan-dalvdm | 没变 | https://www.sbdl.cc/template/mizhiady/statics/images/favicon.png |
 | aniyuan-didahd | 没变 | https://www.didahd.xyz/template/mytheme/statics/img/favicon.ico |
 | aniyuan-dm84 | 没变 | https://dmbus.cc/favicon.ico |
 | aniyuan-ezdmw | 没变 | https://www.ezdmw.org/Public/images/icon.png |
@@ -197,6 +194,4 @@
 | aniyuan-moonci | 没变 | https://www.moonci.com/template/conch/asset/img/favicon.png |
 | aniyuan-mxdm | 没变 | https://www.dcc3.com/favicon.ico |
 | aniyuan-silisili | 没变 | https://www.silisilifun.com/tgy/img/logo.png |
-| aniyuan-sorani | 没变 | https://www.sorani.net/favicon.ico |
-| aniyuan-xfdmneo | 新存 | https://xifan.moe/favicon.ico |
-| aniyuan-xfdmnext | 没变 | https://next.xifanacg.com/favicon.ico?favicon.0dlvkfxcpy8s1.ico |
+| aniyuan-xfdmneo | 没变 | https://xifan.moe/favicon.ico |
