@@ -3,6 +3,7 @@
 只做“能确定地转”的部分；转不了的返回 status="unsupported" 和原因，
 由 build.py 改用 overrides/ 里手写的配置，或在报告里列出。
 """
+import json
 import re
 from urllib.parse import urlparse
 
@@ -53,10 +54,17 @@ def _simple_json_field(path):
     return m.group(1) if m else None
 
 
+def _scalar(v):
+    """查询参数里的值：布尔写成 true/false（str(True) 会得到 True，接口认不出）。"""
+    if isinstance(v, bool):
+        return "true" if v else "false"
+    return str(v)
+
+
 def _query_string(query):
     parts = []
     for k, v in (query or {}).items():
-        v = str(v).replace("@keyword", "{keyword}")
+        v = _scalar(v).replace("@keyword", "{keyword}")
         parts.append("%s=%s" % (k, v))
     return "&".join(parts)
 
@@ -72,7 +80,7 @@ def convert_rule(rule, config=None):
     if rule.get("usePost"):
         return res.fail("规则使用 POST 搜索，Animeko 的 Web 数据源不支持")
     if rule.get("chapterMode") == "api" or rule.get("chapterApiConfig"):
-        return res.fail("章节来自接口（chapterApiConfig），无法推出 Animeko 需要的播放接口，需要手写 override")
+        return convert_api_rule(rule, config, res, origin)
 
     sc = {
         "searchUseOnlyFirstWord": True,
@@ -195,4 +203,179 @@ def convert_rule(rule, config=None):
         },
     }
     res.status = "partial" if res.notes else "ok"
+    return res
+
+
+# ====================== 接口型规则 -> Animeko 的 json-api 数据源 ======================
+#
+# Kazumi 的“接口取章节”规则（searchMode/chapterMode = api）没有网页选择器可转，
+# 对应 Animeko 的 json-api 数据源（官方订阅 animeko-subs 的 subs/api/ 就是这种格式）。
+# 下面的映射是通用规则，不针对某个站点；从官方源里借鉴的通用写法：
+#   * 请求头写成 "名字: 值" 逐行一条的字符串；
+#   * 接口域名和网站域名不同时补一条 Origin（接口常常按它做跨域校验）；
+#   * 搜索条目用 {id} 拼出详情页地址，剧集用 {subjectId}/{id} 拼出播放页地址；
+#   * 带线路的接口用 grouped 通道，没有线路名的用 no-channel；
+#   * 剧集类型映射 typeMapping、名称模板 nameTemplate、autoMatch 用官方一致的默认值。
+# 转不了的（如章节是 "a$b#c$d" 这种分隔字符串）明确写出原因。
+
+DEFAULT_PAGE_SIZE = 24
+EPISODE_TYPE_MAPPING = "main=MainStory\nsp=SP\nova=OVA\noad=OAD\nmovie=MainStory\nex=SP"
+_SORT_FIELD = re.compile(r"(order|number|num|index|sort|seq|episode)$", re.I)
+_SIZE_KEYS = ("items_per_page", "pageSize", "page_size", "size", "limit", "per_page")
+
+
+def _headers_string(headers, extra=None):
+    items = dict(headers or {})
+    for k, v in (extra or {}).items():
+        if not any(k.lower() == x.lower() for x in items):
+            items[k] = v
+    return "\n".join("%s: %s" % (k, v) for k, v in items.items())
+
+
+def _template(text):
+    return (text or "").replace("@keyword", "{keyword}").replace("@source", "{id}")
+
+
+def _request(req, origin, site_origin, with_keyword):
+    """Kazumi 的 request -> json-api 的 request（url / method / body / headers）。"""
+    method = str(req.get("method", "GET")).upper()
+    if method not in ("GET", "POST"):
+        raise ValueError("接口方法 %s 暂不支持" % method)
+    url = req.get("url", "")
+    if not url:
+        raise ValueError("缺少接口地址")
+    qs = _query_string(req.get("query")).replace("@source", "{id}")
+    if qs:
+        url += ("&" if "?" in url else "?") + qs
+    body = ""
+    if req.get("body") not in (None, "", {}):
+        if req.get("bodyType", "json") != "json":
+            raise ValueError("接口请求体类型 %s 暂不支持" % req.get("bodyType"))
+        body = _template(json.dumps(req["body"], ensure_ascii=False, separators=(",", ":")))
+    return {"url": url.replace("@keyword", "{keyword}").replace("@source", "{id}"),
+            "method": method, "body": body, "headers": ""}
+
+
+def _page_size(req):
+    for src in (req.get("body") or {}, req.get("query") or {}):
+        for k in _SIZE_KEYS:
+            if isinstance(src.get(k), int) and src[k] > 0:
+                return src[k]
+    return DEFAULT_PAGE_SIZE
+
+
+def _join_path(prefix, path):
+    """单线路时，剧集路径是接在线路路径后面的：$.data + $.episodes[*] -> $.data.episodes[*]。"""
+    if not prefix or prefix == "$":
+        return path
+    return prefix.rstrip(".") + "." + path[2:] if path.startswith("$.") else prefix + path
+
+
+def convert_api_rule(rule, config, res, origin):
+    config = config or {}
+    if rule.get("searchMode") != "api" and not rule.get("searchApiConfig"):
+        return res.fail("章节来自接口，但搜索是网页：json-api 数据源两步都要走接口")
+    sapi = rule.get("searchApiConfig") or {}
+    capi = rule.get("chapterApiConfig") or {}
+    fmt = capi.get("format", "nested")
+    if fmt != "nested":
+        return res.fail("章节接口格式是 %s（分隔字符串等），Animeko 的 json-api 没有对应的解析方式" % fmt)
+    for key in ("episodesPath", "episodeNamePath", "episodeUrlPath"):
+        if not capi.get(key):
+            return res.fail("章节接口缺少 %s" % key)
+
+    api_origin = _origin(sapi.get("request", {}).get("url", ""))
+    if not api_origin:
+        return res.fail("搜索接口地址不是完整的 http(s) 地址")
+    extra = {"Origin": origin} if api_origin != origin else {}
+    try:
+        search_req = _request(sapi.get("request", {}), api_origin, origin, True)
+        subject_req = _request(capi.get("request", {}), api_origin, origin, False)
+    except ValueError as e:
+        return res.fail(str(e))
+    if "{keyword}" not in search_req["url"] + search_req["body"]:
+        return res.fail("搜索接口里没有找到关键词参数")
+    if "{id}" not in subject_req["url"] + subject_req["body"]:
+        return res.fail("章节接口里没有找到条目 id 参数")
+    list_path, name_path, id_path = sapi.get("listPath"), sapi.get("namePath"), sapi.get("sourcePath")
+    if not (list_path and name_path and id_path):
+        return res.fail("搜索接口缺少 listPath / namePath / sourcePath")
+
+    headers = {}
+    headers.update(sapi.get("request", {}).get("headers") or {})
+    headers.update(capi.get("request", {}).get("headers") or {})
+
+    page = capi.get("episodePage") or {}
+    page_url = page.get("url", "")
+    if page_url:
+        q = _query_string(page.get("query")).replace("@episodeUrl", "{id}").replace("@source", "{subjectId}")
+        ep_tpl = page_url.replace("@episodeUrl", "{id}").replace("@source", "{subjectId}")
+        if q:
+            ep_tpl += ("&" if "?" in ep_tpl else "?") + q
+        cut = page_url.find("@source")
+        subject_tpl = (page_url[:cut + len("@source")] if cut >= 0 else origin + "/").replace("@source", "{id}")
+    else:
+        ep_tpl, subject_tpl = "{id}", origin + "/"
+        res.notes.append("章节接口没有 episodePage，剧集地址直接用 id")
+
+    roads, road_name = capi.get("roadsPath") or "", capi.get("roadNamePath") or ""
+    sort_field = None
+    m = re.match(r"^\$\.(\w+)$", capi.get("episodeUrlPath", ""))
+    if m and _SORT_FIELD.search(m.group(1)):
+        sort_field = capi["episodeUrlPath"]
+    episodes = {
+        "selectName": capi["episodeNamePath"],
+        "selectId": capi["episodeUrlPath"],
+        "selectSort": sort_field or "",
+        "selectType": "",
+        "episodeUrlTemplate": ep_tpl,
+    }
+    if sort_field:
+        episodes["nameTemplate"] = "{sort} {name}"
+    else:
+        res.notes.append("接口里没有明确的剧集序号字段，序号只能靠剧集名称识别，请在 Animeko 里确认选集顺序")
+    if roads.endswith("[*]") and road_name:
+        subject = {"channelFormatId": "grouped",
+                   "channelFormatGrouped": {"selectChannels": roads, "selectChannelName": road_name}}
+        episodes["selectEpisodes"] = capi["episodesPath"]
+    else:
+        subject = {"channelFormatId": "no-channel"}
+        episodes["selectEpisodes"] = _join_path(roads, capi["episodesPath"])
+        res.info.append("接口没有线路名，所有剧集合并为一条")
+    subject_req_full = dict(subject_req)
+    subject.update({"request": subject_req_full, "episodes": episodes})
+
+    name = rule.get("name", "")
+    tier = (config.get("tiers") or {}).get(name, config.get("default_tier", 4))
+    res.notes.append("Kazumi 规则里没有播放接口，生成的 json-api 源没有 play 配置，能否播放请在 Animeko 里试播确认")
+    res.source = {
+        "id": "kazumi-" + slugify(name),
+        "factoryId": "json-api",
+        "version": 1,
+        "arguments": {
+            "name": name,
+            "description": "",
+            "iconUrl": origin + "/favicon.ico",
+            "searchConfig": {
+                "baseUrl": api_origin,
+                "headers": _headers_string(headers, extra),
+                "requestInterval": 1000,
+                "searchCacheTtl": 7200000,
+                "defaultResolution": "1080P",
+                "defaultSubtitleLanguage": "CHS",
+                "autoMatch": {"enabled": True, "searchUseSubjectNamesCount": 3},
+                "search": {
+                    "request": search_req,
+                    "pageSize": _page_size(sapi.get("request", {})),
+                    "selectItems": list_path,
+                    "selectName": name_path,
+                    "selectId": id_path,
+                    "subjectUrlTemplate": subject_tpl,
+                },
+                "subject": subject,
+            },
+            "tier": tier,
+        },
+    }
+    res.status = "partial"
     return res
