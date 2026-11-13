@@ -112,48 +112,60 @@
       "version": 2,
       "arguments": {
         "name": "七色番",
-        "description": "七色番提供最新番剧TV、剧场版在线高速播放，每日及时更新，是动漫迷的不二选择！（来源：AniBaka 规则 7sefun rev 9，自动转换）",
+        "description": "七色番提供最新番剧TV、剧场版在线高速播放，每日及时更新，是动漫迷的不二选择！（来源：基线配置 7sefun）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-7sefun.ico",
         "searchConfig": {
           "searchUrl": "https://www.7sefun.top/vodsearch/-------------.html?wd={keyword}",
           "searchUseOnlyFirstWord": true,
           "searchRemoveSpecial": true,
           "searchUseSubjectNamesCount": 1,
-          "rawBaseUrl": "https://www.7sefun.top",
+          "rawBaseUrl": "",
           "requestInterval": 3000,
-          "subjectFormatId": "a",
-          "selectorSubjectFormatA": {
-            "selectLists": "a.video-wrapper[href^=\"/voddetail/\"]",
+          "searchCacheTtl": 7200000,
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+          "subjectFormatId": "indexed",
+          "selectorSubjectFormatIndexed": {
+            "selectNames": "div.video.anim > div.video-by",
+            "selectLinks": "div.video.anim > a",
+            "linkTemplate": null,
             "preferShorterName": true
           },
-          "channelFormatId": "no-channel",
-          "selectorChannelFormatNoChannel": {
-            "selectEpisodes": ".vod-play-list-container a",
-            "selectEpisodeLinks": ""
+          "channelFormatId": "index-grouped",
+          "selectorChannelFormatFlattened": {
+            "selectChannelNames": "div.chat-header.anim > span",
+            "matchChannelName": "",
+            "selectEpisodeLists": "div.message-container.vod-play-list-container",
+            "selectEpisodesFromList": "span > a",
+            "selectEpisodeLinksFromList": "",
+            "matchEpisodeSortFromName": "第\\s*(?<ep>.+)\\s*[话集]"
           },
-          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
           "defaultResolution": "1080P",
           "defaultSubtitleLanguage": "CHS",
           "onlySupportsPlayers": [],
           "filterByEpisodeSort": true,
-          "filterBySubjectName": true,
           "selectMedia": {
             "distinguishSubjectName": true,
-            "distinguishChannelName": false
+            "distinguishChannelName": true
           },
           "matchVideo": {
-            "enableNestedUrl": false,
+            "enableNestedUrl": true,
             "matchNestedUrl": "$^",
-            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
+            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http)(?!.*jxdunrui\\.top).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/(?!.*jxdunrui\\.top).+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/)|(\\/video\\/.*mime_type=video)",
             "cookies": "quality=1080",
             "addHeadersToVideo": {
               "referer": "https://www.7sefun.top/"
-            },
-            "scanDomMediaUrls": true
+            }
+          },
+          "autoMatch": {
+            "enabled": true,
+            "searchUseOnlyFirstWord": true,
+            "searchRemoveSpecial": true,
+            "searchUseSubjectNamesCount": 1,
+            "preferShorterName": true,
+            "filterByEpisodeSort": true
           }
         },
-        "tier": 1,
-        "channelTiers": {}
+        "tier": 1
       }
     },
     {
@@ -1342,7 +1354,7 @@
       "version": 2,
       "arguments": {
         "name": "LMM",
-        "description": "站点 lmm85.com。（来源：Kazumi 规则 LMM v2.3，自动转换）",
+        "description": "站点 lmm22.com。（来源：Kazumi 规则 LMM v2.4，自动转换）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-lmm.ico",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1350,7 +1362,7 @@
           "searchUseSubjectNamesCount": 1,
           "rawBaseUrl": "",
           "requestInterval": 3000,
-          "searchUrl": "https://www.lmm85.com/index.php/ajax/suggest?mid=1&wd={keyword}",
+          "searchUrl": "https://www.lmm22.com/index.php/ajax/suggest?mid=1&wd={keyword}",
           "subjectFormatId": "json-path-indexed",
           "selectorSubjectFormatJsonPathIndexed": {
             "selectLinks": "$.list[*]['id']",
@@ -1831,48 +1843,60 @@
         "version": 2,
         "arguments": {
           "name": "七色番",
-          "description": "七色番提供最新番剧TV、剧场版在线高速播放，每日及时更新，是动漫迷的不二选择！（来源：AniBaka 规则 7sefun rev 9，自动转换）",
+          "description": "七色番提供最新番剧TV、剧场版在线高速播放，每日及时更新，是动漫迷的不二选择！（来源：基线配置 7sefun）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-7sefun.ico",
           "searchConfig": {
             "searchUrl": "https://www.7sefun.top/vodsearch/-------------.html?wd={keyword}",
             "searchUseOnlyFirstWord": true,
             "searchRemoveSpecial": true,
             "searchUseSubjectNamesCount": 1,
-            "rawBaseUrl": "https://www.7sefun.top",
+            "rawBaseUrl": "",
             "requestInterval": 3000,
-            "subjectFormatId": "a",
-            "selectorSubjectFormatA": {
-              "selectLists": "a.video-wrapper[href^=\"/voddetail/\"]",
+            "searchCacheTtl": 7200000,
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "subjectFormatId": "indexed",
+            "selectorSubjectFormatIndexed": {
+              "selectNames": "div.video.anim > div.video-by",
+              "selectLinks": "div.video.anim > a",
+              "linkTemplate": null,
               "preferShorterName": true
             },
-            "channelFormatId": "no-channel",
-            "selectorChannelFormatNoChannel": {
-              "selectEpisodes": ".vod-play-list-container a",
-              "selectEpisodeLinks": ""
+            "channelFormatId": "index-grouped",
+            "selectorChannelFormatFlattened": {
+              "selectChannelNames": "div.chat-header.anim > span",
+              "matchChannelName": "",
+              "selectEpisodeLists": "div.message-container.vod-play-list-container",
+              "selectEpisodesFromList": "span > a",
+              "selectEpisodeLinksFromList": "",
+              "matchEpisodeSortFromName": "第\\s*(?<ep>.+)\\s*[话集]"
             },
-            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             "defaultResolution": "1080P",
             "defaultSubtitleLanguage": "CHS",
             "onlySupportsPlayers": [],
             "filterByEpisodeSort": true,
-            "filterBySubjectName": true,
             "selectMedia": {
               "distinguishSubjectName": true,
-              "distinguishChannelName": false
+              "distinguishChannelName": true
             },
             "matchVideo": {
-              "enableNestedUrl": false,
+              "enableNestedUrl": true,
               "matchNestedUrl": "$^",
-              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
+              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http)(?!.*jxdunrui\\.top).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/(?!.*jxdunrui\\.top).+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/)|(\\/video\\/.*mime_type=video)",
               "cookies": "quality=1080",
               "addHeadersToVideo": {
                 "referer": "https://www.7sefun.top/"
-              },
-              "scanDomMediaUrls": true
+              }
+            },
+            "autoMatch": {
+              "enabled": true,
+              "searchUseOnlyFirstWord": true,
+              "searchRemoveSpecial": true,
+              "searchUseSubjectNamesCount": 1,
+              "preferShorterName": true,
+              "filterByEpisodeSort": true
             }
           },
-          "tier": 1,
-          "channelTiers": {}
+          "tier": 1
         }
       },
       {
@@ -3061,7 +3085,7 @@
         "version": 2,
         "arguments": {
           "name": "LMM",
-          "description": "站点 lmm85.com。（来源：Kazumi 规则 LMM v2.3，自动转换）",
+          "description": "站点 lmm22.com。（来源：Kazumi 规则 LMM v2.4，自动转换）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-lmm.ico",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -3069,7 +3093,7 @@
             "searchUseSubjectNamesCount": 1,
             "rawBaseUrl": "",
             "requestInterval": 3000,
-            "searchUrl": "https://www.lmm85.com/index.php/ajax/suggest?mid=1&wd={keyword}",
+            "searchUrl": "https://www.lmm22.com/index.php/ajax/suggest?mid=1&wd={keyword}",
             "subjectFormatId": "json-path-indexed",
             "selectorSubjectFormatJsonPathIndexed": {
               "selectLinks": "$.list[*]['id']",
