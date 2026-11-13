@@ -17,7 +17,7 @@
 
 仓库必须是公开的，私有仓库的链接无法匿名访问。
 
-自动同步：每天北京时间 09:17 运行一次；改动 `aniyuan/`、`config.json`、`overrides/`、`baseline/` 或工作流文件时也会运行。也可以在仓库 **Actions → sync-subscription → Run workflow** 手动运行。每次运行的转换报告在任务页的 Summary 里，同时保存为 `dist/report.md`。
+自动同步：每天北京时间 09:17 运行一次；改动 `aniyuan/`、`config.json`、`baseline/` 或工作流文件时也会运行。也可以在仓库 **Actions → sync-subscription → Run workflow** 手动运行。每次运行的转换报告在任务页的 Summary 里，同时保存为 `dist/report.md`。
 
 工作流分两个任务：**build** 只有只读权限、不保留 `GITHUB_TOKEN`，负责跑测试、联网检测和无头浏览器（要打开一堆第三方站点），产物只有 `dist/` 和 `state/` 里的几个 JSON；**publish** 才有写权限，不运行浏览器、不访问第三方站点，只检查产物是合法 JSON、条目数没异常偏少，再提交。
 
@@ -29,7 +29,6 @@
 
 ## 固定使用某一份配置
 
-某个站自动转换出来的结果用不了、而你有亲测可用的配置时：把完整的 Animeko 数据源对象放进 `overrides/<Kazumi 规则名>.json`，再在 `config.json` 的 `prefer` 里写 `{"站点主机名": "kazumi"}`，这个站就固定取它（不受联网检测排名影响，id 仍沿用 AniBaka 的稳定 id）。目前 girigiri 就是这样处理的：`overrides/giriGiriLove.json`（走 `m3u8.girigirilove.com` 的接口）。
 
 ### 域名会变怎么办
 
@@ -94,7 +93,7 @@ git 提交日期会被“发布 / 整理”提交带偏（例如社区仓库一�
 
 | 来源 | 能转 | 转不了（报告里会列出） |
 |---|---|---|
-| Kazumi | XPath（含位置式，用 `:nth-of-type`）、GET 搜索接口（JSONPath） | POST 搜索、接口取章节、并集 XPath 等；`overrides/` 里手写了 sorani、xfdmnext、giriGiriLove、ezdmw |
+| Kazumi | XPath（含位置式，用 `:nth-of-type`）、GET 搜索接口（JSONPath） | POST 搜索、接口取章节、并集 XPath 等 |
 | AniBaka | `fetch`+`searchList`、`maccmsSuggest`、`fetch`+`jsonSeries`（GET）、`episodes` | POST/JSON 站、磁力站、anime1、`jsonEpisodes` 等 → 回退基线 |
 | 纯纯看番 | `kazumi-*.js` 文件头里的 Kazumi 规则常量（还原成规则后按 Kazumi 转换） | 手写逻辑的 JS（age、omofun、xifandm、yhw、Jellyfin、lmm、mifun、sorani、tvtfun 等）、POST 的 |
 
@@ -114,7 +113,6 @@ git 提交日期会被“发布 / 整理”提交带偏（例如社区仓库一�
 - 播放一律用 Animeko 的 WebView 嗅探。AniBaka 里靠站内解密/接口取直链的（silisili、lm6、dm84 等）可能拿不到视频，报告里会标“有近似”。
 - Kazumi / 纯纯看番的规则没有线路名，转出来的源所有线路合并为一条。
 - 检测默认在 GitHub 海外服务器上跑（可用 `ANIYUAN_PROXY` 换成国内出口，见“海外盲区”），访问不了的国内站标 `unreachable`（没有结论，不会被降级也不会被修复），不代表配置错误；有验证码或被 403 拦住的标 `blocked`。这两类只在报告里记录，**不会**往订阅的描述里加警告（多半是海外服务器的问题）。只有页面能打开、但选择器确实没选中结果的（`fail`），且已连续失败到 `fail_threshold` 次（见上面的检测历史）才**只标记不剔除**：在描述前加 `[自动检测未通过：原因]`。
-- `overrides/` 手写配置不会跟着上游更新，上游版本变了报告里会提醒核对。
 - 首次运行没有哈希记录，日期仍用 git 日期（社区仓库的日期可能偏新），之后才会按内容变化校正；遇到取新取错的站用 `prefer` 指定。
 
 ## 配置（`config.json`）

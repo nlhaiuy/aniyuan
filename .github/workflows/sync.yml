@@ -9,7 +9,6 @@ on:
       - "aniyuan/**"
       - "requirements.txt"
       - "config.json"
-      - "overrides/**"
       - "baseline/**"
       - ".github/workflows/sync.yml"
 
