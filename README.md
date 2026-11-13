@@ -93,9 +93,17 @@ git 提交日期会被“发布 / 整理”提交带偏（例如社区仓库一�
 
 | 来源 | 能转 | 转不了（报告里会列出） |
 |---|---|---|
-| Kazumi | XPath（含位置式，用 `:nth-of-type`）、GET 搜索接口（JSONPath） | POST 搜索、接口取章节、并集 XPath 等 |
+| Kazumi | XPath（含位置式，用 `:nth-of-type`）、GET 搜索接口（JSONPath）、搜索 + 章节都走接口的规则（转成 `json-api` 数据源，见下） | POST 网页搜索、章节是 `a$b#c$d` 分隔字符串的接口、并集 XPath 等 |
 | AniBaka | `fetch`+`searchList`、`maccmsSuggest`、`fetch`+`jsonSeries`（GET）、`episodes` | POST/JSON 站、磁力站、anime1、`jsonEpisodes` 等 → 回退基线 |
 | 纯纯看番 | `kazumi-*.js` 文件头里的 Kazumi 规则常量（还原成规则后按 Kazumi 转换） | 手写逻辑的 JS（age、omofun、xifandm、yhw、Jellyfin、lmm、mifun、sorani、tvtfun 等）、POST 的 |
+
+**接口型 Kazumi 规则（`searchMode` / `chapterMode` 都是 `api`）→ `json-api` 数据源**：按通用规则映射，不针对某个站点。
+借鉴了官方订阅（animeko-subs 的 `subs/api/`）的写法：请求头逐行写成 `名字: 值`；接口域名和网站域名不同时补 `Origin`；
+有线路名的用 grouped 通道、没有的用 no-channel（线路路径和剧集路径自动拼接）；用 `{id}` / `{subjectId}` 拼出条目页和播放页地址；
+`typeMapping`、`autoMatch` 等用官方默认值。联网检测会真的请求搜索接口和详情接口、数剧集（`--smoke`）；
+章节请求体里的 id 带引号被接口拒绝（4xx）时，自动试不带引号的写法，通过了才采用。
+注意：Kazumi 规则里没有"取视频地址"的接口，所以转出来的源**没有 `play` 配置**，也不做播放检测，能否播放要在 Animeko 里试播确认（报告备注里会标）。
+没有序号字段时（序号只能靠剧集名识别）也会在备注里提醒。
 
 纯纯看番默认只收 `extensions/`（作者真机验证过）；`dev-extensions/` 约 70 个未验证，默认不收。
 
