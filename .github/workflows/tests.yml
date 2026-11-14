@@ -1,0 +1,43 @@
+name: tests
+
+# 功能分支和 PR 只跑自测（几分钟）；整套联网构建 + 发布只在主分支上跑（sync.yml）
+on:
+  pull_request:
+  push:
+    branches-ignore: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - run: playwright install --with-deps chromium
+
+      - name: 拉取 KazumiRules（翻译器自测用）
+        run: git clone --depth 1 https://github.com/Predidit/KazumiRules.git "$RUNNER_TEMP/KazumiRules"
+
+      - name: 自测
+        run: |
+          KAZUMI_RULES="$RUNNER_TEMP/KazumiRules" python tests/test_xpath2css.py
+          for t in test_anx test_health test_normalize test_repair test_ua test_icons test_jsonapi test_playlearn test_changes test_live test_pipeline; do
+            echo "=== $t"
+            python tests/$t.py
+          done

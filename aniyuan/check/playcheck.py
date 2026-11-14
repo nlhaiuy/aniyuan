@@ -11,6 +11,7 @@
   blocked   页面出现验证码/环境检查
   error     浏览器打开失败
 """
+import os
 import glob
 import re
 
@@ -44,6 +45,9 @@ class PlayChecker:
     def __init__(self, proxy=None):
         """proxy：出口代理地址（见 network.py），给了就让浏览器的所有请求都走它。"""
         from playwright.sync_api import sync_playwright
+        # 配置了代理时 Playwright 默认连 127.0.0.1 也强制走代理；本机回显服务（UA 体检）、本机测试站点会因此连不上。
+        # 本机地址本来就不该出国内代理，关掉这个行为（必须在启动 Playwright 驱动之前设置）。
+        os.environ.setdefault("PLAYWRIGHT_DISABLE_FORCED_CHROMIUM_PROXIED_LOOPBACK", "1")
         self._cm = sync_playwright()
         self._pw = self._cm.start()
         self.browser = _launch(self._pw, network.playwright_proxy(proxy))

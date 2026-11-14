@@ -158,8 +158,9 @@ pip install -r requirements.txt
 git clone https://github.com/Predidit/KazumiRules.git ../KazumiRules
 git clone https://github.com/AniBakaBaka/AniBakaRule.git ../AniBakaRule
 git clone https://github.com/easybangumiorg/CommunityJsExtensionEasyBangumi.git ../EasyBangumi
+git clone --depth 1 https://github.com/creamycake-anime/animeko-subs.git ../animeko-subs
 playwright install chromium   # 只在需要播放检测时
-python -m aniyuan --kazumi ../KazumiRules --anibaka ../AniBakaRule --easybangumi ../EasyBangumi --out dist --smoke --playcheck
+python -m aniyuan --kazumi ../KazumiRules --anibaka ../AniBakaRule --easybangumi ../EasyBangumi --official ../animeko-subs --out dist --smoke --playcheck
 ```
 
 要用完整 git 历史（不要 `--depth 1`），否则取不到每个规则文件的最后修改时间。三个来源参数都可以省略。
@@ -174,9 +175,20 @@ python tests/test_normalize.py   # id / 名称 / 描述规整
 python tests/test_repair.py      # 选择器自动修复：候选库和排序；matchVideoUrl 修复
 python tests/test_ua.py          # 统一 UA、UA 体检、出口代理（本机回显服务 + Chromium）
 python tests/test_icons.py       # 站点图标：候选顺序、防盗链、文件头检查
+python tests/test_jsonapi.py     # 接口型 Kazumi 规则 → json-api：转换映射 + 联网检测（本机模拟接口）
+python tests/test_playlearn.py   # 从播放页学 play、缓存、重放检测（本机模拟站点 + Chromium）
+python tests/test_changes.py     # 和上次订阅比的「本次变化」
 python tests/test_pipeline.py    # 整条流水线（本地模拟站点）
 python tests/test_live.py        # 自动修复 / 域名跳转 / 播放检测（本地模拟站点 + Chromium）
 ```
+
+## 自动运行
+
+- **`sync.yml`**：每天北京时间 09:17、主分支上改了代码 / 配置时、或手动运行。先跑自测，再联网检测并生成订阅，最后提交 `dist/`、`state/`、`icons/`。
+  只有主分支的推送才触发（功能分支不会触发 20 多分钟的联网构建）。发布时基于**最新**的主分支，推送被拒（构建期间主分支有新提交）会自动变基后重试。
+  提交说明带一句话摘要，如「新增 1、移除 0、档位变化 3；共 33 个源」；报告开头有「本次变化」，列出和上一次发布相比新增 / 移除 / 档位 / 换域名的源（`--prev` 指定对比的旧订阅，默认 `dist/all.json`）。
+- **`tests.yml`**：功能分支和 PR 上只跑自测（几分钟），不联网构建、不发布。
+- 可选 Secret：`VMESS_LINK`（国内出口的 vmess 节点，一行一个，按顺序试）或 `ANIYUAN_PROXY`（http / socks5 地址），让联网检测用国内视角。
 
 ## 文件
 
