@@ -179,6 +179,56 @@ class PlayChecker:
         finally:
             ctx.close()
 
+    def capture(self, url, wait_ms=20000, ua=None, stop=None, max_text=1500000):
+        """打开一个播放页，记录页面自己发出的 XHR / fetch 请求和响应（给「学 play」用）。
+        每条：{url, method, post, headers, status, ctype, text}。stop(entries) 返回 True 就提前结束。
+        和 check() 一样，过一会儿会点一下播放器，让需要点击才加载的页面也发请求。"""
+        got, entries, done = [], [], [0]
+        ctx = self.new_context(ua)
+        page = self.new_page(ctx, ua)
+
+        def on_resp(resp):
+            try:
+                if resp.request.resource_type in ("xhr", "fetch"):
+                    got.append(resp)
+            except Exception:
+                pass
+
+        def drain():
+            while done[0] < len(got):
+                resp = got[done[0]]
+                done[0] += 1
+                try:
+                    req = resp.request
+                    ctype = (resp.headers or {}).get("content-type", "")
+                    text = resp.text() if resp.status < 400 else ""
+                    entries.append({"url": req.url, "method": req.method, "post": req.post_data, "headers": dict(req.headers or {}),
+                                    "status": resp.status, "ctype": ctype, "text": text[:max_text]})
+                except Exception:   # 响应已经被丢弃 / 不是文本：忽略这一条
+                    continue
+
+        page.on("response", on_resp)
+        try:
+            try:
+                page.goto(url, wait_until="domcontentloaded", timeout=20000)
+            except Exception:
+                if not got:
+                    return entries
+            waited, clicked = 0, False
+            while waited < wait_ms:
+                page.wait_for_timeout(1500)
+                waited += 1500
+                drain()
+                if stop and stop(entries):
+                    break
+                if not clicked and waited >= 4500:
+                    clicked = True
+                    self._click_play(page)
+            drain()
+            return entries
+        finally:
+            ctx.close()
+
     def _found(self, page, seen, match, scan_dom):
         for u in seen:
             if match and match.search(u) and not u.startswith("data:"):
