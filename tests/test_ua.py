@@ -109,4 +109,14 @@ try:
     check("浏览器的请求经过代理", got[0] == 200 and "via proxy" in got[1] and any("only-reachable-via-proxy.test/b" in p for p, _ in proxied))
 finally:
     pc.close()
+
+# 9. 配置了出口代理时，UA 体检用的本机回显服务（127.0.0.1）不能被带去代理（线上曾因此一直「浏览器请求失败」）
+proxied.clear()
+pc = PlayChecker(purl)
+try:
+    res = ua.audit(pc)
+    check("配置了出口代理时，UA 体检（本机回显）也能通过", res and all(ok for _, ok, _ in res))
+    check("本机地址没有被带去代理", not any("127.0.0.1" in p for p, _ in proxied))
+finally:
+    pc.close()
 sys.exit(1 if bad else 0)

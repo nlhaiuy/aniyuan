@@ -422,6 +422,8 @@ def main():
     ap.add_argument("--play-cache", default=os.path.join(ROOT, "state", "play.json"),
                     help="从播放页学到的 play 的缓存（接口指纹没变就直接沿用）")
     ap.add_argument("--out", default="dist")
+    ap.add_argument("--prev", default=os.path.join(ROOT, "dist", "all.json"),
+                    help="上一次发布的订阅（用来写报告里的「本次变化」）")
     ap.add_argument("--config", default=os.path.join(ROOT, "config.json"))
     ap.add_argument("--overrides", default=os.path.join(ROOT, "overrides"))
     ap.add_argument("--baseline", default=os.path.join(ROOT, "baseline", "anibaka.json"))
@@ -575,6 +577,13 @@ def main():
 
     os.makedirs(args.out, exist_ok=True)
     sub = {"schemaVersion": 2, "mediaSources": sources, "exportedMediaSourceDataList": {"mediaSources": sources}}
+    from . import changes
+    changed = None
+    if os.path.exists(args.prev):   # 上一次发布的订阅读不出来（第一次运行 / 文件坏了）就不写这一节
+        try:
+            changed = changes.diff(load_json(args.prev)["mediaSources"], sources)
+        except (OSError, ValueError, KeyError, TypeError):
+            changed = None
     with open(os.path.join(args.out, "all.json"), "w", encoding="utf-8") as f:
         json.dump(sub, f, ensure_ascii=False, indent=2)
         f.write("\n")
@@ -584,6 +593,8 @@ def main():
     rep = ["# 订阅转换报告", "", "写入订阅 **%d** 个数据源（候选 %d 个，同站点合并后）。" % (len(sources), len(cands)), ""]
     if args.smoke:
         rep += ["检测出口：%s。" % ("代理 " + network.describe(proxy) if proxy else "GitHub 海外服务器（国内站可能打不开或被拦）"), ""]
+    if changed is not None:
+        rep += changes.section(changed)[1:] + [""]
     rep += [
            "## 同站点取舍", "", "| 站点 | 最终 id | 采用 | 理由 | 候选（最后修改） |", "|---|---|---|---|---|"]
     for d in decisions:
@@ -614,6 +625,9 @@ def main():
         rep += ["", "## 站点图标", "", "| 源 | 结果 | 说明 |", "|---|---|---|"]
         for sid, st, why in sorted(icon_results, key=lambda r: (r[1] in ("new", "same"), r[0])):
             rep.append("| %s | %s | %s |" % (sid, names.get(st, st), why.replace("|", "/")))
+    if changed is not None:   # 一句话摘要，给工作流写提交说明用
+        with open(os.path.join(args.out, "summary.txt"), "w", encoding="utf-8") as f:
+            f.write(changes.summary(changed, len(sources)) + "\n")
     with open(os.path.join(args.out, "report.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(rep) + "\n")
     with open(os.path.join(args.out, "report.json"), "w", encoding="utf-8") as f:
