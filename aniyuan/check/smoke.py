@@ -275,13 +275,50 @@ def _api_json(r):
         return None, ("blocked" if _blocked(r.text) else "fail", "返回的不是 JSON")
 
 
-def _count_api_episodes(sc, data):
+def _api_episodes(sc, data):
+    """详情接口响应里的剧集：[(线路名, 剧集 id, 剧集名)]。"""
     sub = sc["subject"]
     ep = sub["episodes"]
+    out = []
     if sub.get("channelFormatId") == "grouped":
-        chans = eval_simple_jsonpath(data, sub["channelFormatGrouped"]["selectChannels"])
-        return sum(len(eval_simple_jsonpath(c, ep["selectEpisodes"])) for c in chans)
-    return len(eval_simple_jsonpath(data, ep["selectEpisodes"]))
+        g = sub["channelFormatGrouped"]
+        groups = []
+        for chan in eval_simple_jsonpath(data, g["selectChannels"]):
+            name = eval_simple_jsonpath(chan, g["selectChannelName"]) if g.get("selectChannelName") else []
+            groups.append((str(name[0]) if name else "", chan))
+    else:
+        groups = [("", data)]
+    for name, scope in groups:
+        for e in eval_simple_jsonpath(scope, ep["selectEpisodes"]):
+            ids = eval_simple_jsonpath(e, ep["selectId"]) if ep.get("selectId") else []
+            names = eval_simple_jsonpath(e, ep["selectName"]) if ep.get("selectName") else []
+            out.append((name, ids[0] if ids else None, str(names[0]) if names else ""))
+    return out
+
+
+def _count_api_episodes(sc, data):
+    return len(_api_episodes(sc, data))
+
+
+def _api_sample(sc, subject_id, data):
+    """给「学 play」用的样本：条目 id、线路名、前几集的 id / 名称 / 播放页地址（优先同一条线路里的）。"""
+    tpl = sc["subject"]["episodes"].get("episodeUrlTemplate", "")
+    eps = [e for e in _api_episodes(sc, data) if e[1] is not None]
+    if not eps:
+        return {}
+    first = [e for e in eps if e[0] == eps[0][0]]
+    picked, seen = [], set()
+    for chan, eid, name in first + eps:
+        if str(eid) in seen:
+            continue
+        seen.add(str(eid))
+        url = tpl.replace("{subjectId}", str(subject_id)).replace("{id}", str(eid))
+        if url and not re.match(r"^https?://", url):
+            url = urljoin(sc.get("baseUrl", "") + "/", url.lstrip("/"))
+        picked.append({"id": eid, "name": name, "channel": chan, "url": url})
+        if len(picked) == 3:
+            break
+    return {"subject_id": subject_id, "channels": list(dict.fromkeys(e[0] for e in eps if e[0])), "episodes": picked}
 
 
 def check_json_api(sc, keyword, session, timeout=15):
@@ -333,7 +370,7 @@ def check_json_api(sc, keyword, session, timeout=15):
                 return {"status": "fail", "reason": str(e)}
             if n:
                 res = {"status": "ok", "reason": "搜到 %d 个条目，详情接口选出 %d 个剧集" % (len(ids), n),
-                       "episode_count": n}
+                       "episode_count": n, "sample": _api_sample(sc, sid, data)}
                 if variant is not None:
                     res["subject_body"] = variant
                 return res

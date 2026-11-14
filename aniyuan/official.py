@@ -77,8 +77,9 @@ def borrow(source, officials):
     return []
 
 
-def apply(cands, officials):
-    """借官方写法；仍然没有 play 的 json-api 候选标成无法转换（输出了也是配置不完整）。"""
+def apply(cands, officials, final=True):
+    """借官方写法。借不到 play 的 json-api 候选标 needs_play（之后可以由 playlearn 从播放页学）；
+    final=True（不会再学了）时直接收尾：仍然没有 play 的标成无法转换。"""
     for c in cands:
         src = c.get("source")
         if not src or src.get("factoryId") != "json-api":
@@ -91,8 +92,25 @@ def apply(cands, officials):
             c["notes"] = [n for n in c.get("notes", []) if "没有播放接口" not in n and "序号" not in n] + notes
             c["status"] = "partial"
         else:
-            c["notes"] = [n for n in c.get("notes", []) if "没有播放接口" not in n] + [
-                "json-api 数据源必须有 play（取视频地址的请求），Kazumi 规则里没有，官方订阅里也没有同一接口的源可借鉴，需要手写 play"]
-            c["status"] = "unsupported"
-            c["source"] = None
+            c["needs_play"] = True
+    if final:
+        finalize(cands)
     return cands
+
+
+def finalize(cands):
+    """收尾：到这里还没有 play 的 json-api 候选不输出（输出了 Animeko 也是「配置不完整」）。"""
+    for c in cands:
+        if not c.get("needs_play") or c.get("source") is None:
+            continue
+        sc = c["source"]["arguments"]["searchConfig"]
+        if sc.get("play"):
+            c["needs_play"] = False
+            continue
+        c["notes"] = [n for n in c.get("notes", []) if "没有播放接口" not in n] + [
+            "json-api 数据源必须有 play（取视频地址的请求）：Kazumi 规则里没有，官方订阅里没有同一接口的源，"
+            "也没能从播放页学出来，需要手写 play"]
+        c["status"] = "unsupported"
+        c["source"] = None
+        c["needs_play"] = False
+        c.pop("smoke", None)

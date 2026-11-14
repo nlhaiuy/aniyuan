@@ -61,6 +61,7 @@ jobs:
           python tests/test_ua.py
           python tests/test_icons.py
           python tests/test_jsonapi.py
+          python tests/test_playlearn.py
           python tests/test_live.py
           python tests/test_pipeline.py
 
@@ -122,6 +123,7 @@ jobs:
           mkdir -p out/dist out/state out/icons
           cp dist.new/all.json dist.new/report.json dist.new/report.md out/dist/
           cp state/seen.json state/health.json out/state/
+          cp state/play.json out/state/ 2>/dev/null || true
           cp icons/* out/icons/ 2>/dev/null || true
 
       - uses: actions/upload-artifact@v4
@@ -170,6 +172,7 @@ jobs:
         run: |
           cp out/dist/all.json out/dist/report.json out/dist/report.md dist/
           cp out/state/seen.json out/state/health.json state/
+          cp out/state/play.json state/ 2>/dev/null || true
           mkdir -p icons && find icons -type f ! -name '.gitkeep' -delete && cp out/icons/* icons/ 2>/dev/null || true
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

@@ -419,6 +419,8 @@ def main():
     ap.add_argument("--anibaka", help="AniBakaRule 仓库目录")
     ap.add_argument("--easybangumi", help="CommunityJsExtensionEasyBangumi 仓库目录")
     ap.add_argument("--official", help="官方订阅 animeko-subs 仓库目录（json-api 源缺 play 时借鉴它的写法）")
+    ap.add_argument("--play-cache", default=os.path.join(ROOT, "state", "play.json"),
+                    help="从播放页学到的 play 的缓存（接口指纹没变就直接沿用）")
     ap.add_argument("--out", default="dist")
     ap.add_argument("--config", default=os.path.join(ROOT, "config.json"))
     ap.add_argument("--overrides", default=os.path.join(ROOT, "overrides"))
@@ -453,7 +455,8 @@ def main():
         cands += collect_easybangumi(args.easybangumi, config)
 
     from . import official as official_mod
-    official_mod.apply(cands, official_mod.load(args.official) if args.official else [])   # json-api 必须有 play：借官方的，借不到就不输出
+    # json-api 必须有 play：先借官方的；借不到的留着，联网检测后从播放页学；都不行才不输出
+    official_mod.apply(cands, official_mod.load(args.official) if args.official else [], final=False)
 
     state = load_json(args.state) if os.path.exists(args.state) else {}
     new_state = apply_state(cands, state, int(time.time()))
@@ -508,6 +511,24 @@ def main():
         except BaseException:
             cleanup()
             raise
+
+    if any(c.get("needs_play") for c in cands):   # 从播放页学 play（或沿用缓存），仍然没有的不输出
+        from .check import playlearn
+        play_cache = load_json(args.play_cache) if os.path.exists(args.play_cache) else {}
+        try:
+            playlearn.learn_plays(cands, pc, network.new_session(proxy), play_cache, int(time.time()),
+                                  config.get("play_wait_ms", 20000))
+        except BaseException:
+            cleanup()
+            raise
+        os.makedirs(os.path.dirname(os.path.abspath(args.play_cache)), exist_ok=True)
+        with open(args.play_cache, "w", encoding="utf-8") as f:
+            json.dump(play_cache, f, ensure_ascii=False, indent=1, sort_keys=True)
+            f.write("\n")
+    official_mod.finalize(cands)
+    if args.smoke:   # json-api 源：重放 play 请求，看取不取得到视频地址
+        from .check import playlearn
+        playlearn.check_plays(cands, network.new_session(proxy))
 
     if args.smoke:   # 没联网检测时不动历史
         history = load_json(args.health) if os.path.exists(args.health) else {}
