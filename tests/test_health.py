@@ -106,6 +106,14 @@ check("手调过的（tier 不是默认值）不动", t["b"] == 2)
 check("config.tiers 点名的不动（按 key 或名称）", t["d"] == 4 and t["e"] == 4)
 check("没有检测结果的保持默认", t["f"] == 4)
 check("自动分档写进备注", any("优先级自动设为 1" in n for n in cs[0]["notes"]))
+cs = [tcand("ok", "ok", key="g", origin="baseline", tier=3), tcand("fail", grace=False, key="h", origin="baseline", tier=2),
+      tcand(key="i", origin="baseline", tier=3), tcand("ok", "ok", key="j", origin="baseline", tier=3, name="J名")]
+apply_auto_tier(cs, {"tiers": {"J名": 3}})
+t = {c["key"]: c["source"]["arguments"]["tier"] for c in cs}
+check("基线手调的档位不再固定：检测通过能播 -> 升到 1", t["g"] == 1)
+check("基线手调的档位不再固定：检测失败 -> 降到 4", t["h"] == 4)
+check("基线手调的档位：没有检测结果时保持原样（兜底）", t["i"] == 3)
+check("基线来源的源，config.tiers 点名的仍然不动", t["j"] == 3)
 cs = [tcand("ok", "ok", key="a")]
 apply_auto_tier(cs, {"auto_tier": False})
 check("auto_tier=false 关闭", cs[0]["source"]["arguments"]["tier"] == 4)

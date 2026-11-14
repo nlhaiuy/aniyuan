@@ -393,9 +393,9 @@ def merge(cands, config):
 
 
 def apply_auto_tier(chosen, config):
-    """给最终入选的源按联网检测结果自动分档。人工指定过的一律不动：
-    config.tiers 里点名的、以及 tier 已经不是默认值的（baseline / overrides 里手调的）。
-    config.auto_tier 设为 false 关闭。没有联网检测结果的源保持原样。"""
+    """给最终入选的源按联网检测结果自动分档。只有你在 config.tiers 里点名的不动；
+    baseline 里手调的档位不再固定（它只是个起点，一样按检测结果升降）；其它来源 tier 已经不是默认值的也不动。
+    config.auto_tier 设为 false 关闭。没有联网检测结果的源保持原样（基线手调的档位这时当作兜底）。"""
     if not config.get("auto_tier", True):
         return
     default = config.get("default_tier", 4)
@@ -404,7 +404,7 @@ def apply_auto_tier(chosen, config):
         a = c["source"]["arguments"]
         if c["key"] in named or a.get("name") in named:
             continue
-        if a.get("tier", default) != default:
+        if a.get("tier", default) != default and c["origin"] != "baseline":
             continue
         tier, why = auto_tier(c)
         if tier is None or tier == a.get("tier"):
