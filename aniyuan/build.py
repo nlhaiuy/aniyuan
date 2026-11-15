@@ -566,7 +566,7 @@ def main():
                 network.new_session(proxy), browser_bytes=(pc.fetch_bytes if pc and config.get("browser_fallback", True) else None))
             icon_results = icons_mod.resolve_icons(
                 sources, args.icons_dir,
-                config.get("icon_base_url", "https://cdn.jsdelivr.net/gh/nlhaiuy/aniyuan@main/icons"),
+                config.get("icon_base_url", "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons"),
                 get_html, get_image, overrides=config.get("icon_overrides") or {})
         except BaseException:
             cleanup()
