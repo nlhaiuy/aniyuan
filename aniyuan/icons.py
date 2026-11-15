@@ -4,7 +4,6 @@
   - 转换器给的图标常常是猜的（站点/favicon.ico），而浏览器是读首页 <link rel="icon"> 找图标的；
   - 有的图标放在图床上，带了防盗链（要求 Referer 是站点自己），Animeko 直接请求会被拒；
   - 站点换域名后，规则里的旧图标地址跟着失效；
-  - 国内访问 jsDelivr 一般比访问各个小站更稳。
 
 做法（只在联网检测时运行）：
   1. 取站点首页，收集候选：config 里的 icon_overrides → 首页 <link rel="icon"/"apple-touch-icon">（声明的尺寸大的优先，

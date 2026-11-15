@@ -12,7 +12,6 @@
 
 订阅链接（Animeko「设置 → 数据源订阅」里添加，任选其一）：
 
-- `https://cdn.jsdelivr.net/gh/nlhaiuy/aniyuan@main/dist/all.json`（国内一般更容易访问，有约半天缓存）
 - `https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/dist/all.json`
 
 仓库必须是公开的，私有仓库的链接无法匿名访问。
