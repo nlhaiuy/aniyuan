@@ -142,7 +142,7 @@ git 提交日期会被“发布 / 整理”提交带偏（例如社区仓库一�
 | `fail_threshold` | 默认 `2`：连续明确失败几次才降级 / 加警告 / 剔除（以前通过过的候选，没到次数都算宽限期） |
 | `names` | `{"id": "显示名称"}`：手动指定某个源的名称，优先于自动规整 |
 | `smoke_keyword` | 冒烟测试用的搜索关键词 |
-| `icons` / `icon_base_url` | 默认 `true`：联网检测时给每个源找图标（顺序：首页 `<link rel="icon">` → 规则里原来的 `iconUrl` → `/favicon.ico`；下载时带站点自己的 Referer，绕过图床防盗链；requests 拿不到真图片（403、防盗链、Cloudflare 一类）时，用无头浏览器再试一次（先打开站点首页拿 cookie，再请求图片；需要 `--playcheck` 且 `browser_fallback` 没关；连首页都打不开的主机只试一次）；只收 ≤300KB 的 PNG/ICO/JPEG/GIF/WebP），存进 `icons/`，`iconUrl` 改成 `icon_base_url/<id>.<扩展名>`。这次取不到就沿用上次存的，一直没取到才保留原地址。设为 `false` 关闭 |
+| `icons` / `icon_base_url` | 默认 `true`：联网检测时给每个源找图标（顺序：首页 `<link rel="icon">` → 规则里原来的 `iconUrl` → `/favicon.ico`；下载时带站点自己的 Referer，绕过图床防盗链；requests 拿不到真图片（403、防盗链、Cloudflare 一类）时，用无头浏览器再试一次（先打开站点首页拿 cookie，再请求图片；需要 `--playcheck` 且 `browser_fallback` 没关；连首页都打不开的主机只试一次）；只收 ≤300KB 的 PNG/ICO/JPEG/GIF/WebP），存进 `icons/`，`iconUrl` 改成 `icon_base_url/<文件名>`（默认走 jsDelivr）。`icon_overrides` 可为某个 id 手动指定高清图地址：`{"aniyuan-lm6": "https://…/logo.png"}`。这次取不到就沿用上次存的，一直没取到才保留原地址。设为 `false` 关闭 |
 | `auto_tier` | 默认 `true`：按联网检测结果给源自动分档（1 能播 / 2 搜索剧集通过但播放没结论 / 3 播放有疑点或没有结论 / 4 明确失败或推测未验证）。0 留给人工指定；只有 `config.tiers` 点名的不动，基线里手调的档位不再固定。没有联网检测结果时不分档。设为 `false` 关闭 |
 | `user_agent` | 默认 `""`（自动）：统一检测用的 UA；留空时 Chrome 大版本跟随实际启动的浏览器，也可填一个完整 UA 整体覆盖 |
 | `blind_carry_days` | 默认 `14`：检测被拦 / 打不开时，以前通过过的候选在这么多天内沿用上次通过的成绩排名分档；`0` 关闭 |

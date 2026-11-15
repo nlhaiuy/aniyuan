@@ -7,11 +7,13 @@
   - 国内访问 jsDelivr 一般比访问各个小站更稳。
 
 做法（只在联网检测时运行）：
-  1. 取站点首页，按浏览器的顺序收集候选：<link rel="icon"/"shortcut icon"/"apple-touch-icon">（尺寸接近 64 的优先）
-     → 订阅里原来的 iconUrl → /favicon.ico；
+  1. 取站点首页，收集候选：config 里的 icon_overrides → 首页 <link rel="icon"/"apple-touch-icon">（声明的尺寸大的优先，
+     apple-touch-icon 没写尺寸按 180 算）→ 订阅里原来的 iconUrl → /favicon.ico；
   2. 逐个下载（带站点自己的 Referer），确认文件头确实是 PNG / ICO / JPEG / GIF / WebP、且不超过 300KB；
-  3. 存成 icons/<id>.<扩展名>，iconUrl 改成 <icon_base_url>/<id>.<扩展名>；
-  4. 全部候选都拿不到时：沿用上次存的图标，没有就保留原来的 iconUrl。
+  3. 不是拿到第一张能用的就停：解码后比较真实像素，挑短边最大的那张（ICO 取里面最大的一帧；已经 >=128px 就不再往下试）；
+  4. 装了 Pillow 时统一存成方形 PNG（非方形补透明边，大于 256px 缩到 256），存成 icons/<id>.png；
+     没装 Pillow 就原样存；iconUrl 改成 <icon_base_url>/<文件名>；
+  5. 全部候选都拿不到时：沿用上次存的图标，没有就保留原来的 iconUrl。
 发布前用 `python -m aniyuan.icons --verify icons` 检查目录里只有合规的图片。
 """
 import os
@@ -51,13 +53,19 @@ def site_origin(source):
     return None
 
 
-def _size_score(sizes):
-    m = re.match(r"(\d+)x\d+", (sizes or "").strip().lower())
-    return abs(int(m.group(1)) - 64) if m else 32   # 没写尺寸按 32 算（favicon 的常见大小）
+MAX_TRIES = 8        # 每个站最多试几个候选地址
+GOOD_ENOUGH = 128    # 短边达到这个像素就不再往下试
+TARGET = 256         # 输出 PNG 的最大边长
+
+
+def _declared_size(sizes, apple):
+    """<link sizes="..."> 里声明的最大边长；没写：apple-touch-icon 按 180（iOS 的惯例），其它按 0（不知道）。"""
+    nums = [int(n) for n in re.findall(r"(\d+)\s*x\s*\d+", (sizes or "").lower())]
+    return max(nums) if nums else (180 if apple else 0)
 
 
 def page_icons(html, base_url):
-    """首页里声明的图标，按优先级排好：普通 icon（尺寸接近 64）在前，apple-touch-icon 在后。"""
+    """首页里声明的图标，按声明的尺寸从大到小排（同尺寸保持页面里的先后）。"""
     from bs4 import BeautifulSoup
     found = []
     for i, link in enumerate(BeautifulSoup(html or "", "lxml").find_all("link")):
@@ -66,17 +74,53 @@ def page_icons(html, base_url):
         if not href or href.startswith("data:") or not any("icon" in r for r in rel) or "mask-icon" in rel:
             continue
         apple = any(r.startswith("apple-touch-icon") for r in rel)
-        found.append(((1 if apple else 0, _size_score(link.get("sizes")), i), urljoin(base_url, href)))
+        found.append(((-_declared_size(link.get("sizes"), apple), i), urljoin(base_url, href)))
     return [u for _k, u in sorted(found)]
 
 
-def candidates(origin, home_html, home_url, old_icon):
+def candidates(origin, home_html, home_url, old_icon, extra=()):
     seen, out = set(), []
-    for u in page_icons(home_html, home_url or origin + "/") + ([old_icon] if old_icon else []) + [origin + "/favicon.ico"]:
+    for u in list(extra) + page_icons(home_html, home_url or origin + "/") + ([old_icon] if old_icon else []) + [origin + "/favicon.ico"]:
         if u and u not in seen:
             seen.add(u)
             out.append(u)
     return out
+
+
+def decode(data):
+    """用 Pillow 读出图片（ICO 取里面最大的一帧）。没装 Pillow 或读不出来返回 None。"""
+    try:
+        import io
+        from PIL import Image
+        im = Image.open(io.BytesIO(data))
+        if im.format == "ICO" and im.info.get("sizes"):
+            im.size = max(im.info["sizes"], key=lambda s: s[0] * s[1])
+        im.load()
+        return im
+    except Exception:
+        return None
+
+
+def to_png(im, target=TARGET):
+    """转成方形 RGBA PNG：非方形补透明边，大于 target 的用 LANCZOS 缩小；超过 300KB 就再缩。"""
+    import io
+    from PIL import Image
+    im = im.convert("RGBA")
+    w, h = im.size
+    side = max(w, h)
+    if w != h:
+        canvas = Image.new("RGBA", (side, side), (0, 0, 0, 0))
+        canvas.paste(im, ((side - w) // 2, (side - h) // 2))
+        im = canvas
+    if side > target:
+        im = im.resize((target, target), Image.LANCZOS)
+    for _ in range(4):
+        buf = io.BytesIO()
+        im.save(buf, "PNG", optimize=True)
+        if buf.tell() <= MAX_BYTES:
+            return buf.getvalue()
+        im = im.resize((im.width * 3 // 4, im.width * 3 // 4), Image.LANCZOS)
+    return None
 
 
 def _existing(icons_dir, sid):
@@ -100,9 +144,10 @@ def _save(icons_dir, sid, ext, data):
     return name
 
 
-def resolve_icons(sources, icons_dir, base_url, get_html, get_image, prune=True):
+def resolve_icons(sources, icons_dir, base_url, get_html, get_image, prune=True, overrides=None):
     """sources：要输出的数据源列表（会被原地改 iconUrl）。
     get_html(url) -> (text, final_url) 或 None；get_image(url, referer) -> bytes 或 None。
+    overrides：{id: 图标地址}，手动指定的地址排在最前面。
     返回 [(id, 状态, 说明)]，状态：new / same / cached / kept。"""
     os.makedirs(icons_dir, exist_ok=True)
     base_url = base_url.rstrip("/")
@@ -113,16 +158,29 @@ def resolve_icons(sources, icons_dir, base_url, get_html, get_image, prune=True)
         name, why = None, "没有可用的站点地址"
         if origin:
             home = get_html(origin + "/") or ("", origin + "/")
-            tried = 0
-            for url in candidates(origin, home[0], home[1], a.get("iconUrl")):
+            tried, best = 0, None   # best = (短边像素, 序号, 地址, 数据, 扩展名, 解码后的图)
+            extra = [(overrides or {}).get(sid)]
+            for url in candidates(origin, home[0], home[1], a.get("iconUrl"), extra)[:MAX_TRIES]:
                 tried += 1
                 data = get_image(url, origin + "/")
                 ext = sniff(data) if data and len(data) <= MAX_BYTES else None
-                if ext:
-                    before = _existing(icons_dir, sid)
-                    name = _save(icons_dir, sid, ext, data)
-                    results.append((sid, "new" if before != name else "same", url))
+                if not ext:
+                    continue
+                im = decode(data)
+                side = min(im.size) if im else 0
+                if best is None or side > best[0]:
+                    best = (side, tried, url, data, ext, im)
+                if side >= GOOD_ENOUGH:
                     break
+            if best:
+                side, _n, url, data, ext, im = best
+                png = to_png(im) if im else None
+                if png:
+                    data, ext = png, "png"
+                before = _existing(icons_dir, sid)
+                name = _save(icons_dir, sid, ext, data)
+                results.append((sid, "new" if before != name or before is None else "same",
+                                "%s%s" % (url, "（%d×%d）" % im.size if im else "")))
             else:
                 why = "试了 %d 个候选地址都不是可用的图片" % tried
         if name is None:

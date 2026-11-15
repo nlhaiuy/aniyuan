@@ -37,11 +37,13 @@ HOME = """<html><head>
 <link rel="mask-icon" href="/mask.svg"><link rel="icon" href="data:image/png;base64,AAAA">
 <link rel="stylesheet" href="/a.css"></head></html>"""
 got = page_icons(HOME, "https://www.x.com/")
-check("接近 64 的优先，apple-touch-icon 排最后，data: 和 mask-icon 跳过",
-      got == ["https://cdn.x.com/64.png", "https://www.x.com/img/fav.ico", "https://www.x.com/img/big.png", "https://www.x.com/apple.png"])
+check("声明尺寸大的优先（apple-touch-icon 没写尺寸按 180），data: 和 mask-icon 跳过",
+      got == ["https://www.x.com/img/big.png", "https://www.x.com/apple.png", "https://cdn.x.com/64.png", "https://www.x.com/img/fav.ico"])
 c = candidates("https://www.x.com", HOME, "https://www.x.com/", "https://img.old.com/o.png")
 check("候选顺序：页面声明 → 原来的 iconUrl → /favicon.ico，且去重",
       c[-2:] == ["https://img.old.com/o.png", "https://www.x.com/favicon.ico"] and len(c) == len(set(c)))
+check("手动指定的图标地址排在最前面",
+      candidates("https://a.com", "", None, "", ["https://img.x/big.png"])[0] == "https://img.x/big.png")
 check("首页打不开也有候选（原 iconUrl 和 /favicon.ico）",
       candidates("https://a.com", "", None, "") == ["https://a.com/favicon.ico"])
 
@@ -94,6 +96,42 @@ with tempfile.TemporaryDirectory() as d:
     resolve_icons([src("aniyuan-t")], d, BASE, lambda u: None, lambda u, ref: PNG)
     resolve_icons([src("aniyuan-t")], d, BASE, lambda u: None, lambda u, ref: ICO)
     check("图标类型变了：旧扩展名不残留", sorted(os.listdir(d)) == ["aniyuan-t.ico"])
+
+# ---- 挑最大的图：装了 Pillow 才测（真图片） ----
+try:
+    from PIL import Image
+    import io
+    def mk(fmt, size, color=(200, 30, 30, 255), **kw):
+        b = io.BytesIO(); Image.new("RGBA", size, color).save(b, fmt, **kw); return b.getvalue()
+    small, big, wide = mk("PNG", (32, 32)), mk("PNG", (180, 180)), mk("PNG", (229, 112))
+    ico_multi = mk("ICO", (256, 256), sizes=[(16, 16), (32, 32), (64, 64), (256, 256)])
+    HOME2 = '<link rel="icon" href="/fav.png"><link rel="apple-touch-icon" href="/apple.png">'
+    imgs = {"/fav.png": small, "/apple.png": big, "/favicon.ico": ico_multi}
+    with tempfile.TemporaryDirectory() as d:
+        gh = lambda u: (HOME2, u)
+        gi = lambda u, ref: imgs.get(urlparse(u).path)
+        from urllib.parse import urlparse
+        it = [src("aniyuan-big", icon="")]
+        r = resolve_icons(it, d, BASE, gh, gi)
+        im = Image.open(os.path.join(d, "aniyuan-big.png"))
+        check("有 180 的 apple-touch-icon 时不再用 32 的 favicon", r[0][1] == "new" and im.size == (180, 180))
+        gi2 = lambda u, ref: {"/fav.png": small, "/favicon.ico": ico_multi}.get(urlparse(u).path)
+        it = [src("aniyuan-ico", icon="")]
+        resolve_icons(it, d, BASE, lambda u: ("", u), gi2)
+        im = Image.open(os.path.join(d, "aniyuan-ico.png"))
+        check("ICO 取最大的一帧，输出 256 的 PNG", im.size == (256, 256) and it[0]["arguments"]["iconUrl"] == BASE + "/aniyuan-ico.png")
+        it = [src("aniyuan-w", icon="")]
+        resolve_icons(it, d, BASE, lambda u: ("", u), lambda u, ref: wide)
+        im = Image.open(os.path.join(d, "aniyuan-w.png"))
+        check("非方形补透明边成方形", im.size == (229, 229) and im.getpixel((0, 0))[3] == 0)
+        it = [src("aniyuan-ov", icon="")]
+        calls2 = []
+        def gi3(u, ref):
+            calls2.append(u); return big if u == "https://cdn.m/o.png" else small
+        resolve_icons(it, d, BASE, lambda u: ("", u), gi3, overrides={"aniyuan-ov": "https://cdn.m/o.png"})
+        check("icon_overrides 的地址最先试，够大就不再往下试", calls2 == ["https://cdn.m/o.png"])
+except ImportError:
+    print("跳过真图片测试（没有 Pillow）")
 
 # ---- 发布前检查 ----
 with tempfile.TemporaryDirectory() as d:
