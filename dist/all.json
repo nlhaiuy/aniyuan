@@ -1040,7 +1040,7 @@
       "version": 2,
       "arguments": {
         "name": "嘶哩嘶哩",
-        "description": "嘶哩嘶哩动漫源。保留站点访问会话 Cookie，优先通过本站播放接口解密直链，WebView 作为后备。（来源：AniBaka 规则 silisili rev 2，自动转换）",
+        "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）] 嘶哩嘶哩动漫源。保留站点访问会话 Cookie，优先通过本站播放接口解密直链，WebView 作为后备。（来源：AniBaka 规则 silisili rev 2，自动转换）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-silisili.png",
         "searchConfig": {
           "searchUrl": "https://www.silisilifun.com/vodsearch/?wd={keyword}",
@@ -1081,7 +1081,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 3,
+        "tier": 4,
         "channelTiers": {}
       }
     },
@@ -1190,7 +1190,7 @@
       "version": 2,
       "arguments": {
         "name": "9ciyuan (jcydm1.com)",
-        "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：修复后的选择器仍未通过：搜索页能打开，但选择器没有选中任何结果）] 站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
+        "description": "[选择器已自动修复] 站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-9ciyuan.png",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1199,7 +1199,7 @@
           "rawBaseUrl": "",
           "requestInterval": 3000,
           "searchUrl": "https://www.jcydm1.com/index.php/vod/search.html?wd={keyword}",
-          "subjectFormatId": "indexed",
+          "subjectFormatId": "a",
           "selectorSubjectFormatIndexed": {
             "selectNames": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(2) > div:nth-of-type(1) > a > strong",
             "selectLinks": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(3) > a:nth-of-type(2)",
@@ -1207,7 +1207,7 @@
           },
           "channelFormatId": "no-channel",
           "selectorChannelFormatNoChannel": {
-            "selectEpisodes": "div > div:nth-of-type(2) > div > div:nth-of-type(2) > div[id=\"panel1\"] div > div > a",
+            "selectEpisodes": "#panel1 a",
             "selectEpisodeLinks": "",
             "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
           },
@@ -1229,9 +1229,13 @@
               "referer": ""
             },
             "scanDomMediaUrls": true
+          },
+          "selectorSubjectFormatA": {
+            "selectLists": ".module-card-item-title a[href*='/vod/']",
+            "preferShorterName": true
           }
         },
-        "tier": 4,
+        "tier": 1,
         "channelTiers": {}
       }
     },
@@ -2759,7 +2763,7 @@
         "version": 2,
         "arguments": {
           "name": "嘶哩嘶哩",
-          "description": "嘶哩嘶哩动漫源。保留站点访问会话 Cookie，优先通过本站播放接口解密直链，WebView 作为后备。（来源：AniBaka 规则 silisili rev 2，自动转换）",
+          "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）] 嘶哩嘶哩动漫源。保留站点访问会话 Cookie，优先通过本站播放接口解密直链，WebView 作为后备。（来源：AniBaka 规则 silisili rev 2，自动转换）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-silisili.png",
           "searchConfig": {
             "searchUrl": "https://www.silisilifun.com/vodsearch/?wd={keyword}",
@@ -2800,7 +2804,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 3,
+          "tier": 4,
           "channelTiers": {}
         }
       },
@@ -2909,7 +2913,7 @@
         "version": 2,
         "arguments": {
           "name": "9ciyuan (jcydm1.com)",
-          "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：修复后的选择器仍未通过：搜索页能打开，但选择器没有选中任何结果）] 站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
+          "description": "[选择器已自动修复] 站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-9ciyuan.png",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -2918,7 +2922,7 @@
             "rawBaseUrl": "",
             "requestInterval": 3000,
             "searchUrl": "https://www.jcydm1.com/index.php/vod/search.html?wd={keyword}",
-            "subjectFormatId": "indexed",
+            "subjectFormatId": "a",
             "selectorSubjectFormatIndexed": {
               "selectNames": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(2) > div:nth-of-type(1) > a > strong",
               "selectLinks": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(3) > a:nth-of-type(2)",
@@ -2926,7 +2930,7 @@
             },
             "channelFormatId": "no-channel",
             "selectorChannelFormatNoChannel": {
-              "selectEpisodes": "div > div:nth-of-type(2) > div > div:nth-of-type(2) > div[id=\"panel1\"] div > div > a",
+              "selectEpisodes": "#panel1 a",
               "selectEpisodeLinks": "",
               "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
             },
@@ -2948,9 +2952,13 @@
                 "referer": ""
               },
               "scanDomMediaUrls": true
+            },
+            "selectorSubjectFormatA": {
+              "selectLists": ".module-card-item-title a[href*='/vod/']",
+              "preferShorterName": true
             }
           },
-          "tier": 4,
+          "tier": 1,
           "channelTiers": {}
         }
       },
