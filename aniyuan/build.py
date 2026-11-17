@@ -35,6 +35,7 @@ from .normalize import normalize_source
 from .check.repair import brittle, mine_presets, repair_match_video, repair_source
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # 仓库根目录（config.json、baseline/、state/ 等所在）
+DEFAULT_FALLBACK_KEYWORDS = ["海贼王", "鬼灭之刃"]   # 主关键词搜不到时依次换用（config.smoke_fallback_keywords 可改，[] 关闭）
 
 
 def load_json(path):
@@ -115,10 +116,27 @@ def rewrite_origin(source, old_origin, new_origin):
 
 
 def probe(c, keyword, session, presets, config):
-    """联网检测一个候选：必要时自动修复选择器、跟随域名跳转。结果写进 c["smoke"]。"""
+    """联网检测一个候选：必要时换备用关键词、自动修复选择器、跟随域名跳转。结果写进 c["smoke"]。"""
+    import time
     from .check.smoke import _blocked, check_source
     ctx = {}
     r = check_source(c["source"], keyword, session=session, ctx=ctx)
+    # 搜索页能打开、但这个关键词没搜出结果：可能只是站里没这部番（或限制了搜索频率），先换备用关键词再下结论
+    for alt in config.get("smoke_fallback_keywords", DEFAULT_FALLBACK_KEYWORDS):
+        if not (r["status"] == "fail" and r.get("stage") == "search"):
+            break
+        if alt == keyword:
+            continue
+        time.sleep(config.get("smoke_fallback_wait", 1))
+        ctx2 = {}
+        r2 = check_source(c["source"], alt, session=session, ctx=ctx2)
+        if r2["status"] == "ok":
+            ctx.clear()
+            ctx.update(ctx2)
+            r = dict(r2, keyword=alt)
+            keyword = alt   # 后面的修复 / 复检都用这个关键词
+            c["notes"].append("搜索「%s」没有结果，换成「%s」检测通过" % (config.get("smoke_keyword", "葬送的芙莉莲"), alt))
+            break
 
     def fetch(url):
         try:

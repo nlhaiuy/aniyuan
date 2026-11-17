@@ -39,5 +39,8 @@
   "blind_carry_days": 14,
   "_说明9": "blind_carry_days：海外盲区——检测被拦(blocked)/打不开(unreachable)时，以前通过过的候选，在这么多天内沿用上次通过的成绩排名分档（默认 14），超期回到没结论；设为 0 关闭沿用。出口代理见环境变量 ANIYUAN_PROXY（README）。",
   "repair_match_video": true,
-  "_说明10": "repair_match_video：播放检测发现页面出现了视频地址、但源的 matchVideoUrl 认不出（mismatch）时，自动换成能认出的写法，重新检测通过才采用（受 repair 总开关控制）。"
+  "_说明10": "repair_match_video：播放检测发现页面出现了视频地址、但源的 matchVideoUrl 认不出（mismatch）时，自动换成能认出的写法，重新检测通过才采用（受 repair 总开关控制）。",
+  "smoke_fallback_keywords": ["海贼王", "鬼灭之刃"],
+  "smoke_fallback_wait": 1,
+  "_说明11": "smoke_fallback_keywords：搜索页能打开、但主关键词（smoke_keyword）没搜出结果时，依次换这些关键词再测，通过就算通过（站里没有那部番不再被误判成选择器坏了）；设为 [] 关闭。另：检测时连接出错或站点返回 500/502/504/52x 会自动重试一次，重试后仍如此记为 unreachable（没结论），不再记为 fail、也不会触发选择器自动修复。"
 }

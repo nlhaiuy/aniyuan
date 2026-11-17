@@ -65,6 +65,8 @@ jobs:
           python tests/test_playlearn.py
           python tests/test_changes.py
           python tests/test_live.py
+          python tests/test_smoke_retry.py
+          python tests/test_fallback_keyword.py
           python tests/test_pipeline.py
 
       # 可选：Secret VMESS_LINK 里放一个或多个 vmess:// 链接（一行一个，必须是国内出口的节点）。

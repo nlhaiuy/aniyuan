@@ -33,9 +33,44 @@ class _BrowserResp:
         return json.loads(self.text)
 
 
+RETRIES = 1        # 连接出错 / 站点网关错误时，最多再试几次（偶发抖动不该让候选被判失败）
+RETRY_WAIT = 2.0   # 重试前等几秒（测试里改成 0）
+BLOCK_CODES = (403, 429, 503)
+
+
+def transient_code(code):
+    """站点服务器一侧的错误（500 / 502 / 504 / Cloudflare 52x）：页面没打开，不是选择器的问题。
+    503 不在里面：它常被用来拦非浏览器，按 blocked 处理。"""
+    return code in (500, 502, 504) or 520 <= code <= 530
+
+
+def status_kind(code):
+    """非 200 响应对应的检测结论：blocked（被拦）/ unreachable（站点出错，没结论）/ fail（地址本身不对，如 404）。"""
+    if code in BLOCK_CODES:
+        return "blocked"
+    return "unreachable" if transient_code(code) else "fail"
+
+
+def _with_retry(call):
+    """call() 返回 response 或抛 requests 异常；连接出错和站点网关错误各自只重试 RETRIES 次。"""
+    import time
+    for attempt in range(RETRIES + 1):
+        last = attempt == RETRIES
+        try:
+            r = call()
+        except requests.RequestException:
+            if last:
+                raise
+        else:
+            if last or not transient_code(r.status_code):
+                return r
+        if RETRY_WAIT:
+            time.sleep(RETRY_WAIT)
+
+
 def _get(url, session, timeout, ua=None):
     """ua：源自己在 searchConfig.userAgent 里指定的 UA（Animeko 就是用它请求的），空则用统一 UA（见 ua.py）。"""
-    r = session.get(url, headers=ua_mod.request_headers(ua), timeout=timeout, allow_redirects=True)
+    r = _with_retry(lambda: session.get(url, headers=ua_mod.request_headers(ua), timeout=timeout, allow_redirects=True))
     if r.status_code in (403, 503) and FETCHER:
         try:
             got = FETCHER(url, ua=ua)
@@ -86,7 +121,7 @@ def _search_subjects(sc, keyword, session, timeout, ctx=None, ua=None):
         p = urlparse(r.url)
         ctx["final_origin"] = "%s://%s" % (p.scheme, p.netloc)
     if r.status_code != 200:
-        return [], ("blocked" if r.status_code in (403, 429, 503) else "fail", "HTTP %d" % r.status_code)
+        return [], (status_kind(r.status_code), "HTTP %d" % r.status_code)
     fmt = sc.get("subjectFormatId")
     if fmt == "json-path-indexed":
         try:
@@ -184,6 +219,7 @@ def check_source(source, keyword="葬送的芙莉莲", timeout=15, session=None,
         base = jp["linkTemplate"].rsplit("/", 1)[0]
         variants = [base + "/{value}.html", base + "/{value}", base + "/{value}/"]
     last = ""
+    loaded = erred = False   # 有没有真的打开过详情页 / 有没有因为站点出错（连不上、5xx）而没打开
     for pick in picks:
         for tpl in variants:
             url = pick[1]
@@ -197,10 +233,14 @@ def check_source(source, keyword="葬送的芙莉莲", timeout=15, session=None,
                 r = _get(url, session, timeout, ua)
             except requests.RequestException as e:
                 last = "详情页请求失败：%s" % type(e).__name__
+                erred = True
                 continue
             if r.status_code != 200:
                 last = "详情页 HTTP %d（%s）" % (r.status_code, url)
+                erred = erred or status_kind(r.status_code) == "unreachable"
+                loaded = loaded or status_kind(r.status_code) == "fail"   # 404 之类：站点有回应，是地址不对
                 continue
+            loaded = True
             if _blocked(r.text):
                 return {"status": "blocked", "reason": "详情页出现验证码/环境检查"}
             ctx["detail_html"] = r.text
@@ -215,6 +255,8 @@ def check_source(source, keyword="葬送的芙莉莲", timeout=15, session=None,
                 return res
             last = "详情页选择器没有选中剧集（%s）" % url
             ctx["stage"] = "episodes"
+    if erred and not loaded:   # 详情页一个都没打开成，全是站点出错：没有结论，不算选择器失败
+        return {"status": "unreachable", "reason": last}
     return {"status": "fail", "reason": last or "详情页没有找到剧集", "stage": "episodes"}
 
 
@@ -261,14 +303,14 @@ def _api_call(session, sc, req, repl, timeout, body_override=None):
     headers.update(_header_dict(req.get("headers")))
     if str(req.get("method", "GET")).upper() == "POST":
         headers.setdefault("Content-Type", "application/json")
-        return session.post(url, data=body.encode("utf-8"), headers=headers, timeout=timeout)
-    return session.get(url, headers=headers, timeout=timeout)
+        return _with_retry(lambda: session.post(url, data=body.encode("utf-8"), headers=headers, timeout=timeout))
+    return _with_retry(lambda: session.get(url, headers=headers, timeout=timeout))
 
 
 def _api_json(r):
     """返回 (data, bad)；bad 是 (status, reason) 或 None。"""
     if r.status_code != 200:
-        return None, ("blocked" if r.status_code in (403, 429, 503) else "fail", "HTTP %d" % r.status_code)
+        return None, (status_kind(r.status_code), "HTTP %d" % r.status_code)
     try:
         return r.json(), None
     except ValueError:
@@ -346,6 +388,7 @@ def check_json_api(sc, keyword, session, timeout=15):
     order = [i for i, n in enumerate(names) if keyword[:3] in str(n)] or [0]
     picks = (order + [i for i in range(len(ids)) if i not in order])[:3]
     last = ""
+    loaded = erred = False   # 同 check_source：区分“站点没回应 / 5xx”和“回应了但路径不对”
     for i in picks:
         sid = ids[i]
         bodies = [None]
@@ -357,13 +400,17 @@ def check_json_api(sc, keyword, session, timeout=15):
                 r = _api_call(session, sc, sub["request"], {"id": sid}, timeout, body_override=variant)
             except requests.RequestException as e:
                 last = "详情接口请求失败：%s" % type(e).__name__
+                erred = True
                 continue
             data, bad = _api_json(r)
             if bad:
                 last = "详情接口：" + bad[1]
                 if bad[0] == "blocked":
                     return {"status": "blocked", "reason": last}
+                erred = erred or bad[0] == "unreachable"
+                loaded = loaded or bad[0] == "fail"
                 continue
+            loaded = True
             try:
                 n = _count_api_episodes(sc, data)
             except ValueError as e:
@@ -375,4 +422,6 @@ def check_json_api(sc, keyword, session, timeout=15):
                     res["subject_body"] = variant
                 return res
             last = "详情接口能打开，但选择路径没有选中剧集"
+    if erred and not loaded:
+        return {"status": "unreachable", "reason": last}
     return {"status": "fail", "reason": last or "详情接口没有返回剧集", "stage": "episodes"}
