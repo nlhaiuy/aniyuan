@@ -1,29 +1,29 @@
 {
  "anibaka:2kdm": {
   "blind": 0,
-  "fails": 19,
+  "fails": 20,
   "last": "fail",
-  "last_fail": 1794960078
+  "last_fail": 1794991528
  },
  "anibaka:5dm": {
-  "blind": 17,
+  "blind": 18,
   "last": "blocked"
  },
  "anibaka:7sefun": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "anibaka:age": {
-  "blind": 17,
-  "last": "unreachable"
+  "blind": 18,
+  "last": "blocked"
  },
  "anibaka:akianime": {
-  "blind": 0,
+  "blind": 1,
   "fails": 0,
-  "last": "ok",
+  "last": "unreachable",
   "last_ok": 1794960078,
   "play": "none"
  },
@@ -31,35 +31,35 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "anibaka:animoe": {
-  "blind": 0,
+  "blind": 1,
   "fails": 0,
-  "last": "ok",
+  "last": "blocked",
   "last_ok": 1794960078,
   "play": "ok"
  },
  "anibaka:cyfz": {
-  "blind": 0,
+  "blind": 1,
   "fails": 0,
-  "last": "ok",
+  "last": "blocked",
   "last_ok": 1794960078,
   "play": "ok"
  },
  "anibaka:dalvdm": {
-  "blind": 0,
+  "blind": 1,
   "fails": 0,
-  "last": "ok",
+  "last": "blocked",
   "last_ok": 1794960078,
   "play": "none"
  },
  "anibaka:didahd": {
   "blind": 0,
-  "fails": 5,
+  "fails": 6,
   "last": "fail",
-  "last_fail": 1794960078,
+  "last_fail": 1794991528,
   "last_ok": 1794642775,
   "play": "ok"
  },
@@ -67,83 +67,83 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "anibaka:gugu": {
   "blind": 0,
-  "fails": 30,
+  "fails": 31,
   "last": "fail",
-  "last_fail": 1794960078
+  "last_fail": 1794991528
  },
  "anibaka:ios_mifun": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "anibaka:lm6": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "anibaka:mgnacg": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "anibaka:moonci": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
-  "play": "ok"
+  "last_ok": 1794991528,
+  "play": "none"
  },
  "anibaka:silisili": {
   "blind": 0,
-  "fails": 29,
+  "fails": 30,
   "last": "fail",
-  "last_fail": 1794960078
+  "last_fail": 1794991528
  },
  "anibaka:xigua": {
-  "blind": 1,
-  "fails": 8,
-  "last": "unreachable",
+  "blind": 0,
+  "fails": 0,
+  "last": "ok",
   "last_fail": 1794816953,
-  "last_ok": 1794557244,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "baseline:2kdm": {
   "blind": 0,
-  "fails": 26,
+  "fails": 27,
   "last": "fail",
-  "last_fail": 1794960078,
+  "last_fail": 1794991528,
   "last_ok": 1793344459,
   "play": "ok"
  },
  "baseline:5dm": {
-  "blind": 17,
+  "blind": 18,
   "last": "blocked"
  },
  "baseline:7sefun": {
   "blind": 0,
-  "fails": 2,
-  "last": "fail",
+  "fails": 0,
+  "last": "ok",
   "last_fail": 1794960078,
-  "last_ok": 1794730000,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "baseline:age": {
-  "blind": 17,
-  "last": "unreachable"
+  "blind": 18,
+  "last": "blocked"
  },
  "baseline:agekkkk": {
-  "blind": 17,
+  "blind": 18,
   "last": "blocked"
  },
  "baseline:akianime": {
@@ -151,35 +151,35 @@
   "fails": 0,
   "last": "ok",
   "last_fail": 1794693920,
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "baseline:ani_pekolove": {
-  "blind": 17,
+  "blind": 18,
   "last": "blocked"
  },
  "baseline:anime7": {
   "blind": 0,
-  "fails": 2,
+  "fails": 3,
   "last": "fail",
-  "last_fail": 1794960078,
+  "last_fail": 1794991528,
   "last_ok": 1794730000,
   "play": "ok"
  },
  "baseline:animoe": {
-  "blind": 17,
+  "blind": 18,
   "last": "blocked"
  },
  "baseline:cyfz": {
-  "blind": 0,
+  "blind": 1,
   "fails": 23,
-  "last": "fail",
+  "last": "blocked",
   "last_fail": 1794960078
  },
  "baseline:dalvdm": {
-  "blind": 0,
+  "blind": 1,
   "fails": 9,
-  "last": "fail",
+  "last": "blocked",
   "last_fail": 1794960078
  },
  "baseline:didahd": {
@@ -187,85 +187,85 @@
   "fails": 0,
   "last": "ok",
   "last_fail": 1794816953,
-  "last_ok": 1794960078,
-  "play": "ok"
+  "last_ok": 1794991528,
+  "play": "none"
  },
  "baseline:dm84": {
   "blind": 0,
-  "fails": 31,
+  "fails": 32,
   "last": "fail",
-  "last_fail": 1794960078
+  "last_fail": 1794991528
  },
  "baseline:ezdmw": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "none"
  },
  "baseline:girigirilove": {
   "blind": 0,
-  "fails": 29,
+  "fails": 30,
   "last": "fail",
-  "last_fail": 1794960078
+  "last_fail": 1794991528
  },
  "baseline:gugu": {
   "blind": 0,
-  "fails": 30,
+  "fails": 31,
   "last": "fail",
-  "last_fail": 1794960078
+  "last_fail": 1794991528
  },
  "baseline:ios_mifun": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "baseline:lm6": {
   "blind": 0,
-  "fails": 31,
+  "fails": 32,
   "last": "fail",
-  "last_fail": 1794960078
+  "last_fail": 1794991528
  },
  "baseline:mgnacg": {
   "blind": 0,
-  "fails": 30,
+  "fails": 31,
   "last": "fail",
-  "last_fail": 1794960078
+  "last_fail": 1794991528
  },
  "baseline:silisili": {
   "blind": 0,
-  "fails": 29,
+  "fails": 30,
   "last": "fail",
-  "last_fail": 1794960078
+  "last_fail": 1794991528
  },
  "baseline:sorani": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": null
  },
  "baseline:xigua": {
-  "blind": 1,
-  "fails": 8,
-  "last": "unreachable",
+  "blind": 0,
+  "fails": 0,
+  "last": "ok",
   "last_fail": 1794816953,
-  "last_ok": 1794557244,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "easybangumi:kazumi-7sefun": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "easybangumi:kazumi-9ciyuan": {
-  "blind": 0,
+  "blind": 1,
   "fails": 2,
-  "last": "fail",
+  "last": "blocked",
   "last_fail": 1794960078,
   "last_ok": 1794730000,
   "play": "ok"
@@ -274,13 +274,13 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "easybangumi:kazumi-ant": {
-  "blind": 0,
+  "blind": 1,
   "fails": 0,
-  "last": "ok",
+  "last": "unreachable",
   "last_ok": 1794960078,
   "play": "ok"
  },
@@ -288,22 +288,22 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "easybangumi:kazumi-mxdm": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "easybangumi:kazumi-omofun03": {
-  "blind": 17,
+  "blind": 18,
   "last": "unreachable"
  },
  "easybangumi:kazumi-ylsp": {
-  "blind": 1,
+  "blind": 2,
   "fails": 26,
   "last": "unreachable",
   "last_fail": 1794816953
@@ -312,67 +312,67 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "kazumi:AGE": {
-  "blind": 17,
-  "last": "unreachable"
+  "blind": 18,
+  "last": "blocked"
  },
  "kazumi:DM84": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
   "last_fail": 1794630687,
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "kazumi:LMM": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "kazumi:MXdm": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "kazumi:TvTFun": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "none"
  },
  "kazumi:aafun": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
-  "play": "ok"
+  "last_ok": 1794991528,
+  "play": "none"
  },
  "kazumi:akianime": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "kazumi:baimao": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "kazumi:dalvdm": {
-  "blind": 0,
+  "blind": 1,
   "fails": 0,
-  "last": "ok",
+  "last": "blocked",
   "last_ok": 1794960078,
   "play": "none"
  },
@@ -380,29 +380,29 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "kazumi:moonci": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
-  "play": "ok"
+  "last_ok": 1794991528,
+  "play": "none"
  },
  "kazumi:xfdmneo": {
   "blind": 0,
-  "fails": 9,
-  "last": "fail",
+  "fails": 0,
+  "last": "ok",
   "last_fail": 1794960078,
-  "last_ok": 1794557244,
+  "last_ok": 1794991528,
   "play": "ok"
  },
  "kazumi:xfdmnext": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1794960078,
+  "last_ok": 1794991528,
   "play": "ok"
  }
 }

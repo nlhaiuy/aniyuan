@@ -621,7 +621,7 @@
           },
           "userAgent": ""
         },
-        "tier": 1
+        "tier": 2
       }
     },
     {
@@ -1030,7 +1030,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 1,
+        "tier": 2,
         "channelTiers": {}
       }
     },
@@ -1142,7 +1142,7 @@
       "arguments": {
         "name": "西瓜卡通",
         "description": "西瓜卡通视频源，源网址www.xgcartoon.com。（来源：AniBaka 规则 xigua rev 9，自动转换）",
-        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xigua.ico",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xigua.png",
         "searchConfig": {
           "searchUrl": "https://www.xgcartoon.com/search?q={keyword}",
           "searchUseOnlyFirstWord": true,
@@ -1190,7 +1190,7 @@
       "version": 2,
       "arguments": {
         "name": "9ciyuan (jcydm1.com)",
-        "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：修复后的选择器仍未通过：搜索页能打开，但选择器没有选中任何结果）] 站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
+        "description": "站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-9ciyuan.png",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1231,7 +1231,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 4,
+        "tier": 1,
         "channelTiers": {}
       }
     },
@@ -1549,7 +1549,7 @@
       "version": 2,
       "arguments": {
         "name": "xfdmneo (dm1.xfdm.pro)",
-        "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）] 站点 dm1.xfdm.pro。（来源：Kazumi 规则 xfdmneo v1.1，自动转换）",
+        "description": "站点 dm1.xfdm.pro。（来源：Kazumi 规则 xfdmneo v1.1，自动转换）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xfdmneo.png",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1590,7 +1590,7 @@
             "scanDomMediaUrls": false
           }
         },
-        "tier": 4,
+        "tier": 1,
         "channelTiers": {}
       }
     },
@@ -2340,7 +2340,7 @@
             },
             "userAgent": ""
           },
-          "tier": 1
+          "tier": 2
         }
       },
       {
@@ -2749,7 +2749,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 1,
+          "tier": 2,
           "channelTiers": {}
         }
       },
@@ -2861,7 +2861,7 @@
         "arguments": {
           "name": "西瓜卡通",
           "description": "西瓜卡通视频源，源网址www.xgcartoon.com。（来源：AniBaka 规则 xigua rev 9，自动转换）",
-          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xigua.ico",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xigua.png",
           "searchConfig": {
             "searchUrl": "https://www.xgcartoon.com/search?q={keyword}",
             "searchUseOnlyFirstWord": true,
@@ -2909,7 +2909,7 @@
         "version": 2,
         "arguments": {
           "name": "9ciyuan (jcydm1.com)",
-          "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：修复后的选择器仍未通过：搜索页能打开，但选择器没有选中任何结果）] 站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
+          "description": "站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-9ciyuan.png",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -2950,7 +2950,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 4,
+          "tier": 1,
           "channelTiers": {}
         }
       },
@@ -3268,7 +3268,7 @@
         "version": 2,
         "arguments": {
           "name": "xfdmneo (dm1.xfdm.pro)",
-          "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：在真实搜索页上没找到合适的结果链接选择器）] 站点 dm1.xfdm.pro。（来源：Kazumi 规则 xfdmneo v1.1，自动转换）",
+          "description": "站点 dm1.xfdm.pro。（来源：Kazumi 规则 xfdmneo v1.1，自动转换）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xfdmneo.png",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -3309,7 +3309,7 @@
               "scanDomMediaUrls": false
             }
           },
-          "tier": 4,
+          "tier": 1,
           "channelTiers": {}
         }
       },
