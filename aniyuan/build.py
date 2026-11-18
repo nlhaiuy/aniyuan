@@ -635,7 +635,7 @@ def main():
             rep += ["| %s | %s | %s |" % b for b in blind]
             if not proxy:
                 why = (os.environ.get("ANIYUAN_PROXY_NOTE") or "").strip()
-                rep += ["", ("出口代理没有启用：%s。" % why) if why else "想看到国内视角的结果：给工作流配置国内出口的代理（Secret `ANIYUAN_PROXY` / `VMESS_LINK` / `CLASH_NODE`），见 README。"]
+                rep += ["", ("出口代理没有启用：%s。" % why) if why else "想看到国内视角的结果：给工作流配置国内出口的代理（Secret `CLASH_NODE` 放 Clash 节点，或 `ANIYUAN_PROXY` 放 http / socks5 地址），见 README。"]
         if ua_audit:
             rep += ["", "## UA 体检", "", "| 检查项 | 结果 | 说明 |", "|---|---|---|"]
             rep += ["| %s | %s | %s |" % (n, "通过" if ok else "**未通过**", d.replace("|", "/")) for n, ok, d in ua_audit]
