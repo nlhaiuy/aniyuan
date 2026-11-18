@@ -133,14 +133,24 @@ def convert_rule(rule, config=None):
         if not surl:
             return res.fail("缺少 searchURL")
         sc["searchUrl"] = surl.replace("@keyword", "{keyword}")
+        # searchResult 写成 "."：链接就是列表项本身（项本身是 <a>），名称取项内的 searchName
+        self_link = (rule.get("searchResult") or "").strip() in (".", "./", "self::node()")
         try:
             lst, n1 = xpath_to_css(rule.get("searchList"))
             nm, n2 = xpath_to_css(rule.get("searchName"))
-            rs, n3 = xpath_to_css(rule.get("searchResult"))
+            rs, n3 = (None, []) if self_link else xpath_to_css(rule.get("searchResult"))
         except Unsupported as e:
             return res.fail("搜索 XPath 无法转换：%s" % e)
         res.notes += n1 + n2 + n3
-        if rule.get("searchName") == rule.get("searchResult"):
+        if self_link:
+            sc["subjectFormatId"] = "indexed"
+            sc["selectorSubjectFormatIndexed"] = {
+                "selectNames": join_relative(lst, nm),
+                "selectLinks": lst,   # 列表项本身就是带 href 的元素
+                "preferShorterName": True,
+            }
+            res.info.append("searchResult 是 \".\"：链接取列表项本身")
+        elif rule.get("searchName") == rule.get("searchResult"):
             sc["subjectFormatId"] = "a"
             sc["selectorSubjectFormatA"] = {"selectLists": join_relative(lst, nm), "preferShorterName": True}
         else:

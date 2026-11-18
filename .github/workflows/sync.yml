@@ -66,6 +66,7 @@ jobs:
           python tests/test_changes.py
           python tests/test_live.py
           python tests/test_smoke_retry.py
+          python tests/test_kazumi_selflink.py
           python tests/test_fallback_keyword.py
           python tests/test_pipeline.py
 
