@@ -67,6 +67,7 @@ jobs:
           python tests/test_live.py
           python tests/test_smoke_retry.py
           python tests/test_kazumi_selflink.py
+          python tests/test_clash_node.py
           python tests/test_fallback_keyword.py
           python tests/test_pipeline.py
 
@@ -115,6 +116,41 @@ jobs:
             sleep 1
           done <<< "$VMESS_LINK"
           echo "没有可用的 vmess 节点，走海外出口"
+          echo "ANIYUAN_PROXY_NOTE=已配置 VMESS_LINK，但 $n 个节点都连不通国内站" >> "$GITHUB_ENV"
+
+      # 可选：Secret CLASH_NODE 里放一个 Clash 格式的节点（mihomo 支持的类型都行：http / socks5 / ss / vmess 等，可带自定义请求头）。
+      # 上一步已经有可用代理就跳过；否则用 mihomo 在 runner 上起本地代理，连得通国内站才启用，不通就走海外出口。
+      # 节点内容只经 Secret 传入；密码 / 令牌 / X-*-Auth 之类的值会用 add-mask 从日志里遮掉。
+      - name: 启动 Clash 节点代理（可选）
+        env:
+          CLASH_NODE: ${{ secrets.CLASH_NODE }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          [ -z "$CLASH_NODE" ] && exit 0
+          [ -n "$ANIYUAN_PROXY" ] && { echo "已有可用代理，跳过"; exit 0; }
+          note() { echo "ANIYUAN_PROXY_NOTE=${ANIYUAN_PROXY_NOTE:+$ANIYUAN_PROXY_NOTE；}$1" >> "$GITHUB_ENV"; echo "$1"; }
+          python -m aniyuan.check.clash_node "$RUNNER_TEMP/mihomo.yaml" || { note "CLASH_NODE 格式不对，没有启用"; exit 0; }
+          url=$(gh api repos/MetaCubeX/mihomo/releases/latest --jq '[.assets[].browser_download_url | select(test("/mihomo-linux-amd64-v[0-9]+\\.[0-9]+\\.[0-9]+\\.gz$"))][0]')
+          if [ -z "$url" ] || [ "$url" = "null" ]; then note "没找到 mihomo 的 linux-amd64 发行包"; exit 0; fi
+          curl -sSL --fail -o "$RUNNER_TEMP/mihomo.gz" "$url" && gunzip -f "$RUNNER_TEMP/mihomo.gz" && chmod +x "$RUNNER_TEMP/mihomo" || { note "mihomo 下载失败"; exit 0; }
+          mkdir -p "$RUNNER_TEMP/mh"
+          if ! "$RUNNER_TEMP/mihomo" -t -f "$RUNNER_TEMP/mihomo.yaml" -d "$RUNNER_TEMP/mh" > "$RUNNER_TEMP/mihomo-test.log" 2>&1; then
+            tail -n 8 "$RUNNER_TEMP/mihomo-test.log"
+            note "CLASH_NODE 的配置 mihomo 不认（日志里有详情）"; exit 0
+          fi
+          "$RUNNER_TEMP/mihomo" -f "$RUNNER_TEMP/mihomo.yaml" -d "$RUNNER_TEMP/mh" > "$RUNNER_TEMP/mihomo.log" 2>&1 &
+          pid=$!
+          sleep 3
+          code=$(curl -sS -o /dev/null -m 20 -w '%{http_code}' --socks5-hostname 127.0.0.1:7890 https://www.baidu.com 2>"$RUNNER_TEMP/curl.err"); rc=$?
+          if [ "$rc" = 0 ] && [ "$code" != "000" ]; then
+            echo "Clash 节点可用（经它访问百度返回 HTTP $code）"
+            echo "ANIYUAN_PROXY=socks5h://127.0.0.1:7890" >> "$GITHUB_ENV"
+            exit 0
+          fi
+          echo "curl 退出码 $rc，HTTP $code：$(cat "$RUNNER_TEMP/curl.err")"
+          tail -n 8 "$RUNNER_TEMP/mihomo.log"
+          kill $pid 2>/dev/null || true
+          note "已配置 CLASH_NODE，但经它连不通国内站（curl 退出码 $rc）"
 
       - name: 转换并做联网冒烟测试
         env:
