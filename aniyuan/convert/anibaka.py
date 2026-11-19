@@ -10,7 +10,8 @@
 import re
 from urllib.parse import urljoin, urlparse
 
-from .kazumi import MATCH_VIDEO_URL, Result, _origin
+from .kazumi import EPISODE_SORT, MATCH_VIDEO_URL, Result, _origin
+from .xpath2css import Unsupported, join_relative, xpath_to_css
 
 # 播放步骤里出现这些 op，说明 AniBaka 是靠站内解密/接口取直链，Animeko 只能靠 WebView 嗅探
 PLAY_HARD_OPS = {"crypto", "playerDecrypt", "maccmsVerify", "aesDecrypt"}
@@ -100,7 +101,7 @@ def _search_html(branch, base):
     """fetch(GET)+searchList -> (searchUrl, searchConfigPart, notes)。"""
     fetch = next((o for o in branch if o.get("op") == "fetch"), None)
     sl = next((o for o in branch if o.get("op") == "searchList"), None)
-    other = [o.get("op") for o in branch if o.get("op") not in ("fetch", "searchList")]
+    other = [o.get("op") for o in branch if o.get("op") not in ("fetch", "searchList", "maccmsVerify")]
     if not fetch or not sl or other or not _is_get(fetch) or not fetch.get("url"):
         return None
     sels = sl.get("selectors") or []
@@ -111,6 +112,8 @@ def _search_html(branch, base):
     for s in sels:
         pieces += [_to_link_selector(p, pattern) for p in split_selectors(s)]
     notes = []
+    if any(o.get("op") == "maccmsVerify" for o in branch):
+        notes.append("搜索用到 maccmsVerify（站点验证码），Animeko 无法处理，遇到验证时会失败")
     if not pattern and not any("href" in x for x in pieces):
         notes.append("searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）")
     url = _join_urls(base, fetch["url"])
@@ -176,7 +179,58 @@ def convert_search(rule_ops, base, origin):
     return None
 
 
+_TEXT_PRED = re.compile(r"\s+and\s+contains\(\s*text\(\)\s*,\s*(['\"]).*?\1\s*\)|contains\(\s*text\(\)\s*,\s*(['\"]).*?\2\s*\)\s+and\s+")
+
+
+_AND_PRED = re.compile(r"\[\s*((?:contains|starts-with)\([^\]]*?\)|@[\w-]+(?:\s*=\s*(?:'[^']*'|\"[^\"]*\"))?)\s+and\s+((?:contains|starts-with)\([^\]]*?\)|@[\w-]+(?:\s*=\s*(?:'[^']*'|\"[^\"]*\"))?)\s*\]")
+
+
+def _xp_css(xp):
+    """XPath -> CSS；contains(text(),..) 这类按文字过滤的条件转不了，去掉条件再转（返回 notes 提醒）。"""
+    try:
+        return xpath_to_css(xp)
+    except Unsupported:
+        pass
+    loose = _TEXT_PRED.sub("", xp)
+    notes = ["XPath 里按文字过滤的条件（contains(text(), ..)）转不了，已去掉，可能多选到非剧集链接"] if loose != xp else []
+    loose = _AND_PRED.sub(lambda m: "[%s][%s]" % (m.group(1), m.group(2)), loose)   # [a and b] -> [a][b]
+    if loose == xp:
+        raise Unsupported("XPath 条件转不了")
+    css, n = xpath_to_css(loose)
+    return css, n + notes
+
+
+def _episodes_xpath(eps):
+    """episodes 用 roadsXPath / itemsXPath 写的：转成 Animeko 的 CSS 选择器。
+    AniBaka 的 XPath 写法没有线路名，所有线路合并成一条（和 Kazumi 规则一样）。返回 (channel_config, notes) 或 None。"""
+    pairs, notes = [], []
+    for o in eps:
+        roads, items = (o.get("roadsXPath") or "").strip(), (o.get("itemsXPath") or "").strip()
+        if not items:
+            continue
+        try:
+            ic, n1 = _xp_css(items)
+            rc, n2 = _xp_css(roads) if roads and roads != "//" else ("", [])
+        except Unsupported:
+            continue
+        css = join_relative(rc, ic) if rc else ic
+        if css not in pairs:
+            pairs.append(css)
+        notes += [n for n in n1 + n2 if n not in notes]
+    if not pairs:
+        return None
+    return {
+        "channelFormatId": "no-channel",
+        "selectorChannelFormatNoChannel": {
+            "selectEpisodes": ", ".join(pairs),
+            "selectEpisodeLinks": "",
+            "matchEpisodeSortFromName": EPISODE_SORT,
+        },
+    }, notes + ["AniBaka 规则没有线路名，所有线路合并为一条"]
+
+
 def convert_episodes(detail_ops):
+    """返回 channel 配置；XPath 写法返回 (配置, notes) 由调用方拆开。"""
     eps = [o for o in _walk_ops(detail_ops) if o.get("op") == "episodes"]
     lists, tabs = [], []
     for o in eps:
@@ -187,7 +241,7 @@ def convert_episodes(detail_ops):
             if s not in tabs:
                 tabs.append(s)
     if not lists:
-        return None
+        return _episodes_xpath(eps)
     if tabs:
         return {
             "channelFormatId": "index-grouped",
@@ -229,6 +283,9 @@ def convert_anx(rule, entry=None, config=None):
     res.notes += [n.replace("GUESS:", "") for n in notes]
 
     ch = convert_episodes(p.get("detail"))
+    if isinstance(ch, tuple):
+        ch, ch_notes = ch
+        res.notes += ch_notes
     if not ch:
         kinds = sorted({o.get("op") for o in _walk_ops(p.get("detail")) if o.get("op")} - {"follow", "first"})
         return res.fail("章节步骤无法转换（需要 episodes 操作，实际是：%s）" % (", ".join(kinds) or "无"))

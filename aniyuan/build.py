@@ -402,6 +402,7 @@ def collect_easybangumi(repo, config):
 
 # ---------------------------------------------------------------- 合并
 def merge(cands, config):
+    from .normalize import normalize_id
     aliases = config.get("site_aliases", {})
     prefer = config.get("prefer", {})
     by_smoke = config.get("select_by_smoke", True)
@@ -478,7 +479,7 @@ def merge(cands, config):
         winner["chosen"] = True
         scores[id(winner)] = (tier(winner), winner["date"] or 0, rank.get(winner["origin"], 0))
         chosen.append(winner)
-        decisions.append(dict(site=host, winner="%s:%s" % (winner["origin"], winner["key"]), id=stable_id, reason=reason,
+        decisions.append(dict(site=host, winner="%s:%s" % (winner["origin"], winner["key"]), id=normalize_id(stable_id), reason=reason,
                               members=["%s:%s(%s)" % (c["origin"], c["key"], fmt_date(c["date"])) for c in members]))
     return dedupe_ids(chosen, decisions, scores)
 

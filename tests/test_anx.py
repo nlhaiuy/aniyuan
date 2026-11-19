@@ -188,4 +188,22 @@ check("没联网检测：搜索地址是推测的 -> 基线优先", ch[0]["origi
 auto = cand("anibaka", "s", "new.com", 100, "anibaka-s", "ok"); auto["guess"] = True; base = cand("baseline", "s", "old.com", 100, "anibaka-s", "ok")
 ch, _ = merge([auto, base], {})
 check("推测的搜索地址实测通过：不再降级", ch[0]["origin"] == "anibaka")
+
+# episodes 用 XPath 写的（roadsXPath / itemsXPath）：转成 CSS，线路合并为一条
+xp = dict(html, detail=[{"op": "follow"}, {"op": "episodes", "roadsXPath": "//section[contains(@class, 'anthology')]",
+                                           "itemsXPath": ".//a[contains(@class, 'circuit_switch1')]"}])
+r5 = convert_anx(xp, {"key": "t5"})
+nc = (r5.source or {"arguments": {"searchConfig": {}}})["arguments"]["searchConfig"].get("selectorChannelFormatNoChannel", {})
+check("episodes XPath -> no-channel CSS", r5.source is not None and nc.get("selectEpisodes") == 'section[class*="anthology"] a[class*="circuit_switch1"]')
+xp2 = dict(html, detail=[{"op": "episodes", "roadsXPath": "//div[contains(@class, \"entry-content\")]",
+                         "itemsXPath": ".//div[contains(@class, \"a\") and contains(@class, \"b\")]//a[contains(@class, \"p-\") and contains(text(), \"集\")]"}])
+r6 = convert_anx(xp2, {"key": "t6"})
+sel6 = ((r6.source or {}).get("arguments", {}).get("searchConfig", {}).get("selectorChannelFormatNoChannel") or {}).get("selectEpisodes", "")
+check("XPath 里 [a and b] 拆成多个属性条件、按文字过滤的条件去掉并提示",
+      sel6 == 'div[class*="entry-content"] div[class*="a"][class*="b"] a[class*="p-"]' and any("contains(text()" in n for n in r6.notes))
+# 搜索里夹着 maccmsVerify（验证码）：照样转，但提示
+mv = dict(html, search=[{"op": "fetch", "url": "/s?wd={keyword}"}, {"op": "maccmsVerify"},
+                        {"op": "searchList", "selectors": [".i"], "detailPattern": "/d/"}])
+r7 = convert_anx(mv, {"key": "t7"})
+check("fetch+maccmsVerify+searchList 可转并提示验证码", r7.source is not None and any("maccmsVerify" in n for n in r7.notes))
 sys.exit(1 if bad else 0)
