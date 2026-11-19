@@ -119,6 +119,7 @@ def probe(c, keyword, session, presets, config):
     """联网检测一个候选：必要时换备用关键词、自动修复选择器、跟随域名跳转。结果写进 c["smoke"]。"""
     import time
     from .check.smoke import _blocked, check_source
+    c.setdefault("orig_site", site_host(c["source"]))   # 域名跳转 / 跟随上游之前的站点，merge 分组时也要认它
     ctx = {}
     r = check_source(c["source"], keyword, session=session, ctx=ctx)
     # 搜索页能打开、但这个关键词没搜出结果：可能只是站里没这部番（或限制了搜索频率），先换备用关键词再下结论
@@ -355,7 +356,11 @@ def merge(cands, config):
             continue
         host = site_host(c["source"])
         c["site"] = aliases.get(host, host)
-        keys = ["h:" + c["site"]] + (["a:" + c["key"]] if c["origin"] in ("anibaka", "baseline") else [])
+        orig = c.get("orig_site")
+        # 检测时被改写了域名（跳转 / 跟随上游）的候选，原来的域名也算它的站点：
+        # 否则同一个站里只有一部分候选换了新域名，就会被拆成两组，各自产出同一个 id
+        keys = ["h:" + c["site"]] + (["h:" + aliases.get(orig, orig)] if orig and orig != host else []) \
+            + (["a:" + c["key"]] if c["origin"] in ("anibaka", "baseline") else [])
         for k in keys:
             if k in seen_key:
                 parent[find(id(c))] = find(seen_key[k])
@@ -369,7 +374,7 @@ def merge(cands, config):
         label = next((m["site"] for m in members if m["origin"] != "baseline"), members[0]["site"])
         groups[label] = members
 
-    chosen, decisions = [], []
+    chosen, decisions, scores = [], [], {}
     for host, members in sorted(groups.items()):
         rank = {"kazumi": 3, "easybangumi": 2, "anibaka": 1}   # 时间相同：Kazumi > 纯纯看番 > AniBaka > 基线
         smoke_of = lambda c: (c.get("smoke") or {}).get("status")  # noqa: E731
@@ -404,9 +409,31 @@ def merge(cands, config):
         stable_id = source_id(ab[0]["key"]) if ab else (kz[0]["source"]["id"] if kz else winner["source"]["id"])
         winner["source"]["id"] = stable_id
         winner["chosen"] = True
+        scores[id(winner)] = (tier(winner), winner["date"] or 0, rank.get(winner["origin"], 0))
         chosen.append(winner)
         decisions.append(dict(site=host, winner="%s:%s" % (winner["origin"], winner["key"]), id=stable_id, reason=reason,
                               members=["%s:%s(%s)" % (c["origin"], c["key"], fmt_date(c["date"])) for c in members]))
+    return dedupe_ids(chosen, decisions, scores)
+
+
+def dedupe_ids(chosen, decisions, scores):
+    """兜底：不同站点组最终输出的 id 相同（同名站点因为域名不一致没被分到一组）时，保留检测结果更好的那个，
+    其余的并进它的“同站点取舍”记录。宁可合并，也不能让重复 id 把整个构建弄失败、订阅停在旧版本上。"""
+    from .normalize import normalize_id
+    by_id = {}
+    for c, d in zip(chosen, decisions):
+        by_id.setdefault(normalize_id(c["source"]["id"]), []).append((c, d))
+    for items in by_id.values():
+        if len(items) < 2:
+            continue
+        items.sort(key=lambda cd: scores.get(id(cd[0]), (0, 0, 0)), reverse=True)
+        keep_c, keep_d = items[0]
+        for c, d in items[1:]:
+            chosen.remove(c)
+            decisions.remove(d)
+            c["chosen"] = False
+            keep_d["members"] += d["members"]
+            keep_d["reason"] += "；同名站点 %s 因域名不一致被分成了两组，已合并为一个（保留检测结果更好的 %s）" % (d["site"], keep_d["winner"])
     return chosen, decisions
 
 
