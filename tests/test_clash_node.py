@@ -25,10 +25,11 @@ NODE = """- name: bd直连
 cfg, name = build_config(NODE)
 check("节点名取出来了", name == "bd直连")
 check("混合代理只监听本机", "mixed-port: %d" % PORT in cfg and "bind-address: 127.0.0.1" in cfg and "allow-lan: false" in cfg)
-check("所有流量走这个节点", cfg.rstrip().endswith('- MATCH,"bd直连"'))
+check("所有流量走这个节点：规则不带引号，节点统一改名（真实 mihomo 报过 proxy not found）",
+      cfg.rstrip().endswith("- MATCH,aniyuan-exit") and "  - name: aniyuan-exit\n" in cfg and "bd直连" not in cfg)
 check("节点内容原样保留（含嵌套的 headers）", "    server: cloudnproxy.bd.com\n" in cfg and "    headers:\n      Host: cloudnproxy.bd.com\n      X-T5-Auth: 1050504963\n" in cfg
       and '      User-Agent: ""\n' in cfg)
-check("节点在 proxies: 下、缩进统一", "proxies:\n  - name: bd直连\n    server:" in cfg)
+check("节点在 proxies: 下、缩进统一", "proxies:\n  - name: aniyuan-exit\n    server:" in cfg)
 
 # 首行被去掉缩进、其余行缩进更深（从聊天里复制粘贴常见的样子）
 cfg2, _ = build_config("  - name: a\n      server: s\n      type: http\n      port: 1\n      headers:\n        K: v\n")
@@ -39,9 +40,14 @@ TWO = "proxies:\n  - name: one\n    type: http\n    server: a\n    port: 1\n  - 
 many = build_configs(TWO)
 check("多个节点各出一份配置、顺序不变", [n for _, n in many] == ["one", "two"])
 check("每份配置只含自己的节点", "server: a" in many[0][0] and "server: b" not in many[0][0] and "server: b" in many[1][0] and "server: a" not in many[1][0])
-check("每份配置都把流量指向自己的节点", many[0][0].rstrip().endswith('- MATCH,"one"') and many[1][0].rstrip().endswith('- MATCH,"two"'))
+check("每份配置都把流量指向自己的节点", all(c.rstrip().endswith("- MATCH,aniyuan-exit") and "  - name: aniyuan-exit\n" in c for c, _ in many) and [n for _, n in many] == ["one", "two"])
 check("不带 proxies: 的多节点（缩进不同）也行", [n for _, n in build_configs("- name: x\n    type: http\n    server: a\n    port: 1\n- name: y\n    type: http\n    server: b\n    port: 2\n")] == ["x", "y"])
 check("嵌套里的 name 不会被当成节点名", split_nodes("- type: http\n  name: real\n  headers:\n    name: fake\n  server: s\n  port: 1\n")[0][1] == "real")
+c4 = build_configs("- type: http\n  name: real\n  headers:\n    name: fake\n  server: s\n  port: 1\n")[0][0]
+check("改名只改节点自己的 name，嵌套里的不动", "    name: aniyuan-exit\n" in c4 and "      name: fake\n" in c4)
+for odd in ('a,b', '"q"', "it's", '带 空格 的名字'):
+    c5 = build_configs("- name: %s\n    type: http\n    server: s\n    port: 1\n" % ("'%s'" % odd if odd == 'a,b' else odd))[0][0]
+    check("奇怪的节点名 %r 不影响规则" % odd, c5.rstrip().endswith("- MATCH,aniyuan-exit") and odd not in c5.split("rules:")[1])
 
 for bad_in, why in (("", "空"), ("server: x", "不是从 - 开始"), ("proxies:\n", "没有节点"), ("- type: http\n  server: x\n", "没有 name")):
     try:

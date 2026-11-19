@@ -62,10 +62,25 @@ def split_nodes(text):
     return nodes
 
 
+EXIT_NAME = "aniyuan-exit"   # 配置里节点统一改叫这个名字：mihomo 的规则是逗号分隔的纯文本，不按 YAML 解析，
+                             # 原名里的引号 / 逗号 / 中文都可能让 MATCH 规则找不到节点（真实运行里 MATCH,"bd直连" 就报 proxy not found）
+
+
+def _rename(node_lines):
+    """把节点自己的 name（首行里的，或缩进 4 格的）改成 EXIT_NAME；嵌套里的 name 不动。"""
+    out, done = [], False
+    for i, l in enumerate(node_lines):
+        if not done and (i == 0 or _indent(l) == 4):
+            m = re.match(r"^(\s*(?:-\s*)?name:\s*)(.+?)\s*$", l)
+            if m:
+                l, done = m.group(1) + EXIT_NAME, True
+        out.append(l)
+    return out
+
+
 def _config(node_lines, name, port):
-    quoted = name.replace("\\", "\\\\").replace('"', '\\"')
     cfg = ["mixed-port: %d" % port, "bind-address: 127.0.0.1", "allow-lan: false", "mode: rule", "log-level: warning", "ipv6: false",
-           "dns:", "  enable: false", "proxies:"] + node_lines + ["rules:", '  - MATCH,"%s"' % quoted]
+           "dns:", "  enable: false", "proxies:"] + _rename(node_lines) + ["rules:", "  - MATCH,%s" % EXIT_NAME]
     return "\n".join(cfg) + "\n"
 
 
