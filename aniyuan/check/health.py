@@ -17,6 +17,7 @@ blocked / unreachable / skipped / 没检测 都不算失败，也不会清零，
 
 DEFAULT_THRESHOLD = 2
 DEFAULT_CARRY_DAYS = 14   # 海外盲区：被拦 / 打不开时，最多沿用多少天内的“上次通过”成绩
+EXIT = "海外"   # 检测出口的叫法，进备注里；走国内代理时 build 会改成“国内出口”
 DAY = 86400
 # 检测通过后按播放检测结果排名：能播 > 没检测 > 没抓到 > 认不出（和 build.merge 里一致）
 PLAY_TIER = {"ok": 3, "error": 2, "none": 1.8, "blocked": 1.6, "mismatch": 1.5}
@@ -54,8 +55,8 @@ def update_health(cands, history, now, threshold=DEFAULT_THRESHOLD, carry_days=D
         carry = bool(st in BLIND and age is not None and age <= carry_days)
         c["health"] = dict(rec, grace=grace, carry=carry, carry_age=round(age, 1) if carry else None)
         if carry:
-            c["notes"].append("海外检测%s（连续 %d 次），%.0f 天前通过过，暂按上次的成绩排名" % (
-                "被拦" if st == "blocked" else "打不开", rec["blind"], age))
+            c["notes"].append("%s检测%s（连续 %d 次），%.0f 天前通过过，暂按上次的成绩排名" % (
+                EXIT, "被拦" if st == "blocked" else "打不开", rec["blind"], age))
         if grace:
             c["notes"].append("自动检测未通过（连续 %d/%d 次），以前通过过，暂不降级、不加警告" % (rec["fails"], threshold))
         if rec:
@@ -89,7 +90,7 @@ def auto_tier(c):
         play, basis = h.get("play"), "检测未通过但在宽限期内，按上次通过的成绩"
     elif (c.get("health") or {}).get("carry"):
         h = c["health"]
-        play, basis = h.get("play"), "海外检测%s，沿用 %s 天前通过时的成绩" % ("被拦" if st == "blocked" else "打不开", h.get("carry_age"))
+        play, basis = h.get("play"), "%s检测%s，沿用 %s 天前通过时的成绩" % (EXIT, "被拦" if st == "blocked" else "打不开", h.get("carry_age"))
     else:
         return (4, "搜索地址是推测的且没验证过") if c.get("guess") else (3, "检测没有结论（%s）" % st)
     t = PLAY_TIER.get(play, 2)

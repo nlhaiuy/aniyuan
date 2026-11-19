@@ -189,6 +189,73 @@ def probe(c, keyword, session, presets, config):
     c["smoke"] = r
 
 
+def direct_pass(cands, config, session=None):
+    """海外直连对照：用不经代理的 GitHub 海外出口，把每个候选再测一遍，结果写进 c["smoke_direct"]。
+    只做搜索 + 详情这两步（不修复、不改源、不影响排名和历史），为的是在报告里和国内出口的结果对比。
+    浏览器 403 回退走的是代理，必须关掉，否则会把国内视角混进“海外直连”的结果里。"""
+    from .check import smoke as smoke_mod
+    from .check.smoke import check_source
+    session = session or network.new_session(None)
+    keyword = config.get("smoke_keyword", "葬送的芙莉莲")
+    prev = smoke_mod.FETCHER
+    smoke_mod.set_browser_fetcher(None)
+    try:
+        for c in cands:
+            if c.get("source") is None:
+                continue
+            try:
+                r = check_source(c["source"], keyword, session=session)
+                for alt in config.get("smoke_fallback_keywords", DEFAULT_FALLBACK_KEYWORDS):   # 和主检测同样的备用关键词规则
+                    if not (r["status"] == "fail" and r.get("stage") == "search"):
+                        break
+                    if alt != keyword:
+                        r2 = check_source(c["source"], alt, session=session)
+                        if r2["status"] == "ok":
+                            r = r2
+                            break
+            except Exception as e:   # 对照检测出任何问题都不能拖垮主流程
+                r = {"status": "skipped", "reason": "对照检测出错：%s" % type(e).__name__}
+            c["smoke_direct"] = {k: r[k] for k in ("status", "reason", "episode_count") if k in r}
+            time.sleep(config.get("smoke_direct_wait", 0.5))
+    finally:
+        smoke_mod.set_browser_fetcher(prev)
+
+
+# 两个出口的结果怎么归类：只看“有没有通过”，没通过的再看是被拦 / 打不开 / 选择器不对
+EXIT_NOTE = {
+    ("ok", "ok"): "两边都通过",
+    ("ok", "blocked"): "国内通过、海外被拦（海外服务器常被站点拦，符合预期）",
+    ("ok", "unreachable"): "国内通过、海外打不开",
+    ("ok", "fail"): "国内通过、海外选择器没选中（站点对海外返回了不同页面）",
+}
+
+
+def exit_compare(cands):
+    """两个出口的对比：返回 (分类计数, 差异清单)。只统计两边都有结果的候选。
+    清单行：(候选, 国内状态, 海外状态, 说明, 是否入选)。"""
+    cats = {"both_ok": 0, "cn_only": 0, "abroad_only": 0, "neither": 0}
+    rows = []
+    for c in cands:
+        a, b = (c.get("smoke") or {}).get("status"), (c.get("smoke_direct") or {}).get("status")
+        if not a or not b or c.get("source") is None:
+            continue
+        key = "%s:%s" % (c["origin"], c["key"])
+        if a == "ok" and b == "ok":
+            cats["both_ok"] += 1
+        elif a == "ok":
+            cats["cn_only"] += 1
+            rows.append((key, a, b, EXIT_NOTE.get((a, b), "国内通过、海外没通过"), bool(c.get("chosen"))))
+        elif b == "ok":
+            cats["abroad_only"] += 1
+            rows.append((key, a, b, "海外通过、国内出口没通过：可能是代理线路问题，也可能站点限制国内访问，值得留意", bool(c.get("chosen"))))
+        else:
+            cats["neither"] += 1
+            if a != b:
+                rows.append((key, a, b, "两边都没通过，但原因不同", bool(c.get("chosen"))))
+    rows.sort(key=lambda r: (not r[4], r[1] == "ok", r[0]))   # 入选的排前面，“海外通过、国内没通过”的排在“国内通过”前面
+    return cats, rows
+
+
 def _check(source, config, session):
     from .check.smoke import check_source
     return check_source(source, config.get("smoke_keyword", "葬送的芙莉莲"), session=session)
@@ -522,6 +589,8 @@ def main():
         session = network.new_session(proxy)
         if proxy:
             print("检测走出口代理：%s" % network.describe(proxy))
+            from .check import health as health_mod
+            health_mod.EXIT = "国内出口"
         presets = mine_presets(args.anibaka)
         if args.playcheck:   # 浏览器启动一次：既用于 403 回退，也用于播放检测
             try:
@@ -553,6 +622,9 @@ def main():
             if config.get("follow_upstream_domains", True):
                 for key, old, new, ok in follow_upstream(cands, lambda src: _check(src, config, session)):
                     print("域名跟随 %s：%s → %s %s" % (key, old, new, "已采用" if ok else "未通过，保持原样"))
+            if proxy and config.get("smoke_both_exits", True):
+                print("海外直连对照检测（不经代理）……")
+                direct_pass(cands, config)
             if pc:
                 run_playchecks(cands, config, pc)
         except BaseException:
@@ -637,7 +709,9 @@ def main():
              "baseline": "回退基线"}
     rep = ["# 订阅转换报告", "", "写入订阅 **%d** 个数据源（候选 %d 个，同站点合并后）。" % (len(sources), len(cands)), ""]
     if args.smoke:
-        rep += ["检测出口：%s。" % ("代理 " + network.describe(proxy) if proxy else "GitHub 海外服务器（国内站可能打不开或被拦）"), ""]
+        both = bool(proxy and any(c.get("smoke_direct") for c in cands))
+        rep += ["检测出口：%s。" % ("国内出口（代理 %s）%s" % (network.describe(proxy), "，并用 GitHub 海外服务器直连做了一遍对照，见「国内外出口对比」" if both else "")
+                                  if proxy else "GitHub 海外服务器（国内站可能打不开或被拦）"), ""]
     if changed is not None:
         rep += changes.section(changed)[1:] + [""]
     rep += [
@@ -651,13 +725,24 @@ def main():
                            + ([sm["play_reason"]] if sm.get("play") not in (None, "ok") else []))
         rep.append("| %s | %s | %s | %s | %s | %s | %s | %s | %s |" % (
             c["origin"], c["key"], c["version"], fmt_date(c["date"]) + ("（%s）" % c["date_basis"] if c.get("date_basis") else ""), label.get(c["status"], c["status"]),
-            sm.get("status", "-") + ("（已剔除）" if c.get("dropped") else ""), sm.get("play", "-"),
+            sm.get("status", "-") + ("（海外：%s）" % c["smoke_direct"]["status"] if c.get("smoke_direct") else "") + ("（已剔除）" if c.get("dropped") else ""), sm.get("play", "-"),
             "是" if c.get("chosen") else "否", remark.replace("|", "/")))
     if args.smoke:
+        cats, diff = exit_compare(cands)
+        if sum(cats.values()):
+            rep += ["", "## 国内外出口对比", "",
+                    "同一批候选分别用国内出口（代理，决定排名）和 GitHub 海外服务器直连（只做对照）各测了一遍；表中「自动检测」列括号里是海外直连的结果。", "",
+                    "| 国内 / 海外 | 个数 |", "|---|---|",
+                    "| 两边都通过 | %d |" % cats["both_ok"], "| 只有国内通过 | %d |" % cats["cn_only"],
+                    "| 只有海外通过 | %d |" % cats["abroad_only"], "| 两边都没通过 | %d |" % cats["neither"]]
+            if diff:
+                rep += ["", "| 候选 | 国内 | 海外 | 说明 | 入选 |", "|---|---|---|---|---|"]
+                rep += ["| %s | %s | %s | %s | %s |" % (k, a, b, note, "是" if ch else "否") for k, a, b, note, ch in diff]
         blind = blind_spots([c for c in cands if c.get("chosen")])
         if blind:
-            rep += ["", "## 海外盲区", "",
-                    "最终入选的源里，有 %d 个这次在海外检测不出结论（被拦 / 打不开），不等于站点坏了：" % len(blind), "",
+            where = "国内出口" if proxy else "海外"
+            rep += ["", "## %s盲区" % where,  "",
+                    "最终入选的源里，有 %d 个这次在%s检测不出结论（被拦 / 打不开），不等于站点坏了：" % (len(blind), where), "",
                     "| 候选 | 状态 | 排名依据 |", "|---|---|---|"]
             rep += ["| %s | %s | %s |" % b for b in blind]
             if not proxy:
