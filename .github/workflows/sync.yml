@@ -69,6 +69,8 @@ jobs:
           python tests/test_kazumi_selflink.py
           python tests/test_clash_node.py
           python tests/test_merge_redirect.py
+          python tests/test_exit_compare.py
+          python tests/test_exit_pipeline.py
           python tests/test_fallback_keyword.py
           python tests/test_pipeline.py
 
