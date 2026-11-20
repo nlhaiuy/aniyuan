@@ -214,6 +214,33 @@ try:
     made4 = AL.learn_cands(cs4, "cn", None, PRESETS, cache4, 1000, {})
     check("猜测候选的 guess 标记带进候选和缓存（排在有实测的后面）", len(made4) == 1 and made4[0]["guess"] is True
           and cache4["gpjda.com"]["guess"] is True)
+
+    # ---------------- 合理性检查（真实站点上出过：搜索选到 87 条里命中 1 条、剧集选到 2360 条） ----------------
+    WIDE_SEARCH = "<html><body>" + "".join('<h4><a href="/voddetail/%d.html">%s</a></h4>' % (i, "葬送的芙莉莲" if i == 0 else "别的番%d" % i)
+                                           for i in range(70)) + "</body></html>"
+    MANY_EPS = '<html><body><div class="tab-pane">' + "".join('<a href="/vodplay/1-1-%d.html">第%d集</a>' % (i, i) for i in range(1, 121)) + "</div></body></html>"
+    def fake_wide(search_html, detail_html):
+        def _get(url, session, timeout, ua=None):
+            if "/index.php/vod/search.html" in url:
+                return Resp(200, search_html, url)
+            if "/voddetail/" in url:
+                return Resp(200, detail_html, url)
+            return Resp(404, "", url)
+        return _get
+    smoke_mod._get = fake_wide(WIDE_SEARCH, DETAIL)
+    src, why, ex, guess = AL.learn_site(T, [("国内出口", "cn")], PRESETS, ["葬送的芙莉莲"])
+    check("搜索选择器选到太多条（把页面所有链接都选进来）-> 不采用", src is None and "太宽" in why)
+    smoke_mod._get = fake_wide(SEARCH, MANY_EPS)
+    src, why, ex, guess = AL.learn_site(T, [("国内出口", "cn")], PRESETS, ["葬送的芙莉莲"])
+    check("葬送的芙莉莲不可能有 120 集 -> 剧集选择器太宽，不采用", src is None and "太宽" in why)
+    check("合理性函数：已知关键词按 80、其它按 1500", AL.plausible_episodes(28, "葬送的芙莉莲") and not AL.plausible_episodes(81, "葬送的芙莉莲")
+          and AL.plausible_episodes(1100, "海贼王") and not AL.plausible_episodes(2360, "海贼王") and not AL.plausible_episodes(0, "x"))
+    smoke_mod._get = fake_get({"cn": True}, [])
+    old_entry = {"gpjda.com": {"source": {"id": "aniyuan-gpjda", "factoryId": "web-selector", "arguments": {"searchConfig": {"rawBaseUrl": "https://www.gpjda.com"}}},
+                               "note": "旧版本学的", "exit": "国内出口", "at": 1000}}   # 没有 v：旧版本（没有合理性检查）写的
+    made5 = AL.learn_cands([cand("anibaka", "gpjda", None, "unsupported", ["www.gpjda.com"])], "cn", None, PRESETS, old_entry, 1000 + 3600, {})
+    check("旧版本缓存不沿用：重新学（学出来的是新规则，不是旧缓存里的）",
+          len(made5) == 1 and "沿用" not in made5[0]["notes"][0] and old_entry["gpjda.com"].get("v") == AL.CACHE_VERSION)
 finally:
     smoke_mod._get, AL.time.sleep = orig_get, orig_sleep
 

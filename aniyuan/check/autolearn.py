@@ -78,6 +78,14 @@ GUESS_RESULT = "a[href*='/voddetail/'], a[href*='/vod/detail/'], a[href*='/vod-d
 GUESS_EPISODES = "a[href*='/vodplay/'], a[href*='/vod/play/'], a[href*='/vod-play/']"
 DEFAULT_EXCLUDE = ["dmhy.org", "mikanani.me", "mikanime.tv", "nyaa.si"]
 CACHE_DAYS, FAIL_DAYS = 7, 3
+CACHE_VERSION = 2   # 学习逻辑变了（比如加了合理性检查）就加一：旧缓存里的规则不再沿用
+MAX_RESULTS = 60    # 搜索结果页上选出来的条目超过这个数，多半把页面上所有链接都选进来了
+MAX_EPISODES = {"葬送的芙莉莲": 80}   # 已知集数的关键词：超过很多就是选宽了；其余关键词按 DEFAULT_MAX_EPISODES
+DEFAULT_MAX_EPISODES = 1500
+
+
+def plausible_episodes(n, keyword):
+    return 0 < n <= MAX_EPISODES.get(keyword, DEFAULT_MAX_EPISODES)
 DEFAULT_MAX_SITES = 8
 
 
@@ -288,7 +296,12 @@ def _episodes(detail_html, final, presets, base):
 def learn_site(t, sessions, presets, keywords, sleep=1.0):
     """学一个站。返回 (source, 说明, 出口名, 是否猜测) 或 (None, 原因, None, False)。"""
     origin = t["origin"]
-    why, captcha = "搜索页都打不开或被拦", ""
+    w = {"why": "搜索页都打不开或被拦", "rank": 0}
+    captcha = ""
+
+    def setw(msg, rank):   # 具体的原因（页面打开了但选择器不对 / 太宽）比泛泛的「打不开」有用，不被后者覆盖
+        if rank >= w["rank"]:
+            w["why"], w["rank"] = msg, rank
     dead = set()   # 第一个关键词就 404 / 打不开的地址，换关键词也不会好，别再敲
     for kw in keywords:
         for path in SEARCH_PATHS:
@@ -298,27 +311,33 @@ def learn_site(t, sessions, presets, keywords, sleep=1.0):
             text, final, exit_name, status, cap = _fetch(url, sessions)
             time.sleep(sleep)
             if text is None:
-                why = "搜索页打不开（%s）" % status
+                setw("搜索页打不开（%s）" % status, 0)
                 captcha = captcha or cap
                 if not cap:
                     dead.add(path)
                 continue
             found = find_search_selector(text, kw, presets)
             if not found:
-                why = "搜索页能打开，但在上面没找到合适的结果链接选择器"
+                setw("搜索页能打开，但在上面没找到合适的结果链接选择器", 1)
                 continue
             sel, hits, total, first = found
+            if total > MAX_RESULTS:
+                setw("搜索结果选择器太宽（%s 选到 %d 条，命中关键词的只有 %d 条）" % (sel, total, hits), 2)
+                continue
             detail_url = urljoin(final, first[1])
             dtext, dfinal, _dexit, dstatus, _c = _fetch(detail_url, sessions)
             time.sleep(sleep)
             if dtext is None:
-                why = "搜到了结果，但详情页打不开（%s）" % dstatus
+                setw("搜到了结果，但详情页打不开（%s）" % dstatus, 2)
                 continue
             eps = _episodes(dtext, dfinal, presets, origin)
             if not eps:
-                why = "详情页上没找到合适的剧集列表选择器"
+                setw("详情页上没找到合适的剧集列表选择器", 2)
                 continue
             ep_sel, n, ch, ch_note = eps
+            if not plausible_episodes(n, kw):
+                setw("剧集选择器太宽（%s 选到 %d 条，「%s」不可能有这么多集）" % (ep_sel, n, kw), 2)
+                continue
             real_origin = "%s://%s" % (urlparse(final).scheme, urlparse(final).netloc) if final else origin
             src = build_source(t["key"], t["name"], real_origin, host_of(real_origin), path, sel, ep_sel, channels=ch)
             note = "自动学习：搜索 %s（命中 %d/%d），剧集 %s（%d 集%s），在%s学到" % (
@@ -349,17 +368,20 @@ def learn_site(t, sessions, presets, keywords, sleep=1.0):
                 if not eps:
                     continue
                 ep_sel, n, ch, ch_note = eps
+                if not plausible_episodes(n, kw):
+                    setw("剧集选择器太宽（%s 选到 %d 条）" % (ep_sel, n), 2)
+                    continue
                 real_origin = "%s://%s" % (urlparse(final).scheme, urlparse(final).netloc) if final else origin
                 src = build_source(t["key"], t["name"], real_origin, host_of(real_origin), path, "", ep_sel,
                                    channels=ch, json_search=(links, names, tpl))
                 note = "自动学习：JSON 搜索接口 %s（%s），详情页 %s，剧集 %s（%d 集%s），在%s学到" % (
                     path.split("?")[0], links, tpl, ep_sel, n, "，" + ch_note if ch_note else "", exit_name)
                 return src, note, exit_name, False
-            why = "JSON 接口搜得到，但猜不出详情页地址"
+            setw("JSON 接口搜得到，但猜不出详情页地址", 2)
     if captcha == "maccms":   # 搜索页是 MacCMS 图片验证码，页面学不了：用最常见的写法猜一条，等联网检测 / Animeko 自动验证来定
         src = build_source(t["key"], t["name"], origin, host_of(origin), GUESS_SEARCH, GUESS_RESULT, GUESS_EPISODES, guess=True)
         return src, "搜索页是 MacCMS 图片验证码（Animeko 有自动 solver），学不了页面，按 MacCMS 最常见的写法猜了一条", "", True
-    return None, why, None, False
+    return None, w["why"], None, False
 
 
 # ------------------------------- 接进构建 -------------------------------
@@ -379,6 +401,8 @@ def learn_cands(cands, proxy_session, direct_session, presets, cache, now, confi
     for t in targets(cands, config):
         reg = registrable(t["host"])
         hit = cache.get(reg) or {}
+        if hit.get("v") != CACHE_VERSION:   # 旧版本学出来的（没有合理性检查）一律不沿用，重新学
+            hit = {}
         src, note, exit_name, guess = None, "", None, False
         if hit.get("source") and now - hit.get("at", 0) < CACHE_DAYS * 86400:
             src, note, exit_name, guess = (json.loads(json.dumps(hit["source"])), hit.get("note", "") + "（沿用上次学到的规则）",
@@ -393,9 +417,9 @@ def learn_cands(cands, proxy_session, direct_session, presets, cache, now, confi
                 src, note, guess = None, "学习时出错：%s" % type(e).__name__, False
             if src is None:
                 print("自动学习 %s：没学出来（%s）" % (t["host"], note))
-                cache[reg] = {"fail": note, "at": now}
+                cache[reg] = {"fail": note, "at": now, "v": CACHE_VERSION}
                 continue
-            cache[reg] = {"source": src, "note": note, "exit": exit_name, "guess": guess, "at": now}
+            cache[reg] = {"source": src, "note": note, "exit": exit_name, "guess": guess, "at": now, "v": CACHE_VERSION}
             print("自动学习 %s：%s" % (t["host"], note))
         notes = [note]
         if exit_name == "海外直连":
@@ -414,4 +438,4 @@ def finalize_cache(made, cache, now):
         sm = c.get("smoke") or {}
         reg = registrable(host_of(c["source"]["arguments"]["searchConfig"]["rawBaseUrl"]))
         if sm.get("status") == "fail" and reg in cache:
-            cache[reg] = {"fail": "学到的规则检测未通过：%s" % sm.get("reason", ""), "at": now}
+            cache[reg] = {"fail": "学到的规则检测未通过：%s" % sm.get("reason", ""), "at": now, "v": CACHE_VERSION}
