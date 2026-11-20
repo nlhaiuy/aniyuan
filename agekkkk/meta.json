@@ -1,0 +1,280 @@
+{
+ "key": "agekkkk",
+ "origin": "https://cn.agekkkk.com",
+ "note": "国内外都 blocked；看验证页是什么类型",
+ "steps": [
+  {
+   "url": "https://cn.agekkkk.com/index.php/vod/search.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://cn.agekkkk.com/index.php/vod/search.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 1312,
+   "secs": 0.2,
+   "step": "search-overseas"
+  },
+  {
+   "url": "https://cn.agekkkk.com/index.php/vod/search.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://cn.agekkkk.com/index.php/vod/search.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 1312,
+   "secs": 1.7,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://cn.agekkkk.com/vodsearch/-------------.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://cn.agekkkk.com/vodsearch/-------------.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 1312,
+   "secs": 0.4,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://cn.agekkkk.com/vodsearch/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2-------------.html",
+   "status": 404,
+   "final": "https://cn.agekkkk.com/vodsearch/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2-------------.html",
+   "size": 1312,
+   "secs": 0.4,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://cn.agekkkk.com/vodsearch/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2----------1---.html",
+   "status": 404,
+   "final": "https://cn.agekkkk.com/vodsearch/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2----------1---.html",
+   "size": 1312,
+   "secs": 0.4,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://cn.agekkkk.com/search/-------------.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 200,
+   "final": "https://cn.agekkkk.com/search/-------------.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 5193,
+   "secs": 0.5,
+   "blocked": "waf",
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://cn.agekkkk.com/search/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2----------1---.html",
+   "status": 200,
+   "final": "https://cn.agekkkk.com/search/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2----------1---.html",
+   "size": 5193,
+   "secs": 0.5,
+   "blocked": "waf",
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://cn.agekkkk.com/search/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2/",
+   "status": 404,
+   "final": "https://cn.agekkkk.com/search/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2/",
+   "size": 1312,
+   "secs": 0.5,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://cn.agekkkk.com/search.php?searchword=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://cn.agekkkk.com/search.php?searchword=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 1312,
+   "secs": 0.4,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://cn.agekkkk.com/index.php/vod/search/wd/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2.html",
+   "status": 404,
+   "final": "https://cn.agekkkk.com/index.php/vod/search/wd/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2.html",
+   "size": 1312,
+   "secs": 0.4,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://cn.agekkkk.com/index.php?m=vod-search&wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 200,
+   "final": "https://cn.agekkkk.com/index.php?m=vod-search&wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 98193,
+   "secs": 0.5,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false,
+   "catch_all": true
+  },
+  {
+   "url": "https://cn.agekkkk.com/search/index.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 500,
+   "final": "https://cn.agekkkk.com/search/index.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 7111,
+   "secs": 3.0,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://cn.agekkkk.com/search?query=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 500,
+   "final": "https://cn.agekkkk.com/search?query=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 7111,
+   "secs": 3.0,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://cn.agekkkk.com/search?q=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 500,
+   "final": "https://cn.agekkkk.com/search?q=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 7111,
+   "secs": 3.0,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://cn.agekkkk.com/search.php?q=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://cn.agekkkk.com/search.php?q=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 1312,
+   "secs": 0.4,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://cn.agekkkk.com/search.php?keyword=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://cn.agekkkk.com/search.php?keyword=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 1312,
+   "secs": 0.4,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://cn.agekkkk.com/?s=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://cn.agekkkk.com/?s=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 1312,
+   "secs": 0.4,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://cn.agekkkk.com/index.php/search?q=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 500,
+   "final": "https://cn.agekkkk.com/index.php/search?q=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 7111,
+   "secs": 3.0,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://cn.agekkkk.com/index.php/search?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 500,
+   "final": "https://cn.agekkkk.com/index.php/search?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 7111,
+   "secs": 3.0,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://cn.agekkkk.com/index.php/ajax/suggest?mid=1&wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 200,
+   "final": "https://cn.agekkkk.com/index.php/ajax/suggest?mid=1&wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 593,
+   "secs": 0.6,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": true
+  },
+  {
+   "url": "https://cn.agekkkk.com/index.php/ajax/suggest?mid=1&wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2&limit=30",
+   "status": 200,
+   "final": "https://cn.agekkkk.com/index.php/ajax/suggest?mid=1&wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2&limit=30",
+   "size": 593,
+   "secs": 0.6,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": true
+  },
+  {
+   "url": "https://cn.agekkkk.com/index.php/vod/detail/id/17482.html",
+   "status": 404,
+   "final": "https://cn.agekkkk.com/index.php/vod/detail/id/17482.html",
+   "size": 1312,
+   "secs": 0.4,
+   "step": "detail-guess",
+   "template": "/index.php/vod/detail/id/{value}.html"
+  },
+  {
+   "url": "https://cn.agekkkk.com/voddetail/17482.html",
+   "status": 404,
+   "final": "https://cn.agekkkk.com/voddetail/17482.html",
+   "size": 1312,
+   "secs": 0.4,
+   "step": "detail-guess",
+   "template": "/voddetail/{value}.html"
+  },
+  {
+   "url": "https://cn.agekkkk.com/vod/detail/id/17482.html",
+   "status": 404,
+   "final": "https://cn.agekkkk.com/anime/detail/id/17482.html",
+   "size": 1312,
+   "secs": 0.9,
+   "step": "detail-guess",
+   "template": "/vod/detail/id/{value}.html"
+  },
+  {
+   "url": "https://cn.agekkkk.com/detail/17482.html",
+   "status": 404,
+   "final": "https://cn.agekkkk.com/detail/17482.html",
+   "size": 1312,
+   "secs": 0.4,
+   "step": "detail-guess",
+   "template": "/detail/{value}.html"
+  },
+  {
+   "url": "https://cn.agekkkk.com/vod-detail-id-17482.html",
+   "status": 404,
+   "final": "https://cn.agekkkk.com/vod-detail-id-17482.html",
+   "size": 1312,
+   "secs": 0.4,
+   "step": "detail-guess",
+   "template": "/vod-detail-id-{value}.html"
+  },
+  {
+   "url": "https://cn.agekkkk.com/index.php/vod/detail/id/17482/",
+   "status": 404,
+   "final": "https://cn.agekkkk.com/index.php/vod/detail/id/17482/",
+   "size": 1312,
+   "secs": 0.4,
+   "step": "detail-guess",
+   "template": "/index.php/vod/detail/id/{value}/"
+  }
+ ],
+ "files": [
+  "search-captcha.html",
+  "search-1.json",
+  "search-2.json"
+ ],
+ "detail_url": null,
+ "detail_how": "",
+ "result": "搜到了结果但找不到详情页链接"
+}

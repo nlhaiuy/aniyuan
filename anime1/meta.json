@@ -1,0 +1,474 @@
+{
+ "key": "anime1",
+ "origin": "https://anime1.me",
+ "note": "页面能打开但选择器学不出来；AniBaka 里是 POST/JSON",
+ "steps": [
+  {
+   "url": "https://anime1.me/index.php/vod/search.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://anime1.me/vod/search.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 24743,
+   "secs": 0.8,
+   "step": "search-overseas"
+  },
+  {
+   "url": "https://anime1.me/index.php/vod/search.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://anime1.me/vod/search.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 24743,
+   "secs": 3.4,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/vodsearch/-------------.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://anime1.me/vodsearch/-------------.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 24743,
+   "secs": 0.8,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/vodsearch/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2-------------.html",
+   "status": 404,
+   "final": "https://anime1.me/vodsearch/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2-------------.html",
+   "size": 24743,
+   "secs": 0.9,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/vodsearch/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2----------1---.html",
+   "status": 404,
+   "final": "https://anime1.me/vodsearch/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2----------1---.html",
+   "size": 24743,
+   "secs": 0.9,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/search/-------------.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 200,
+   "final": "https://anime1.me/search/-------------.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 38225,
+   "secs": 1.0,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/search/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2----------1---.html",
+   "status": 200,
+   "final": "https://anime1.me/search/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2----------1---.html",
+   "size": 24905,
+   "secs": 1.0,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false,
+   "catch_all": true
+  },
+  {
+   "url": "https://anime1.me/search/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2/",
+   "status": 200,
+   "final": "https://anime1.me/search/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2/",
+   "size": 24832,
+   "secs": 0.8,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false,
+   "catch_all": true
+  },
+  {
+   "url": "https://anime1.me/search.php?searchword=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://anime1.me/search.php?searchword=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 548,
+   "secs": 0.8,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/index.php/vod/search/wd/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2.html",
+   "status": 404,
+   "final": "https://anime1.me/vod/search/wd/%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2.html",
+   "size": 24743,
+   "secs": 1.6,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/index.php?m=vod-search&wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 200,
+   "final": "https://anime1.me/?m=vod-search&wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 45270,
+   "secs": 1.7,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/search/index.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 200,
+   "final": "https://anime1.me/search/index.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 24844,
+   "secs": 0.9,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/search?query=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://anime1.me/search?query=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 24743,
+   "secs": 0.9,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/search?q=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://anime1.me/search?q=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 24743,
+   "secs": 0.9,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/search.php?q=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://anime1.me/search.php?q=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 548,
+   "secs": 0.8,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/search.php?keyword=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://anime1.me/search.php?keyword=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 548,
+   "secs": 0.8,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/?s=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 200,
+   "final": "https://anime1.me/?s=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 24832,
+   "secs": 0.9,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false,
+   "catch_all": true
+  },
+  {
+   "url": "https://anime1.me/index.php/search?q=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://anime1.me/search?q=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 24743,
+   "secs": 1.6,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/index.php/search?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://anime1.me/search?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 24743,
+   "secs": 1.5,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/index.php/ajax/suggest?mid=1&wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://anime1.me/ajax/suggest?mid=1&wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 24743,
+   "secs": 1.6,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/index.php/ajax/suggest?mid=1&wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2&limit=30",
+   "status": 404,
+   "final": "https://anime1.me/ajax/suggest?mid=1&wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2&limit=30",
+   "size": 24743,
+   "secs": 1.5,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/api.php/provide/vod/?ac=list&wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://anime1.me/api.php/provide/vod/?ac=list&wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 24743,
+   "secs": 0.9,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/api.php/provide/vod?ac=detail&wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://anime1.me/api.php/provide/vod?ac=detail&wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 24743,
+   "secs": 0.8,
+   "step": "search",
+   "keyword": "葬送的芙莉莲",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/index.php/vod/search.html?wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "status": 404,
+   "final": "https://anime1.me/vod/search.html?wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "size": 24743,
+   "secs": 6.1,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/vodsearch/-------------.html?wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "status": 404,
+   "final": "https://anime1.me/vodsearch/-------------.html?wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "size": 24743,
+   "secs": 0.8,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/vodsearch/%E6%B5%B7%E8%B4%BC%E7%8E%8B-------------.html",
+   "status": 404,
+   "final": "https://anime1.me/vodsearch/%E6%B5%B7%E8%B4%BC%E7%8E%8B-------------.html",
+   "size": 24743,
+   "secs": 0.9,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/vodsearch/%E6%B5%B7%E8%B4%BC%E7%8E%8B----------1---.html",
+   "status": 404,
+   "final": "https://anime1.me/vodsearch/%E6%B5%B7%E8%B4%BC%E7%8E%8B----------1---.html",
+   "size": 24743,
+   "secs": 0.8,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/search/-------------.html?wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "status": 200,
+   "final": "https://anime1.me/search/-------------.html?wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "size": 38198,
+   "secs": 0.8,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/search/%E6%B5%B7%E8%B4%BC%E7%8E%8B----------1---.html",
+   "status": 200,
+   "final": "https://anime1.me/search/%E6%B5%B7%E8%B4%BC%E7%8E%8B----------1---.html",
+   "size": 24896,
+   "secs": 0.9,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false,
+   "catch_all": true
+  },
+  {
+   "url": "https://anime1.me/search/%E6%B5%B7%E8%B4%BC%E7%8E%8B/",
+   "status": 200,
+   "final": "https://anime1.me/search/%E6%B5%B7%E8%B4%BC%E7%8E%8B/",
+   "size": 24823,
+   "secs": 1.0,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false,
+   "catch_all": true
+  },
+  {
+   "url": "https://anime1.me/search.php?searchword=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "status": 404,
+   "final": "https://anime1.me/search.php?searchword=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "size": 548,
+   "secs": 0.8,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/index.php/vod/search/wd/%E6%B5%B7%E8%B4%BC%E7%8E%8B.html",
+   "status": 404,
+   "final": "https://anime1.me/vod/search/wd/%E6%B5%B7%E8%B4%BC%E7%8E%8B.html",
+   "size": 24743,
+   "secs": 1.5,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/index.php?m=vod-search&wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "status": 200,
+   "final": "https://anime1.me/?m=vod-search&wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "size": 45243,
+   "secs": 1.6,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/search/index.html?wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "status": 200,
+   "final": "https://anime1.me/search/index.html?wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "size": 24844,
+   "secs": 0.8,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/search?query=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "status": 404,
+   "final": "https://anime1.me/search?query=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "size": 24743,
+   "secs": 25.0,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/search?q=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "status": 404,
+   "final": "https://anime1.me/search?q=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "size": 24743,
+   "secs": 0.8,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/search.php?q=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "status": 404,
+   "final": "https://anime1.me/search.php?q=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "size": 548,
+   "secs": 0.8,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/search.php?keyword=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "status": 404,
+   "final": "https://anime1.me/search.php?keyword=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "size": 548,
+   "secs": 0.8,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/?s=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "status": 200,
+   "final": "https://anime1.me/?s=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "size": 24823,
+   "secs": 0.8,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false,
+   "catch_all": true
+  },
+  {
+   "url": "https://anime1.me/index.php/search?q=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "status": 404,
+   "final": "https://anime1.me/search?q=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "size": 24743,
+   "secs": 1.7,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/index.php/search?wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "status": 404,
+   "final": "https://anime1.me/search?wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "size": 24743,
+   "secs": 1.6,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/index.php/ajax/suggest?mid=1&wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "status": 404,
+   "final": "https://anime1.me/ajax/suggest?mid=1&wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "size": 24743,
+   "secs": 1.5,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/index.php/ajax/suggest?mid=1&wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B&limit=30",
+   "status": 404,
+   "final": "https://anime1.me/ajax/suggest?mid=1&wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B&limit=30",
+   "size": 24743,
+   "secs": 1.7,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/api.php/provide/vod/?ac=list&wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "status": 404,
+   "final": "https://anime1.me/api.php/provide/vod/?ac=list&wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "size": 24743,
+   "secs": 0.9,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false
+  },
+  {
+   "url": "https://anime1.me/api.php/provide/vod?ac=detail&wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "status": 404,
+   "final": "https://anime1.me/api.php/provide/vod?ac=detail&wd=%E6%B5%B7%E8%B4%BC%E7%8E%8B",
+   "size": 24743,
+   "secs": 0.8,
+   "step": "search",
+   "keyword": "海贼王",
+   "found_keyword": false
+  },
+  {
+   "step": "search-browser",
+   "url": "https://anime1.me/index.php/vod/search.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "status": 404,
+   "final": "https://anime1.me/vod/search.html?wd=%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2",
+   "size": 24869,
+   "found_keyword": false
+  }
+ ],
+ "files": [
+  "search-no-keyword.html",
+  "search-browser.html"
+ ],
+ "result": "没有拿到带关键词的搜索结果"
+}
