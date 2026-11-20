@@ -17,7 +17,7 @@
  {
   "key": "anime1",
   "origin": "https://anime1.me",
-  "note": "页面能打开但选择器学不出来；AniBaka 里是 POST/JSON"
+  "note": "已抓取验证：搜索页没有带关键词的静态结果，暂不支持"
  },
  {
   "key": "hanimeone",
@@ -27,11 +27,11 @@
  {
   "key": "agekkkk",
   "origin": "https://cn.agekkkk.com",
-  "note": "国内外都 blocked；看验证页是什么类型"
+  "note": "已抓取验证：suggest JSON 能搜，但详情页地址是 /anime/<24位哈希>.html，和 id 对不上，无法拼详情页；HTML 搜索是点击式 WAF 验证，保留现有规则（Animeko 会弹验证浏览器）"
  },
  {
   "key": "mutedm",
   "origin": "https://www.mutedm.com",
-  "note": "HTTP 403；看是 Cloudflare 还是别的"
+  "note": "已抓取验证：真搜索 /index.php/search?q= 在国内出口返回 403（防火墙），首页兜底不算；静态 GET 做不了，暂不支持"
  }
 ]
