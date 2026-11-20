@@ -1,0 +1,37 @@
+[
+ {
+  "key": "gpjda",
+  "origin": "https://www.gpjda.com",
+  "note": "自动学习的规则选宽了（命中 1/87，剧集 2360 条），看真实页面结构重写"
+ },
+ {
+  "key": "fsdm02",
+  "origin": "https://dm.fsdm02.com",
+  "note": "搜索页是 MacCMS 图片验证码，现在是猜的规则；看验证页和验证后的结构"
+ },
+ {
+  "key": "aniwatch",
+  "origin": "https://www.aniwatch.top",
+  "note": "页面能打开但选择器学不出来；可能是 JS 渲染 / API"
+ },
+ {
+  "key": "anime1",
+  "origin": "https://anime1.me",
+  "note": "页面能打开但选择器学不出来；AniBaka 里是 POST/JSON"
+ },
+ {
+  "key": "hanimeone",
+  "origin": "https://hanimeone.me",
+  "note": "GitHub 出口 403；看国内出口和浏览器能不能拿到"
+ },
+ {
+  "key": "agekkkk",
+  "origin": "https://cn.agekkkk.com",
+  "note": "国内外都 blocked；看验证页是什么类型"
+ },
+ {
+  "key": "mutedm",
+  "origin": "https://www.mutedm.com",
+  "note": "HTTP 403；看是 Cloudflare 还是别的"
+ }
+]

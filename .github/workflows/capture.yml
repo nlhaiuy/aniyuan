@@ -1,0 +1,127 @@
+name: capture-sites
+
+# 抓取：把写规则要用的原始数据（搜索页 / 详情页 / 播放页 / 播放页发出的 XHR）存下来，推到 captures 分支。
+# 只抓取，不学习、不改订阅。手动运行（Actions 页面 → capture-sites → Run workflow），
+# sites 留空就抓 capture_sites.json 里的全部，也可以填站点 key 或网址，逗号分隔。
+on:
+  workflow_dispatch:
+    inputs:
+      sites:
+        description: "只抓这几个站（key 或 https://域名，逗号分隔）；留空 = capture_sites.json 里的全部"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: capture-sites
+  cancel-in-progress: false
+
+jobs:
+  # 抓取任务：会用无头浏览器去打开第三方站点，只给只读权限；产物通过 artifact 交给 publish 任务
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: 安装无头浏览器
+        run: playwright install --with-deps chromium
+
+      # 可选：Secret CLASH_NODE 里放一个或多个 Clash 格式的节点（"- name: xxx" 一段一个，或完整的 proxies: 配置；
+      # mihomo 支持的类型都行：http / socks5 / ss / vmess / trojan 等，可带自定义请求头）。必须是国内出口的节点。
+      # 用 mihomo 在 runner 上起本地代理，按顺序逐个试，第一个能连通国内站的就用；都不通或没配置就走海外出口。
+      # 想直接给一个 http / socks5 地址的话，用 Secret ANIYUAN_PROXY（见下一步）。
+      # 节点内容只经 Secret 传入；密码 / 令牌 / X-*-Auth 之类的值会用 add-mask 从日志里遮掉。
+      - name: 启动 Clash 节点代理（可选）
+        env:
+          CLASH_NODE: ${{ secrets.CLASH_NODE }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          [ -z "$CLASH_NODE" ] && exit 0
+          note() { echo "ANIYUAN_PROXY_NOTE=$1" >> "$GITHUB_ENV"; echo "$1"; }
+          out=$(python -m aniyuan.check.clash_node "$RUNNER_TEMP/mihomo") || { note "CLASH_NODE 格式不对，没有启用"; exit 0; }
+          printf '%s\n' "$out" | grep '^::add-mask::' || true   # 命令替换会吞掉输出，遮罩指令要重新打出来才生效
+          count=$(printf '%s\n' "$out" | tail -n 1)
+          url=$(gh api repos/MetaCubeX/mihomo/releases/latest --jq '[.assets[].browser_download_url | select(test("/mihomo-linux-amd64-v[0-9]+\\.[0-9]+\\.[0-9]+\\.gz$"))][0]')
+          if [ -z "$url" ] || [ "$url" = "null" ]; then note "没找到 mihomo 的 linux-amd64 发行包"; exit 0; fi
+          curl -sSL --fail -o "$RUNNER_TEMP/mihomo.gz" "$url" && gunzip -f "$RUNNER_TEMP/mihomo.gz" && chmod +x "$RUNNER_TEMP/mihomo" || { note "mihomo 下载失败"; exit 0; }
+          mkdir -p "$RUNNER_TEMP/mh"
+          fails=""
+          for i in $(seq 1 "$count"); do
+            cfg="$RUNNER_TEMP/mihomo.$i.yaml"
+            if ! "$RUNNER_TEMP/mihomo" -t -f "$cfg" -d "$RUNNER_TEMP/mh" > "$RUNNER_TEMP/mihomo-test.log" 2>&1; then
+              echo "第 $i 个节点：配置 mihomo 不认"; tail -n 6 "$RUNNER_TEMP/mihomo-test.log"
+              fails="$fails 第$i个配置不对"; continue
+            fi
+            "$RUNNER_TEMP/mihomo" -f "$cfg" -d "$RUNNER_TEMP/mh" > "$RUNNER_TEMP/mihomo.log" 2>&1 &
+            pid=$!
+            sleep 3
+            rc=0   # bash -e 下 curl 失败会直接退出整个脚本，所以用 || 接住退出码
+            code=$(curl -sS -o /dev/null -m 20 -w '%{http_code}' --socks5-hostname 127.0.0.1:7890 https://www.baidu.com 2>"$RUNNER_TEMP/curl.err") || rc=$?
+            if [ "$rc" = 0 ] && [ "$code" != "000" ]; then
+              echo "第 $i 个节点可用（经它访问百度返回 HTTP $code）"
+              echo "ANIYUAN_PROXY=socks5h://127.0.0.1:7890" >> "$GITHUB_ENV"
+              exit 0
+            fi
+            echo "第 $i 个节点不通：curl 退出码 $rc，HTTP $code：$(cat "$RUNNER_TEMP/curl.err")"
+            tail -n 6 "$RUNNER_TEMP/mihomo.log"
+            kill $pid 2>/dev/null || true
+            wait $pid 2>/dev/null || true
+            fails="$fails 第$i个连不通(curl $rc)"
+          done
+          note "已配置 CLASH_NODE（$count 个节点），但都不能用：${fails# }"
+
+      - name: 抓取
+        env:
+          ANIYUAN_PROXY: ${{ env.ANIYUAN_PROXY || secrets.ANIYUAN_PROXY }}
+          SITES: ${{ github.event.inputs.sites }}
+        run: python -m aniyuan.capture --out captures ${SITES:+--only "$SITES"}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: captures
+          path: captures
+          if-no-files-found: error
+          retention-days: 7
+
+  # 发布任务：有写权限，但不运行浏览器、不访问第三方站点，只把抓到的文件提交到 captures 分支（每次覆盖成一个提交）
+  publish:
+    needs: capture
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: captures
+          path: captures-out
+
+      - name: 提交到 captures 分支
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -q --orphan captures-new
+          git rm -rf -q . 2>/dev/null || true
+          cp -r captures-out/. .
+          rm -rf captures-out
+          git add -A
+          git commit -q -m "capture: run ${{ github.run_id }}"
+          git push -f origin HEAD:captures
