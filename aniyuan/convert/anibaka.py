@@ -113,7 +113,7 @@ def _search_html(branch, base):
         pieces += [_to_link_selector(p, pattern) for p in split_selectors(s)]
     notes = []
     if any(o.get("op") == "maccmsVerify" for o in branch):
-        notes.append("搜索用到 maccmsVerify（站点验证码），Animeko 无法处理，遇到验证时会失败")
+        notes.append("搜索用到 maccmsVerify（MacCMS 图片验证码），Animeko 有自动 solver，通常能自动通过，通不过时会弹验证浏览器")
     if not pattern and not any("href" in x for x in pieces):
         notes.append("searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）")
     url = _join_urls(base, fetch["url"])

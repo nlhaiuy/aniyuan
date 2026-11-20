@@ -86,6 +86,28 @@ def _blocked(text):
     return any(w in head for w in BLOCK_WORDS)
 
 
+def captcha_kind(text):
+    """拦截页是哪一种：Animeko 对 MacCMS 图片验证码有自动 solver，其余走交互式验证浏览器（Cloudflare 这类动态验证
+    不保证能过），所以报告里要分开写，别都当成站点坏了。返回 maccms / cloudflare / other。"""
+    head = (text or "")[:20000]
+    low = head.lower()
+    if any(w in low for w in ("just a moment", "cf-challenge", "challenges.cloudflare.com", "cf-turnstile", "cf_chl_")):
+        return "cloudflare"
+    if "验证码" in head and (re.search(r"/verify/index|verify/index\.html|name=[\"']?verify[\"']?", head, re.I)
+                          or re.search(r"<img[^>]+(?:verify|captcha|vcode)", head, re.I)):
+        return "maccms"
+    return "other"
+
+
+CAPTCHA_NOTE = {"maccms": "MacCMS 图片验证码，Animeko 有自动 solver，可能自动通过",
+                "cloudflare": "Cloudflare 一类动态验证，Animeko 走验证浏览器，不一定能过",
+                "other": "验证码 / 环境检查，Animeko 会弹验证浏览器让用户通过"}
+
+
+def blocked_reason(text, where="搜索页"):
+    return "%s出现验证码/环境检查（%s）" % (where, CAPTCHA_NOTE[captcha_kind(text)])
+
+
 def eval_simple_jsonpath(data, path):
     """只支持本工具生成的形式：$.a.b[*]['field'] 或 $[*]['field'] 或 $.a.b[*]。"""
     m = re.match(r"^\$((?:\.[\w]+)*)(\[\*\])?(?:\['(\w+)'\]|\.(\w+))?$", path)
@@ -138,7 +160,7 @@ def _search_subjects(sc, keyword, session, timeout, ctx=None, ua=None):
         base = sc.get("rawBaseUrl") or url   # 相对链接按 rawBaseUrl 补全（接口域名常常不是网站域名）
         return [(str(n), urljoin(base, tpl.replace("{value}", str(i)))) for n, i in zip(names, ids)], None
     if _blocked(r.text):
-        return [], ("blocked", "搜索页出现验证码/环境检查")
+        return [], ("blocked", blocked_reason(r.text, "搜索页"))
     soup = BeautifulSoup(r.text, "lxml")
     if fmt == "a":
         els = soup.select(sc["selectorSubjectFormatA"]["selectLists"])
@@ -242,7 +264,7 @@ def check_source(source, keyword="葬送的芙莉莲", timeout=15, session=None,
                 continue
             loaded = True
             if _blocked(r.text):
-                return {"status": "blocked", "reason": "详情页出现验证码/环境检查"}
+                return {"status": "blocked", "reason": blocked_reason(r.text, "详情页"), "captcha": captcha_kind(r.text)}
             ctx["detail_html"] = r.text
             eps = extract_episodes(sc, r.text, r.url)
             if eps:
