@@ -54,6 +54,8 @@ SEARCH_PATHS = [
     "/search.php?q={keyword}",
     "/search.php?keyword={keyword}",
     "/?s={keyword}",
+    "/index.php/search?q={keyword}",
+    "/index.php/search?wd={keyword}",
 ]
 # MacCMS 的 JSON 接口（网页搜索都学不出来时再试）：返回的 JSON 里有 id 和名称
 JSON_PATHS = [
@@ -293,6 +295,21 @@ def _episodes(detail_html, final, presets, base):
     return ep_sel, n, None, ""
 
 
+NONSENSE = "zqxjkv零"
+
+
+def _hrefs(text):
+    return set(re.findall(r"""href=["']([^"'#]+)""", text or ""))
+
+
+def is_catch_all(text, other):
+    """拿一个乱写的关键词搜出来的页面和真关键词的页面几乎一样 —— 说明这个地址不是搜索（首页 / 404 兜底页）。"""
+    a, b = _hrefs(text), _hrefs(other)
+    if not a or not b:
+        return False
+    return len(a & b) / float(len(a | b)) >= 0.8
+
+
 def learn_site(t, sessions, presets, keywords, sleep=1.0):
     """学一个站。返回 (source, 说明, 出口名, 是否猜测) 或 (None, 原因, None, False)。"""
     origin = t["origin"]
@@ -321,6 +338,12 @@ def learn_site(t, sessions, presets, keywords, sleep=1.0):
                 setw("搜索页能打开，但在上面没找到合适的结果链接选择器", 1)
                 continue
             sel, hits, total, first = found
+            ntext = _fetch(origin + path.replace("{keyword}", quote(NONSENSE)), sessions)[0]
+            time.sleep(sleep)
+            if ntext is not None and is_catch_all(text, ntext):
+                setw("这个搜索地址不是真搜索（乱写的关键词搜出来和真关键词一样，是首页兜底）", 1)
+                dead.add(path)
+                continue
             if total > MAX_RESULTS:
                 setw("搜索结果选择器太宽（%s 选到 %d 条，命中关键词的只有 %d 条）" % (sel, total, hits), 2)
                 continue

@@ -33,7 +33,7 @@ def fake_get(site_ok, calls):
         if not site_ok.get(session):
             raise OSError("unreachable")
         if "/index.php/vod/search.html" in url:
-            return Resp(200, SEARCH, url)
+            return Resp(200, "<html><body>没有结果</body></html>" if "zqxjkv" in url else SEARCH, url)
         if "/voddetail/101" in url:
             return Resp(200, DETAIL, url)
         return Resp(404, "", url)
@@ -193,6 +193,9 @@ try:
     CF = "<html><title>Just a moment...</title><div id='cf-challenge'></div></html>"
     check("MacCMS 图片验证码被认出来", smoke_mod.captcha_kind(MACCMS_CAPTCHA) == "maccms")
     check("Cloudflare 挑战被认出来", smoke_mod.captcha_kind(CF) == "cloudflare")
+    check("GoEdge 防火墙验证归 waf", smoke_mod.captcha_kind('<title>系统安全验证</title><img src="/WAF/VERIFY/CAPTCHA/x">') == "waf")
+    check("首页兜底被认出（乱关键词页面一样）", AL.is_catch_all('<a href="/a">1</a><a href="/b">2</a>', '<a href="/a">1</a><a href="/b">2</a>')
+          and not AL.is_catch_all('<a href="/a">1</a>', '<a href="/z">2</a>'))
     check("别的验证页归 other", smoke_mod.captcha_kind("<html>请完成安全验证</html>") == "other")
     check("拦截原因里写明类型", "自动 solver" in smoke_mod.blocked_reason(MACCMS_CAPTCHA) and "Cloudflare" in smoke_mod.blocked_reason(CF, "详情页"))
 
@@ -222,7 +225,7 @@ try:
     def fake_wide(search_html, detail_html):
         def _get(url, session, timeout, ua=None):
             if "/index.php/vod/search.html" in url:
-                return Resp(200, search_html, url)
+                return Resp(200, "<html><body>没有结果</body></html>" if "zqxjkv" in url else search_html, url)
             if "/voddetail/" in url:
                 return Resp(200, detail_html, url)
             return Resp(404, "", url)

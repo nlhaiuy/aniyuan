@@ -25,7 +25,7 @@ from urllib.parse import quote, urljoin, urlparse
 from bs4 import BeautifulSoup
 
 from .check import network, smoke as smoke_mod, ua as ua_mod
-from .check.autolearn import DETAIL_TEMPLATES, JSON_PATHS, SEARCH_PATHS, find_json_results
+from .check.autolearn import DETAIL_TEMPLATES, JSON_PATHS, NONSENSE, SEARCH_PATHS, find_json_results, is_catch_all
 from .check.repair import DEFAULT_CONTAINERS, DEFAULT_LISTS, DEFAULT_PATTERNS, EP_TEXT, find_episode_selector, find_search_selector
 
 MAX_BODY = 600_000        # 每个文件最多存这么多字符
@@ -94,6 +94,13 @@ class Capturer:
                     rec("search-overseas", o)
                 text = info["text"]
                 has_kw = info["status"] == 200 and kw[:2] in text and not info.get("blocked")
+                if has_kw and tag in SEARCH_PATHS:   # 乱写的关键词搜出来一样 = 首页兜底，不是真搜索
+                    nt = self.get(u.replace(quote(kw), quote(NONSENSE)))
+                    time.sleep(self.sleep)
+                    if nt["status"] == 200 and is_catch_all(text, nt["text"]):
+                        has_kw = False
+                        rec("search", info, keyword=kw, found_keyword=False, catch_all=True)
+                        continue
                 rec("search", info, keyword=kw, found_keyword=bool(has_kw))
                 if info.get("blocked") and saved["blocked"] < 1:
                     saved["blocked"] += 1

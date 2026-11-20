@@ -22,7 +22,7 @@ def getter(mode):
         if "/voddetail/1.html" in url: return Resp(200, DETAIL, url)
         if "/vodplay/1-1-1.html" in url: return Resp(200, "<html>player</html>", url)
         if "/index.php/vod/search.html" in url:
-            return Resp(200, SEARCH if mode == "ok" else CAPTCHA, url)
+            return Resp(200, ("<html>空</html>" if "zqxjkv" in url else SEARCH) if mode == "ok" else CAPTCHA, url)
         return Resp(404, "", url)
     return _get
 

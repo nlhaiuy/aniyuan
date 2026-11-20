@@ -88,19 +88,21 @@ def _blocked(text):
 
 def captcha_kind(text):
     """拦截页是哪一种：Animeko 对 MacCMS 图片验证码有自动 solver，其余走交互式验证浏览器（Cloudflare 这类动态验证
-    不保证能过），所以报告里要分开写，别都当成站点坏了。返回 maccms / cloudflare / other。"""
+    不保证能过），所以报告里要分开写，别都当成站点坏了。返回 maccms / cloudflare / waf / other。"""
     head = (text or "")[:20000]
     low = head.lower()
     if any(w in low for w in ("just a moment", "cf-challenge", "challenges.cloudflare.com", "cf-turnstile", "cf_chl_")):
         return "cloudflare"
-    if "验证码" in head and (re.search(r"/verify/index|verify/index\.html|name=[\"']?verify[\"']?", head, re.I)
-                          or re.search(r"<img[^>]+(?:verify|captcha|vcode)", head, re.I)):
+    if re.search(r"/WAF/VERIFY|goedge|/waf/", head, re.I) or "系统安全验证" in head:
+        return "waf"
+    if "验证码" in head and re.search(r"/verify/index|verify/index\.html|index\.php/verify|name=[\"']?verify[\"']?", head, re.I):
         return "maccms"
     return "other"
 
 
 CAPTCHA_NOTE = {"maccms": "MacCMS 图片验证码，Animeko 有自动 solver，可能自动通过",
                 "cloudflare": "Cloudflare 一类动态验证，Animeko 走验证浏览器，不一定能过",
+                "waf": "网站防火墙的点击/滑块验证，Animeko 会弹验证浏览器让用户通过",
                 "other": "验证码 / 环境检查，Animeko 会弹验证浏览器让用户通过"}
 
 
