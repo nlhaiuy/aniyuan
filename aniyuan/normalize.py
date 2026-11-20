@@ -22,7 +22,7 @@ LEGACY = [
     re.compile(r"^由(?: Kazumi 规则| 纯纯看番社区 JS 源|纯纯看番社区 JS 源)[^（]*自动转换(?:（规则更新于[^）]*）)?\s*$"),
 ]
 ORIGIN_LABEL = {"kazumi": "Kazumi 规则", "anibaka": "AniBaka 规则", "easybangumi": "纯纯看番社区源",
-                "baseline": "基线配置"}
+                "baseline": "基线配置", "learned": "自动学习"}
 
 
 ID_PREFIX = "aniyuan-"
@@ -91,6 +91,8 @@ def source_note(c):
     note = " ".join(parts)
     if origin in ("kazumi", "anibaka", "easybangumi") and c.get("status") not in ("override",):
         return note + "，自动转换"
+    if origin == "learned":
+        return "自动学习 %s" % key
     if c.get("status") == "override":
         return note + "，手写配置"
     return note

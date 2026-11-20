@@ -532,6 +532,8 @@ def main():
     ap.add_argument("--anibaka", help="AniBakaRule 仓库目录")
     ap.add_argument("--easybangumi", help="CommunityJsExtensionEasyBangumi 仓库目录")
     ap.add_argument("--official", help="官方订阅 animeko-subs 仓库目录（json-api 源缺 play 时借鉴它的写法）")
+    ap.add_argument("--learned-cache", default=os.path.join(ROOT, "state", "learned.json"),
+                    help="自动学习出来的规则缓存（7 天内沿用；学不出来的站点 3 天内不重试）")
     ap.add_argument("--play-cache", default=os.path.join(ROOT, "state", "play.json"),
                     help="从播放页学到的 play 的缓存（接口指纹没变就直接沿用）")
     ap.add_argument("--out", default="dist")
@@ -581,6 +583,7 @@ def main():
         f.write("\n")
 
     pc = None
+    learned_made, learned_cache = [], {}
 
     def cleanup():   # 浏览器要一直开到图标步骤结束（图标下载也会用它回退），所以不在这个块里关
         pass
@@ -609,6 +612,15 @@ def main():
             ua_audit = ua_mod.audit(pc)   # UA 体检：真的发请求，核对 requests 和浏览器发出去的 UA / 客户端提示一致
             for name, ok, detail in ua_audit:
                 print("UA 体检 %s：%s（%s）" % ("通过" if ok else "未通过", name, detail), file=sys.stderr)
+            if config.get("learn", True):   # 没有任何来源能转的站点：看真实页面自己写规则（学到的照样要过下面的联网检测）
+                from .check import autolearn
+                learned_cache = load_json(args.learned_cache) if os.path.exists(args.learned_cache) else {}
+                try:
+                    learned_made = autolearn.learn_cands(
+                        cands, session, network.new_session(None) if proxy else None, presets, learned_cache,
+                        int(time.time()), config)
+                except Exception as e:   # 学习只是补充，出任何问题都不能影响已有的订阅
+                    print("自动学习出错，已跳过：%s" % e, file=sys.stderr)
             for c in cands:
                 if c["source"] is None:
                     continue
@@ -631,6 +643,15 @@ def main():
         except BaseException:
             cleanup()
             raise
+
+    if args.smoke and learned_made:   # 检测明确失败的学习结果清掉，下次重学
+        from .check import autolearn
+        autolearn.finalize_cache(learned_made, learned_cache, int(time.time()))
+    if args.smoke and learned_cache:
+        os.makedirs(os.path.dirname(os.path.abspath(args.learned_cache)), exist_ok=True)
+        with open(args.learned_cache, "w", encoding="utf-8") as f:
+            json.dump(learned_cache, f, ensure_ascii=False, indent=1, sort_keys=True)
+            f.write("\n")
 
     if any(c.get("needs_play") for c in cands):   # 从播放页学 play（或沿用缓存），仍然没有的不输出
         from .check import playlearn
@@ -707,7 +728,7 @@ def main():
         f.write("\n")
 
     label = {"ok": "完整", "partial": "有近似", "unsupported": "无法转换", "override": "手写", "missing": "缺文件",
-             "baseline": "回退基线"}
+             "baseline": "回退基线", "learned": "自动学习"}
     rep = ["# 订阅转换报告", "", "写入订阅 **%d** 个数据源（候选 %d 个，同站点合并后）。" % (len(sources), len(cands)), ""]
     if args.smoke:
         both = bool(proxy and any(c.get("smoke_direct") for c in cands))
