@@ -90,6 +90,14 @@ def _label(host):
     return re.sub(r"[^a-z0-9]+", "", reg.split(".")[0]) or "site"
 
 
+_HOSTNAME = re.compile(r"^(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z][a-z0-9-]*[a-z0-9]$", re.I)
+
+
+def _is_hostname(host):
+    """像个域名才学：有字母的顶级域（排除 0.6 这样的版本号、1.2.3.4 这样的 IP、localhost）。"""
+    return bool(host) and bool(_HOSTNAME.match(host.strip()))
+
+
 def targets(cands, config):
     """要学的站点：[{"key","name","origin","host"}]。"""
     exclude = [x.lower() for x in config.get("learn_exclude", DEFAULT_EXCLUDE)]
@@ -109,7 +117,7 @@ def targets(cands, config):
 
     def add(host, origin, name=None):
         reg = registrable(host)
-        if not host or reg in covered or reg in seen or any(reg.endswith(x) for x in exclude):
+        if not _is_hostname(host) or reg in covered or reg in seen or any(reg.endswith(x) for x in exclude):
             return
         seen.add(reg)
         out.append(dict(key=_label(host), name=name or _label(host), origin=origin, host=host))
