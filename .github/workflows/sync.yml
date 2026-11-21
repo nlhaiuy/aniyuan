@@ -10,7 +10,6 @@ on:
       - "aniyuan/**"
       - "requirements.txt"
       - "config.json"
-      - "baseline/**"
       - ".github/workflows/sync.yml"
 
 # 默认只读。只有最后的 publish 任务单独申请写权限
