@@ -78,4 +78,31 @@ check("repair_match_video：只改 matchVideoUrl，其余字段保留，描述�
       and new["arguments"]["searchConfig"]["matchVideo"]["cookies"] == "q=1" and new["arguments"]["description"].startswith("[匹配规则已自动修复]")
       and src["arguments"]["searchConfig"]["matchVideo"]["matchVideoUrl"] == r"never\.flv")
 check("repair_match_video：没有 matchVideo 的源不动", repair_match_video({"arguments": {"searchConfig": {}}}, ["https://v/a.m3u8"], DEFAULT_MV)[0] is None)
+
+# 8. 同站其它来源的选择器（hints）：和内置候选一起比命中率，不盲信
+from aniyuan.check.repair import search_stats
+html = ('<div class="hot"><a href="/vodplay/5.html">葬送的芙莉莲 推荐</a><a href="/vodplay/6.html">别的</a></div>'
+        '<div class="res"><div class="module-item"><a href="/zzz/1.html">葬送的芙莉莲</a></div></div>')
+check("search_stats：命中数 / 链接总数", search_stats(html, ".hot a", "葬送的芙莉莲") == (1, 2)
+      and search_stats(html, ".module-item a", "葬送的芙莉莲") == (1, 1))
+r = find_search_selector(html, "葬送的芙莉莲", presets, hints=[".module-item a"])
+check("hints：和内置候选同样准时，优先同站其它来源的选择器", bool(r) and r[0] == ".module-item a" and r[1] == r[2] == 1)
+r = find_search_selector(html, "葬送的芙莉莲", presets, hints=[".hot a"])
+check("hints 不盲信：命中率更低的 hint 会输给更准的内置候选", bool(r) and r[0] != ".hot a" and r[1] == r[2] == 1)
+check("hints 在页面上选不到任何东西：不影响结果", find_search_selector(html, "葬送的芙莉莲", presets, hints=[".nope a"]) is not None)
+
+# 9. attach_search_hints：只给 loose_search 的候选配同站、不同来源的选择器
+from aniyuan.build import attach_search_hints
+def mk(origin, key, host, sel, loose=False):
+    return dict(origin=origin, key=key, notes=[], loose_search=loose, source={
+        "factoryId": "web-selector", "arguments": {"searchConfig": {
+            "searchUrl": "https://%s/s?wd={keyword}" % host, "subjectFormatId": "a",
+            "selectorSubjectFormatA": {"selectLists": sel}}}})
+a = mk("anibaka", "x", "x.com", "a", loose=True)
+k = mk("kazumi", "X", "www.x.com", ".r-item a")
+o = mk("kazumi", "Y", "y.com", ".other a")
+a2 = mk("anibaka", "z", "z.com", "a", loose=True)
+attach_search_hints([a, k, o, a2], {})
+check("attach_search_hints：同站不同来源的选择器配给 loose_search 候选", a.get("search_hints") == [".r-item a"])
+check("attach_search_hints：别的站的不配；没有同站来源的不动", "search_hints" not in a2 and "search_hints" not in k)
 sys.exit(1 if bad else 0)

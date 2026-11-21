@@ -80,22 +80,35 @@ def _anchors(soup, sel):
     return out
 
 
-def find_search_selector(html, keyword, presets):
-    """返回 (selector, hits, total, 第一个命中的链接) 或 None。"""
+def search_stats(html, sel, keyword):
+    """某个选择器在真实搜索页上的 (命中数, 链接总数)；命中 = 链接文字里含关键词前两个字。"""
+    links = _anchors(BeautifulSoup(html, "lxml"), sel)
+    key = keyword[:2]
+    return len([l for l in links if key in l[0]]), len(links)
+
+
+def find_search_selector(html, keyword, presets, hints=()):
+    """返回 (selector, hits, total, 第一个命中的链接) 或 None。
+
+    hints：同一个站在其它来源（Kazumi / 纯纯看番）里的结果选择器。它们和内置候选一起在真实页面上比，
+    不会因为是“别人写的”就直接采用；命中率相同时优先用 hints（那是人工维护过的）。"""
     soup = BeautifulSoup(html, "lxml")
     key = keyword[:2]
     best, best_key = None, None
+    cands = [(h, True) for h in hints if h]
     for pat in presets["patterns"]:
         for cont in presets["containers"]:
-            sel = (("%s a[href*='%s']" % (cont, pat)) if pat else ("%s a[href]" % cont)).strip()
-            links = _anchors(soup, sel)
-            hits = [l for l in links if key in l[0]]
-            if not hits:
-                continue
-            # 命中率 > 命中数 > 限定了链接路径的（更不容易被改版误伤）> 选择器更短
-            rank = (round(len(hits) / len(links), 3), len(hits), 1 if pat else 0, -len(sel))
-            if best_key is None or rank > best_key:
-                best, best_key = (sel, len(hits), len(links), hits[0]), rank
+            cands.append(((("%s a[href*='%s']" % (cont, pat)) if pat else ("%s a[href]" % cont)).strip(), bool(pat)))
+    for n, (sel, has_pat) in enumerate(cands):
+        is_hint = n < len([h for h in hints if h])
+        links = _anchors(soup, sel)
+        hits = [l for l in links if key in l[0]]
+        if not hits:
+            continue
+        # 命中率 > 命中数 > 来自同站其它来源的 > 限定了链接路径的（更不容易被改版误伤）> 选择器更短
+        rank = (round(len(hits) / len(links), 3), len(hits), 1 if is_hint else 0, 1 if has_pat else 0, -len(sel))
+        if best_key is None or rank > best_key:
+            best, best_key = (sel, len(hits), len(links), hits[0]), rank
     return best
 
 
@@ -119,8 +132,8 @@ def brittle(source):
     return json.dumps(source["arguments"].get("searchConfig", {}), ensure_ascii=False).count(":nth-of-type") >= 3
 
 
-def repair_source(source, ctx, keyword, presets, fetch, which):
-    """which: "search" / "episodes" / "both"。fetch(url)->html|None。
+def repair_source(source, ctx, keyword, presets, fetch, which, hints=()):
+    """which: "search" / "episodes" / "both"。fetch(url)->html|None。hints 见 find_search_selector。
     返回 (新 source, 说明) 或 (None, 原因)。"""
     new = json.loads(json.dumps(source))
     sc = new["arguments"]["searchConfig"]
@@ -128,7 +141,7 @@ def repair_source(source, ctx, keyword, presets, fetch, which):
     base = ctx.get("search_final_url") or ctx.get("search_url", "")
     detail_html = ctx.get("detail_html")
     if which in ("search", "both"):
-        found = find_search_selector(ctx.get("search_html", ""), keyword, presets)
+        found = find_search_selector(ctx.get("search_html", ""), keyword, presets, hints)
         if not found:
             return None, "在真实搜索页上没找到合适的结果链接选择器"
         sel, hits, total, first = found

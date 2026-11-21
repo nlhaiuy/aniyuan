@@ -32,7 +32,8 @@ from .check import network, ua as ua_mod
 from .check.health import (DEFAULT_CARRY_DAYS, DEFAULT_THRESHOLD, auto_tier, blind_spots, confirmed_fail, smoke_tier,
                            update_health)
 from .normalize import normalize_source
-from .check.repair import brittle, mine_presets, repair_match_video, repair_source
+from .check.repair import (brittle, find_search_selector, mine_presets, repair_match_video, repair_source,
+                           search_stats)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # 仓库根目录（config.json、baseline/、state/ 等所在）
 DEFAULT_FALLBACK_KEYWORDS = ["海贼王", "鬼灭之刃"]   # 主关键词搜不到时依次换用（config.smoke_fallback_keywords 可改，[] 关闭）
@@ -148,7 +149,7 @@ def probe(c, keyword, session, presets, config):
             return None
 
     def try_repair(which, require_not_fewer=None):
-        new, why = repair_source(c["source"], ctx, keyword, presets, fetch, which)
+        new, why = repair_source(c["source"], ctx, keyword, presets, fetch, which, c.get("search_hints") or ())
         if not new:
             return False, why
         if ctx.get("detail_url_repaired"):
@@ -179,6 +180,17 @@ def probe(c, keyword, session, presets, config):
             ok, res = try_repair("both", require_not_fewer=r.get("episode_count", 0))
             if ok:
                 r = res
+        elif r["status"] == "ok" and c.get("loose_search") and config.get("calibrate_loose", True) \
+                and ctx.get("search_html"):
+            # AniBaka 规则没写 detailPattern：结果选择器是“猜的”，检测通过也可能混进了非结果链接。
+            # 在真实搜索页上和（同站其它来源提供的）候选比命中率，明显更准才替换，且剧集数不能变少
+            sel = (c["source"]["arguments"]["searchConfig"].get("selectorSubjectFormatA") or {}).get("selectLists", "")
+            h0, t0 = search_stats(ctx["search_html"], sel, keyword) if sel else (0, 0)
+            best = find_search_selector(ctx["search_html"], keyword, presets, c.get("search_hints") or ())
+            if best and best[2] and best[1] / best[2] > (h0 / t0 if t0 else 0):
+                ok, res = try_repair("both", require_not_fewer=r.get("episode_count", 0))
+                if ok:
+                    r = res
     fo = r.get("final_origin")
     if fo and r["status"] == "ok" and config.get("follow_redirects", True):
         from urllib.parse import urlparse
@@ -351,6 +363,7 @@ def collect_anibaka(repo, baseline, config):
         if os.path.exists(path):
             res = convert_anx(load_json(path), e, config)
             c.update(source=res.source, status=res.status, notes=list(res.notes), guess=res.guess)
+            c["loose_search"] = any("searchList 没有 detailPattern" in n for n in c["notes"])
         else:
             c["notes"] = ["规则文件 %s 不存在" % e["ref"]]
         base_c = None
@@ -401,6 +414,36 @@ def collect_easybangumi(repo, config):
 
 
 # ---------------------------------------------------------------- 合并
+def attach_search_hints(cands, config):
+    """给“搜索选择器是猜的”（loose_search）的候选配上同站其它来源的结果选择器，作为修复/校准的候选。
+
+    同站 = 站点主机名相同（认 site_aliases）。别的来源只提供候选，用不用由真实搜索页上的命中率决定。"""
+    aliases = config.get("site_aliases", {})
+
+    def host(c):
+        h = site_host(c["source"])
+        return aliases.get(h, h)
+
+    by_host = {}
+    for c in cands:
+        if c["source"] is None or c["source"].get("factoryId") != "web-selector":
+            continue
+        sc = c["source"]["arguments"].get("searchConfig", {})
+        sel = (sc.get("selectorSubjectFormatA") or {}).get("selectLists") if sc.get("subjectFormatId") == "a" else None
+        if sel and not c.get("loose_search"):
+            by_host.setdefault(host(c), []).append((c, sel))
+    for c in cands:
+        if not c.get("loose_search") or c["source"] is None:
+            continue
+        hints = []
+        for other, sel in by_host.get(host(c), []):
+            if other is not c and other["origin"] != c["origin"] and sel not in hints:
+                hints.append(sel)
+        if hints:
+            c["search_hints"] = hints
+            c["notes"].append("同站其它来源提供了 %d 个结果选择器，检测时一并比较" % len(hints))
+
+
 def merge(cands, config):
     from .normalize import normalize_id
     aliases = config.get("site_aliases", {})
@@ -621,6 +664,7 @@ def main():
                         int(time.time()), config)
                 except Exception as e:   # 学习只是补充，出任何问题都不能影响已有的订阅
                     print("自动学习出错，已跳过：%s" % e, file=sys.stderr)
+            attach_search_hints(cands, config)
             for c in cands:
                 if c["source"] is None:
                     continue
