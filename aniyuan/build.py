@@ -228,6 +228,8 @@ def direct_pass(cands, config, session=None):
             except Exception as e:   # 对照检测出任何问题都不能拖垮主流程
                 r = {"status": "skipped", "reason": "对照检测出错：%s" % type(e).__name__}
             c["smoke_direct"] = {k: r[k] for k in ("status", "reason", "episode_count") if k in r}
+            if c.get("needs_play") and r.get("sample"):   # 等着学 play 的 json-api 源：主出口没检测到条目时，学习要用这份样本
+                c["smoke_direct"]["sample"] = r["sample"]
             time.sleep(config.get("smoke_direct_wait", 0.5))
     finally:
         smoke_mod.set_browser_fetcher(prev)
@@ -712,7 +714,7 @@ def main():
         play_cache = load_json(args.play_cache) if os.path.exists(args.play_cache) else {}
         try:
             playlearn.learn_plays(cands, pc, network.new_session(proxy), play_cache, int(time.time()),
-                                  config.get("play_wait_ms", 20000))
+                                  config.get("play_wait_ms", 20000), config.get("play_overrides") or {})
         except BaseException:
             cleanup()
             raise

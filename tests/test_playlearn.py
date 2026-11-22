@@ -152,6 +152,67 @@ try:
     check("本次没检测到条目（被拦）：沿用缓存的 play，备注写明未验证",
           cand4["source"]["arguments"]["searchConfig"].get("play") and any("未验证" in n for n in cand4["notes"]))
 
+    # 5b) 主出口没检测到条目、海外直连有样本：用海外样本学
+    MODE["api"] = "stable"
+    cand5 = {"source": new_source(""), "needs_play": True, "notes": [], "status": "partial",
+             "smoke": {"status": "fail", "reason": "打不开"}, "smoke_direct": {"status": "ok", "sample": sample}}
+    cache5 = {}
+    pl.learn_plays([cand5], pc, s, cache5, 5000, wait_ms=9000)
+    check("海外样本回退：主出口没样本时用海外直连的样本学到 play，备注写明来源",
+          cand5["source"]["arguments"]["searchConfig"].get("play") and not cand5["needs_play"]
+          and any("海外直连检测" in n for n in cand5["notes"]) and "kazumi-demo" in cache5)
+    cand5b = {"source": new_source(""), "needs_play": True, "notes": [], "status": "partial", "smoke": {"status": "fail"}, "smoke_direct": {"status": "fail"}}
+    pl.learn_plays([cand5b], pc, s, {}, 5001, wait_ms=4000)
+    check("主出口和海外都没样本：保持待学，备注说明两边都没有",
+          cand5b["needs_play"] and any("主出口和海外直连都没有" in n for n in cand5b["notes"]))
+    cand5c = {"source": new_source(""), "needs_play": True, "notes": [], "status": "partial",
+              "smoke": {"status": "ok", "sample": sample}, "smoke_direct": {"status": "ok", "sample": {"episodes": [{"id": 999, "url": "x"}]}}}
+    check("主出口有样本时优先用主出口的（不被海外样本覆盖）", (lambda c_: (pl.learn_plays([c_], pc, s, {}, 1, wait_ms=9000), c_["source"]["arguments"]["searchConfig"].get("play"))[1])(cand5c)
+          and not any("海外直连检测" in n for n in cand5c["notes"]))
+
+    # 5c) 手写 play（play_overrides）
+    good_play = copy.deepcopy(cache["kazumi-demo"]["play"])
+    c6 = {"source": new_source(""), "needs_play": True, "notes": ["Kazumi 规则里没有播放接口"], "status": "partial", "origin": "kazumi", "key": "demo",
+          "smoke": {"status": "ok", "sample": sample}}
+    cache6 = {}
+    before = HITS["play"]
+    pl.learn_plays([c6], None, s, cache6, 6000, overrides={"kazumi:demo": good_play})   # 键用「来源:站点」，没有浏览器也能用
+    check("手写 play：用「来源:站点」做键，重放验证通过后采用，备注写明", c6["source"]["arguments"]["searchConfig"].get("play") and not c6["needs_play"]
+          and any("手写的 play" in n and "已重放验证" in n for n in c6["notes"]) and HITS["play"] == before + 1)
+    check("手写 play 不进缓存（删掉手写项就回到自动学习）", cache6 == {})
+    c6b = {"source": new_source(""), "needs_play": True, "notes": [], "status": "partial", "origin": "kazumi", "key": "demo", "smoke": {"status": "ok", "sample": sample}}
+    pl.learn_plays([c6b], None, s, {}, 6001, overrides={"kazumi-demo": good_play})
+    check("手写 play：也可以用源 id 做键", c6b["source"]["arguments"]["searchConfig"].get("play") is not None)
+
+    bad_play = copy.deepcopy(good_play); bad_play["request"]["url"] = base + "/api/gone"
+    c7 = {"source": new_source(""), "needs_play": True, "notes": [], "status": "partial", "origin": "kazumi", "key": "demo", "smoke": {"status": "ok", "sample": sample}}
+    cache7 = {}
+    pl.learn_plays([c7], pc, s, cache7, 7000, wait_ms=9000, overrides={"kazumi:demo": bad_play})
+    check("手写 play 重放不通过：忽略它，说明原因，改用自动学习",
+          any("手写的 play 重放没通过" in n for n in c7["notes"]) and c7["source"]["arguments"]["searchConfig"]["play"]["request"]["url"] == base + "/api/play"
+          and "kazumi-demo" in cache7)
+    c8 = {"source": new_source(""), "needs_play": True, "notes": [], "status": "partial", "origin": "kazumi", "key": "demo", "smoke": {"status": "ok", "sample": sample}}
+    pl.learn_plays([c8], None, s, {}, 8000, overrides={"kazumi:demo": {"request": {"url": "ftp://x"}}})
+    check("手写 play 写法不对：忽略并说明，源保持待学", c8["needs_play"] and any("写法不对" in n for n in c8["notes"]))
+    c9 = {"source": new_source(""), "needs_play": True, "notes": [], "status": "partial", "origin": "kazumi", "key": "demo", "smoke": {"status": "blocked"}}
+    pl.learn_plays([c9], None, s, {}, 9000, overrides={"kazumi:demo": good_play})
+    check("本次没检测到条目：手写 play 照用，备注写明未验证", c9["source"]["arguments"]["searchConfig"].get("play") and any("未验证" in n for n in c9["notes"]))
+    c10 = {"source": new_source(""), "needs_play": True, "notes": [], "status": "partial", "origin": "anibaka", "key": "demo", "smoke": {"status": "ok", "sample": sample}}
+    pl.learn_plays([c10], None, s, {}, 10000, overrides={"kazumi:demo": good_play})
+    check("手写 play 只对键对得上的来源生效（anibaka:demo 不吃 kazumi:demo 的）", c10["needs_play"])
+
+    vp, why = pl.valid_play({"request": {"url": "https://a.b/x"}, "selectVideoUrl": "$.url"})
+    check("valid_play：缺的可选项补默认值（GET、空请求体、回退第一个候选）",
+          vp and vp["request"] == {"url": "https://a.b/x", "method": "GET", "body": "", "headers": ""} and vp["fallbackToFirstCandidate"] is True and vp["selectCandidates"] == "")
+    check("valid_play：缺 selectVideoUrl / 方法不对 / 不是对象 都拒绝",
+          all(pl.valid_play(x)[0] is None for x in ({"request": {"url": "https://a.b"}}, {"request": {"url": "https://a.b", "method": "PUT"}, "selectVideoUrl": "$.u"}, "x", None, {"selectVideoUrl": "$.u"})))
+
+    # 5d) 学不出来时，备注里带上播放页发出的请求，给手写 play 当线索
+    MODE["api"] = "none"
+    p5, why5 = pl.learn(pc, new_source("")["arguments"]["searchConfig"], sample, s, wait_ms=4000)
+    check("学不出 play：原因里列出播放页发出的请求（方法 + 地址）", p5 is None and "抓到的请求：" in why5 and "play_overrides" in why5)
+    MODE["api"] = "stable"
+
     # 6) check_plays：带 play 的 json-api 源每次重放验证，写进 smoke.play
     MODE["api"] = "stable"
     good = {"source": new_source(""), "smoke": {"status": "ok", "sample": sample}}
