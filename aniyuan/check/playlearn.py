@@ -18,6 +18,7 @@ import copy
 import hashlib
 import json
 import re
+from urllib.parse import urlparse
 
 from . import smoke as smoke_mod
 from .playcheck import MEDIA_RE
@@ -201,6 +202,27 @@ def _entry_template(entry_a, entry_b, id_a, id_b):
     return {"url": url, "method": entry_a["method"], "body": body or "", "headers": ""}, ""
 
 
+LOGIN_WORDS = ("请先登录", "请登录", "未登录", "需要登录", "登录后", "login required", "please log in", "please login", "not logged in", "unauthorized")
+PLAYISH_PATH = re.compile(r"play|video|episode|source|stream|m3u8|watch", re.I)
+
+
+def login_hint(entries):
+    """播放页里像「取视频地址」的接口，是不是在说要先登录（响应里写着「请先登录」，或者直接 401）。返回说明文字，不是就返回 None。
+    只看路径像播放的请求，评论 / 统计之类的接口说「请登录」不算。"""
+    for e in entries or []:
+        url = e.get("url") or ""
+        if not PLAYISH_PATH.search(urlparse(url).path):
+            continue
+        raw = e.get("text") or ""
+        data = loads(raw)   # 先解析再找：有的站把中文转义成 \uXXXX 发出来，直接在原文里找不到
+        low = (json.dumps(data, ensure_ascii=False) if data is not None else raw)[:3000].lower()
+        word = next((w for w in LOGIN_WORDS if w.lower() in low), None)
+        if word or e.get("status") == 401:
+            return "播放接口要求登录（%s %s 返回%s）：json-api 没法匿名取到视频地址，这个源放弃，不用手写 play" % (
+                e.get("method") or "GET", url[:100], ("「%s」" % word) if word else " 401")
+    return None
+
+
 def clues(entries, limit=6):
     """播放页发出的请求清单（方法 + 地址，去重、截断），学不出 play 时写进备注，给手写 play 当线索。"""
     seen = []
@@ -254,6 +276,9 @@ def learn(pc, sc, sample, session, wait_ms=20000, ua=None):
         if paths:
             hits.append((e, data, paths[0]))
     if not hits:
+        lg = login_hint(cap_a)
+        if lg:
+            return None, lg
         n = len(cap_a)
         hint = clues(cap_a)
         return None, "播放页没有发出带视频地址的 JSON 接口请求（共抓到 %d 个 XHR/fetch；视频地址可能在页面 HTML / iframe 里，或需要登录 / 点击）%s" % (

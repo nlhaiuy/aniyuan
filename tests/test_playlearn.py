@@ -73,6 +73,8 @@ class H(BaseHTTPRequestHandler):
             if self.headers.get("apikey") != "k":
                 return self._send(401, {"error": "key"})
             ep = body.get("episode_id")
+            if MODE["api"] == "login":   # 像 sorani：接口 200，但 canPlay=false、没有视频地址，说请先登录
+                return self._send(200, {"code": 200, "data": {"episodeId": ep, "canPlay": False, "message": "请先登录", "playUrl": None}})
             return self._send(200, {"candidates": [{"source_name": "线路1", "url": "https://cdn.example.com/%s/index.m3u8" % ep},
                                                    {"source_name": "线路2", "url": "https://cdn.example.com/%s/b.mp4" % ep}]})
         self._send(404, {})
@@ -121,6 +123,16 @@ try:
     MODE["api"] = "none"
     p4, why = pl.learn(pc, new_source("")["arguments"]["searchConfig"], sample, s, wait_ms=4000)
     check("页面没有带视频地址的接口：学不了并说明原因", p4 is None and "没有发出带视频地址的 JSON 接口" in why)
+
+    # 4b) 播放接口说要先登录（canPlay=false、请先登录）：明确说放弃，不让人手写
+    MODE["api"] = "login"
+    p4b, why4b = pl.learn(pc, new_source("")["arguments"]["searchConfig"], sample, s, wait_ms=4000)
+    check("播放接口要求登录：学不了，原因明确写「要求登录」并说不用手写", p4b is None and "要求登录" in why4b and "不用手写" in why4b and "请先登录" in why4b)
+    check("要求登录的原因里不再给「抓到的请求」线索（没有手写的必要）", "抓到的请求" not in why4b)
+    c4b = {"source": new_source(""), "needs_play": True, "notes": [], "status": "partial", "smoke": {"status": "ok", "sample": sample}}
+    pl.learn_plays([c4b], pc, s, {}, 4500, wait_ms=4000)
+    check("learn_plays：备注里写着要求登录，源保持待学", c4b["needs_play"] and any("要求登录" in n for n in c4b["notes"]))
+    MODE["api"] = "stable"
 
     # 5) learn_plays：学到后写缓存；第二次只用缓存（不开浏览器）
     MODE["api"] = "stable"
@@ -206,6 +218,18 @@ try:
           vp and vp["request"] == {"url": "https://a.b/x", "method": "GET", "body": "", "headers": ""} and vp["fallbackToFirstCandidate"] is True and vp["selectCandidates"] == "")
     check("valid_play：缺 selectVideoUrl / 方法不对 / 不是对象 都拒绝",
           all(pl.valid_play(x)[0] is None for x in ({"request": {"url": "https://a.b"}}, {"request": {"url": "https://a.b", "method": "PUT"}, "selectVideoUrl": "$.u"}, "x", None, {"selectVideoUrl": "$.u"})))
+
+    # 5d0) login_hint 单元：只看路径像播放的接口
+    check("login_hint：播放接口响应里写着请先登录",
+          "请先登录" in (pl.login_hint([{"url": "https://a.b/api/video/episode/1/play", "method": "GET", "status": 200, "text": '{"message":"请先登录"}'}]) or ""))
+    check("login_hint：响应里的中文被转义成 \\uXXXX 也能识别",
+          "请先登录" in (pl.login_hint([{"url": "https://a.b/play", "method": "GET", "status": 200, "text": json.dumps({"message": "请先登录"})}]) or ""))
+    check("login_hint：评论 / 统计接口说请登录不算", pl.login_hint([{"url": "https://a.b/api/comment/list", "method": "GET", "status": 200, "text": '{"message":"请登录后评论"}'}]) is None)
+    check("login_hint：播放接口 401 也算；403（可能是防火墙）不算",
+          "401" in (pl.login_hint([{"url": "https://a.b/play", "method": "GET", "status": 401, "text": ""}]) or "")
+          and pl.login_hint([{"url": "https://a.b/play", "method": "GET", "status": 403, "text": ""}]) is None)
+    check("login_hint：正常响应 / 空列表 / None 都是 None",
+          pl.login_hint([{"url": "https://a.b/play", "method": "GET", "status": 200, "text": '{"url":"x.m3u8"}'}]) is None and pl.login_hint([]) is None and pl.login_hint(None) is None)
 
     # 5d) 学不出来时，备注里带上播放页发出的请求，给手写 play 当线索
     MODE["api"] = "none"

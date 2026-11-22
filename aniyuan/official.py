@@ -107,9 +107,12 @@ def finalize(cands):
         if sc.get("play"):
             c["needs_play"] = False
             continue
+        need_login = any("要求登录" in n for n in c.get("notes", []))
         c["notes"] = [n for n in c.get("notes", []) if "没有播放接口" not in n] + [
-            "json-api 数据源必须有 play（取视频地址的请求）：Kazumi 规则里没有，官方订阅里没有同一接口的源，"
-            "也没能从播放页学出来，需要手写 play"]
+            ("json-api 数据源必须有 play（取视频地址的请求）：这个站的播放接口要求登录，匿名取不到视频地址，没法转换"
+             if need_login else
+             "json-api 数据源必须有 play（取视频地址的请求）：Kazumi 规则里没有，官方订阅里没有同一接口的源，"
+             "也没能从播放页学出来，需要手写 play")]
         c["status"] = "unsupported"
         c["source"] = None
         c["needs_play"] = False

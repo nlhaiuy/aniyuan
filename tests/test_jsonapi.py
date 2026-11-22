@@ -177,5 +177,13 @@ json.dump({"id": "w", "factoryId": "web-selector", "arguments": {}}, open(os.pat
 open(os.path.join(tmp, "subs", "api", "t0", "broken.json"), "w").write("{not json")
 loaded = official.load(tmp)
 check("load：只读 subs/api 下有 play 的 json-api 源，坏文件跳过", len(loaded) == 1 and loaded[0]["id"] == "official-demo")
+# finalize：到最后还没有 play 的 json-api 候选不输出；备注按原因区分
+def _cand(notes):
+    return {"source": {"id": "kazumi-x", "factoryId": "json-api", "arguments": {"searchConfig": {}}}, "needs_play": True, "status": "partial", "notes": list(notes)}
+plain, login = _cand(["Kazumi 规则里没有播放接口"]), _cand(["从播放页学习 play 失败：播放接口要求登录（GET https://a.b/play 返回「请先登录」）：json-api 没法匿名取到视频地址，这个源放弃，不用手写 play"])
+official.finalize([plain, login])
+check("finalize：没有 play 的不输出（status=unsupported，source 清空）", plain["status"] == "unsupported" and plain["source"] is None and login["source"] is None)
+check("finalize：普通缺 play：备注说需要手写 play", any("需要手写 play" in n for n in plain["notes"]) and not any("没有播放接口" in n for n in plain["notes"]))
+check("finalize：已确认要求登录：备注说没法转换，不再让人手写", any("要求登录" in n and "没法转换" in n for n in login["notes"]) and not any("需要手写 play" in n for n in login["notes"]))
 print("\n%d 项未通过" % bad if bad else "\n全部通过")
 sys.exit(1 if bad else 0)

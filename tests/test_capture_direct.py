@@ -86,9 +86,7 @@ try:
     keys = [s["key"] for s in sites]
     check("capture_sites.json：key 不重复", len(keys) == len(set(keys)))
     by = {s["key"]: s for s in sites}
-    check("capture_sites.json：sorani 有详情接口和两个播放页；xfdmnext 是对照组（有两个播放页）",
-          len(by["sorani"]["play_urls"]) == 2 and by["sorani"]["fetch_urls"][0].startswith("https://api.sorani.cc/")
-          and len(by["xfdmnext"]["play_urls"]) == 2)
+    check("capture_sites.json：xfdmnext 是对照组（有两个播放页，没有要搜索的地址）", len(by["xfdmnext"]["play_urls"]) == 2)
     check("capture_sites.json：每个条目都有 key / origin",
           all(s.get("key") and str(s.get("origin", "")).startswith("http") for s in sites))
 finally:
