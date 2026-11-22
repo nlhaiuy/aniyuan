@@ -642,7 +642,17 @@ def main():
         if args.playcheck:   # 浏览器启动一次：既用于 403 回退，也用于播放检测
             try:
                 from .check.playcheck import PlayChecker
-                pc = PlayChecker(proxy, (config.get("browser") or "").strip() or None)   # 空 = 看环境变量 ANIYUAN_BROWSER，再不行就是 chromium
+                from .check import browser_pick
+                bname = browser_pick.resolve(config)   # 具体名字 = 固定用它；auto = 读 state/browser.json（每周对比抓取自动更新）；空 = 环境变量 / chromium
+                try:
+                    pc = PlayChecker(proxy, bname)
+                except Exception as e:
+                    if bname and bname != browser_pick.DEFAULT:   # 选定的浏览器起不来（比如没装）：退回 chromium，别丢了播放检测
+                        print("浏览器 %s 起不来（%s），退回 %s" % (bname, str(e).strip().splitlines()[0][:80] if str(e).strip() else type(e).__name__, browser_pick.DEFAULT), file=sys.stderr)
+                        pc = PlayChecker(proxy, browser_pick.DEFAULT)
+                    else:
+                        raise
+                print("播放检测用的浏览器：%s" % pc.browser_name)
                 if config.get("browser_fallback", True):
                     smoke_mod.set_browser_fetcher(pc.fetch)
             except Exception as e:  # 没装浏览器就跳过，不影响其它流程

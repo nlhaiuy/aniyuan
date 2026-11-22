@@ -37,7 +37,7 @@ jobs:
       - name: 自测
         run: |
           KAZUMI_RULES="$RUNNER_TEMP/KazumiRules" python tests/test_xpath2css.py
-          for t in test_anx test_health test_normalize test_repair test_ua test_icons test_jsonapi test_playlearn test_changes test_live test_smoke_retry test_kazumi_selflink test_merge_redirect test_exit_compare test_exit_pipeline test_clash_node test_fallback_keyword test_autolearn test_capture test_browsers test_pipeline; do
+          for t in test_anx test_health test_normalize test_repair test_ua test_icons test_jsonapi test_playlearn test_changes test_live test_smoke_retry test_kazumi_selflink test_merge_redirect test_exit_compare test_exit_pipeline test_clash_node test_fallback_keyword test_autolearn test_capture test_browsers test_browser_pick test_browser_fallback test_pipeline; do
             echo "=== $t"
             python tests/$t.py
           done

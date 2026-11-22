@@ -3,7 +3,11 @@ name: capture-sites
 # 抓取：把写规则要用的原始数据（搜索页 / 详情页 / 播放页 / 播放页发出的 XHR）存下来，推到 captures 分支。
 # 只抓取，不学习、不改订阅。手动运行（Actions 页面 → capture-sites → Run workflow），
 # sites 留空就抓 capture_sites.json 里的全部，也可以填站点 key 或网址，逗号分隔。
+# 每周日自动跑一次：chromium / chrome / firefox 各抓一遍并出对比表；发布任务再根据对比表挑日常构建用的浏览器
+# （config.json 的 browser 设为 auto 时才采用，结果写在 state/browser.json；有保护，没有明显优势不会换）。
 on:
+  schedule:
+    - cron: "37 2 * * 0"      # 每周日 UTC 02:37（北京时间 10:37）
   workflow_dispatch:
     inputs:
       sites:
@@ -26,7 +30,7 @@ jobs:
   # 抓取任务：会用无头浏览器去打开第三方站点，只给只读权限；产物通过 artifact 交给 publish 任务
   capture:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 120   # 三个浏览器各抓一遍
     permissions:
       contents: read
     steps:
@@ -47,7 +51,7 @@ jobs:
       # 只有手动选了 firefox / webkit 才装对应内核（默认的定时 / 手动运行不多花时间）
       - name: 安装可选的 Firefox / WebKit
         env:
-          BROWSERS: ${{ github.event.inputs.browsers }}
+          BROWSERS: ${{ github.event.inputs.browsers || (github.event_name == 'schedule' && 'chromium,chrome,firefox') || '' }}
         run: |
           for b in firefox webkit; do
             case ",${BROWSERS// /}," in *",$b,"*) playwright install --with-deps "$b" ;; esac
@@ -101,7 +105,7 @@ jobs:
         env:
           ANIYUAN_PROXY: ${{ env.ANIYUAN_PROXY || secrets.ANIYUAN_PROXY }}
           SITES: ${{ github.event.inputs.sites }}
-          BROWSERS: ${{ github.event.inputs.browsers }}
+          BROWSERS: ${{ github.event.inputs.browsers || (github.event_name == 'schedule' && 'chromium,chrome,firefox') || '' }}
         # xvfb-run：给 chrome 一个虚拟显示器，它才会用有头模式（更不像自动化）；其它浏览器不受影响
         run: xvfb-run -a python -m aniyuan.capture --out captures ${SITES:+--only "$SITES"} ${BROWSERS:+--browsers "$BROWSERS"}
 
@@ -123,11 +127,34 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
+          fetch-depth: 20   # 推送被拒时要变基，需要一点历史
 
       - uses: actions/download-artifact@v4
         with:
           name: captures
           path: captures-out
+
+      # 根据多浏览器对比结果挑日常构建用的浏览器（只有这次抓了 chromium 加至少一个别的浏览器才会动；
+      # 别的浏览器要在至少 2 个站上比 chromium 多抓到视频地址才换，追平了就换回 chromium）
+      - name: 挑选浏览器
+        run: python -m aniyuan.check.browser_pick pick captures-out --state state/browser.json
+
+      - name: 提交浏览器选择到 main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/browser.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "浏览器选择没有变化"
+          else
+            git commit -m "chore: 自动选择浏览器（$(python -c "import json;d=json.load(open('state/browser.json',encoding='utf-8'));print(d['browser'],'-',d['reason'])")）"
+            for i in 1 2 3 4; do
+              git push origin HEAD:main && exit 0
+              echo "推送被拒，变基后重试（第 $i 次）"
+              git pull --rebase origin main || { git rebase --abort 2>/dev/null; echo "变基冲突，放弃"; exit 1; }
+            done
+            echo "连续 4 次推送失败"; exit 1
+          fi
 
       - name: 提交到 captures 分支
         run: |

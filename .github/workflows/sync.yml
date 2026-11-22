@@ -44,6 +44,13 @@ jobs:
       - name: 安装无头浏览器（播放检测用）
         run: playwright install --with-deps chromium
 
+      # config.json 的 browser 是 auto 时，按 state/browser.json 里选定的浏览器装对应内核（chrome 在 runner 上自带；默认 chromium 不用多装）
+      - name: 安装自动选定的浏览器
+        run: |
+          name=$(python -m aniyuan.check.browser_pick resolve)
+          echo "播放检测用的浏览器：$name"
+          case "$name" in firefox|webkit) playwright install --with-deps "$name" ;; esac
+
       - name: 拉取最新的 KazumiRules、AniBakaRule 和纯纯看番社区源（完整历史，用来取每个规则的最后修改时间）
         run: |
           git clone https://github.com/Predidit/KazumiRules.git "$RUNNER_TEMP/KazumiRules"
@@ -74,6 +81,8 @@ jobs:
           python tests/test_autolearn.py
           python tests/test_capture.py
           python tests/test_browsers.py
+          python tests/test_browser_pick.py
+          python tests/test_browser_fallback.py
           python tests/test_pipeline.py
 
       # 可选：Secret CLASH_NODE 里放一个或多个 Clash 格式的节点（"- name: xxx" 一段一个，或完整的 proxies: 配置；
@@ -124,7 +133,10 @@ jobs:
         env:
           # 优先用上一步 mihomo 起的本地代理；否则用 Secret ANIYUAN_PROXY（http/socks5 地址）；都没有就是空串，走 GitHub 海外出口
           ANIYUAN_PROXY: ${{ env.ANIYUAN_PROXY || secrets.ANIYUAN_PROXY }}
-        run: python -m aniyuan --kazumi "$RUNNER_TEMP/KazumiRules" --anibaka "$RUNNER_TEMP/AniBakaRule" --easybangumi "$RUNNER_TEMP/EasyBangumi" --official "$RUNNER_TEMP/animeko-subs" --out dist.new --icons-dir icons --smoke --playcheck
+        # 有 xvfb 就在虚拟显示器里跑：选了 chrome 时它会用有头模式（更不像自动化）；其它浏览器不受影响
+        run: |
+          RUN="python"; command -v xvfb-run >/dev/null && RUN="xvfb-run -a python"
+          $RUN -m aniyuan --kazumi "$RUNNER_TEMP/KazumiRules" --anibaka "$RUNNER_TEMP/AniBakaRule" --easybangumi "$RUNNER_TEMP/EasyBangumi" --official "$RUNNER_TEMP/animeko-subs" --out dist.new --icons-dir icons --smoke --playcheck
 
       # 只打包要发布的几个文件（白名单），不带别的东西
       - name: 打包产物
