@@ -95,6 +95,25 @@ class Capturer:
         def keep(name, text):
             meta["files"].append(_write(os.path.join(d, name), text))
 
+        # 0) 直接模式：站点配置里直接给了播放页地址（play_urls）或要原样保存的地址（fetch_urls）时，不猜搜索页 / 详情页，
+        #    只做这两件事。适合 json-api 类的源：搜索、详情本来就是接口，要看的是播放页发出的请求和接口的原始响应。
+        play_urls = [u for u in (spec.get("play_urls") or []) if str(u).startswith("http")]
+        fetch_urls = [u for u in (spec.get("fetch_urls") or []) if str(u).startswith("http")]
+        if play_urls or fetch_urls:
+            for i, u in enumerate(fetch_urls, 1):
+                fi = self.get(u)
+                time.sleep(self.sleep)
+                rec("fetch", fi)
+                if fi["text"]:
+                    keep("fetch-%d.%s" % (i, _kind(fi["text"])), fi["text"])
+            for i, u in enumerate(play_urls[:3], 1):
+                if i == 1:
+                    meta["episode_url"] = u
+                self._capture_play(meta, keep, u, "play-xhr.json" if i == 1 else "play-xhr-%d.json" % i, stats=(i == 1))
+            got = meta.get("play_xhr") or {}
+            meta["result"] = "ok" if (fetch_urls and any(m for m in meta["files"] if m.startswith("fetch-"))) or got.get("count") else "没有抓到内容"
+            return self._finish(d, meta)
+
         # 1) 搜索
         best = None    # (info, keyword, 路径)
         urls = [(u, "") for u in spec.get("search_urls", [])] + [(p, p) for p in SEARCH_PATHS + JSON_PATHS]
@@ -216,19 +235,24 @@ class Capturer:
         rec("play-page", pi)
         if pi["text"]:
             keep("play-page.html", pi["text"])
-        if self.pc is not None:
-            try:
-                entries = self.pc.capture(ep_url, wait_ms=20000)
-            except Exception as e:
-                entries = []
-                meta["steps"].append(dict(step="play-xhr", error=type(e).__name__))
-            slim = [dict(e, text=(e.get("text") or "")[:MAX_XHR_TEXT]) for e in entries[:MAX_XHR]]
-            meta["steps"].append(dict(step="play-xhr", url=ep_url, count=len(entries)))
-            # 对比不同浏览器用：抓到多少条 XHR，其中多少条的响应里带视频地址（写 play 要的就是这种）
-            meta["play_xhr"] = dict(count=len(entries), media=_media_count(entries))
-            keep("play-xhr.json", json.dumps(slim, ensure_ascii=False, indent=1))
+        self._capture_play(meta, keep, ep_url, "play-xhr.json")
         meta["result"] = "ok"
         return self._finish(d, meta)
+
+    def _capture_play(self, meta, keep, url, filename, stats=True):
+        """用浏览器打开播放页，存下页面发出的 XHR/fetch（含响应正文）。stats=True 时把条数写进 meta["play_xhr"]，对比浏览器用。"""
+        if self.pc is None:
+            return
+        try:
+            entries = self.pc.capture(url, wait_ms=20000)
+        except Exception as e:
+            entries = []
+            meta["steps"].append(dict(step="play-xhr", url=url, error=type(e).__name__))
+        slim = [dict(e, text=(e.get("text") or "")[:MAX_XHR_TEXT]) for e in entries[:MAX_XHR]]
+        meta["steps"].append(dict(step="play-xhr", url=url, count=len(entries)))
+        if stats:   # 抓到多少条 XHR，其中多少条的响应里带视频地址（写 play 要的就是这种）
+            meta["play_xhr"] = dict(count=len(entries), media=_media_count(entries))
+        keep(filename, json.dumps(slim, ensure_ascii=False, indent=1))
 
     def _finish(self, d, meta):
         _write(os.path.join(d, "meta.json"), json.dumps(meta, ensure_ascii=False, indent=1))

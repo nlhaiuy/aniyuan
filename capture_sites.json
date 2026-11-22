@@ -1,5 +1,26 @@
 [
  {
+  "key": "xfdmnext",
+  "origin": "https://next.xifanacg.com",
+  "note": "对照组：官方订阅里这个接口的 play 已知可用，播放页应该能抓到带视频地址的请求；哪个浏览器抓不到，说明这个浏览器不行",
+  "play_urls": [
+   "https://next.xifanacg.com/anime/26/play/329",
+   "https://next.xifanacg.com/anime/26/play/330"
+  ]
+ },
+ {
+  "key": "sorani",
+  "origin": "https://www.sorani.net",
+  "note": "json-api 缺 play：播放页请求 GET api.sorani.cc/sorani-cms/api/video/episode/<内部id>/play?lineCode=anime_jp_m3u8，但详情接口选的 id 是集序号（1.0、2.0），和内部 id 对不上。fetch-1 是详情接口原始响应（看集里有没有内部 id 字段），play-xhr 是播放页发出的请求和响应（看视频地址在哪）",
+  "fetch_urls": [
+   "https://api.sorani.cc/sorani-cms/api/video/828"
+  ],
+  "play_urls": [
+   "https://www.sorani.net/anime/mal/828/episode/1.0",
+   "https://www.sorani.net/anime/mal/828/episode/2.0"
+  ]
+ },
+ {
   "key": "gpjda",
   "origin": "https://www.gpjda.com",
   "note": "自动学习的规则选宽了（命中 1/87，剧集 2360 条），看真实页面结构重写"

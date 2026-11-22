@@ -137,6 +137,8 @@ jobs:
       # 根据多浏览器对比结果挑日常构建用的浏览器（只有这次抓了 chromium 加至少一个别的浏览器才会动；
       # 别的浏览器要在至少 2 个站上比 chromium 多抓到视频地址才换，追平了就换回 chromium）
       - name: 挑选浏览器
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"   # 不然 __pycache__ 会混进下面的 captures 分支
         run: python -m aniyuan.check.browser_pick pick captures-out --state state/browser.json
 
       - name: 提交浏览器选择到 main
@@ -147,7 +149,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "浏览器选择没有变化"
           else
-            git commit -m "chore: 自动选择浏览器（$(python -c "import json;d=json.load(open('state/browser.json',encoding='utf-8'));print(d['browser'],'-',d['reason'])")）"
+            git commit -m "chore: 自动选择浏览器（$(PYTHONDONTWRITEBYTECODE=1 python -c "import json;d=json.load(open('state/browser.json',encoding='utf-8'));print(d['browser'],'-',d['reason'])")）"
             for i in 1 2 3 4; do
               git push origin HEAD:main && exit 0
               echo "推送被拒，变基后重试（第 $i 次）"
@@ -164,6 +166,8 @@ jobs:
           git rm -rf -q . 2>/dev/null || true
           cp -r captures-out/. .
           rm -rf captures-out
+          # git rm 只清得掉已跟踪的文件；前面跑 python 留下的 __pycache__ 要手动清，不然会被 add -A 带进 captures 分支
+          find . -path ./.git -prune -o -name __pycache__ -type d -prune -exec rm -rf {} +
           git add -A
           git commit -q -m "capture: run ${{ github.run_id }}"
           git push -f origin HEAD:captures
