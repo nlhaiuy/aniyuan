@@ -29,29 +29,60 @@ def to_py_regex(pattern):
     return re.sub(r"\(\?<(?![=!])", "(?P<", pattern)
 
 
-def _launch(pw, proxy=None):
-    kw = dict(headless=True, args=["--no-sandbox", "--autoplay-policy=no-user-gesture-required"])
+# 可选浏览器。chromium = Playwright 自带的无头 Chromium（默认，行为和以前完全一样）；
+# chrome = 真 Chrome（装了 Google Chrome 才有；有 DISPLAY 时用有头模式，比如 xvfb-run 下，更不像自动化）；
+# firefox / webkit = Playwright 自带的另外两个内核（指纹和 Chromium 不同，有的站只拦 Chromium 特征）。
+BROWSERS = ("chromium", "chrome", "firefox", "webkit")
+CHROMIUM_FAMILY = ("chromium", "chrome")
+
+
+def browser_name(name=None):
+    """浏览器名：参数 > 环境变量 ANIYUAN_BROWSER > chromium。名字不认识就报错，不悄悄换成别的。"""
+    n = (name or os.environ.get("ANIYUAN_BROWSER") or "chromium").strip().lower()
+    if n not in BROWSERS:
+        raise ValueError("不支持的浏览器 %r（可选：%s）" % (n, " / ".join(BROWSERS)))
+    return n
+
+
+def _launch(pw, proxy=None, name="chromium"):
+    if name == "chromium":
+        kw = dict(headless=True, args=["--no-sandbox", "--autoplay-policy=no-user-gesture-required"])
+        if proxy:
+            kw["proxy"] = proxy
+        try:
+            return pw.chromium.launch(**kw)
+        except Exception:
+            for exe in glob.glob("/opt/pw-browsers/chromium-*/chrome-linux*/chrome"):
+                return pw.chromium.launch(executable_path=exe, **kw)
+            raise
+    if name == "chrome":
+        kw = dict(channel="chrome", headless=not os.environ.get("DISPLAY"),
+                  args=["--no-sandbox", "--autoplay-policy=no-user-gesture-required"])
+    else:   # firefox / webkit：不认 Chromium 的命令行参数
+        kw = dict(headless=True)
     if proxy:
         kw["proxy"] = proxy
-    try:
-        return pw.chromium.launch(**kw)
-    except Exception:
-        for exe in glob.glob("/opt/pw-browsers/chromium-*/chrome-linux*/chrome"):
-            return pw.chromium.launch(executable_path=exe, **kw)
-        raise
+    return getattr(pw, "chromium" if name == "chrome" else name).launch(**kw)
 
 
 class PlayChecker:
-    def __init__(self, proxy=None):
-        """proxy：出口代理地址（见 network.py），给了就让浏览器的所有请求都走它。"""
+    def __init__(self, proxy=None, browser=None):
+        """proxy：出口代理地址（见 network.py），给了就让浏览器的所有请求都走它。
+        browser：见 BROWSERS；不给就看环境变量 ANIYUAN_BROWSER，再不给就是 chromium。"""
         from playwright.sync_api import sync_playwright
+        self.browser_name = browser_name(browser)
         # 配置了代理时 Playwright 默认连 127.0.0.1 也强制走代理；本机回显服务（UA 体检）、本机测试站点会因此连不上。
         # 本机地址本来就不该出国内代理，关掉这个行为（必须在启动 Playwright 驱动之前设置）。
         os.environ.setdefault("PLAYWRIGHT_DISABLE_FORCED_CHROMIUM_PROXIED_LOOPBACK", "1")
         self._cm = sync_playwright()
         self._pw = self._cm.start()
-        self.browser = _launch(self._pw, network.playwright_proxy(proxy))
-        ua_mod.adopt_browser_version(self.browser.version)   # 统一 UA 的大版本以真实浏览器为准
+        try:
+            self.browser = _launch(self._pw, network.playwright_proxy(proxy), self.browser_name)
+        except Exception:
+            self._pw.stop()   # 没起来就别把 Playwright 驱动留着
+            raise
+        if self.browser_name in CHROMIUM_FAMILY:
+            ua_mod.adopt_browser_version(self.browser.version)   # 统一 UA 的大版本以真实浏览器为准
         self._fetch_ctx = {}
         self._warmed = set()   # fetch_bytes 已经预热过的主机
         self._dead = set()     # fetch_bytes 连页面都打不开的主机
@@ -69,12 +100,17 @@ class PlayChecker:
 
     def new_context(self, ua=None):
         """所有浏览器上下文都从这里建：UA 统一，客户端提示（Sec-CH-UA）和 UA 同一个版本、不带 HeadlessChrome。"""
-        return self.browser.new_context(user_agent=(ua or "").strip() or ua_mod.current(), ignore_https_errors=True,
+        ua = (ua or "").strip()
+        if self.browser_name not in CHROMIUM_FAMILY and not ua:
+            # Firefox / WebKit 用自己的 UA：套上 Chrome 的 UA 会出现「引擎和 UA 对不上」，反爬更容易认出来
+            return self.browser.new_context(ignore_https_errors=True,
+                                            extra_http_headers={"Accept-Language": ua_mod.ACCEPT_LANGUAGE})
+        return self.browser.new_context(user_agent=ua or ua_mod.current(), ignore_https_errors=True,
                                         extra_http_headers={"Accept-Language": ua_mod.ACCEPT_LANGUAGE})
 
     def new_page(self, ctx, ua=None):
         page = ctx.new_page()
-        hints = ua_mod.client_hints(ua)
+        hints = ua_mod.client_hints(ua) if self.browser_name in CHROMIUM_FAMILY else None   # 客户端提示 / CDP 只有 Chromium 有
         if hints:
             try:
                 ctx.new_cdp_session(page).send("Emulation.setUserAgentOverride", {

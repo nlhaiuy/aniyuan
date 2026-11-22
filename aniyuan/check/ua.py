@@ -128,6 +128,10 @@ def audit(pc=None, timeout=5):
         if pc is None:
             out.append(("浏览器的 UA 与客户端提示一致", True, "没有启用浏览器（--playcheck），跳过"))
             return out
+        bname = getattr(pc, "browser_name", "chromium")
+        if bname not in ("chromium", "chrome"):
+            out.append(("浏览器的 UA 与客户端提示一致", True, "浏览器是 %s，用它自带的 UA（不统一成 Chrome 的），跳过核对" % bname))
+            return out
         try:
             pc.fetch(base + "/browser")
             h = seen.get("/browser") or {}

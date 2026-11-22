@@ -10,6 +10,10 @@ on:
         description: "只抓这几个站（key 或 https://域名，逗号分隔）；留空 = capture_sites.json 里的全部"
         required: false
         default: ""
+      browsers:
+        description: "用哪些浏览器：chromium / chrome / firefox / webkit，逗号分隔；填多个 = 各抓一遍并出对比表（根目录 INDEX.md）；留空 = chromium"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -39,6 +43,15 @@ jobs:
 
       - name: 安装无头浏览器
         run: playwright install --with-deps chromium
+
+      # 只有手动选了 firefox / webkit 才装对应内核（默认的定时 / 手动运行不多花时间）
+      - name: 安装可选的 Firefox / WebKit
+        env:
+          BROWSERS: ${{ github.event.inputs.browsers }}
+        run: |
+          for b in firefox webkit; do
+            case ",${BROWSERS// /}," in *",$b,"*) playwright install --with-deps "$b" ;; esac
+          done
 
       # 可选：Secret CLASH_NODE 里放一个或多个 Clash 格式的节点（"- name: xxx" 一段一个，或完整的 proxies: 配置；
       # mihomo 支持的类型都行：http / socks5 / ss / vmess / trojan 等，可带自定义请求头）。必须是国内出口的节点。
@@ -88,7 +101,9 @@ jobs:
         env:
           ANIYUAN_PROXY: ${{ env.ANIYUAN_PROXY || secrets.ANIYUAN_PROXY }}
           SITES: ${{ github.event.inputs.sites }}
-        run: python -m aniyuan.capture --out captures ${SITES:+--only "$SITES"}
+          BROWSERS: ${{ github.event.inputs.browsers }}
+        # xvfb-run：给 chrome 一个虚拟显示器，它才会用有头模式（更不像自动化）；其它浏览器不受影响
+        run: xvfb-run -a python -m aniyuan.capture --out captures ${SITES:+--only "$SITES"} ${BROWSERS:+--browsers "$BROWSERS"}
 
       - uses: actions/upload-artifact@v4
         with:
