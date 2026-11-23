@@ -158,4 +158,24 @@ ch_c = cand("anibaka", "z", "z.com", 1, "anibaka-z", "blocked"); update_health([
 ch_c["chosen"] = True
 bs = blind_spots([ch_c, cand("anibaka", "q", "q.com", 1, "anibaka-q", "ok")])
 check("海外盲区清单只列被拦 / 打不开的", len(bs) == 1 and bs[0][1] == "blocked" and "沿用" in bs[0][2])
+
+# 海外直连通过、国内出口没通过：照样采用，只是低一级
+from aniyuan.check.health import abroad_ok, smoke_tier, auto_tier
+def with_direct(c, st):
+    c["smoke_direct"] = {"status": st}; return c
+a = with_direct(cand("anibaka", "ab", "ab.com", 1, "anibaka-ab", "blocked"), "ok")
+check("abroad_ok：国内被拦、海外通过", abroad_ok(a))
+check("abroad_ok：国内通过时不算", not abroad_ok(with_direct(cand("anibaka", "x", "x.com", 1, "anibaka-x", "ok", "ok"), "ok")))
+check("abroad_ok：海外也没通过不算", not abroad_ok(with_direct(cand("anibaka", "y", "y.com", 1, "anibaka-y", "blocked"), "blocked")))
+f = with_direct(cand("anibaka", "f", "f.com", 1, "anibaka-f", "fail"), "ok")
+check("国内 fail 但海外通过：不算确认失败（不剔除不警告），分档 2", not confirmed_fail(f) and auto_tier(f)[0] == 2)
+check("排名档位：国内通过且能播 > 只有海外通过 > 没结论", smoke_tier(cand("a", "k", "k.com", 1, "a-k", "ok", "ok")) > smoke_tier(a) > 1)
+dom = cand("kazumi", "D", "same.com", 100, "kazumi-d", "ok", "ok")
+ov = with_direct(cand("anibaka", "d", "same.com", 200, "anibaka-d", "blocked"), "ok")
+ch, d = merge([ov, dom], {})
+check("合并：国内也通过的旧来源，胜过只有海外通过的新来源", ch[0]["origin"] == "kazumi")
+ov2 = with_direct(cand("anibaka", "e", "same2.com", 200, "anibaka-e", "blocked"), "ok")
+bad_c = cand("kazumi", "E", "same2.com", 100, "kazumi-e", "fail")
+ch, d = merge([ov2, bad_c], {})
+check("合并：海外通过的来源，胜过国内明确失败的旧来源", ch[0]["origin"] == "anibaka")
 sys.exit(1 if bad else 0)

@@ -64,9 +64,18 @@ def update_health(cands, history, now, threshold=DEFAULT_THRESHOLD, carry_days=D
     return new
 
 
+ABROAD_TIER = 2.2   # 只有海外直连通过时的排名档位：低于国内出口通过且播放验证成功（3），高于没结论 / 播放有疑点的
+
+
+def abroad_ok(c):
+    """国内出口没通过（被拦 / 打不开 / 选择器没选中），但 GitHub 海外服务器直连通过：这个源海外能用，照样采用，
+    只是不如国内出口也通过的可靠，排名和分档都低一级。"""
+    return (c.get("smoke") or {}).get("status") not in (None, "ok") and (c.get("smoke_direct") or {}).get("status") == "ok"
+
+
 def confirmed_fail(c):
-    """检测明确失败，并且已经不在宽限期内。"""
-    return (c.get("smoke") or {}).get("status") == "fail" and not (c.get("health") or {}).get("grace")
+    """检测明确失败，并且已经不在宽限期内。海外直连通过的不算失败（不剔除、不加警告）。"""
+    return (c.get("smoke") or {}).get("status") == "fail" and not (c.get("health") or {}).get("grace") and not abroad_ok(c)
 
 
 def auto_tier(c):
@@ -83,6 +92,8 @@ def auto_tier(c):
         return None, ""
     if st == "ok":
         play, basis = sm.get("play"), "检测通过"
+    elif abroad_ok(c):
+        return 2, "国内出口%s，GitHub 海外直连通过，照样采用（排名低一级）" % st
     elif st == "fail":
         h = c.get("health") or {}
         if not h.get("grace"):
@@ -105,6 +116,8 @@ def smoke_tier(c):
     st = sm.get("status")
     if st == "ok":
         return PLAY_TIER.get(sm.get("play"), 2)
+    if abroad_ok(c):
+        return ABROAD_TIER
     if st == "fail":
         h = c.get("health") or {}
         return PLAY_TIER.get(h.get("play"), 2) if h.get("grace") else 0

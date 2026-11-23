@@ -29,7 +29,7 @@ from .convert.kazumi import convert_rule
 from .convert.easybangumi import convert_extension
 from .check.domains import follow_upstream, host_of
 from .check import network, ua as ua_mod
-from .check.health import (DEFAULT_CARRY_DAYS, DEFAULT_THRESHOLD, auto_tier, blind_spots, confirmed_fail, smoke_tier,
+from .check.health import (DEFAULT_CARRY_DAYS, abroad_ok, DEFAULT_THRESHOLD, auto_tier, blind_spots, confirmed_fail, smoke_tier,
                            update_health)
 from .normalize import normalize_source
 from .check.repair import (brittle, find_search_selector, mine_presets, repair_match_video, repair_source,
@@ -202,8 +202,8 @@ def probe(c, keyword, session, presets, config):
 
 
 def direct_pass(cands, config, session=None):
-    """海外直连对照：用不经代理的 GitHub 海外出口，把每个候选再测一遍，结果写进 c["smoke_direct"]。
-    只做搜索 + 详情这两步（不修复、不改源、不影响排名和历史），为的是在报告里和国内出口的结果对比。
+    """海外直连：用不经代理的 GitHub 海外出口，把每个候选再测一遍，结果写进 c["smoke_direct"]。
+    只做搜索 + 详情这两步（不修复、不改源）。结果既用来在报告里对比两个出口，也真正参与排名：国内没通过、海外通过的照样采用（health.abroad_ok）。
     浏览器 403 回退走的是代理，必须关掉，否则会把国内视角混进“海外直连”的结果里。"""
     from .check import smoke as smoke_mod
     from .check.smoke import check_source
@@ -230,6 +230,8 @@ def direct_pass(cands, config, session=None):
             c["smoke_direct"] = {k: r[k] for k in ("status", "reason", "episode_count") if k in r}
             if c.get("needs_play") and r.get("sample"):   # 等着学 play 的 json-api 源：主出口没检测到条目时，学习要用这份样本
                 c["smoke_direct"]["sample"] = r["sample"]
+            if abroad_ok(c):
+                c["notes"].append("国内出口检测%s，但 GitHub 海外直连通过，照样采用（排名低一级）" % c["smoke"]["status"])
             time.sleep(config.get("smoke_direct_wait", 0.5))
     finally:
         smoke_mod.set_browser_fetcher(prev)
@@ -261,7 +263,7 @@ def exit_compare(cands):
             rows.append((key, a, b, EXIT_NOTE.get((a, b), "国内通过、海外没通过"), bool(c.get("chosen"))))
         elif b == "ok":
             cats["abroad_only"] += 1
-            rows.append((key, a, b, "海外通过、国内出口没通过：可能是代理线路问题，也可能站点限制国内访问，值得留意", bool(c.get("chosen"))))
+            rows.append((key, a, b, "海外通过、国内出口没通过：已按海外直连的结果采用（排名低一级）；可能是代理线路问题，也可能站点限制国内访问，值得留意", bool(c.get("chosen"))))
         else:
             cats["neither"] += 1
             if a != b:
@@ -814,7 +816,7 @@ def main():
     rep = ["# 订阅转换报告", "", "写入订阅 **%d** 个数据源（候选 %d 个，同站点合并后）。" % (len(sources), len(cands)), ""]
     if args.smoke:
         both = bool(proxy and any(c.get("smoke_direct") for c in cands))
-        rep += ["检测出口：%s。" % ("国内出口（代理 %s）%s" % (network.describe(proxy), "，并用 GitHub 海外服务器直连做了一遍对照，见「国内外出口对比」" if both else "")
+        rep += ["检测出口：%s。" % ("国内出口（代理 %s）%s" % (network.describe(proxy), "，并用 GitHub 海外服务器直连也测了一遍（国内没通过、海外通过的照样采用，排名低一级），见「国内外出口对比」" if both else "")
                                   if proxy else "GitHub 海外服务器（国内站可能打不开或被拦）"), ""]
     if changed is not None:
         rep += changes.section(changed)[1:] + [""]
@@ -835,7 +837,7 @@ def main():
         cats, diff = exit_compare(cands)
         if sum(cats.values()):
             rep += ["", "## 国内外出口对比", "",
-                    "同一批候选分别用国内出口（代理，决定排名）和 GitHub 海外服务器直连（只做对照）各测了一遍；表中「自动检测」列括号里是海外直连的结果。", "",
+                    "同一批候选分别用国内出口（代理）和 GitHub 海外服务器直连各测了一遍；表中「自动检测」列括号里是海外直连的结果。国内出口通过的按国内成绩排名；国内没通过、只有海外直连通过的也照样采用，只是排名和分档低一级。", "",
                     "| 国内 / 海外 | 个数 |", "|---|---|",
                     "| 两边都通过 | %d |" % cats["both_ok"], "| 只有国内通过 | %d |" % cats["cn_only"],
                     "| 只有海外通过 | %d |" % cats["abroad_only"], "| 两边都没通过 | %d |" % cats["neither"]]

@@ -87,7 +87,7 @@ cand = {e["key"]: e for e in json.load(open(os.path.join(out, "report.json")))["
 check("流水线正常结束", r.returncode == 0)
 check("两个出口的结果都记下了：geo1 国内 ok、海外 blocked", cand["geo1"]["smoke"]["status"] == "ok" and cand["geo1"]["smoke_direct"]["status"] == "blocked")
 check("两边都通的：both1 国内 ok、海外 ok", cand["both1"]["smoke"]["status"] == "ok" and cand["both1"]["smoke_direct"]["status"] == "ok")
-check("报告抬头写明国内出口 + 海外对照", "检测出口：国内出口（代理 http://127.0.0.1:" in rep and "海外服务器直连做了一遍对照" in rep)
+check("报告抬头写明国内出口 + 海外对照", "检测出口：国内出口（代理 http://127.0.0.1:" in rep and "海外服务器直连也测了一遍" in rep)
 check("全部候选表的自动检测列带海外结果", "| ok（海外：blocked） |" in rep and "| ok（海外：ok） |" in rep)
 check("有「国内外出口对比」一节，计数正确", "## 国内外出口对比" in rep and "| 两边都通过 | 1 |" in rep and "| 只有国内通过 | 1 |" in rep and "| 只有海外通过 | 0 |" in rep)
 check("差异清单列出 geo1 并说明符合预期", "| kazumi:geo1 | ok | blocked |" in rep and "符合预期" in rep)
@@ -100,7 +100,7 @@ r, out = run({"smoke_both_exits": False}, proxy=True)
 rep = open(os.path.join(out, "report.md"), encoding="utf-8").read()
 cand = {e["key"]: e for e in json.load(open(os.path.join(out, "report.json")))["candidates"]}
 check("smoke_both_exits=false：不做海外对照、报告没有对比一节", all("smoke_direct" not in c for c in cand.values()) and "## 国内外出口对比" not in rep and "（海外：" not in rep)
-check("smoke_both_exits=false：抬头只写国内出口", "检测出口：国内出口（代理 http://127.0.0.1:" in rep and "对照" not in rep.split("## ")[0])
+check("smoke_both_exits=false：抬头只写国内出口", "检测出口：国内出口（代理 http://127.0.0.1:" in rep and "海外服务器直连" not in rep.split("## ")[0])
 
 r, out = run({}, proxy=False)
 rep = open(os.path.join(out, "report.md"), encoding="utf-8").read()
