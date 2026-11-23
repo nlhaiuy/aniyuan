@@ -65,33 +65,8 @@ jobs:
           git clone --depth 1 https://github.com/creamycake-anime/animeko-subs.git "$RUNNER_TEMP/animeko-subs"
 
       - name: 自测（翻译器 + 整条流水线）
-        run: |
-          KAZUMI_RULES="$RUNNER_TEMP/KazumiRules" python tests/test_xpath2css.py
-          python tests/test_anx.py
-          python tests/test_health.py
-          python tests/test_normalize.py
-          python tests/test_repair.py
-          python tests/test_ua.py
-          python tests/test_icons.py
-          python tests/test_jsonapi.py
-          python tests/test_playlearn.py
-          python tests/test_changes.py
-          python tests/test_live.py
-          python tests/test_smoke_retry.py
-          python tests/test_kazumi_selflink.py
-          python tests/test_clash_node.py
-          python tests/test_merge_redirect.py
-          python tests/test_exit_compare.py
-          python tests/test_exit_pipeline.py
-          python tests/test_fallback_keyword.py
-          python tests/test_autolearn.py
-          python tests/test_capture.py
-          python tests/test_capture_direct.py
-          python tests/test_browsers.py
-          python tests/test_browser_pick.py
-          python tests/test_browser_compare.py
-          python tests/test_browser_fallback.py
-          python tests/test_pipeline.py
+        # run_all.py 自动发现 tests/test_*.py 并行跑；新增测试不用再改这里
+        run: KAZUMI_RULES="$RUNNER_TEMP/KazumiRules" python tests/run_all.py -j 4
 
       # 可选：Secret CLASH_NODE 里放一个或多个 Clash 格式的节点（"- name: xxx" 一段一个，或完整的 proxies: 配置；
       # mihomo 支持的类型都行：http / socks5 / ss / vmess / trojan 等，可带自定义请求头）。必须是国内出口的节点。
