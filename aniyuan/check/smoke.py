@@ -16,11 +16,17 @@ BLOCK_WORDS = ["验证码", "安全验证", "检查环境", "请输入验证", "
 
 
 FETCHER = None   # 可选：requests 被 403/503 拦时，改用无头浏览器取页面（见 playcheck.BrowserFetcher）
+FORCE_BROWSER = False   # 浏览器对比用：True 时每个页面都先用浏览器取（不先用 requests），这样才能比出各浏览器自己的表现
 
 
 def set_browser_fetcher(fn):
     global FETCHER
     FETCHER = fn
+
+
+def set_force_browser(on):
+    global FORCE_BROWSER
+    FORCE_BROWSER = bool(on)
 
 
 class _BrowserResp:
@@ -48,7 +54,7 @@ def status_kind(code):
     """非 200 响应对应的检测结论：blocked（被拦）/ unreachable（站点出错，没结论）/ fail（地址本身不对，如 404）。"""
     if code in BLOCK_CODES:
         return "blocked"
-    return "unreachable" if transient_code(code) else "fail"
+    return "unreachable" if (transient_code(code) or code == 0) else "fail"   # 0 = 浏览器没取到页面
 
 
 def _with_retry(call):
@@ -70,6 +76,14 @@ def _with_retry(call):
 
 def _get(url, session, timeout, ua=None):
     """ua：源自己在 searchConfig.userAgent 里指定的 UA（Animeko 就是用它请求的），空则用统一 UA（见 ua.py）。"""
+    if FORCE_BROWSER and FETCHER:
+        try:
+            got = FETCHER(url, ua=ua)
+        except Exception:
+            got = None
+        if got:
+            return _BrowserResp(got[0], got[1], got[2], _host(got[2]) != _host(url))
+        return _BrowserResp(0, "", url, False)   # 浏览器没取到（超时 / 连不上）：和 requests 连接失败一样，算打不开
     r = _with_retry(lambda: session.get(url, headers=ua_mod.request_headers(ua), timeout=timeout, allow_redirects=True))
     if r.status_code in (403, 503) and FETCHER:
         try:

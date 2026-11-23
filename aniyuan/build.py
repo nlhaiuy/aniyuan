@@ -275,6 +275,29 @@ def _check(source, config, session):
     return check_source(source, config.get("smoke_keyword", "葬送的芙莉莲"), session=session)
 
 
+def run_browser_compare(cands, config, proxy, session, state_path):
+    """每周（或环境变量 ANIYUAN_BROWSER_COMPARE=1 手动触发）：拿联网检测没通过的候选，每个浏览器各重测一遍，
+    成绩交给 browser_pick 更新 state/browser.json。任何出错都只打印，不影响订阅。"""
+    import datetime
+    if not config.get("browser_compare", True):
+        return
+    day = config.get("browser_compare_weekday", 6)   # 0=周一 … 6=周日；None = 每次都比
+    forced = os.environ.get("ANIYUAN_BROWSER_COMPARE") == "1"
+    if not forced and day is not None and datetime.datetime.utcnow().weekday() != day:
+        return
+    try:
+        from .check import browser_compare, browser_pick
+        res = browser_compare.compare(cands, config, proxy, session)
+        for line in browser_compare.summary_lines(res):
+            print(line)
+        sc = browser_compare.to_scores(res)
+        if sc:
+            choice, reason, _, wrote = browser_pick.pick_scores(sc, state_path)
+            print("浏览器对比结论：%s（%s）%s" % (choice, reason, "已更新 %s" % state_path if wrote else "；没有变化"))
+    except Exception as e:
+        print("浏览器对比出错，已跳过：%s" % e, file=sys.stderr)
+
+
 def run_playchecks(cands, config, pc):
     """对检测通过的候选逐个做无头浏览器播放检测（耗时，约 20~30 秒一个）。
     页面里出现了视频地址但 matchVideoUrl 认不出（mismatch）时，试着修 matchVideoUrl 并重新检测。"""
@@ -593,6 +616,8 @@ def main():
                     help="记录各候选历次联网检测结果的文件（连续失败才降级）")
     ap.add_argument("--icons-dir", default=None,
                     help="站点图标存放目录（和 --smoke 一起用才会联网取图标；不给就不处理图标）")
+    ap.add_argument("--browser-state", default=os.path.join(ROOT, "state", "browser.json"),
+                    help="浏览器选择（browser=auto 时读它；每周对比失败候选后更新）")
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--playcheck", action="store_true", help="在 --smoke 之后再用无头浏览器检测能否播放（需要 playwright）")
     args = ap.parse_args()
@@ -696,6 +721,7 @@ def main():
                 direct_pass(cands, config)
             if pc:
                 run_playchecks(cands, config, pc)
+            run_browser_compare(cands, config, proxy, session, args.browser_state)
         except BaseException:
             cleanup()
             raise

@@ -51,6 +51,12 @@ jobs:
           echo "播放检测用的浏览器：$name"
           case "$name" in firefox|webkit) playwright install --with-deps "$name" ;; esac
 
+      # 每周日（或手动运行）构建会拿没通过检测的候选在 chromium / chrome / firefox 里各重测一遍，需要 firefox
+      - name: 安装 firefox（每周浏览器对比用）
+        if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+        run: |
+          if [ "$(date -u +%u)" = 7 ] || [ "${{ github.event_name }}" = workflow_dispatch ]; then playwright install --with-deps firefox || true; fi
+
       - name: 拉取最新的 KazumiRules、AniBakaRule 和纯纯看番社区源（完整历史，用来取每个规则的最后修改时间）
         run: |
           git clone https://github.com/Predidit/KazumiRules.git "$RUNNER_TEMP/KazumiRules"
@@ -83,6 +89,7 @@ jobs:
           python tests/test_capture_direct.py
           python tests/test_browsers.py
           python tests/test_browser_pick.py
+          python tests/test_browser_compare.py
           python tests/test_browser_fallback.py
           python tests/test_pipeline.py
 
@@ -146,7 +153,7 @@ jobs:
           cp dist.new/all.json dist.new/report.json dist.new/report.md out/dist/
           cp dist.new/summary.txt out/dist/ 2>/dev/null || true
           cp state/seen.json state/health.json out/state/
-          cp state/play.json state/learned.json out/state/ 2>/dev/null || true
+          cp state/play.json state/learned.json state/browser.json out/state/ 2>/dev/null || true
           cp icons/* out/icons/ 2>/dev/null || true
 
       - uses: actions/upload-artifact@v4
@@ -199,7 +206,7 @@ jobs:
         run: |
           cp out/dist/all.json out/dist/report.json out/dist/report.md dist/
           cp out/state/seen.json out/state/health.json state/
-          cp out/state/play.json out/state/learned.json state/ 2>/dev/null || true
+          cp out/state/play.json out/state/learned.json out/state/browser.json state/ 2>/dev/null || true
           mkdir -p icons && find icons -type f ! -name '.gitkeep' -delete && cp out/icons/* icons/ 2>/dev/null || true
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

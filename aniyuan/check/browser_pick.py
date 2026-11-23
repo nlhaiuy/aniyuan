@@ -105,7 +105,11 @@ def resolve(config=None, state_path=STATE_PATH):
 
 def pick(captures_dir, state_path=STATE_PATH, today=None):
     """评分、决定、写 state。返回 (选择, 原因, 评分, 是否写了文件)。数据不足时不写文件（保持原样）。"""
-    sc = scores(captures_dir)
+    return pick_scores(scores(captures_dir), state_path, today)
+
+
+def pick_scores(sc, state_path=STATE_PATH, today=None):
+    """同 pick，但成绩直接给（抓取对比和失败候选重测都走这里）。"""
     prev = read_state(state_path)
     current = str(prev.get("browser") or DEFAULT)
     choice, reason, decided = _decide(sc, current)
