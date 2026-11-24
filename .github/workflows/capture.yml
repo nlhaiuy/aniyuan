@@ -55,49 +55,11 @@ jobs:
             case ",${BROWSERS// /}," in *",$b,"*) playwright install --with-deps "$b" ;; esac
           done
 
-      # 可选：Secret CLASH_NODE 里放一个或多个 Clash 格式的节点（"- name: xxx" 一段一个，或完整的 proxies: 配置；
-      # mihomo 支持的类型都行：http / socks5 / ss / vmess / trojan 等，可带自定义请求头）。必须是国内出口的节点。
-      # 用 mihomo 在 runner 上起本地代理，按顺序逐个试，第一个能连通国内站的就用；都不通或没配置就走海外出口。
-      # 想直接给一个 http / socks5 地址的话，用 Secret ANIYUAN_PROXY（见下一步）。
-      # 节点内容只经 Secret 传入；密码 / 令牌 / X-*-Auth 之类的值会用 add-mask 从日志里遮掉。
+      # 可选的国内出口代理：Secret CLASH_NODE（Clash 节点）→ mihomo 本地代理 → 环境变量 ANIYUAN_PROXY。细节见 .github/actions/clash-proxy/action.yml
       - name: 启动 Clash 节点代理（可选）
-        env:
-          CLASH_NODE: ${{ secrets.CLASH_NODE }}
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          [ -z "$CLASH_NODE" ] && exit 0
-          note() { echo "ANIYUAN_PROXY_NOTE=$1" >> "$GITHUB_ENV"; echo "$1"; }
-          out=$(python -m aniyuan.check.clash_node "$RUNNER_TEMP/mihomo") || { note "CLASH_NODE 格式不对，没有启用"; exit 0; }
-          printf '%s\n' "$out" | grep '^::add-mask::' || true   # 命令替换会吞掉输出，遮罩指令要重新打出来才生效
-          count=$(printf '%s\n' "$out" | tail -n 1)
-          url=$(gh api repos/MetaCubeX/mihomo/releases/latest --jq '[.assets[].browser_download_url | select(test("/mihomo-linux-amd64-v[0-9]+\\.[0-9]+\\.[0-9]+\\.gz$"))][0]')
-          if [ -z "$url" ] || [ "$url" = "null" ]; then note "没找到 mihomo 的 linux-amd64 发行包"; exit 0; fi
-          curl -sSL --fail -o "$RUNNER_TEMP/mihomo.gz" "$url" && gunzip -f "$RUNNER_TEMP/mihomo.gz" && chmod +x "$RUNNER_TEMP/mihomo" || { note "mihomo 下载失败"; exit 0; }
-          mkdir -p "$RUNNER_TEMP/mh"
-          fails=""
-          for i in $(seq 1 "$count"); do
-            cfg="$RUNNER_TEMP/mihomo.$i.yaml"
-            if ! "$RUNNER_TEMP/mihomo" -t -f "$cfg" -d "$RUNNER_TEMP/mh" > "$RUNNER_TEMP/mihomo-test.log" 2>&1; then
-              echo "第 $i 个节点：配置 mihomo 不认"; tail -n 6 "$RUNNER_TEMP/mihomo-test.log"
-              fails="$fails 第$i个配置不对"; continue
-            fi
-            "$RUNNER_TEMP/mihomo" -f "$cfg" -d "$RUNNER_TEMP/mh" > "$RUNNER_TEMP/mihomo.log" 2>&1 &
-            pid=$!
-            sleep 3
-            rc=0   # bash -e 下 curl 失败会直接退出整个脚本，所以用 || 接住退出码
-            code=$(curl -sS -o /dev/null -m 20 -w '%{http_code}' --socks5-hostname 127.0.0.1:7890 https://www.baidu.com 2>"$RUNNER_TEMP/curl.err") || rc=$?
-            if [ "$rc" = 0 ] && [ "$code" != "000" ]; then
-              echo "第 $i 个节点可用（经它访问百度返回 HTTP $code）"
-              echo "ANIYUAN_PROXY=socks5h://127.0.0.1:7890" >> "$GITHUB_ENV"
-              exit 0
-            fi
-            echo "第 $i 个节点不通：curl 退出码 $rc，HTTP $code：$(cat "$RUNNER_TEMP/curl.err")"
-            tail -n 6 "$RUNNER_TEMP/mihomo.log"
-            kill $pid 2>/dev/null || true
-            wait $pid 2>/dev/null || true
-            fails="$fails 第$i个连不通(curl $rc)"
-          done
-          note "已配置 CLASH_NODE（$count 个节点），但都不能用：${fails# }"
+        uses: ./.github/actions/clash-proxy
+        with:
+          clash-node: ${{ secrets.CLASH_NODE }}
 
       - name: 抓取
         env:

@@ -15,6 +15,8 @@ import glob
 import json
 import os
 
+from .check.domains import host_of, sld
+
 
 def load(repo):
     """读 animeko-subs 里 subs/api/ 下所有 json-api 源。"""
@@ -117,3 +119,149 @@ def finalize(cands):
         c["source"] = None
         c["needs_play"] = False
         c.pop("smoke", None)
+
+
+# ---------------------------------------------------------------------------
+# 与官方订阅互补
+#
+# 你同时订阅官方源和自己的源时，同一个站在 Animeko 里会出现两次。官方的是人工验证 + 人工分档的，
+# 所以：官方同站源检测通过 → 自有的这条是重复的，降到最低档（或按配置剔除）；
+# 官方同站源检测没通过、自有的通过 → 自有的留着补位，保持原档位；没有结论 / 没联网 → 只降档，绝不剔除。
+# 站点怎么认：和 check/domains.py 一样，看主域名的“名字部分”（lmm22.com 和 lmm22.net 是同一个站），
+# 名字不同但其实是一个站的写进 config.official_aliases（{自有名字: 官方名字}）。
+# ---------------------------------------------------------------------------
+GENERIC_SLDS = {"", "github", "githubusercontent", "googleusercontent", "gstatic", "cloudflare", "jsdelivr", "unpkg", "gravatar"}
+MODES = ("demote", "exclude", "off")
+
+
+def _urls(source):
+    a = source.get("arguments") or {}
+    sc = a.get("searchConfig") or {}
+    req = (sc.get("search") or {}).get("request") or {}
+    # 不看 iconUrl：图标常放在百度云 / GitHub 之类的 CDN 上，按它认站会把不相干的站认成一个（真实数据里出现过）
+    return [sc.get("searchUrl"), sc.get("rawBaseUrl"), sc.get("baseUrl"), req.get("url")]
+
+
+def site_names(source, extra=()):
+    """一个源涉及的主域名名字集合（去掉 github 之类的通用域名）。extra：检测时改写域名前的原站点等。"""
+    hosts = [host_of(u) for u in _urls(source) if isinstance(u, str) and u.startswith(("http://", "https://"))]
+    hosts += [h for h in extra if h]
+    return {sld(h) for h in hosts} - GENERIC_SLDS
+
+
+def load_sites(repo):
+    """读 animeko-subs 里 subs/web/ 和 subs/api/ 下全部 web-selector / json-api 源（不要求有 play），
+    返回 [{name, tier, source, names, path}]；读不出来的文件跳过。"""
+    out = []
+    for sub in ("web", "api"):
+        for path in sorted(glob.glob(os.path.join(repo, "subs", sub, "**", "*.json"), recursive=True)):
+            try:
+                with open(path, encoding="utf-8") as f:
+                    d = json.load(f)
+            except (OSError, ValueError):
+                continue
+            if not isinstance(d, dict) or d.get("factoryId") not in ("web-selector", "json-api"):
+                continue
+            a = d.get("arguments") or {}
+            tier = a.get("tier")
+            out.append({"name": a.get("name") or d.get("id") or os.path.basename(path)[:-5],
+                        "tier": tier if isinstance(tier, int) else None,
+                        "source": d, "names": site_names(d), "path": os.path.relpath(path, repo)})
+    return out
+
+
+def find_matches(source, sites, aliases=None, extra=()):
+    """官方订阅里和这个源是同一个站的条目（可能有多个，比如 girigiri 有两条），档位高的（数字小的）在前。"""
+    aliases = aliases or {}
+    mine = {aliases.get(n, n) for n in site_names(source, extra)}
+    hit = [s for s in sites if mine & s["names"]]
+    return sorted(hit, key=lambda s: (99 if s["tier"] is None else s["tier"], s["name"]))
+
+
+def _verdict(own_status, official_status):
+    """返回 (动作, 说明)。动作：redundant（官方已覆盖）/ rescue（官方没通过、自有补位）/ unsure（没结论，只降档）。"""
+    if official_status == "ok":
+        return "redundant", "官方同站源检测通过"
+    if official_status == "fail":
+        if own_status == "ok":
+            return "rescue", "官方同站源检测没通过（选择器失效），自有源通过，留着补位"
+        return "unsure", "官方同站源检测没通过，自有源也没通过"
+    if official_status is None:
+        return "unsure", "没联网检测官方同站源"
+    return "unsure", "官方同站源检测没有结论（%s）" % official_status
+
+
+def reconcile(chosen, sites, config, check=None):
+    """把最终入选的自有源和官方订阅对一遍。
+    chosen：入选候选列表（c["source"] 是订阅里的源）；check(official_source) -> {"status": ...}（可选，联网检测官方源用，
+    同一个官方源只测一次）；返回报告用的行：[{id, name, official, official_tier, official_status, action, note}]。
+    会改动候选：降档的改 source.arguments.tier，剔除的打 c["dropped"] = True。
+    config：official_dedupe（demote 默认 / exclude / off）、official_demote_tier（默认 4）、official_aliases、
+    tiers（你手动点名过档位的源不动）。"""
+    mode = config.get("official_dedupe", "demote")
+    if mode not in MODES:
+        raise ValueError("official_dedupe 只能是 %s，现在是 %r" % ("/".join(MODES), mode))
+    if mode == "off" or not sites:
+        return []
+    aliases = config.get("official_aliases") or {}
+    pinned = config.get("tiers") or {}
+    lowest = int(config.get("official_demote_tier", 4))
+    checked = {}
+    rows = []
+    for c in chosen:
+        src = c["source"]
+        a = src["arguments"]
+        hits = find_matches(src, sites, aliases, [c.get("orig_site")] if c.get("orig_site") else [])
+        if not hits:
+            continue
+        best = hits[0]
+        if check is not None:
+            # 同站有多条官方源时，只要有一条通过就算官方覆盖了
+            sts = []
+            for h in hits:
+                if h["path"] not in checked:
+                    try:
+                        checked[h["path"]] = (check(h["source"]) or {}).get("status")
+                    except Exception as e:   # 官方源检测出任何问题都只当没结论，不影响订阅
+                        checked[h["path"]] = "error:%s" % type(e).__name__
+                sts.append(checked[h["path"]])
+            ost = "ok" if "ok" in sts else ("fail" if "fail" in sts else sts[0])
+        else:
+            ost = None
+        own = (c.get("smoke") or {}).get("status")
+        action, why = _verdict(own, ost)
+        row = {"id": src["id"], "name": a.get("name", src["id"]), "official": "、".join(h["name"] for h in hits),
+               "official_tier": best["tier"], "official_status": ost or "-", "action": "keep", "note": why}
+        if c["key"] in pinned or a.get("name") in pinned:
+            row["note"] = "你在 config.tiers 里手动定过档位，不动（%s）" % why
+        elif action == "rescue":
+            pass   # 保持原档位
+        elif mode == "exclude" and action == "redundant":
+            c["dropped"] = True
+            row["action"] = "drop"
+            c["notes"].append("官方订阅里已有同一个站的源「%s」，已从订阅里剔除（%s）" % (row["official"], why))
+        else:
+            old = a.get("tier")
+            if old is None or old < lowest:
+                a["tier"] = lowest
+                row["action"] = "demote"
+                c["notes"].append("官方订阅里已有同一个站的源「%s」，优先级降到 %d（%s）" % (row["official"], lowest, why))
+            else:
+                row["note"] += "；本来就在最低档"
+        rows.append(row)
+    return rows
+
+
+def report_section(rows, total, mode):
+    """报告里的「与官方订阅的重叠」一节（没有重叠也写一句，方便确认功能在工作）。"""
+    names = {"drop": "已剔除", "demote": "已降档", "keep": "保持"}
+    out = ["", "## 与官方订阅的重叠", "",
+           "你同时订阅官方源时，同一个站会出现两次。这次入选的 %d 个源里 **%d 个**和官方订阅重复，**%d 个**是官方没有的（自有独有）。处理方式：`official_dedupe` = `%s`。"
+           % (total, len(rows), total - len(rows), mode)]
+    if rows:
+        out += ["", "| 自有源 | 官方同站源（档位） | 官方检测 | 处理 | 说明 |", "|---|---|---|---|---|"]
+        for r in rows:
+            tier = "" if r["official_tier"] is None else "（T%d）" % r["official_tier"]
+            out.append("| %s | %s%s | %s | %s | %s |" % (r["name"].replace("|", "/"), r["official"].replace("|", "/"), tier,
+                                                   r["official_status"], names.get(r["action"], r["action"]), r["note"].replace("|", "/")))
+    return out

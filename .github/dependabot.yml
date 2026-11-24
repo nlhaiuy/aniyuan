@@ -1,0 +1,18 @@
+# 依赖自动更新：Actions 版本和 Python 依赖每周检查一次，有新版本自动提 PR。
+# PR 会触发 tests 工作流（自测），通过了再合并即可。
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+    groups:
+      python:
+        patterns: ["*"]

@@ -601,7 +601,8 @@ def main():
     ap.add_argument("--kazumi", help="KazumiRules 仓库目录")
     ap.add_argument("--anibaka", help="AniBakaRule 仓库目录")
     ap.add_argument("--easybangumi", help="CommunityJsExtensionEasyBangumi 仓库目录")
-    ap.add_argument("--official", help="官方订阅 animeko-subs 仓库目录（json-api 源缺 play 时借鉴它的写法）")
+    ap.add_argument("--official", help="官方订阅 animeko-subs 仓库目录（json-api 源缺 play 时借鉴它的写法；"
+                                       "并和你的源去重互补，见 config.official_dedupe）")
     ap.add_argument("--learned-cache", default=os.path.join(ROOT, "state", "learned.json"),
                     help="自动学习出来的规则缓存（7 天内沿用；学不出来的站点 3 天内不重试）")
     ap.add_argument("--play-cache", default=os.path.join(ROOT, "state", "play.json"),
@@ -646,6 +647,7 @@ def main():
     from . import official as official_mod
     # json-api 必须有 play：先借官方的；借不到的留着，联网检测后从播放页学；都不行才不输出
     official_mod.apply(cands, official_mod.load(args.official) if args.official else [], final=False)
+    official_sites = official_mod.load_sites(args.official) if args.official else []
 
     state = load_json(args.state) if os.path.exists(args.state) else {}
     new_state = apply_state(cands, state, int(time.time()))
@@ -767,8 +769,22 @@ def main():
     chosen, decisions = merge(cands, config)
     apply_auto_tier(chosen, config)
 
+    # 和官方订阅对一遍：官方已覆盖的同站源降档 / 剔除；官方那条失效而自有的能用就保留补位
+    official_mode = config.get("official_dedupe", "demote")
+    official_rows = []
+    if official_sites and official_mode != "off":
+        off_check = None
+        if args.smoke:
+            off_session = network.new_session(proxy)
+            off_check = lambda src: _check(src, config, off_session)  # noqa: E731
+        official_rows = official_mod.reconcile(chosen, official_sites, config, off_check)
+        for r in official_rows:
+            print("官方重叠 %s ↔ %s：%s（%s）" % (r["name"], r["official"], r["action"], r["note"]))
+
     sources = []
     for c in sorted(chosen, key=lambda c: c["source"]["id"]):
+        if c.get("dropped"):   # 官方已覆盖、按 official_dedupe=exclude 剔除
+            continue
         s = strip_private(c["source"])
         sm = c.get("smoke")
         warn = ""
@@ -824,6 +840,8 @@ def main():
            "## 同站点取舍", "", "| 站点 | 最终 id | 采用 | 理由 | 候选（最后修改） |", "|---|---|---|---|---|"]
     for d in decisions:
         rep.append("| %s | %s | %s | %s | %s |" % (d["site"], d["id"], d["winner"], d["reason"], "<br>".join(d["members"])))
+    if official_sites and official_mode != "off":
+        rep += official_mod.report_section(official_rows, len(chosen), official_mode)
     rep += ["", "## 全部候选", "", "| 来源 | 规则 | 版本 | 修改日期（依据） | 转换 | 自动检测 | 播放 | 采用 | 备注 |", "|---|---|---|---|---|---|---|---|---|"]
     for c in cands:
         sm = c.get("smoke") or {}
@@ -868,7 +886,7 @@ def main():
     with open(os.path.join(args.out, "report.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(rep) + "\n")
     with open(os.path.join(args.out, "report.json"), "w", encoding="utf-8") as f:
-        json.dump({"decisions": decisions,
+        json.dump({"decisions": decisions, "official_overlap": official_rows,
                    "candidates": [{k: v for k, v in c.items() if k != "source"} for c in cands]},
                   f, ensure_ascii=False, indent=2)
     print("\n".join(rep))
