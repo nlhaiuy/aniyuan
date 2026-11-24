@@ -48,7 +48,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 3,
+        "tier": 4,
         "channelTiers": {}
       }
     },
@@ -149,7 +149,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 1,
+        "tier": 4,
         "channelTiers": {}
       }
     },
@@ -256,6 +256,57 @@
       }
     },
     {
+      "id": "aniyuan-akianime",
+      "factoryId": "web-selector",
+      "version": 2,
+      "arguments": {
+        "name": "萌番 AkiAnime",
+        "description": "萌番 AkiAnime 动漫源，源网址 https://www.akianime.com/。（来源：AniBaka 规则 akianime rev 8，自动转换）",
+        "iconUrl": "https://www.akianime.com/template/dsn2/static/img/ico.png",
+        "searchConfig": {
+          "searchUrl": "https://www.akianime.com/bgmsearch/{keyword}-------------.html",
+          "searchUseOnlyFirstWord": true,
+          "searchRemoveSpecial": true,
+          "searchUseSubjectNamesCount": 1,
+          "rawBaseUrl": "https://www.akianime.com",
+          "requestInterval": 3000,
+          "subjectFormatId": "a",
+          "selectorSubjectFormatA": {
+            "selectLists": ".vod-detail.search-list a",
+            "preferShorterName": true
+          },
+          "channelFormatId": "index-grouped",
+          "selectorChannelFormatFlattened": {
+            "selectChannelNames": ".anthology-tab a.swiper-slide",
+            "selectEpisodeLists": "ul.anthology-list-play",
+            "selectEpisodesFromList": "a"
+          },
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
+          "defaultResolution": "1080P",
+          "defaultSubtitleLanguage": "CHS",
+          "onlySupportsPlayers": [],
+          "filterByEpisodeSort": true,
+          "filterBySubjectName": true,
+          "selectMedia": {
+            "distinguishSubjectName": true,
+            "distinguishChannelName": true
+          },
+          "matchVideo": {
+            "enableNestedUrl": false,
+            "matchNestedUrl": "$^",
+            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
+            "cookies": "quality=1080",
+            "addHeadersToVideo": {
+              "referer": "https://www.akianime.com/"
+            },
+            "scanDomMediaUrls": true
+          }
+        },
+        "tier": 1,
+        "channelTiers": {}
+      }
+    },
+    {
       "id": "aniyuan-ani-pekolove",
       "factoryId": "web-selector",
       "version": 2,
@@ -353,7 +404,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 1,
+        "tier": 4,
         "channelTiers": {}
       }
     },
@@ -825,7 +876,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 2,
+        "tier": 1,
         "channelTiers": {}
       },
       "clientVersions": ">=6.3.0"
@@ -879,7 +930,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 2,
+        "tier": 1,
         "channelTiers": {}
       },
       "clientVersions": ">=6.3.0"
@@ -1031,7 +1082,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 2,
+        "tier": 1,
         "channelTiers": {}
       }
     },
@@ -1041,7 +1092,7 @@
       "version": 2,
       "arguments": {
         "name": "9ciyuan (jcydm1.com)",
-        "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：修复后的选择器仍未通过：搜索页能打开，但选择器没有选中任何结果）] 站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
+        "description": "[选择器已自动修复] 站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-9ciyuan.png",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1050,7 +1101,7 @@
           "rawBaseUrl": "",
           "requestInterval": 3000,
           "searchUrl": "https://www.jcydm1.com/index.php/vod/search.html?wd={keyword}",
-          "subjectFormatId": "indexed",
+          "subjectFormatId": "a",
           "selectorSubjectFormatIndexed": {
             "selectNames": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(2) > div:nth-of-type(1) > a > strong",
             "selectLinks": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(3) > a:nth-of-type(2)",
@@ -1058,58 +1109,7 @@
           },
           "channelFormatId": "no-channel",
           "selectorChannelFormatNoChannel": {
-            "selectEpisodes": "div > div:nth-of-type(2) > div > div:nth-of-type(2) > div[id=\"panel1\"] div > div > a",
-            "selectEpisodeLinks": "",
-            "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
-          },
-          "defaultResolution": "1080P",
-          "defaultSubtitleLanguage": "CHS",
-          "onlySupportsPlayers": [],
-          "filterByEpisodeSort": true,
-          "filterBySubjectName": true,
-          "selectMedia": {
-            "distinguishSubjectName": true,
-            "distinguishChannelName": false
-          },
-          "matchVideo": {
-            "enableNestedUrl": false,
-            "matchNestedUrl": "$^",
-            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
-            "cookies": "quality=1080",
-            "addHeadersToVideo": {
-              "referer": ""
-            },
-            "scanDomMediaUrls": true
-          }
-        },
-        "tier": 4,
-        "channelTiers": {}
-      }
-    },
-    {
-      "id": "aniyuan-akianime",
-      "factoryId": "web-selector",
-      "version": 2,
-      "arguments": {
-        "name": "akianime",
-        "description": "[选择器已自动修复] 站点 akianime.cc。（来源：Kazumi 规则 akianime v1.4，自动转换）",
-        "iconUrl": "https://www.akianime.cc/favicon.ico",
-        "searchConfig": {
-          "searchUseOnlyFirstWord": true,
-          "searchRemoveSpecial": true,
-          "searchUseSubjectNamesCount": 1,
-          "rawBaseUrl": "",
-          "requestInterval": 3000,
-          "searchUrl": "https://www.akianime.cc/bgmsearch/-------------.html?wd={keyword}",
-          "subjectFormatId": "a",
-          "selectorSubjectFormatIndexed": {
-            "selectNames": "div[class=\"vod-detail style-detail cor4 search-list\"] div > div:nth-of-type(2) > a > h3",
-            "selectLinks": "div[class=\"vod-detail style-detail cor4 search-list\"] div > div:nth-of-type(2) > div > div:nth-of-type(1) > a",
-            "preferShorterName": true
-          },
-          "channelFormatId": "no-channel",
-          "selectorChannelFormatNoChannel": {
-            "selectEpisodes": ".anthology-list-box a",
+            "selectEpisodes": "#panel1 a",
             "selectEpisodeLinks": "",
             "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
           },
@@ -1133,7 +1133,7 @@
             "scanDomMediaUrls": true
           },
           "selectorSubjectFormatA": {
-            "selectLists": ".vod-detail a[href]",
+            "selectLists": ".module-card-item-title a[href*='/vod/']",
             "preferShorterName": true
           }
         },
@@ -1290,7 +1290,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 1,
+        "tier": 4,
         "channelTiers": {}
       },
       "clientVersions": ">=6.3.0"
@@ -1496,7 +1496,7 @@
             "scanDomMediaUrls": false
           }
         },
-        "tier": 2,
+        "tier": 4,
         "channelTiers": {}
       }
     },
@@ -1569,7 +1569,7 @@
             "referer": ""
           }
         },
-        "tier": 1
+        "tier": 4
       }
     },
     {
@@ -1673,7 +1673,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 3,
+          "tier": 4,
           "channelTiers": {}
         }
       },
@@ -1774,7 +1774,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 1,
+          "tier": 4,
           "channelTiers": {}
         }
       },
@@ -1881,6 +1881,57 @@
         }
       },
       {
+        "id": "aniyuan-akianime",
+        "factoryId": "web-selector",
+        "version": 2,
+        "arguments": {
+          "name": "萌番 AkiAnime",
+          "description": "萌番 AkiAnime 动漫源，源网址 https://www.akianime.com/。（来源：AniBaka 规则 akianime rev 8，自动转换）",
+          "iconUrl": "https://www.akianime.com/template/dsn2/static/img/ico.png",
+          "searchConfig": {
+            "searchUrl": "https://www.akianime.com/bgmsearch/{keyword}-------------.html",
+            "searchUseOnlyFirstWord": true,
+            "searchRemoveSpecial": true,
+            "searchUseSubjectNamesCount": 1,
+            "rawBaseUrl": "https://www.akianime.com",
+            "requestInterval": 3000,
+            "subjectFormatId": "a",
+            "selectorSubjectFormatA": {
+              "selectLists": ".vod-detail.search-list a",
+              "preferShorterName": true
+            },
+            "channelFormatId": "index-grouped",
+            "selectorChannelFormatFlattened": {
+              "selectChannelNames": ".anthology-tab a.swiper-slide",
+              "selectEpisodeLists": "ul.anthology-list-play",
+              "selectEpisodesFromList": "a"
+            },
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
+            "defaultResolution": "1080P",
+            "defaultSubtitleLanguage": "CHS",
+            "onlySupportsPlayers": [],
+            "filterByEpisodeSort": true,
+            "filterBySubjectName": true,
+            "selectMedia": {
+              "distinguishSubjectName": true,
+              "distinguishChannelName": true
+            },
+            "matchVideo": {
+              "enableNestedUrl": false,
+              "matchNestedUrl": "$^",
+              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
+              "cookies": "quality=1080",
+              "addHeadersToVideo": {
+                "referer": "https://www.akianime.com/"
+              },
+              "scanDomMediaUrls": true
+            }
+          },
+          "tier": 1,
+          "channelTiers": {}
+        }
+      },
+      {
         "id": "aniyuan-ani-pekolove",
         "factoryId": "web-selector",
         "version": 2,
@@ -1978,7 +2029,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 1,
+          "tier": 4,
           "channelTiers": {}
         }
       },
@@ -2450,7 +2501,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 2,
+          "tier": 1,
           "channelTiers": {}
         },
         "clientVersions": ">=6.3.0"
@@ -2504,7 +2555,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 2,
+          "tier": 1,
           "channelTiers": {}
         },
         "clientVersions": ">=6.3.0"
@@ -2656,7 +2707,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 2,
+          "tier": 1,
           "channelTiers": {}
         }
       },
@@ -2666,7 +2717,7 @@
         "version": 2,
         "arguments": {
           "name": "9ciyuan (jcydm1.com)",
-          "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：修复后的选择器仍未通过：搜索页能打开，但选择器没有选中任何结果）] 站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
+          "description": "[选择器已自动修复] 站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-9ciyuan.png",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -2675,7 +2726,7 @@
             "rawBaseUrl": "",
             "requestInterval": 3000,
             "searchUrl": "https://www.jcydm1.com/index.php/vod/search.html?wd={keyword}",
-            "subjectFormatId": "indexed",
+            "subjectFormatId": "a",
             "selectorSubjectFormatIndexed": {
               "selectNames": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(2) > div:nth-of-type(1) > a > strong",
               "selectLinks": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(3) > a:nth-of-type(2)",
@@ -2683,58 +2734,7 @@
             },
             "channelFormatId": "no-channel",
             "selectorChannelFormatNoChannel": {
-              "selectEpisodes": "div > div:nth-of-type(2) > div > div:nth-of-type(2) > div[id=\"panel1\"] div > div > a",
-              "selectEpisodeLinks": "",
-              "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
-            },
-            "defaultResolution": "1080P",
-            "defaultSubtitleLanguage": "CHS",
-            "onlySupportsPlayers": [],
-            "filterByEpisodeSort": true,
-            "filterBySubjectName": true,
-            "selectMedia": {
-              "distinguishSubjectName": true,
-              "distinguishChannelName": false
-            },
-            "matchVideo": {
-              "enableNestedUrl": false,
-              "matchNestedUrl": "$^",
-              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
-              "cookies": "quality=1080",
-              "addHeadersToVideo": {
-                "referer": ""
-              },
-              "scanDomMediaUrls": true
-            }
-          },
-          "tier": 4,
-          "channelTiers": {}
-        }
-      },
-      {
-        "id": "aniyuan-akianime",
-        "factoryId": "web-selector",
-        "version": 2,
-        "arguments": {
-          "name": "akianime",
-          "description": "[选择器已自动修复] 站点 akianime.cc。（来源：Kazumi 规则 akianime v1.4，自动转换）",
-          "iconUrl": "https://www.akianime.cc/favicon.ico",
-          "searchConfig": {
-            "searchUseOnlyFirstWord": true,
-            "searchRemoveSpecial": true,
-            "searchUseSubjectNamesCount": 1,
-            "rawBaseUrl": "",
-            "requestInterval": 3000,
-            "searchUrl": "https://www.akianime.cc/bgmsearch/-------------.html?wd={keyword}",
-            "subjectFormatId": "a",
-            "selectorSubjectFormatIndexed": {
-              "selectNames": "div[class=\"vod-detail style-detail cor4 search-list\"] div > div:nth-of-type(2) > a > h3",
-              "selectLinks": "div[class=\"vod-detail style-detail cor4 search-list\"] div > div:nth-of-type(2) > div > div:nth-of-type(1) > a",
-              "preferShorterName": true
-            },
-            "channelFormatId": "no-channel",
-            "selectorChannelFormatNoChannel": {
-              "selectEpisodes": ".anthology-list-box a",
+              "selectEpisodes": "#panel1 a",
               "selectEpisodeLinks": "",
               "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
             },
@@ -2758,7 +2758,7 @@
               "scanDomMediaUrls": true
             },
             "selectorSubjectFormatA": {
-              "selectLists": ".vod-detail a[href]",
+              "selectLists": ".module-card-item-title a[href*='/vod/']",
               "preferShorterName": true
             }
           },
@@ -2915,7 +2915,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 1,
+          "tier": 4,
           "channelTiers": {}
         },
         "clientVersions": ">=6.3.0"
@@ -3121,7 +3121,7 @@
               "scanDomMediaUrls": false
             }
           },
-          "tier": 2,
+          "tier": 4,
           "channelTiers": {}
         }
       },
@@ -3194,7 +3194,7 @@
               "referer": ""
             }
           },
-          "tier": 1
+          "tier": 4
         }
       },
       {
