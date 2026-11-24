@@ -302,7 +302,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 2,
+        "tier": 1,
         "channelTiers": {}
       }
     },
@@ -628,26 +628,27 @@
       "version": 2,
       "arguments": {
         "name": "DM84 (dmbus.cc)",
-        "description": "站点 dmbus.cc。（来源：Kazumi 规则 DM84 v1.4，自动转换）",
+        "description": "DM84 动漫视频源。（来源：AniBaka 规则 dm84 rev 3，自动转换）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-dm84.png",
         "searchConfig": {
+          "searchUrl": "https://dmbus.cc/s----------.html?wd={keyword}",
           "searchUseOnlyFirstWord": true,
           "searchRemoveSpecial": true,
           "searchUseSubjectNamesCount": 1,
-          "rawBaseUrl": "",
+          "rawBaseUrl": "https://dmbus.cc",
           "requestInterval": 3000,
-          "searchUrl": "https://dmbus.cc/s----------.html?wd={keyword}",
           "subjectFormatId": "a",
           "selectorSubjectFormatA": {
-            "selectLists": "div > div:nth-of-type(3) > ul > li div > a:nth-of-type(2)",
+            "selectLists": "div.item a",
             "preferShorterName": true
           },
-          "channelFormatId": "no-channel",
-          "selectorChannelFormatNoChannel": {
-            "selectEpisodes": "div > div:nth-of-type(4) > div > ul li > a",
-            "selectEpisodeLinks": "",
-            "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
+          "channelFormatId": "index-grouped",
+          "selectorChannelFormatFlattened": {
+            "selectChannelNames": "ul.tab_control.play_from > li",
+            "selectEpisodeLists": "ul.play_list",
+            "selectEpisodesFromList": "a"
           },
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
           "defaultResolution": "1080P",
           "defaultSubtitleLanguage": "CHS",
           "onlySupportsPlayers": [],
@@ -655,7 +656,7 @@
           "filterBySubjectName": true,
           "selectMedia": {
             "distinguishSubjectName": true,
-            "distinguishChannelName": false
+            "distinguishChannelName": true
           },
           "matchVideo": {
             "enableNestedUrl": false,
@@ -663,12 +664,12 @@
             "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
             "cookies": "quality=1080",
             "addHeadersToVideo": {
-              "referer": ""
+              "referer": "https://dmbus.cc/"
             },
             "scanDomMediaUrls": true
           }
         },
-        "tier": 2,
+        "tier": 1,
         "channelTiers": {}
       }
     },
@@ -822,7 +823,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 1,
+        "tier": 2,
         "channelTiers": {}
       },
       "clientVersions": ">=6.3.0"
@@ -1045,11 +1046,11 @@
         "description": "西瓜卡通视频源，源网址www.xgcartoon.com。（来源：AniBaka 规则 xigua rev 9，自动转换）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xigua.png",
         "searchConfig": {
-          "searchUrl": "https://cn1.xgcartoon.com/search?q={keyword}",
+          "searchUrl": "https://www.xgcartoon.com/search?q={keyword}",
           "searchUseOnlyFirstWord": true,
           "searchRemoveSpecial": true,
           "searchUseSubjectNamesCount": 1,
-          "rawBaseUrl": "https://cn1.xgcartoon.com",
+          "rawBaseUrl": "https://www.xgcartoon.com",
           "requestInterval": 3000,
           "subjectFormatId": "a",
           "selectorSubjectFormatA": {
@@ -1076,12 +1077,12 @@
             "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
             "cookies": "quality=1080",
             "addHeadersToVideo": {
-              "referer": "https://cn1.xgcartoon.com/"
+              "referer": "https://www.xgcartoon.com/"
             },
             "scanDomMediaUrls": true
           }
         },
-        "tier": 1,
+        "tier": 2,
         "channelTiers": {}
       }
     },
@@ -1136,7 +1137,7 @@
             "preferShorterName": true
           }
         },
-        "tier": 2,
+        "tier": 1,
         "channelTiers": {}
       }
     },
@@ -1196,8 +1197,8 @@
       "factoryId": "web-selector",
       "version": 2,
       "arguments": {
-        "name": "baimao (bmddm.com)",
-        "description": "站点 bmddm.com。（来源：纯纯看番社区源 kazumi-baimao v1.0.1，自动转换）",
+        "name": "baimao",
+        "description": "站点 baimaodm.com。（来源：纯纯看番社区源 kazumi-baimao v1.0.1，自动转换）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-baimao.png",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -1205,7 +1206,7 @@
           "searchUseSubjectNamesCount": 1,
           "rawBaseUrl": "",
           "requestInterval": 3000,
-          "searchUrl": "https://www.bmddm.com/s_all?ex=1&kw={keyword}",
+          "searchUrl": "https://www.baimaodm.com/s_all?ex=1&kw={keyword}",
           "subjectFormatId": "a",
           "selectorSubjectFormatA": {
             "selectLists": "div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(1) > ul > li h2 > a",
@@ -1237,7 +1238,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 1,
+        "tier": 2,
         "channelTiers": {}
       }
     },
@@ -1926,7 +1927,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 2,
+          "tier": 1,
           "channelTiers": {}
         }
       },
@@ -2252,26 +2253,27 @@
         "version": 2,
         "arguments": {
           "name": "DM84 (dmbus.cc)",
-          "description": "站点 dmbus.cc。（来源：Kazumi 规则 DM84 v1.4，自动转换）",
+          "description": "DM84 动漫视频源。（来源：AniBaka 规则 dm84 rev 3，自动转换）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-dm84.png",
           "searchConfig": {
+            "searchUrl": "https://dmbus.cc/s----------.html?wd={keyword}",
             "searchUseOnlyFirstWord": true,
             "searchRemoveSpecial": true,
             "searchUseSubjectNamesCount": 1,
-            "rawBaseUrl": "",
+            "rawBaseUrl": "https://dmbus.cc",
             "requestInterval": 3000,
-            "searchUrl": "https://dmbus.cc/s----------.html?wd={keyword}",
             "subjectFormatId": "a",
             "selectorSubjectFormatA": {
-              "selectLists": "div > div:nth-of-type(3) > ul > li div > a:nth-of-type(2)",
+              "selectLists": "div.item a",
               "preferShorterName": true
             },
-            "channelFormatId": "no-channel",
-            "selectorChannelFormatNoChannel": {
-              "selectEpisodes": "div > div:nth-of-type(4) > div > ul li > a",
-              "selectEpisodeLinks": "",
-              "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
+            "channelFormatId": "index-grouped",
+            "selectorChannelFormatFlattened": {
+              "selectChannelNames": "ul.tab_control.play_from > li",
+              "selectEpisodeLists": "ul.play_list",
+              "selectEpisodesFromList": "a"
             },
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
             "defaultResolution": "1080P",
             "defaultSubtitleLanguage": "CHS",
             "onlySupportsPlayers": [],
@@ -2279,7 +2281,7 @@
             "filterBySubjectName": true,
             "selectMedia": {
               "distinguishSubjectName": true,
-              "distinguishChannelName": false
+              "distinguishChannelName": true
             },
             "matchVideo": {
               "enableNestedUrl": false,
@@ -2287,12 +2289,12 @@
               "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
               "cookies": "quality=1080",
               "addHeadersToVideo": {
-                "referer": ""
+                "referer": "https://dmbus.cc/"
               },
               "scanDomMediaUrls": true
             }
           },
-          "tier": 2,
+          "tier": 1,
           "channelTiers": {}
         }
       },
@@ -2446,7 +2448,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 1,
+          "tier": 2,
           "channelTiers": {}
         },
         "clientVersions": ">=6.3.0"
@@ -2669,11 +2671,11 @@
           "description": "西瓜卡通视频源，源网址www.xgcartoon.com。（来源：AniBaka 规则 xigua rev 9，自动转换）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-xigua.png",
           "searchConfig": {
-            "searchUrl": "https://cn1.xgcartoon.com/search?q={keyword}",
+            "searchUrl": "https://www.xgcartoon.com/search?q={keyword}",
             "searchUseOnlyFirstWord": true,
             "searchRemoveSpecial": true,
             "searchUseSubjectNamesCount": 1,
-            "rawBaseUrl": "https://cn1.xgcartoon.com",
+            "rawBaseUrl": "https://www.xgcartoon.com",
             "requestInterval": 3000,
             "subjectFormatId": "a",
             "selectorSubjectFormatA": {
@@ -2700,12 +2702,12 @@
               "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
               "cookies": "quality=1080",
               "addHeadersToVideo": {
-                "referer": "https://cn1.xgcartoon.com/"
+                "referer": "https://www.xgcartoon.com/"
               },
               "scanDomMediaUrls": true
             }
           },
-          "tier": 1,
+          "tier": 2,
           "channelTiers": {}
         }
       },
@@ -2760,7 +2762,7 @@
               "preferShorterName": true
             }
           },
-          "tier": 2,
+          "tier": 1,
           "channelTiers": {}
         }
       },
@@ -2820,8 +2822,8 @@
         "factoryId": "web-selector",
         "version": 2,
         "arguments": {
-          "name": "baimao (bmddm.com)",
-          "description": "站点 bmddm.com。（来源：纯纯看番社区源 kazumi-baimao v1.0.1，自动转换）",
+          "name": "baimao",
+          "description": "站点 baimaodm.com。（来源：纯纯看番社区源 kazumi-baimao v1.0.1，自动转换）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-baimao.png",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -2829,7 +2831,7 @@
             "searchUseSubjectNamesCount": 1,
             "rawBaseUrl": "",
             "requestInterval": 3000,
-            "searchUrl": "https://www.bmddm.com/s_all?ex=1&kw={keyword}",
+            "searchUrl": "https://www.baimaodm.com/s_all?ex=1&kw={keyword}",
             "subjectFormatId": "a",
             "selectorSubjectFormatA": {
               "selectLists": "div:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(1) > ul > li h2 > a",
@@ -2861,7 +2863,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 1,
+          "tier": 2,
           "channelTiers": {}
         }
       },
