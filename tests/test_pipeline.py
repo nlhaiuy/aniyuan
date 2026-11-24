@@ -69,7 +69,7 @@ def main():
                 "searchList": "//li", "searchName": "//a", "searchResult": "//a", "chapterRoads": "//ul", "chapterResult": "//li/a"})
     json.dump([{"name": n, "version": "1"} for n in ("html1", "api1", "blocked1", "empty1", "post1", "down1", "gone1")], open(os.path.join(rules, "index.json"), "w"))
     out = os.path.join(tmp, "dist")
-    r = subprocess.run([sys.executable, "-m", "aniyuan", "--kazumi", rules, "--baseline", os.path.join(tmp, "none.json"), "--state", os.path.join(tmp, "state.json"), "--health", os.path.join(tmp, "health.json"), "--out", out, "--overrides", ov, "--learned-cache", os.path.join(tmp, "learned.json"), "--play-cache", os.path.join(tmp, "play.json"), "--smoke"],
+    r = subprocess.run([sys.executable, "-m", "aniyuan", "--kazumi", rules, "--baseline", os.path.join(tmp, "none.json"), "--state", os.path.join(tmp, "state.json"), "--health", os.path.join(tmp, "health.json"), "--out", out, "--learned-cache", os.path.join(tmp, "learned.json"), "--play-cache", os.path.join(tmp, "play.json"), "--smoke"],
                        capture_output=True, text=True, cwd=ROOT)
     print(r.stdout[-2500:], r.stderr[-1500:])
     rep = {e["key"]: e for e in json.load(open(os.path.join(out, "report.json")))["candidates"]}

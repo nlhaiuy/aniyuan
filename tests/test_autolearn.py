@@ -82,8 +82,6 @@ try:
     ]
     ts = AL.targets(cands, {})
     check("只学没有来源可用的站：gpjda", [t["host"] for t in ts] == ["www.gpjda.com"] and ts[0]["origin"] == "https://www.gpjda.com")
-    ts = AL.targets(cands, {"learn_sites": [{"url": "https://www.manual.org", "name": "手动站"}]})
-    check("config.learn_sites 手动指定的站也学", [t["host"] for t in ts] == ["www.manual.org", "www.gpjda.com"] and ts[0]["name"] == "手动站")
     check("不像域名的（版本号 / IP / 没有点）不学", not any(AL._is_hostname(h) for h in ["0.6", "1.2.3.4", "localhost", "", None, "a_b.com"])
           and all(AL._is_hostname(h) for h in ["www.gpjda.com", "dm.fsdm02.com", "hanimeone.me"]))
     bogus = AL.targets([cand("kazumi", "v", None, "unsupported", ["0.6"])], {})

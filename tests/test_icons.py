@@ -124,12 +124,6 @@ try:
         resolve_icons(it, d, BASE, lambda u: ("", u), lambda u, ref: wide)
         im = Image.open(os.path.join(d, "aniyuan-w.png"))
         check("非方形补透明边成方形", im.size == (229, 229) and im.getpixel((0, 0))[3] == 0)
-        it = [src("aniyuan-ov", icon="")]
-        calls2 = []
-        def gi3(u, ref):
-            calls2.append(u); return big if u == "https://cdn.m/o.png" else small
-        resolve_icons(it, d, BASE, lambda u: ("", u), gi3, overrides={"aniyuan-ov": "https://cdn.m/o.png"})
-        check("icon_overrides 的地址最先试，够大就不再往下试", calls2 == ["https://cdn.m/o.png"])
 except ImportError:
     print("跳过真图片测试（没有 Pillow）")
 

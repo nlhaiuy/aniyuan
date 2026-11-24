@@ -31,7 +31,7 @@ OLD_PREFIX = re.compile(r"^(?:anibaka|kazumi|aniyuan)-")
 
 def normalize_id(sid):
     """统一成 aniyuan-<站点名>：小写，只含 a-z0-9 和连字符。
-    转换器内部仍按来源给的 id（anibaka-<key> / kazumi-<名字>，用来对上 baseline 和 overrides），
+    转换器内部仍按来源给的 id（anibaka-<key> / kazumi-<名字>，用来对上 baseline），
     输出时去掉来源前缀、统一加 aniyuan-。已经是 aniyuan-xxx 的原样返回（幂等）。"""
     body = re.sub(r"-{2,}", "-", re.sub(r"[^a-z0-9]+", "-", str(sid).lower())).strip("-")
     body = OLD_PREFIX.sub("", body, count=1).strip("-")

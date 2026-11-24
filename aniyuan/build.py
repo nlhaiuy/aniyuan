@@ -328,14 +328,11 @@ def run_playchecks(cands, config, pc):
             c["smoke"].update({"play": "error", "play_reason": "检测出错：%s" % type(e).__name__})
 
 
-def collect_kazumi(repo, config, overrides_dir):
+def collect_kazumi(repo, config):
     out = []
     index = load_json(os.path.join(repo, "index.json"))
-    exclude = set(config.get("exclude", []))
     for item in index:
         name = item["name"]
-        if name in exclude:
-            continue
         rel = name + ".json"
         path = os.path.join(repo, rel)
         c = dict(origin="kazumi", key=name, version=str(item.get("version", "")), source=None,
@@ -352,18 +349,10 @@ def collect_kazumi(repo, config, overrides_dir):
         c["live_hosts"] = [h for h in (host_of(rule.get("baseURL", "")), host_of(rule.get("searchURL", ""))) if h]
         c["version"] = str(rule.get("version", c["version"]))
         c["raw_hash"] = file_hash(path)
-        ov_path = os.path.join(overrides_dir, name + ".json")
-        if os.path.exists(ov_path):
-            ov = load_json(ov_path)
-            if str(ov.get("_kazumiVersion", "")) != c["version"]:
-                c["notes"].append("手写配置基于 Kazumi v%s，规则已更新到 v%s，请核对是否需要同步修改" % (
-                    ov.get("_kazumiVersion", "?"), c["version"]))
-            c.update(source=ov, status="override", info=["使用 overrides/%s.json 手写配置" % name])
-        else:
-            res = convert_rule(rule, config)
-            if res.source is not None and getattr(res, "_template_guess", False):
-                res.source["_template_guess"] = True
-            c.update(source=res.source, status=res.status, notes=res.notes, info=res.info)
+        res = convert_rule(rule, config)
+        if res.source is not None and getattr(res, "_template_guess", False):
+            res.source["_template_guess"] = True
+        c.update(source=res.source, status=res.status, notes=res.notes, info=res.info)
         out.append(c)
     return out
 
@@ -372,11 +361,8 @@ def collect_anibaka(repo, baseline, config):
     out = []
     index = load_json(os.path.join(repo, "index.json"))
     synced = parse_iso(index.get("synced", ""))
-    exclude = set(config.get("exclude_anibaka", []))
     for e in index.get("entries", []):
         key = e["key"]
-        if key in exclude:
-            continue
         sid = source_id(key)
         c = dict(origin="anibaka", key=key, version="rev %s" % e.get("rev", "?"), source=None,
                  status="unsupported", notes=[], info=[], guess=False)
@@ -403,9 +389,6 @@ def collect_anibaka(repo, baseline, config):
                 c["source"]["arguments"]["tier"] = bsrc["arguments"].get("tier", c["source"]["arguments"]["tier"])
                 if bsrc["arguments"].get("channelTiers"):
                     c["source"]["arguments"]["channelTiers"] = bsrc["arguments"]["channelTiers"]
-            if key in config.get("prefer_baseline", []):
-                c["source"] = None
-                c["notes"].append("config.prefer_baseline 指定只用基线")
         if c["source"] is None and base_c is None:
             c["notes"].append("baseline 里也没有这个源，已跳过")
         out.append(c)
@@ -417,7 +400,6 @@ def collect_anibaka(repo, baseline, config):
 def collect_easybangumi(repo, config):
     """纯纯看番社区 JS 源：release 里是真机验证过的，dev 是未验证的（默认不收）。"""
     out, seen = [], set()
-    exclude = set(config.get("exclude_easybangumi", []))
     for channel, sub in (("release", "extensions"), ("dev", "dev-extensions")):
         if channel not in config.get("easybangumi_channels", ["release"]):
             continue
@@ -427,8 +409,6 @@ def collect_easybangumi(repo, config):
                 continue
             seen.add(fn)
             key = fn[:-3]
-            if key in exclude:
-                continue
             res, meta = convert_extension(os.path.join(d, fn), config)
             c = dict(raw_hash=file_hash(os.path.join(d, fn)), origin="easybangumi", key=key, version=meta.get("versionName", ""), source=res.source,
                      status=res.status, notes=list(res.notes), info=res.info, guess=False,
@@ -474,7 +454,6 @@ def attach_search_hints(cands, config):
 def merge(cands, config):
     from .normalize import normalize_id
     aliases = config.get("site_aliases", {})
-    prefer = config.get("prefer", {})
     by_smoke = config.get("select_by_smoke", True)
     # 分组：同主机名，或同一条 AniBaka 规则（key 相同，含基线配置）算同一个站；用并查集合并，
     # 这样基线配置的域名和上游不一样时也不会被拆成两个站（否则会出现重复 id）
@@ -537,11 +516,6 @@ def merge(cands, config):
                     by_date["origin"], by_date["key"], {"fail": "未通过"}.get(smoke_of(by_date), "没有结论"), smoke_of(winner) or "-")
         if winner is by_date and (winner.get("health") or {}).get("grace"):
             reason += "；自动检测本次未通过，但以前通过过，暂不降级"
-        p = prefer.get(host)
-        if p:
-            forced = [c for c in members if (("anibaka" if c["origin"] == "baseline" else c["origin"]) == p)]
-            if forced:
-                winner, reason = forced[0], "config.prefer 指定 %s" % p
         ab = [c for c in members if c["origin"] in ("anibaka", "baseline")]
         kz = [c for c in members if c["origin"] == "kazumi"]
         stable_id = source_id(ab[0]["key"]) if ab else (kz[0]["source"]["id"] if kz else winner["source"]["id"])
@@ -576,17 +550,13 @@ def dedupe_ids(chosen, decisions, scores):
 
 
 def apply_auto_tier(chosen, config):
-    """给最终入选的源按联网检测结果自动分档。只有你在 config.tiers 里点名的不动；
-    baseline 里手调的档位不再固定（它只是个起点，一样按检测结果升降）；其它来源 tier 已经不是默认值的也不动。
+    """给最终入选的源按联网检测结果自动分档。baseline 里手调的档位不再固定（它只是个起点，一样按检测结果升降）；其它来源 tier 已经不是默认值的不动。
     config.auto_tier 设为 false 关闭。没有联网检测结果的源保持原样（基线手调的档位这时当作兜底）。"""
     if not config.get("auto_tier", True):
         return
     default = config.get("default_tier", 4)
-    named = config.get("tiers") or {}
     for c in chosen:
         a = c["source"]["arguments"]
-        if c["key"] in named or a.get("name") in named:
-            continue
         if a.get("tier", default) != default and c["origin"] != "baseline":
             continue
         tier, why = auto_tier(c)
@@ -611,7 +581,6 @@ def main():
     ap.add_argument("--prev", default=os.path.join(ROOT, "dist", "all.json"),
                     help="上一次发布的订阅（用来写报告里的「本次变化」）")
     ap.add_argument("--config", default=os.path.join(ROOT, "config.json"))
-    ap.add_argument("--overrides", default=os.path.join(ROOT, "overrides"))
     ap.add_argument("--baseline", default=os.path.join(ROOT, "baseline", "anibaka.json"))
     ap.add_argument("--state", default=os.path.join(ROOT, "state", "seen.json"),
                     help="记录各规则内容哈希和“最后真正改动时间”的文件")
@@ -638,7 +607,7 @@ def main():
 
     cands = []
     if args.kazumi:
-        cands += collect_kazumi(args.kazumi, config, args.overrides)
+        cands += collect_kazumi(args.kazumi, config)
     if args.anibaka:
         cands += collect_anibaka(args.anibaka, baseline, config)
     if args.easybangumi:
@@ -744,7 +713,7 @@ def main():
         play_cache = load_json(args.play_cache) if os.path.exists(args.play_cache) else {}
         try:
             playlearn.learn_plays(cands, pc, network.new_session(proxy), play_cache, int(time.time()),
-                                  config.get("play_wait_ms", 20000), config.get("play_overrides") or {})
+                                  config.get("play_wait_ms", 20000))
         except BaseException:
             cleanup()
             raise
@@ -806,7 +775,7 @@ def main():
             icon_results = icons_mod.resolve_icons(
                 sources, args.icons_dir,
                 config.get("icon_base_url", "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons"),
-                get_html, get_image, overrides=config.get("icon_overrides") or {})
+                get_html, get_image)
         except BaseException:
             cleanup()
             raise
@@ -892,7 +861,7 @@ def main():
     print("\n".join(rep))
     skipped = [c["key"] for c in cands if c["source"] is None]
     if skipped:
-        print("\n没有生成数据源（可在 overrides/ 或 baseline/ 里手写）：", ", ".join(skipped))
+        print("\n没有生成数据源：", ", ".join(skipped))
 
 
 if __name__ == "__main__":

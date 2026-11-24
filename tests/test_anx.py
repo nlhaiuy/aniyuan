@@ -69,8 +69,6 @@ a["date"] = k["date"] = 100
 ch, _ = merge([a, k], {})
 check("时间相同取 Kazumi", ch[0]["origin"] == "kazumi")
 a["date"], k["date"] = 100, 200
-ch, _ = merge([a, k], {"prefer": {"foo.com": "anibaka"}})
-check("prefer 强制", ch[0]["origin"] == "anibaka")
 z = cand("kazumi", "Zed", "zed.com", 1, "kazumi-zed")
 ch, _ = merge([z], {})
 check("只有 Kazumi 的站点沿用 kazumi-<name>", ch[0]["source"]["id"] == "kazumi-zed")
@@ -119,8 +117,6 @@ a1 = cand("anibaka", "a", "t.com", 200, "anibaka-a", "fail"); k1 = cand("kazumi"
 ch, _ = merge([a1, k1], {"select_by_smoke": False})
 check("select_by_smoke=false：只看时间", ch[0]["origin"] == "anibaka")
 a1 = cand("anibaka", "a", "t.com", 200, "anibaka-a", "fail"); k1 = cand("kazumi", "A", "t.com", 100, "kazumi-a", "ok")
-ch, _ = merge([a1, k1], {"prefer": {"t.com": "anibaka"}})
-check("prefer 优先于实测", ch[0]["origin"] == "anibaka")
 
 # ---- 内容哈希日期 ----
 def hc(origin, key, h, git):
@@ -140,12 +136,9 @@ check("内容变了但 git 日期不比记录新：用本次同步时间", c4[0]
 c5 = [hc("baseline", "y", "h", 10)]
 check("baseline 与 anibaka 共用记录", "anibaka:y" in apply_state(c5, {}, 1))
 
-# ---- prefer：固定取某一边（girigiri 用它固定取 overrides 里亲测可用的那份）----
-k1 = cand("kazumi", "G", "api.t.com", 1, "kazumi-g"); ab = cand("anibaka", "g", "t2.com", 500, "anibaka-g")
-ch, d = merge([k1, ab], {"site_aliases": {"api.t.com": "t2.com"}, "prefer": {"t2.com": "kazumi"}})
-check("prefer 固定取 Kazumi 一边，即使它更旧；id 仍沿用 AniBaka 的稳定 id", ch[0]["origin"] == "kazumi" and ch[0]["source"]["id"] == "anibaka-g")
+# ---- 站点别名 ----
 ch, d = merge([cand("kazumi", "G", "api.t.com", 1, "kazumi-g"), cand("anibaka", "g", "t2.com", 500, "anibaka-g")], {"site_aliases": {"api.t.com": "t2.com"}})
-check("对照：不设 prefer 时取更新的 AniBaka", ch[0]["origin"] == "anibaka")
+check("站点别名：api.t.com 并入 t2.com，同站取更新的 AniBaka", len(ch) == 1 and ch[0]["origin"] == "anibaka")
 check("jsonpath 支持 $.a.b[*].field", eval_simple_jsonpath({"info": {"rows": [{"vod_id": 1}, {"vod_id": 2}]}}, "$.info.rows[*].vod_id") == [1, 2])
 check("jsonpath 原有 ['field'] 写法不受影响", eval_simple_jsonpath({"list": [{"id": 7}]}, "$.list[*]['id']") == [7])
 

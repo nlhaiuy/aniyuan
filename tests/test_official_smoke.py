@@ -26,7 +26,7 @@ def build(tmp, tag, cfg, official=None):
     out = os.path.join(tmp, "dist-" + tag)
     cmd = [sys.executable, "-m", "aniyuan", "--kazumi", os.path.join(tmp, "rules"), "--baseline", os.path.join(tmp, "none.json"),
            "--state", os.path.join(tmp, "state-%s.json" % tag), "--health", os.path.join(tmp, "health-%s.json" % tag), "--out", out,
-           "--config", cpath, "--overrides", os.path.join(tmp, "ov"), "--learned-cache", os.path.join(tmp, "l-%s.json" % tag),
+           "--config", cpath, "--learned-cache", os.path.join(tmp, "l-%s.json" % tag),
            "--play-cache", os.path.join(tmp, "p-%s.json" % tag), "--smoke"]
     if official:
         cmd += ["--official", official]

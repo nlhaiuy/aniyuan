@@ -1,7 +1,7 @@
 """Kazumi 规则 -> Animeko 数据源（订阅格式）的转换。
 
 只做“能确定地转”的部分；转不了的返回 status="unsupported" 和原因，
-由 build.py 改用 overrides/ 里手写的配置，或在报告里列出。
+在报告里列出。
 """
 import json
 import re
@@ -197,7 +197,7 @@ def convert_rule(rule, config=None):
         },
     })
 
-    tier = (config.get("tiers") or {}).get(name, config.get("default_tier", 4))
+    tier = config.get("default_tier", 4)
     desc = ""   # Kazumi 规则没有站点简介；“来源”说明由 build.py 统一生成（见 normalize.py）
     res.source = {
         "id": "kazumi-" + slugify(name),
@@ -357,7 +357,7 @@ def convert_api_rule(rule, config, res, origin):
     subject.update({"request": subject_req_full, "episodes": episodes})
 
     name = rule.get("name", "")
-    tier = (config.get("tiers") or {}).get(name, config.get("default_tier", 4))
+    tier = config.get("default_tier", 4)
     res.notes.append("Kazumi 规则里没有播放接口（没有 play）；build 会去官方订阅里找同一接口的源借 play，借不到就不输出")
     res.source = {
         "id": "kazumi-" + slugify(name),

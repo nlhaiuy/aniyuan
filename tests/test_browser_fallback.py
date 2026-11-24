@@ -50,7 +50,7 @@ def run(browser):
     env["NO_PROXY"] = "127.0.0.1,localhost"
     r = subprocess.run([sys.executable, "-m", "aniyuan", "--kazumi", rules, "--baseline", os.path.join(tmp, "none.json"),
                         "--state", os.path.join(tmp, "s_%s.json" % browser), "--health", os.path.join(tmp, "h_%s.json" % browser),
-                        "--out", out, "--overrides", os.path.join(tmp, "ov"), "--config", cfg, "--smoke", "--playcheck"],
+                        "--out", out, "--config", cfg, "--smoke", "--playcheck"],
                        capture_output=True, text=True, cwd=ROOT, env=env, timeout=240)
     return r
 

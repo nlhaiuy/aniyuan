@@ -2,7 +2,6 @@
 
 哪些站点会被学：
   * 候选里「无法转换」（source 为空）、而且同一个站没有任何别的来源能用（没有 source，或站点域名不在已有候选里）；
-  * config.learn_sites 手动指定的站点；
   * 磁力站（config.learn_exclude，默认 dmhy / mikan）不学：Animeko 的 Web 数据源不支持。
 
 怎么学（MacCMS 一类模板站为主）：
@@ -132,10 +131,6 @@ def targets(cands, config):
         seen.add(reg)
         out.append(dict(key=_label(host), name=name or _label(host), origin=origin, host=host))
 
-    for site in config.get("learn_sites", []) or []:   # 手动指定的：{"url": "https://x.com", "name": "…"}
-        u = site.get("url", "")
-        if u:
-            add(urlparse(u).netloc, "%s://%s" % (urlparse(u).scheme or "https", urlparse(u).netloc), site.get("name"))
     for c in cands:
         if c.get("source") is not None or c.get("status") != "unsupported" or c["origin"] == "baseline":
             continue

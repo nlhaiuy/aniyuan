@@ -98,22 +98,20 @@ check("推测的搜索地址且没结论 -> 4", auto_tier(tcand("unreachable", g
 check("没有检测结果 -> None", auto_tier(tcand())[0] is None)
 
 cs = [tcand("ok", "ok", key="a"), tcand("ok", "ok", key="b", tier=2),
-      tcand("ok", "ok", key="d"), tcand("ok", "ok", key="e", name="E名"), tcand(key="f")]
-apply_auto_tier(cs, {"tiers": {"d": 3, "E名": 0}})
+      tcand(key="f")]
+apply_auto_tier(cs, {})
 t = {c["key"]: c["source"]["arguments"]["tier"] for c in cs}
 check("默认值的源按检测结果自动分档", t["a"] == 1)
 check("手调过的（tier 不是默认值）不动", t["b"] == 2)
-check("config.tiers 点名的不动（按 key 或名称）", t["d"] == 4 and t["e"] == 4)
 check("没有检测结果的保持默认", t["f"] == 4)
 check("自动分档写进备注", any("优先级自动设为 1" in n for n in cs[0]["notes"]))
 cs = [tcand("ok", "ok", key="g", origin="baseline", tier=3), tcand("fail", grace=False, key="h", origin="baseline", tier=2),
-      tcand(key="i", origin="baseline", tier=3), tcand("ok", "ok", key="j", origin="baseline", tier=3, name="J名")]
-apply_auto_tier(cs, {"tiers": {"J名": 3}})
+      tcand(key="i", origin="baseline", tier=3)]
+apply_auto_tier(cs, {})
 t = {c["key"]: c["source"]["arguments"]["tier"] for c in cs}
 check("基线手调的档位不再固定：检测通过能播 -> 升到 1", t["g"] == 1)
 check("基线手调的档位不再固定：检测失败 -> 降到 4", t["h"] == 4)
 check("基线手调的档位：没有检测结果时保持原样（兜底）", t["i"] == 3)
-check("基线来源的源，config.tiers 点名的仍然不动", t["j"] == 3)
 cs = [tcand("ok", "ok", key="a")]
 apply_auto_tier(cs, {"auto_tier": False})
 check("auto_tier=false 关闭", cs[0]["source"]["arguments"]["tier"] == 4)

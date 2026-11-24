@@ -15,8 +15,7 @@ def run(tmp, cfg, tag):
     out = os.path.join(tmp, "dist-" + tag)
     r = subprocess.run([sys.executable, "-m", "aniyuan", "--kazumi", os.path.join(tmp, "rules"), "--official", os.path.join(tmp, "official"),
                         "--baseline", os.path.join(tmp, "none.json"), "--state", os.path.join(tmp, "state-%s.json" % tag),
-                        "--health", os.path.join(tmp, "health.json"), "--out", out, "--config", cpath,
-                        "--overrides", os.path.join(tmp, "ov")], capture_output=True, text=True, cwd=ROOT)
+                        "--health", os.path.join(tmp, "health.json"), "--out", out, "--config", cpath], capture_output=True, text=True, cwd=ROOT)
     return r, out
 
 def main():

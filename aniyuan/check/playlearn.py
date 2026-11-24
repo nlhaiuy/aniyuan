@@ -233,27 +233,6 @@ def clues(entries, limit=6):
     return "；".join(seen[:limit])
 
 
-def valid_play(p):
-    """手写的 play 格式对不对。返回 (规范化后的 play 或 None, 说明)。缺的可选项补默认值，不改传进来的对象。"""
-    if not isinstance(p, dict) or not isinstance(p.get("request"), dict):
-        return None, "缺少 request"
-    req = p["request"]
-    if not str(req.get("url") or "").lower().startswith(("http://", "https://")):
-        return None, "request.url 必须是 http(s) 地址"
-    method = str(req.get("method") or "GET").upper()
-    if method not in ("GET", "POST"):
-        return None, "request.method 只能是 GET 或 POST"
-    if not str(p.get("selectVideoUrl") or "").strip():
-        return None, "缺少 selectVideoUrl（视频地址在响应里的 JSONPath）"
-    out = copy.deepcopy(p)
-    out["request"] = {"url": req["url"], "method": method, "body": str(req.get("body") or ""), "headers": str(req.get("headers") or "")}
-    out.setdefault("selectCandidates", "")
-    out.setdefault("selectCandidateChannel", "")
-    out.setdefault("fallbackToFirstCandidate", True)
-    out.setdefault("referer", "")
-    return out, ""
-
-
 def _stop_when_media(entries):
     return any(find_media_paths(loads(e["text"])) for e in entries if loads(e["text"]) is not None)
 
@@ -282,7 +261,7 @@ def learn(pc, sc, sample, session, wait_ms=20000, ua=None):
         n = len(cap_a)
         hint = clues(cap_a)
         return None, "播放页没有发出带视频地址的 JSON 接口请求（共抓到 %d 个 XHR/fetch；视频地址可能在页面 HTML / iframe 里，或需要登录 / 点击）%s" % (
-            n, ("；抓到的请求：" + hint + "（手写 play 可参考，写法见 config.json 的 play_overrides）") if hint else "")
+            n, ("；抓到的请求：" + hint + "") if hint else "")
     cap_b = pc.capture(B["url"], wait_ms, ua) if B else []
     why = "没有候选"
     for ea, data, (tokens, _url) in hits:
@@ -335,11 +314,10 @@ def fingerprint(sc):
     return hashlib.sha1(json.dumps(key, ensure_ascii=False).encode("utf-8")).hexdigest()[:16]
 
 
-def learn_plays(cands, pc, session, cache, now, wait_ms=20000, overrides=None):
-    """给 needs_play 的候选补 play，来源按顺序：手写的（config 的 play_overrides）→ 缓存（能重放验证就验证）→ 浏览器从播放页学。
-    cache 就地更新（只记学来的，手写的不进缓存，删掉手写项就回到自动学习）。
+def learn_plays(cands, pc, session, cache, now, wait_ms=20000):
+    """给 needs_play 的候选补 play，来源按顺序：缓存（能重放验证就验证）→ 浏览器从播放页学。
+    cache 就地更新。
     剧集样本优先用主出口检测到的；主出口没检测到条目时，改用海外直连检测留下的样本。"""
-    overrides = overrides or {}
     for c in cands:
         src = c.get("source")
         if not c.get("needs_play") or not src or src.get("factoryId") != "json-api":
@@ -355,23 +333,8 @@ def learn_plays(cands, pc, session, cache, now, wait_ms=20000, overrides=None):
         eps = sample.get("episodes") or []
         tag = "（剧集样本来自海外直连检测：国内出口这次没检测到条目）" if overseas else ""
         cached = cache.get(src["id"])
-        play, note, hand = None, "", False
-        ov = overrides.get(src["id"])   # 写源 id（如 kazumi-sorani），或「来源:站点」（如 kazumi:sorani，和报告里的写法一致）
-        if ov is None and c.get("key"):
-            ov = overrides.get("%s:%s" % (c.get("origin"), c["key"]))
-        if ov is not None:   # 1) 手写的 play
-            mine, bad = valid_play(ov)
-            if mine is None:
-                c["notes"].append("play_overrides 里这个源的写法不对（%s），已忽略" % bad)
-            elif eps:
-                ok, why, media = verify(session, sc, mine, eps[-1]["id"])
-                if ok:
-                    play, note, hand = mine, "手写的 play（play_overrides），已重放验证（视频地址 %s）%s" % (media[:80], tag), True
-                else:
-                    c["notes"].append("手写的 play 重放没通过（%s），已忽略，改用自动学习" % why)
-            else:
-                play, note, hand = mine, "手写的 play（play_overrides）；本次没检测到条目，未验证", True
-        if play is None and cached and cached.get("fp") == fp:   # 2) 缓存
+        play, note = None, ""
+        if play is None and cached and cached.get("fp") == fp:   # 1) 缓存
             if eps:
                 ok, bad, _ = verify(session, sc, cached["play"], eps[-1]["id"])
                 if ok:
@@ -380,7 +343,7 @@ def learn_plays(cands, pc, session, cache, now, wait_ms=20000, overrides=None):
                     c["notes"].append("上次学到的 play 重放没通过（%s），重新学" % bad)
             elif (c.get("smoke") or {}).get("status") != "ok":
                 play, note = cached["play"], "本次没检测到条目，沿用上次学到的 play（未验证）"
-        if play is None and pc is not None and eps:   # 3) 浏览器学
+        if play is None and pc is not None and eps:   # 2) 浏览器学
             try:
                 play, note = learn(pc, sc, sample, session, wait_ms, (sc.get("userAgent") or "").strip() or None)
                 if play:
@@ -392,8 +355,7 @@ def learn_plays(cands, pc, session, cache, now, wait_ms=20000, overrides=None):
             c["needs_play"] = False
             c["status"] = "partial"
             c["notes"] = [n for n in c["notes"] if "没有播放接口" not in n] + ["播放接口（play）：" + note]
-            if not hand:
-                cache[src["id"]] = {"fp": fp, "play": play, "learned": now}
+            cache[src["id"]] = {"fp": fp, "play": play, "learned": now}
         elif note:
             c["notes"].append("从播放页学习 play 失败：" + note)
         elif not eps:

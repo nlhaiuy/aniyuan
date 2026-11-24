@@ -6,7 +6,7 @@
   - 站点换域名后，规则里的旧图标地址跟着失效；
 
 做法（只在联网检测时运行）：
-  1. 取站点首页，收集候选：config 里的 icon_overrides → 首页 <link rel="icon"/"apple-touch-icon">（声明的尺寸大的优先，
+  1. 取站点首页，收集候选：首页 <link rel="icon"/"apple-touch-icon">（声明的尺寸大的优先，
      apple-touch-icon 没写尺寸按 180 算）→ 订阅里原来的 iconUrl → /favicon.ico；
   2. 逐个下载（带站点自己的 Referer），确认文件头确实是 PNG / ICO / JPEG / GIF / WebP、且不超过 300KB；
   3. 不是拿到第一张能用的就停：解码后比较真实像素，挑短边最大的那张（ICO 取里面最大的一帧；已经 >=128px 就不再往下试）；
@@ -143,10 +143,9 @@ def _save(icons_dir, sid, ext, data):
     return name
 
 
-def resolve_icons(sources, icons_dir, base_url, get_html, get_image, prune=True, overrides=None):
+def resolve_icons(sources, icons_dir, base_url, get_html, get_image, prune=True):
     """sources：要输出的数据源列表（会被原地改 iconUrl）。
     get_html(url) -> (text, final_url) 或 None；get_image(url, referer) -> bytes 或 None。
-    overrides：{id: 图标地址}，手动指定的地址排在最前面。
     返回 [(id, 状态, 说明)]，状态：new / same / cached / kept。"""
     os.makedirs(icons_dir, exist_ok=True)
     base_url = base_url.rstrip("/")
@@ -158,8 +157,7 @@ def resolve_icons(sources, icons_dir, base_url, get_html, get_image, prune=True,
         if origin:
             home = get_html(origin + "/") or ("", origin + "/")
             tried, best = 0, None   # best = (短边像素, 序号, 地址, 数据, 扩展名, 解码后的图)
-            extra = [(overrides or {}).get(sid)]
-            for url in candidates(origin, home[0], home[1], a.get("iconUrl"), extra)[:MAX_TRIES]:
+            for url in candidates(origin, home[0], home[1], a.get("iconUrl"))[:MAX_TRIES]:
                 tried += 1
                 data = get_image(url, origin + "/")
                 ext = sniff(data) if data and len(data) <= MAX_BYTES else None
