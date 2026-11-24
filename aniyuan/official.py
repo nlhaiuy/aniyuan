@@ -196,15 +196,13 @@ def reconcile(chosen, sites, config, check=None):
     chosen：入选候选列表（c["source"] 是订阅里的源）；check(official_source) -> {"status": ...}（可选，联网检测官方源用，
     同一个官方源只测一次）；返回报告用的行：[{id, name, official, official_tier, official_status, action, note}]。
     会改动候选：降档的改 source.arguments.tier，剔除的打 c["dropped"] = True。
-    config：official_dedupe（demote 默认 / exclude / off）、official_demote_tier（默认 4）、official_aliases、
-    tiers（你手动点名过档位的源不动）。"""
+    config：official_dedupe（demote 默认 / exclude / off）、official_demote_tier（默认 4）、official_aliases。"""
     mode = config.get("official_dedupe", "demote")
     if mode not in MODES:
         raise ValueError("official_dedupe 只能是 %s，现在是 %r" % ("/".join(MODES), mode))
     if mode == "off" or not sites:
         return []
     aliases = config.get("official_aliases") or {}
-    pinned = config.get("tiers") or {}
     lowest = int(config.get("official_demote_tier", 4))
     checked = {}
     rows = []
@@ -232,9 +230,7 @@ def reconcile(chosen, sites, config, check=None):
         action, why = _verdict(own, ost)
         row = {"id": src["id"], "name": a.get("name", src["id"]), "official": "、".join(h["name"] for h in hits),
                "official_tier": best["tier"], "official_status": ost or "-", "action": "keep", "note": why}
-        if c["key"] in pinned or a.get("name") in pinned:
-            row["note"] = "你在 config.tiers 里手动定过档位，不动（%s）" % why
-        elif action == "rescue":
+        if action == "rescue":
             pass   # 保持原档位
         elif mode == "exclude" and action == "redundant":
             c["dropped"] = True

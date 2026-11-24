@@ -84,10 +84,7 @@ cs = fresh()
 official.reconcile(cs, sites, dict(cfg, official_dedupe="exclude"), check=boom)
 check("官方检测抛异常：不影响，只降档", tiers(cs)["lmm"] == 4 and not cs[0].get("dropped"))
 
-# 6. 你手动定过档位的不动；off 什么都不做；非法值报错
-cs = fresh()
-official.reconcile(cs, sites, dict(cfg, tiers={"lmm": 0}), check=lambda s: {"status": "ok"})
-check("config.tiers 点名的不动", tiers(cs)["lmm"] == 1 and tiers(cs)["2kdm"] == 4)
+# 6. off 什么都不做；非法值报错
 cs = fresh()
 check("official_dedupe=off：不动", official.reconcile(cs, sites, dict(cfg, official_dedupe="off")) == [] and tiers(cs)["lmm"] == 1)
 try:
