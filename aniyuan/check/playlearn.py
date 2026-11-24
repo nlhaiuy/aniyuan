@@ -218,13 +218,13 @@ def login_hint(entries):
         low = (json.dumps(data, ensure_ascii=False) if data is not None else raw)[:3000].lower()
         word = next((w for w in LOGIN_WORDS if w.lower() in low), None)
         if word or e.get("status") == 401:
-            return "播放接口要求登录（%s %s 返回%s）：json-api 没法匿名取到视频地址，这个源放弃，不用手写 play" % (
+            return "播放接口要求登录（%s %s 返回%s）：json-api 没法匿名取到视频地址，这个源放弃" % (
                 e.get("method") or "GET", url[:100], ("「%s」" % word) if word else " 401")
     return None
 
 
 def clues(entries, limit=6):
-    """播放页发出的请求清单（方法 + 地址，去重、截断），学不出 play 时写进备注，给手写 play 当线索。"""
+    """播放页发出的请求清单（方法 + 地址，去重、截断），学不出 play 时写进备注，方便排查。"""
     seen = []
     for e in entries or []:
         line = "%s %s" % (e.get("method") or "GET", (e.get("url") or "")[:100])

@@ -114,7 +114,7 @@ def finalize(cands):
             ("json-api 数据源必须有 play（取视频地址的请求）：这个站的播放接口要求登录，匿名取不到视频地址，没法转换"
              if need_login else
              "json-api 数据源必须有 play（取视频地址的请求）：Kazumi 规则里没有，官方订阅里没有同一接口的源，"
-             "也没能从播放页学出来，需要手写 play")]
+             "也没能从播放页学出来，没法自动补")]
         c["status"] = "unsupported"
         c["source"] = None
         c["needs_play"] = False

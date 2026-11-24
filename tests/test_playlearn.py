@@ -127,7 +127,7 @@ try:
     # 4b) 播放接口说要先登录（canPlay=false、请先登录）：明确说放弃，不让人手写
     MODE["api"] = "login"
     p4b, why4b = pl.learn(pc, new_source("")["arguments"]["searchConfig"], sample, s, wait_ms=4000)
-    check("播放接口要求登录：学不了，原因明确写「要求登录」并说不用手写", p4b is None and "要求登录" in why4b and "不用手写" in why4b and "请先登录" in why4b)
+    check("播放接口要求登录：学不了，原因明确写「要求登录」", p4b is None and "要求登录" in why4b and "请先登录" in why4b)
     check("要求登录的原因里不再给「抓到的请求」线索（没有手写的必要）", "抓到的请求" not in why4b)
     c4b = {"source": new_source(""), "needs_play": True, "notes": [], "status": "partial", "smoke": {"status": "ok", "sample": sample}}
     pl.learn_plays([c4b], pc, s, {}, 4500, wait_ms=4000)

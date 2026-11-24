@@ -12,8 +12,7 @@
   1. 按“站点主机名”（去掉 www./m.，可在 config.json 的 site_aliases 里手动并站）分组；
   2. 同一站点在多个来源里都有，取最后修改时间更新的那个（并列时 Kazumi > 纯纯看番 > AniBaka）；
   3. 站点在 AniBaka 里有时，订阅里的 id 取自 AniBaka 的 key，否则取 Kazumi 规则名，输出时统一成 aniyuan-<站点名>；
-     id 不随“谁赢了”变化，Animeko 里用户的启用状态才不会丢；
-  4. AniBaka 规则转不了时，回退到 baseline/anibaka.json 里同 id 的现成配置。
+     id 不随“谁赢了”变化，Animeko 里用户的启用状态才不会丢。
 """
 import argparse
 import hashlib
@@ -27,7 +26,7 @@ from datetime import datetime, timezone
 from .convert.anibaka import convert_anx, site_host, source_id
 from .convert.kazumi import convert_rule
 from .convert.easybangumi import convert_extension
-from .check.domains import follow_upstream, host_of
+from .check.domains import host_of
 from .check import network, ua as ua_mod
 from .check.health import (DEFAULT_CARRY_DAYS, abroad_ok, DEFAULT_THRESHOLD, auto_tier, blind_spots, confirmed_fail, smoke_tier,
                            update_health)
@@ -35,7 +34,7 @@ from .normalize import normalize_source
 from .check.repair import (brittle, find_search_selector, mine_presets, repair_match_video, repair_source,
                            search_stats)
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # 仓库根目录（config.json、baseline/、state/ 等所在）
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # 仓库根目录（config.json、state/ 等所在）
 DEFAULT_FALLBACK_KEYWORDS = ["海贼王", "鬼灭之刃"]   # 主关键词搜不到时依次换用（config.smoke_fallback_keywords 可改，[] 关闭）
 
 
@@ -78,7 +77,7 @@ def apply_state(cands, state, now):
     """
     new = {}
     for c in cands:
-        key = "%s:%s" % ("anibaka" if c["origin"] == "baseline" else c["origin"], c["key"])
+        key = "%s:%s" % (c["origin"], c["key"])
         h, git = c.get("raw_hash"), c.get("date")
         old = state.get(key)
         if not h:
@@ -357,7 +356,7 @@ def collect_kazumi(repo, config):
     return out
 
 
-def collect_anibaka(repo, baseline, config):
+def collect_anibaka(repo, config):
     out = []
     index = load_json(os.path.join(repo, "index.json"))
     synced = parse_iso(index.get("synced", ""))
@@ -379,21 +378,9 @@ def collect_anibaka(repo, baseline, config):
             c["loose_search"] = any("searchList 没有 detailPattern" in n for n in c["notes"])
         else:
             c["notes"] = ["规则文件 %s 不存在" % e["ref"]]
-        base_c = None
-        if sid in baseline:
-            bsrc = json.loads(json.dumps(baseline[sid]))
-            base_c = dict(origin="baseline", key=key, version=c["version"], source=bsrc, status="baseline",
-                          notes=["用你原来的基线配置（baseline/anibaka.json），与自动转换的结果一起比较"], info=[],
-                          guess=False, date=c["date"], raw_hash=c.get("raw_hash"), live_hosts=c.get("live_hosts"))
-            if c["source"] is not None:   # 保留你在基线里设置的优先级
-                c["source"]["arguments"]["tier"] = bsrc["arguments"].get("tier", c["source"]["arguments"]["tier"])
-                if bsrc["arguments"].get("channelTiers"):
-                    c["source"]["arguments"]["channelTiers"] = bsrc["arguments"]["channelTiers"]
-        if c["source"] is None and base_c is None:
-            c["notes"].append("baseline 里也没有这个源，已跳过")
+        if c["source"] is None:
+            c["notes"].append("无法转换，已跳过")
         out.append(c)
-        if base_c:
-            out.append(base_c)
     return out
 
 
@@ -455,8 +442,8 @@ def merge(cands, config):
     from .normalize import normalize_id
     aliases = config.get("site_aliases", {})
     by_smoke = config.get("select_by_smoke", True)
-    # 分组：同主机名，或同一条 AniBaka 规则（key 相同，含基线配置）算同一个站；用并查集合并，
-    # 这样基线配置的域名和上游不一样时也不会被拆成两个站（否则会出现重复 id）
+    # 分组：同主机名，或同一条 AniBaka 规则（key 相同）算同一个站；用并查集合并，
+    # 这样同一条规则被检测改写到新域名时也不会被拆成两个站（否则会出现重复 id）
     live = [c for c in cands if c["source"] is not None]
     parent = {id(c): id(c) for c in live}
 
@@ -477,7 +464,7 @@ def merge(cands, config):
         # 检测时被改写了域名（跳转 / 跟随上游）的候选，原来的域名也算它的站点：
         # 否则同一个站里只有一部分候选换了新域名，就会被拆成两组，各自产出同一个 id
         keys = ["h:" + c["site"]] + (["h:" + aliases.get(orig, orig)] if orig and orig != host else []) \
-            + (["a:" + c["key"]] if c["origin"] in ("anibaka", "baseline") else [])
+            + (["a:" + c["key"]] if c["origin"] == "anibaka" else [])
         for k in keys:
             if k in seen_key:
                 parent[find(id(c))] = find(seen_key[k])
@@ -488,12 +475,12 @@ def merge(cands, config):
         comp.setdefault(find(id(c)), []).append(c)
     groups = {}
     for members in comp.values():
-        label = next((m["site"] for m in members if m["origin"] != "baseline"), members[0]["site"])
+        label = members[0]["site"]
         groups[label] = members
 
     chosen, decisions, scores = [], [], {}
     for host, members in sorted(groups.items()):
-        rank = {"kazumi": 3, "easybangumi": 2, "anibaka": 1}   # 时间相同：Kazumi > 纯纯看番 > AniBaka > 基线
+        rank = {"kazumi": 3, "easybangumi": 2, "anibaka": 1}   # 时间相同：Kazumi > 纯纯看番 > AniBaka
         smoke_of = lambda c: (c.get("smoke") or {}).get("status")  # noqa: E731
         # 实测优先：检测通过 > 没测出结论（无法访问/验证码/跳过） > 明确失败；同档内再比修改时间
         def tier(c):
@@ -516,7 +503,7 @@ def merge(cands, config):
                     by_date["origin"], by_date["key"], {"fail": "未通过"}.get(smoke_of(by_date), "没有结论"), smoke_of(winner) or "-")
         if winner is by_date and (winner.get("health") or {}).get("grace"):
             reason += "；自动检测本次未通过，但以前通过过，暂不降级"
-        ab = [c for c in members if c["origin"] in ("anibaka", "baseline")]
+        ab = [c for c in members if c["origin"] == "anibaka"]
         kz = [c for c in members if c["origin"] == "kazumi"]
         stable_id = source_id(ab[0]["key"]) if ab else (kz[0]["source"]["id"] if kz else winner["source"]["id"])
         winner["source"]["id"] = stable_id
@@ -550,14 +537,13 @@ def dedupe_ids(chosen, decisions, scores):
 
 
 def apply_auto_tier(chosen, config):
-    """给最终入选的源按联网检测结果自动分档。baseline 里手调的档位不再固定（它只是个起点，一样按检测结果升降）；其它来源 tier 已经不是默认值的不动。
-    config.auto_tier 设为 false 关闭。没有联网检测结果的源保持原样（基线手调的档位这时当作兜底）。"""
+    """给最终入选的源按联网检测结果自动分档。tier 已经不是默认值的不动。config.auto_tier 设为 false 关闭。没有联网检测结果的源保持原样。"""
     if not config.get("auto_tier", True):
         return
     default = config.get("default_tier", 4)
     for c in chosen:
         a = c["source"]["arguments"]
-        if a.get("tier", default) != default and c["origin"] != "baseline":
+        if a.get("tier", default) != default:
             continue
         tier, why = auto_tier(c)
         if tier is None or tier == a.get("tier"):
@@ -581,7 +567,6 @@ def main():
     ap.add_argument("--prev", default=os.path.join(ROOT, "dist", "all.json"),
                     help="上一次发布的订阅（用来写报告里的「本次变化」）")
     ap.add_argument("--config", default=os.path.join(ROOT, "config.json"))
-    ap.add_argument("--baseline", default=os.path.join(ROOT, "baseline", "anibaka.json"))
     ap.add_argument("--state", default=os.path.join(ROOT, "state", "seen.json"),
                     help="记录各规则内容哈希和“最后真正改动时间”的文件")
     ap.add_argument("--health", default=os.path.join(ROOT, "state", "health.json"),
@@ -601,15 +586,12 @@ def main():
     ua_mod.configure(config)
     proxy = network.proxy_url()
     ua_audit = []
-    baseline = {}
-    if os.path.exists(args.baseline):
-        baseline = {s["id"]: s for s in load_json(args.baseline)["mediaSources"]}
 
     cands = []
     if args.kazumi:
         cands += collect_kazumi(args.kazumi, config)
     if args.anibaka:
-        cands += collect_anibaka(args.anibaka, baseline, config)
+        cands += collect_anibaka(args.anibaka, config)
     if args.easybangumi:
         cands += collect_easybangumi(args.easybangumi, config)
 
@@ -686,9 +668,6 @@ def main():
                     c["source"]["arguments"]["searchConfig"]["subject"]["request"]["body"] = r["subject_body"]
                     c["notes"].append("章节接口的 id 参数改成不带引号的写法（带引号被接口拒绝）")
                 time.sleep(1)
-            if config.get("follow_upstream_domains", True):
-                for key, old, new, ok in follow_upstream(cands, lambda src: _check(src, config, session)):
-                    print("域名跟随 %s：%s → %s %s" % (key, old, new, "已采用" if ok else "未通过，保持原样"))
             if proxy and config.get("smoke_both_exits", True):
                 print("海外直连对照检测（不经代理）……")
                 direct_pass(cands, config)
@@ -796,8 +775,8 @@ def main():
         json.dump(sub, f, ensure_ascii=False, indent=2)
         f.write("\n")
 
-    label = {"ok": "完整", "partial": "有近似", "unsupported": "无法转换", "override": "手写", "missing": "缺文件",
-             "baseline": "回退基线", "learned": "自动学习"}
+    label = {"ok": "完整", "partial": "有近似", "unsupported": "无法转换", "missing": "缺文件",
+             "learned": "自动学习"}
     rep = ["# 订阅转换报告", "", "写入订阅 **%d** 个数据源（候选 %d 个，同站点合并后）。" % (len(sources), len(cands)), ""]
     if args.smoke:
         both = bool(proxy and any(c.get("smoke_direct") for c in cands))

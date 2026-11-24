@@ -24,7 +24,7 @@ def build(tmp, tag, cfg, official=None):
     cpath = os.path.join(tmp, "config-%s.json" % tag)
     json.dump(cfg, open(cpath, "w", encoding="utf-8"))
     out = os.path.join(tmp, "dist-" + tag)
-    cmd = [sys.executable, "-m", "aniyuan", "--kazumi", os.path.join(tmp, "rules"), "--baseline", os.path.join(tmp, "none.json"),
+    cmd = [sys.executable, "-m", "aniyuan", "--kazumi", os.path.join(tmp, "rules"),
            "--state", os.path.join(tmp, "state-%s.json" % tag), "--health", os.path.join(tmp, "health-%s.json" % tag), "--out", out,
            "--config", cpath, "--learned-cache", os.path.join(tmp, "l-%s.json" % tag),
            "--play-cache", os.path.join(tmp, "p-%s.json" % tag), "--smoke"]
@@ -68,7 +68,7 @@ def main():
             print(r.stdout[-1500:], r.stderr[-1500:])
     tier = lambda d, k: d[k]["arguments"].get("tier")
     checks = [
-        ("基线：不处理官方，自有源 ok 且在订阅里", r0.returncode == 0 and "aniyuan-mine" in base and tier(base, "aniyuan-mine") == 2),
+        ("对照：不处理官方，自有源 ok 且在订阅里", r0.returncode == 0 and "aniyuan-mine" in base and tier(base, "aniyuan-mine") == 2),
         ("官方同站源检测通过 + exclude：自有的被剔除，独有的还在", r1.returncode == 0 and "aniyuan-mine" not in ex and "aniyuan-solo" in ex),
         ("报告写明官方检测 ok、已剔除", "| 官方mine（T1） | ok | 已剔除 |" in rep1),
         ("官方通过 + demote：降到 4，独有的不动", r2.returncode == 0 and tier(dm, "aniyuan-mine") == 4 and tier(dm, "aniyuan-solo") == 2),

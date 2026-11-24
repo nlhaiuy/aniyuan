@@ -5,7 +5,7 @@
   章节：episodes（listSelectors / tabSelectors）
   播放：统一交给 Animeko 的 WebView 嗅探（scanDomMediaUrls）
 转不了的（POST/JSON 站、磁力站、anime1、jsonEpisodes/maccmsApiEpisodes 等）返回 unsupported，
-由 build.py 回退到 baseline/anibaka.json 里同 id 的现成配置。
+在报告里列出。
 """
 import re
 from urllib.parse import urljoin, urlparse

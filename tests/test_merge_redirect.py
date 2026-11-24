@@ -11,7 +11,7 @@ def check(name, ok):
     print(("OK  " if ok else "BAD ") + name); bad += (not ok)
 
 def cand(origin, key, host, date, status="ok", orig=None, play="ok"):
-    sid = {"kazumi": "kazumi-", "anibaka": "anibaka-", "baseline": "anibaka-", "easybangumi": "kazumi-"}[origin] + key
+    sid = {"kazumi": "kazumi-", "anibaka": "anibaka-", "easybangumi": "kazumi-"}[origin] + key
     c = dict(origin=origin, key=key, date=date, notes=[], smoke={"status": status, "play": play},
              source={"id": sid, "factoryId": "web-selector", "version": 2,
                      "arguments": {"name": key, "iconUrl": "", "searchConfig": {"searchUrl": "https://%s/s?wd={keyword}" % host}}})
@@ -22,12 +22,11 @@ def cand(origin, key, host, date, status="ok", orig=None, play="ok"):
 def ids(chosen):
     return sorted(normalize_id(c["source"]["id"]) for c in chosen)
 
-# 1. 真实场景：anibaka / baseline 被检测改写到新域名，kazumi 还在旧域名
+# 1. 真实场景：anibaka 被检测改写到新域名，kazumi 还在旧域名
 cs = [cand("anibaka", "akianime", "akianime.com", 300, orig="akianime.cc"),
-      cand("baseline", "akianime", "akianime.com", 300, orig="akianime.cc"),
       cand("kazumi", "akianime", "akianime.cc", 100, orig="akianime.cc")]
 ch, dec = merge(cs, {})
-check("一部分候选换了新域名：仍是同一个站，只选出一个", len(ch) == 1 and len(dec) == 1 and len(dec[0]["members"]) == 3)
+check("一部分候选换了新域名：仍是同一个站，只选出一个", len(ch) == 1 and len(dec) == 1 and len(dec[0]["members"]) == 2)
 check("输出 id 不重复", len(ids(ch)) == len(set(ids(ch))))
 
 # 2. 没记录原始站点（老数据 / 没联网检测）：靠兜底合并，不报错

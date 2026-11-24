@@ -97,7 +97,7 @@ def convert_rule(rule, config=None):
         api = rule.get("searchApiConfig") or {}
         req = api.get("request", {})
         if str(req.get("method", "GET")).upper() != "GET":
-            return res.fail("搜索接口为 %s，需要手写 override" % req.get("method"))
+            return res.fail("搜索接口为 %s，不支持" % req.get("method"))
         url = req.get("url", "")
         qs = _query_string(req.get("query"))
         if not url:

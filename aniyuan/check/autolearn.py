@@ -132,7 +132,7 @@ def targets(cands, config):
         out.append(dict(key=_label(host), name=name or _label(host), origin=origin, host=host))
 
     for c in cands:
-        if c.get("source") is not None or c.get("status") != "unsupported" or c["origin"] == "baseline":
+        if c.get("source") is not None or c.get("status") != "unsupported":
             continue
         hosts = c.get("live_hosts") or []
         if hosts:   # 第一个是规则的 baseUrl，后面的多半是图标 / CDN 域名

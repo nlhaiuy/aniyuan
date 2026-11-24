@@ -133,8 +133,6 @@ check("内容变了：用更新的 git 日期", c3[0]["date"] == 300)
 c4 = [hc("kazumi", "x", "h2", 50)]
 apply_state(c4, st, 6000)
 check("内容变了但 git 日期不比记录新：用本次同步时间", c4[0]["date"] == 6000)
-c5 = [hc("baseline", "y", "h", 10)]
-check("baseline 与 anibaka 共用记录", "anibaka:y" in apply_state(c5, {}, 1))
 
 # ---- 站点别名 ----
 ch, d = merge([cand("kazumi", "G", "api.t.com", 1, "kazumi-g"), cand("anibaka", "g", "t2.com", 500, "anibaka-g")], {"site_aliases": {"api.t.com": "t2.com"}})
@@ -142,46 +140,9 @@ check("站点别名：api.t.com 并入 t2.com，同站取更新的 AniBaka", len
 check("jsonpath 支持 $.a.b[*].field", eval_simple_jsonpath({"info": {"rows": [{"vod_id": 1}, {"vod_id": 2}]}}, "$.info.rows[*].vod_id") == [1, 2])
 check("jsonpath 原有 ['field'] 写法不受影响", eval_simple_jsonpath({"list": [{"id": 7}]}, "$.list[*]['id']") == [7])
 
-# ---- 跟随上游域名 ----
+# ---- 域名工具 ----
 check("registrable：常见后缀", D.registrable("ani.girigirilove.com") == "girigirilove.com" and D.registrable("a.b.example.co.jp") == "example.co.jp")
 check("sld：名字部分与后缀无关", D.sld("ani.girigirilove.xyz") == "girigirilove")
-def st(urls, origin="baseline"):
-    return dict(origin=origin, key="m", status="baseline", notes=[], date=1, live_hosts=None, source={"id": "i", "factoryId": "web-selector",
-        "arguments": {"name": "n", "iconUrl": urls[2], "searchConfig": {"searchUrl": urls[0], "rawBaseUrl": urls[1]}}})
-def up(host, date=1):
-    return dict(origin="anibaka", key=host, status="ok", notes=[], date=date, live_hosts=[host], source=None)
-m = st(["https://m3u8.girigirilove.com/api?q={keyword}", "https://bg.girigirilove.com", "https://ani.girigirilove.com/i.png"])
-cur = D.current_domains([up("ani.girigirilove.xyz"), up("girigirilove.xyz"), up("ani.girigirilove.com")])
-check("多数上游换了主域名 -> 取多数", cur == {"girigirilove": "girigirilove.xyz"})
-check("票数相同取最近改动的", D.current_domains([up("a.x.com", 1), up("a.x.net", 9)]) == {"x": "x.net"})
-ch = D.follow_upstream([m, up("ani.girigirilove.xyz"), up("girigirilove.xyz")], lambda s: {"status": "ok"})
-sc = m["source"]["arguments"]["searchConfig"]
-check("检测通过：主域名整体替换且保留子域名前缀", ch and ch[0][3] and sc["searchUrl"].startswith("https://m3u8.girigirilove.xyz/api")
-      and sc["rawBaseUrl"] == "https://bg.girigirilove.xyz" and m["source"]["arguments"]["iconUrl"].startswith("https://ani.girigirilove.xyz/"))
-m = st(["https://m3u8.girigirilove.com/api?q={keyword}", "https://bg.girigirilove.com", "https://ani.girigirilove.com/i.png"])
-ch = D.follow_upstream([m, up("ani.girigirilove.xyz"), up("girigirilove.xyz")], lambda s: {"status": "fail", "reason": "x"})
-check("检测没通过：保持原样并留备注", ch and not ch[0][3] and "girigirilove.com" in m["source"]["arguments"]["searchConfig"]["searchUrl"] and m["notes"])
-m = st(["https://m3u8.girigirilove.com/api?q={keyword}", "https://bg.girigirilove.com", "https://ani.girigirilove.com/i.png"], "kazumi"); m["status"] = "ok"
-check("自动转换出来的（非静态）源不被这个机制改", D.follow_upstream([m, up("ani.girigirilove.xyz")], lambda s: {"status": "ok"}) == [])
-m = st(["https://m3u8.girigirilove.com/api?q={keyword}", "https://bg.girigirilove.com", "https://ani.girigirilove.com/i.png"])
-check("上游没换：不动", D.follow_upstream([m, up("ani.girigirilove.com")], lambda s: {"status": "ok"}) == [])
-check("rewrite_domain 不误伤别的域名", D.rewrite_domain({"a": "https://x.girigirilove.com/p?u=https://girigirilove.com.cn/z https://other-girigirilove.com"},
-      "girigirilove.com", "girigirilove.xyz")["a"] == "https://x.girigirilove.xyz/p?u=https://girigirilove.com.cn/z https://other-girigirilove.com")
-
-# ---- 基线作为独立候选 ----
-auto = cand("anibaka", "s", "new.com", 100, "anibaka-s", "fail"); base = cand("baseline", "s", "old.com", 100, "anibaka-s", "ok")
-ch, _ = merge([auto, base], {})
-check("自动转换的没通过、基线通过 -> 用基线；域名不同也不会拆成两个站", len(ch) == 1 and ch[0]["origin"] == "baseline")
-auto = cand("anibaka", "s", "new.com", 100, "anibaka-s"); base = cand("baseline", "s", "old.com", 100, "anibaka-s")
-ch, _ = merge([auto, base], {})
-check("没联网检测：同日期，自动转换（上游）优先", len(ch) == 1 and ch[0]["origin"] == "anibaka")
-auto = cand("anibaka", "s", "new.com", 100, "anibaka-s"); auto["guess"] = True; base = cand("baseline", "s", "old.com", 100, "anibaka-s")
-ch, _ = merge([auto, base], {})
-check("没联网检测：搜索地址是推测的 -> 基线优先", ch[0]["origin"] == "baseline")
-auto = cand("anibaka", "s", "new.com", 100, "anibaka-s", "ok"); auto["guess"] = True; base = cand("baseline", "s", "old.com", 100, "anibaka-s", "ok")
-ch, _ = merge([auto, base], {})
-check("推测的搜索地址实测通过：不再降级", ch[0]["origin"] == "anibaka")
-
 # episodes 用 XPath 写的（roadsXPath / itemsXPath）：转成 CSS，线路合并为一条
 xp = dict(html, detail=[{"op": "follow"}, {"op": "episodes", "roadsXPath": "//section[contains(@class, 'anthology')]",
                                            "itemsXPath": ".//a[contains(@class, 'circuit_switch1')]"}])

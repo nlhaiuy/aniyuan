@@ -21,8 +21,7 @@ LEGACY = [
     re.compile(r"\s*（(?:AniBaka 规则|Kazumi 规则)[^）]*自动转换）\s*$"),
     re.compile(r"^由(?: Kazumi 规则| 纯纯看番社区 JS 源|纯纯看番社区 JS 源)[^（]*自动转换(?:（规则更新于[^）]*）)?\s*$"),
 ]
-ORIGIN_LABEL = {"kazumi": "Kazumi 规则", "anibaka": "AniBaka 规则", "easybangumi": "纯纯看番社区源",
-                "baseline": "基线配置", "learned": "自动学习"}
+ORIGIN_LABEL = {"kazumi": "Kazumi 规则", "anibaka": "AniBaka 规则", "easybangumi": "纯纯看番社区源", "learned": "自动学习"}
 
 
 ID_PREFIX = "aniyuan-"
@@ -31,7 +30,7 @@ OLD_PREFIX = re.compile(r"^(?:anibaka|kazumi|aniyuan)-")
 
 def normalize_id(sid):
     """统一成 aniyuan-<站点名>：小写，只含 a-z0-9 和连字符。
-    转换器内部仍按来源给的 id（anibaka-<key> / kazumi-<名字>，用来对上 baseline），
+    转换器内部仍按来源给的 id（anibaka-<key> / kazumi-<名字>），
     输出时去掉来源前缀、统一加 aniyuan-。已经是 aniyuan-xxx 的原样返回（幂等）。"""
     body = re.sub(r"-{2,}", "-", re.sub(r"[^a-z0-9]+", "-", str(sid).lower())).strip("-")
     body = OLD_PREFIX.sub("", body, count=1).strip("-")
@@ -86,15 +85,13 @@ def source_note(c):
     origin, key, ver = c["origin"], c["key"], str(c.get("version") or "").strip()
     label = ORIGIN_LABEL.get(origin, origin)
     parts = ["%s %s" % (label, key)]
-    if ver and origin != "baseline":
+    if ver:
         parts.append(ver if not ver[0].isdigit() else "v" + ver)
     note = " ".join(parts)
-    if origin in ("kazumi", "anibaka", "easybangumi") and c.get("status") not in ("override",):
+    if origin in ("kazumi", "anibaka", "easybangumi"):
         return note + "，自动转换"
     if origin == "learned":
         return "自动学习 %s" % key
-    if c.get("status") == "override":
-        return note + "，手写配置"
     return note
 
 

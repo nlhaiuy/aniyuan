@@ -13,8 +13,7 @@ def run(tmp, cfg, tag):
     cpath = os.path.join(tmp, "config-%s.json" % tag)
     json.dump(cfg, open(cpath, "w", encoding="utf-8"), ensure_ascii=False)
     out = os.path.join(tmp, "dist-" + tag)
-    r = subprocess.run([sys.executable, "-m", "aniyuan", "--kazumi", os.path.join(tmp, "rules"), "--official", os.path.join(tmp, "official"),
-                        "--baseline", os.path.join(tmp, "none.json"), "--state", os.path.join(tmp, "state-%s.json" % tag),
+    r = subprocess.run([sys.executable, "-m", "aniyuan", "--kazumi", os.path.join(tmp, "rules"), "--official", os.path.join(tmp, "official"), "--state", os.path.join(tmp, "state-%s.json" % tag),
                         "--health", os.path.join(tmp, "health.json"), "--out", out, "--config", cpath], capture_output=True, text=True, cwd=ROOT)
     return r, out
 

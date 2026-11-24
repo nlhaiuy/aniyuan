@@ -78,7 +78,6 @@ try:
         cand("anibaka", "gpjda", None, "unsupported", ["www.gpjda.com", "cdn.img.com"]),
         cand("anibaka", "dmhy", None, "unsupported", ["share.dmhy.org"]),                 # 磁力站
         cand("easybangumi", "yhw", None, "unsupported", []),                              # 没有域名线索
-        cand("baseline", "zzz", None, "baseline", ["www.zzz.com"]),
     ]
     ts = AL.targets(cands, {})
     check("只学没有来源可用的站：gpjda", [t["host"] for t in ts] == ["www.gpjda.com"] and ts[0]["origin"] == "https://www.gpjda.com")

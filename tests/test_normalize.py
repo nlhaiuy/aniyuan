@@ -51,8 +51,6 @@ check("过长的简介截断", len(clean_intro("长" * 500)) <= 202)
 check("来源：AniBaka", source_note(cand("anibaka", "age", "rev 6", "")) == "AniBaka 规则 age rev 6，自动转换")
 check("来源：Kazumi 版本加 v", source_note(cand("kazumi", "mutefun", "1.4", "")) == "Kazumi 规则 mutefun v1.4，自动转换")
 check("来源：纯纯看番", source_note(cand("easybangumi", "kazumi-7sefun", "1.2.1", "")) == "纯纯看番社区源 kazumi-7sefun v1.2.1，自动转换")
-check("来源：手写配置", source_note(cand("kazumi", "xfdmnext", "1.0", "", status="override")) == "Kazumi 规则 xfdmnext v1.0，手写配置")
-check("来源：基线", source_note(cand("baseline", "age", "rev 6", "")) == "基线配置 age")
 
 c = cand("anibaka", "age", "rev 6", "AGE动漫视频源 （AniBaka 规则 age rev 6 自动转换）", host="www.agedm.io")
 check("完整描述", compose_description(c, "agedm.io") == "AGE动漫视频源。（来源：AniBaka 规则 age rev 6，自动转换）")

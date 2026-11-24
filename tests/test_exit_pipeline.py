@@ -69,7 +69,7 @@ def run(extra_cfg, proxy):
     env["NO_PROXY"] = "127.0.0.1,localhost"
     if proxy:
         env["ANIYUAN_PROXY"] = "http://127.0.0.1:%d" % prox.server_address[1]
-    r = subprocess.run([sys.executable, "-m", "aniyuan", "--kazumi", rules, "--baseline", os.path.join(tmp, "none.json"), "--state", os.path.join(tmp, "s_%s.json" % os.path.basename(out)),
+    r = subprocess.run([sys.executable, "-m", "aniyuan", "--kazumi", rules, "--state", os.path.join(tmp, "s_%s.json" % os.path.basename(out)),
                         "--health", os.path.join(tmp, "h_%s.json" % os.path.basename(out)), "--out", out, "--config", cfg, "--smoke"],
                        capture_output=True, text=True, cwd=ROOT, env=env)
     if r.returncode:

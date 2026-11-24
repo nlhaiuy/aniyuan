@@ -237,7 +237,7 @@ def check_source(source, keyword="葬送的芙莉莲", timeout=15, session=None,
     if source.get("factoryId") == "json-api" and isinstance(sc.get("search"), dict) and isinstance(sc.get("subject"), dict):
         return check_json_api(sc, keyword, session, timeout)
     if source.get("factoryId") != "web-selector" or "searchUrl" not in sc:
-        return {"status": "skipped", "reason": "手写配置，不做自动检测"}
+        return {"status": "skipped", "reason": "不是 web-selector / json-api 源，不做自动检测"}
     ua = sc.get("userAgent") or None
     subs, bad = _search_subjects(sc, keyword, session, timeout, ctx, ua)
     ctx["subs"] = subs

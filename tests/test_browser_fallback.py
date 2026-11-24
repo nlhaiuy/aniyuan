@@ -48,7 +48,7 @@ def run(browser):
     json.dump(c, open(cfg, "w", encoding="utf-8"))
     env = {k: v for k, v in os.environ.items() if k.lower() not in ("http_proxy", "https_proxy", "all_proxy", "aniyuan_proxy", "aniyuan_browser")}
     env["NO_PROXY"] = "127.0.0.1,localhost"
-    r = subprocess.run([sys.executable, "-m", "aniyuan", "--kazumi", rules, "--baseline", os.path.join(tmp, "none.json"),
+    r = subprocess.run([sys.executable, "-m", "aniyuan", "--kazumi", rules,
                         "--state", os.path.join(tmp, "s_%s.json" % browser), "--health", os.path.join(tmp, "h_%s.json" % browser),
                         "--out", out, "--config", cfg, "--smoke", "--playcheck"],
                        capture_output=True, text=True, cwd=ROOT, env=env, timeout=240)
