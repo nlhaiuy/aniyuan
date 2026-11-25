@@ -6,30 +6,28 @@
       "factoryId": "web-selector",
       "version": 2,
       "arguments": {
-        "name": "MuteFun动漫 (2kdm)",
-        "description": "MuteFun动漫网站-无声乐趣，提供日漫、美漫、特摄、日剧等高清在线观看。（来源：AniBaka 规则 2kdm rev 6，自动转换）",
-        "iconUrl": "https://image1.ljcdn.com/materials/cmsapi/1a5b58f50c23e5475dc6a8bb827035e2.png",
+        "name": "mutefun (mutedm.com)",
+        "description": "站点 mutedm.com。（来源：Kazumi 规则 mutefun v1.6，自动转换）",
+        "iconUrl": "https://www.mutedm.com/favicon.ico",
         "searchConfig": {
-          "searchUrl": "https://www.2kdm.com/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
           "searchUseOnlyFirstWord": true,
           "searchRemoveSpecial": true,
           "searchUseSubjectNamesCount": 1,
-          "rawBaseUrl": "https://www.2kdm.com",
+          "rawBaseUrl": "",
           "requestInterval": 3000,
-          "subjectFormatId": "json-path-indexed",
-          "selectorSubjectFormatJsonPathIndexed": {
-            "selectLinks": "$.list[*]['id']",
-            "selectNames": "$.list[*]['name']",
-            "preferShorterName": true,
-            "linkTemplate": "/voddetail/{value}.html"
+          "searchUrl": "https://www.mutedm.com/search?q={keyword}",
+          "subjectFormatId": "indexed",
+          "selectorSubjectFormatIndexed": {
+            "selectNames": "section[class*=\"search-results-section\"] a[class*=\"video-card\"] span[class*=\"video-card-title\"]",
+            "selectLinks": "section[class*=\"search-results-section\"] a[class*=\"video-card\"]",
+            "preferShorterName": true
           },
-          "channelFormatId": "index-grouped",
-          "selectorChannelFormatFlattened": {
-            "selectChannelNames": ".module-tab-item[data-dropdown-value]",
-            "selectEpisodeLists": ".module-play-list",
-            "selectEpisodesFromList": "a"
+          "channelFormatId": "no-channel",
+          "selectorChannelFormatNoChannel": {
+            "selectEpisodes": "div[class*=\"episode-panel\"] div[class*=\"episode-list\"] a",
+            "selectEpisodeLinks": "",
+            "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
           },
-          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
           "defaultResolution": "1080P",
           "defaultSubtitleLanguage": "CHS",
           "onlySupportsPlayers": [],
@@ -37,7 +35,7 @@
           "filterBySubjectName": true,
           "selectMedia": {
             "distinguishSubjectName": true,
-            "distinguishChannelName": true
+            "distinguishChannelName": false
           },
           "matchVideo": {
             "enableNestedUrl": false,
@@ -45,15 +43,14 @@
             "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
             "cookies": "quality=1080",
             "addHeadersToVideo": {
-              "referer": "https://www.2kdm.com/"
+              "referer": ""
             },
             "scanDomMediaUrls": true
           }
         },
-        "tier": 3,
+        "tier": 4,
         "channelTiers": {}
-      },
-      "clientVersions": ">=6.3.0"
+      }
     },
     {
       "id": "aniyuan-5dm",
@@ -315,7 +312,7 @@
       "version": 2,
       "arguments": {
         "name": "Anime7 动画线上看",
-        "description": "[选择器已自动修复] Anime7 动画线上看，提供日韩动漫、剧场版、国产动漫等高清在线观看。含广告。（来源：AniBaka 规则 anime7 rev 6，自动转换）",
+        "description": "Anime7 动画线上看，提供日韩动漫、剧场版、国产动漫等高清在线观看。含广告。（来源：AniBaka 规则 anime7 rev 6，自动转换）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-anime7.png",
         "searchConfig": {
           "searchUrl": "https://anime7.top/vod-search/wd/{keyword}/",
@@ -326,10 +323,15 @@
           "requestInterval": 3000,
           "subjectFormatId": "a",
           "selectorSubjectFormatA": {
-            "selectLists": ".hl-item-title a[href*='/vod-detail/']",
+            "selectLists": "li.hl-list-item a",
             "preferShorterName": true
           },
-          "channelFormatId": "no-channel",
+          "channelFormatId": "index-grouped",
+          "selectorChannelFormatFlattened": {
+            "selectChannelNames": ".hl-plays-from a",
+            "selectEpisodeLists": "ul.hl-plays-list",
+            "selectEpisodesFromList": "a"
+          },
           "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
           "defaultResolution": "1080P",
           "defaultSubtitleLanguage": "CHS",
@@ -349,11 +351,6 @@
               "referer": "https://anime7.top/"
             },
             "scanDomMediaUrls": true
-          },
-          "selectorChannelFormatNoChannel": {
-            "selectEpisodes": ".hl-plays-list a",
-            "selectEpisodeLinks": "",
-            "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
           }
         },
         "tier": 4,
@@ -409,7 +406,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 1,
+        "tier": 2,
         "channelTiers": {}
       },
       "clientVersions": ">=6.3.0"
@@ -735,26 +732,80 @@
       "factoryId": "web-selector",
       "version": 2,
       "arguments": {
-        "name": "mgnacg",
-        "description": "站点 mgnacg.com。（来源：Kazumi 规则 mgnacg v1.2，自动转换）",
+        "name": "Mgnacg 橘子动漫",
+        "description": "Mgnacg 橘子动漫视频源。（来源：AniBaka 规则 mgnacg rev 2，自动转换）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-mgnacg.png",
+        "searchConfig": {
+          "searchUrl": "https://www.mgnacg.com/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
+          "searchUseOnlyFirstWord": true,
+          "searchRemoveSpecial": true,
+          "searchUseSubjectNamesCount": 1,
+          "rawBaseUrl": "https://www.mgnacg.com",
+          "requestInterval": 3000,
+          "subjectFormatId": "json-path-indexed",
+          "selectorSubjectFormatJsonPathIndexed": {
+            "selectLinks": "$.list[*]['id']",
+            "selectNames": "$.list[*]['name']",
+            "preferShorterName": true,
+            "linkTemplate": "/media/{value}/"
+          },
+          "channelFormatId": "index-grouped",
+          "selectorChannelFormatFlattened": {
+            "selectChannelNames": ".anthology-tab a.swiper-slide",
+            "selectEpisodeLists": "ul.anthology-list-play",
+            "selectEpisodesFromList": "a"
+          },
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
+          "defaultResolution": "1080P",
+          "defaultSubtitleLanguage": "CHS",
+          "onlySupportsPlayers": [],
+          "filterByEpisodeSort": true,
+          "filterBySubjectName": true,
+          "selectMedia": {
+            "distinguishSubjectName": true,
+            "distinguishChannelName": true
+          },
+          "matchVideo": {
+            "enableNestedUrl": false,
+            "matchNestedUrl": "$^",
+            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
+            "cookies": "quality=1080",
+            "addHeadersToVideo": {
+              "referer": "https://www.mgnacg.com/"
+            },
+            "scanDomMediaUrls": true
+          }
+        },
+        "tier": 1,
+        "channelTiers": {}
+      },
+      "clientVersions": ">=6.3.0"
+    },
+    {
+      "id": "aniyuan-moonci",
+      "factoryId": "web-selector",
+      "version": 2,
+      "arguments": {
+        "name": "moonci",
+        "description": "站点 moonci.com。（来源：Kazumi 规则 moonci v1.1，自动转换）",
+        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-moonci.png",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
           "searchRemoveSpecial": true,
           "searchUseSubjectNamesCount": 1,
           "rawBaseUrl": "",
           "requestInterval": 3000,
-          "searchUrl": "https://www.mgnacg.com/index.php/ajax/suggest?mid=1&wd={keyword}",
+          "searchUrl": "https://www.moonci.com/index.php/ajax/suggest?mid=1&wd={keyword}",
           "subjectFormatId": "json-path-indexed",
           "selectorSubjectFormatJsonPathIndexed": {
             "selectLinks": "$.list[*]['id']",
             "selectNames": "$.list[*]['name']",
-            "linkTemplate": "/media/{value}.html",
+            "linkTemplate": "/anime/{value}.html",
             "preferShorterName": true
           },
           "channelFormatId": "no-channel",
           "selectorChannelFormatNoChannel": {
-            "selectEpisodes": "ul[class=\"anthology-list-play size\"] li > a",
+            "selectEpisodes": "div[class*=\"hl-play-source\"] ul[class*=\"hl-plays-list\"] a[href*=\"/play/\"]",
             "selectEpisodeLinks": "",
             "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
           },
@@ -782,57 +833,6 @@
         "channelTiers": {}
       },
       "clientVersions": ">=6.3.0"
-    },
-    {
-      "id": "aniyuan-moonci",
-      "factoryId": "web-selector",
-      "version": 2,
-      "arguments": {
-        "name": "Moonci",
-        "description": "Moonci 动漫视频源。（来源：AniBaka 规则 moonci rev 5，自动转换）",
-        "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-moonci.png",
-        "searchConfig": {
-          "searchUrl": "https://www.moonci.com/search/-------------.html?wd={keyword}",
-          "searchUseOnlyFirstWord": true,
-          "searchRemoveSpecial": true,
-          "searchUseSubjectNamesCount": 1,
-          "rawBaseUrl": "https://www.moonci.com",
-          "requestInterval": 3000,
-          "subjectFormatId": "a",
-          "selectorSubjectFormatA": {
-            "selectLists": "li.hl-list-item a",
-            "preferShorterName": true
-          },
-          "channelFormatId": "index-grouped",
-          "selectorChannelFormatFlattened": {
-            "selectChannelNames": ".hl-plays-from a",
-            "selectEpisodeLists": "ul.hl-plays-list",
-            "selectEpisodesFromList": "a"
-          },
-          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
-          "defaultResolution": "1080P",
-          "defaultSubtitleLanguage": "CHS",
-          "onlySupportsPlayers": [],
-          "filterByEpisodeSort": true,
-          "filterBySubjectName": true,
-          "selectMedia": {
-            "distinguishSubjectName": true,
-            "distinguishChannelName": true
-          },
-          "matchVideo": {
-            "enableNestedUrl": false,
-            "matchNestedUrl": "$^",
-            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
-            "cookies": "quality=1080",
-            "addHeadersToVideo": {
-              "referer": "https://www.moonci.com/"
-            },
-            "scanDomMediaUrls": true
-          }
-        },
-        "tier": 2,
-        "channelTiers": {}
-      }
     },
     {
       "id": "aniyuan-xigua",
@@ -879,7 +879,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 2,
+        "tier": 1,
         "channelTiers": {}
       }
     },
@@ -889,7 +889,7 @@
       "version": 2,
       "arguments": {
         "name": "9ciyuan (jcydm1.com)",
-        "description": "站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
+        "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：修复后的选择器仍未通过：搜索页能打开，但选择器没有选中任何结果）] 站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-9ciyuan.png",
         "searchConfig": {
           "searchUseOnlyFirstWord": true,
@@ -930,7 +930,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 1,
+        "tier": 4,
         "channelTiers": {}
       }
     },
@@ -1036,7 +1036,7 @@
             "scanDomMediaUrls": true
           }
         },
-        "tier": 2,
+        "tier": 1,
         "channelTiers": {}
       }
     },
@@ -1479,30 +1479,28 @@
         "factoryId": "web-selector",
         "version": 2,
         "arguments": {
-          "name": "MuteFun动漫 (2kdm)",
-          "description": "MuteFun动漫网站-无声乐趣，提供日漫、美漫、特摄、日剧等高清在线观看。（来源：AniBaka 规则 2kdm rev 6，自动转换）",
-          "iconUrl": "https://image1.ljcdn.com/materials/cmsapi/1a5b58f50c23e5475dc6a8bb827035e2.png",
+          "name": "mutefun (mutedm.com)",
+          "description": "站点 mutedm.com。（来源：Kazumi 规则 mutefun v1.6，自动转换）",
+          "iconUrl": "https://www.mutedm.com/favicon.ico",
           "searchConfig": {
-            "searchUrl": "https://www.2kdm.com/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
             "searchUseOnlyFirstWord": true,
             "searchRemoveSpecial": true,
             "searchUseSubjectNamesCount": 1,
-            "rawBaseUrl": "https://www.2kdm.com",
+            "rawBaseUrl": "",
             "requestInterval": 3000,
-            "subjectFormatId": "json-path-indexed",
-            "selectorSubjectFormatJsonPathIndexed": {
-              "selectLinks": "$.list[*]['id']",
-              "selectNames": "$.list[*]['name']",
-              "preferShorterName": true,
-              "linkTemplate": "/voddetail/{value}.html"
+            "searchUrl": "https://www.mutedm.com/search?q={keyword}",
+            "subjectFormatId": "indexed",
+            "selectorSubjectFormatIndexed": {
+              "selectNames": "section[class*=\"search-results-section\"] a[class*=\"video-card\"] span[class*=\"video-card-title\"]",
+              "selectLinks": "section[class*=\"search-results-section\"] a[class*=\"video-card\"]",
+              "preferShorterName": true
             },
-            "channelFormatId": "index-grouped",
-            "selectorChannelFormatFlattened": {
-              "selectChannelNames": ".module-tab-item[data-dropdown-value]",
-              "selectEpisodeLists": ".module-play-list",
-              "selectEpisodesFromList": "a"
+            "channelFormatId": "no-channel",
+            "selectorChannelFormatNoChannel": {
+              "selectEpisodes": "div[class*=\"episode-panel\"] div[class*=\"episode-list\"] a",
+              "selectEpisodeLinks": "",
+              "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
             },
-            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
             "defaultResolution": "1080P",
             "defaultSubtitleLanguage": "CHS",
             "onlySupportsPlayers": [],
@@ -1510,7 +1508,7 @@
             "filterBySubjectName": true,
             "selectMedia": {
               "distinguishSubjectName": true,
-              "distinguishChannelName": true
+              "distinguishChannelName": false
             },
             "matchVideo": {
               "enableNestedUrl": false,
@@ -1518,15 +1516,14 @@
               "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
               "cookies": "quality=1080",
               "addHeadersToVideo": {
-                "referer": "https://www.2kdm.com/"
+                "referer": ""
               },
               "scanDomMediaUrls": true
             }
           },
-          "tier": 3,
+          "tier": 4,
           "channelTiers": {}
-        },
-        "clientVersions": ">=6.3.0"
+        }
       },
       {
         "id": "aniyuan-5dm",
@@ -1788,7 +1785,7 @@
         "version": 2,
         "arguments": {
           "name": "Anime7 动画线上看",
-          "description": "[选择器已自动修复] Anime7 动画线上看，提供日韩动漫、剧场版、国产动漫等高清在线观看。含广告。（来源：AniBaka 规则 anime7 rev 6，自动转换）",
+          "description": "Anime7 动画线上看，提供日韩动漫、剧场版、国产动漫等高清在线观看。含广告。（来源：AniBaka 规则 anime7 rev 6，自动转换）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-anime7.png",
           "searchConfig": {
             "searchUrl": "https://anime7.top/vod-search/wd/{keyword}/",
@@ -1799,10 +1796,15 @@
             "requestInterval": 3000,
             "subjectFormatId": "a",
             "selectorSubjectFormatA": {
-              "selectLists": ".hl-item-title a[href*='/vod-detail/']",
+              "selectLists": "li.hl-list-item a",
               "preferShorterName": true
             },
-            "channelFormatId": "no-channel",
+            "channelFormatId": "index-grouped",
+            "selectorChannelFormatFlattened": {
+              "selectChannelNames": ".hl-plays-from a",
+              "selectEpisodeLists": "ul.hl-plays-list",
+              "selectEpisodesFromList": "a"
+            },
             "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
             "defaultResolution": "1080P",
             "defaultSubtitleLanguage": "CHS",
@@ -1822,11 +1824,6 @@
                 "referer": "https://anime7.top/"
               },
               "scanDomMediaUrls": true
-            },
-            "selectorChannelFormatNoChannel": {
-              "selectEpisodes": ".hl-plays-list a",
-              "selectEpisodeLinks": "",
-              "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
             }
           },
           "tier": 4,
@@ -1882,7 +1879,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 1,
+          "tier": 2,
           "channelTiers": {}
         },
         "clientVersions": ">=6.3.0"
@@ -2208,26 +2205,80 @@
         "factoryId": "web-selector",
         "version": 2,
         "arguments": {
-          "name": "mgnacg",
-          "description": "站点 mgnacg.com。（来源：Kazumi 规则 mgnacg v1.2，自动转换）",
+          "name": "Mgnacg 橘子动漫",
+          "description": "Mgnacg 橘子动漫视频源。（来源：AniBaka 规则 mgnacg rev 2，自动转换）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-mgnacg.png",
+          "searchConfig": {
+            "searchUrl": "https://www.mgnacg.com/index.php/ajax/suggest?mid=1&wd={keyword}&limit=20",
+            "searchUseOnlyFirstWord": true,
+            "searchRemoveSpecial": true,
+            "searchUseSubjectNamesCount": 1,
+            "rawBaseUrl": "https://www.mgnacg.com",
+            "requestInterval": 3000,
+            "subjectFormatId": "json-path-indexed",
+            "selectorSubjectFormatJsonPathIndexed": {
+              "selectLinks": "$.list[*]['id']",
+              "selectNames": "$.list[*]['name']",
+              "preferShorterName": true,
+              "linkTemplate": "/media/{value}/"
+            },
+            "channelFormatId": "index-grouped",
+            "selectorChannelFormatFlattened": {
+              "selectChannelNames": ".anthology-tab a.swiper-slide",
+              "selectEpisodeLists": "ul.anthology-list-play",
+              "selectEpisodesFromList": "a"
+            },
+            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
+            "defaultResolution": "1080P",
+            "defaultSubtitleLanguage": "CHS",
+            "onlySupportsPlayers": [],
+            "filterByEpisodeSort": true,
+            "filterBySubjectName": true,
+            "selectMedia": {
+              "distinguishSubjectName": true,
+              "distinguishChannelName": true
+            },
+            "matchVideo": {
+              "enableNestedUrl": false,
+              "matchNestedUrl": "$^",
+              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
+              "cookies": "quality=1080",
+              "addHeadersToVideo": {
+                "referer": "https://www.mgnacg.com/"
+              },
+              "scanDomMediaUrls": true
+            }
+          },
+          "tier": 1,
+          "channelTiers": {}
+        },
+        "clientVersions": ">=6.3.0"
+      },
+      {
+        "id": "aniyuan-moonci",
+        "factoryId": "web-selector",
+        "version": 2,
+        "arguments": {
+          "name": "moonci",
+          "description": "站点 moonci.com。（来源：Kazumi 规则 moonci v1.1，自动转换）",
+          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-moonci.png",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
             "searchRemoveSpecial": true,
             "searchUseSubjectNamesCount": 1,
             "rawBaseUrl": "",
             "requestInterval": 3000,
-            "searchUrl": "https://www.mgnacg.com/index.php/ajax/suggest?mid=1&wd={keyword}",
+            "searchUrl": "https://www.moonci.com/index.php/ajax/suggest?mid=1&wd={keyword}",
             "subjectFormatId": "json-path-indexed",
             "selectorSubjectFormatJsonPathIndexed": {
               "selectLinks": "$.list[*]['id']",
               "selectNames": "$.list[*]['name']",
-              "linkTemplate": "/media/{value}.html",
+              "linkTemplate": "/anime/{value}.html",
               "preferShorterName": true
             },
             "channelFormatId": "no-channel",
             "selectorChannelFormatNoChannel": {
-              "selectEpisodes": "ul[class=\"anthology-list-play size\"] li > a",
+              "selectEpisodes": "div[class*=\"hl-play-source\"] ul[class*=\"hl-plays-list\"] a[href*=\"/play/\"]",
               "selectEpisodeLinks": "",
               "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
             },
@@ -2255,57 +2306,6 @@
           "channelTiers": {}
         },
         "clientVersions": ">=6.3.0"
-      },
-      {
-        "id": "aniyuan-moonci",
-        "factoryId": "web-selector",
-        "version": 2,
-        "arguments": {
-          "name": "Moonci",
-          "description": "Moonci 动漫视频源。（来源：AniBaka 规则 moonci rev 5，自动转换）",
-          "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-moonci.png",
-          "searchConfig": {
-            "searchUrl": "https://www.moonci.com/search/-------------.html?wd={keyword}",
-            "searchUseOnlyFirstWord": true,
-            "searchRemoveSpecial": true,
-            "searchUseSubjectNamesCount": 1,
-            "rawBaseUrl": "https://www.moonci.com",
-            "requestInterval": 3000,
-            "subjectFormatId": "a",
-            "selectorSubjectFormatA": {
-              "selectLists": "li.hl-list-item a",
-              "preferShorterName": true
-            },
-            "channelFormatId": "index-grouped",
-            "selectorChannelFormatFlattened": {
-              "selectChannelNames": ".hl-plays-from a",
-              "selectEpisodeLists": "ul.hl-plays-list",
-              "selectEpisodesFromList": "a"
-            },
-            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
-            "defaultResolution": "1080P",
-            "defaultSubtitleLanguage": "CHS",
-            "onlySupportsPlayers": [],
-            "filterByEpisodeSort": true,
-            "filterBySubjectName": true,
-            "selectMedia": {
-              "distinguishSubjectName": true,
-              "distinguishChannelName": true
-            },
-            "matchVideo": {
-              "enableNestedUrl": false,
-              "matchNestedUrl": "$^",
-              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
-              "cookies": "quality=1080",
-              "addHeadersToVideo": {
-                "referer": "https://www.moonci.com/"
-              },
-              "scanDomMediaUrls": true
-            }
-          },
-          "tier": 2,
-          "channelTiers": {}
-        }
       },
       {
         "id": "aniyuan-xigua",
@@ -2352,7 +2352,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 2,
+          "tier": 1,
           "channelTiers": {}
         }
       },
@@ -2362,7 +2362,7 @@
         "version": 2,
         "arguments": {
           "name": "9ciyuan (jcydm1.com)",
-          "description": "站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
+          "description": "[自动检测未通过：搜索页能打开，但选择器没有选中任何结果（自动修复也失败：修复后的选择器仍未通过：搜索页能打开，但选择器没有选中任何结果）] 站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-9ciyuan.png",
           "searchConfig": {
             "searchUseOnlyFirstWord": true,
@@ -2403,7 +2403,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 1,
+          "tier": 4,
           "channelTiers": {}
         }
       },
@@ -2509,7 +2509,7 @@
               "scanDomMediaUrls": true
             }
           },
-          "tier": 2,
+          "tier": 1,
           "channelTiers": {}
         }
       },
