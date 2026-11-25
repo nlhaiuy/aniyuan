@@ -20,8 +20,14 @@ from . import ua as ua_mod
 
 BLOCK_WORDS = ["验证码", "安全验证", "检查环境", "请输入验证", "Just a moment", "人机验证"]
 MEDIA_RE = re.compile(r"\.(m3u8|mpd|mp4|m4v|mkv|webm|mov|flv|avi)(\?|$|#)|/video/tos/|mime_type=video", re.I)
-CLICK_SELECTORS = ["video", ".dplayer-video-wrap", ".dplayer", ".art-video-player", "#player", "#playleft",
+# 先点具体的播放按钮，再点播放器容器，最后点 iframe 本身
+CLICK_SELECTORS = [".vjs-big-play-button", ".dplayer-play-icon", ".art-control-play", ".art-state", ".jw-icon-display",
+                   ".xgplayer-start", ".prism-big-play-btn", "[class*='play-btn']", "[class*='playBtn']",
+                   "video", ".dplayer-video-wrap", ".dplayer", ".art-video-player", "#player", "#playleft",
                    ".player", ".MacPlayer", "iframe"]
+CLICK_FIRST_MS = 4500    # 第一次点击的时间
+CLICK_EVERY_MS = 6000    # 之后每隔多久再点一轮（广告、懒加载的 iframe 常常头几秒还没出来）
+PLAYER_PROBE = "video, iframe, .dplayer, .art-video-player, #playleft, .MacPlayer, .xgplayer, .vjs-big-play-button"
 
 
 def to_py_regex(pattern):
@@ -177,7 +183,9 @@ class PlayChecker:
         finally:
             page.close()
 
-    def check(self, source, episode_url, wait_ms=20000):
+    def check(self, source, episode_url, wait_ms=20000, extra_ms=0):
+        """extra_ms：等满 wait_ms 还没抓到、但页面上确实有播放器（video / iframe 等）时，再多等这么久（每 6 秒再点一轮）。
+        页面上连播放器都没有的不加时，不浪费时间。默认 0 = 和以前一样。"""
         mv = source["arguments"]["searchConfig"].get("matchVideo", {})
         try:
             match = re.compile(to_py_regex(mv.get("matchVideoUrl") or r"$^"))
@@ -195,16 +203,21 @@ class PlayChecker:
             except Exception as e:  # 超时也继续看已经抓到的
                 if not seen:
                     return {"play": "error", "play_reason": "打开播放页失败：%s" % type(e).__name__}
-            waited, clicked = 0, False
-            while waited < wait_ms:
+            waited, next_click, limit = 0, CLICK_FIRST_MS, wait_ms
+            extended = False
+            while waited < limit:
                 page.wait_for_timeout(1500)
                 waited += 1500
                 found = self._found(page, seen, match, scan_dom)
                 if found:
                     return found
-                if not clicked and waited >= 4500:
-                    clicked = True
+                if waited >= next_click:
+                    next_click = waited + CLICK_EVERY_MS
                     self._click_play(page)
+                if waited >= limit and extra_ms > 0 and not extended:
+                    extended = True   # 只加一次时间，并且只在页面上真有播放器时
+                    if self._has_player(page):
+                        limit += extra_ms
             try:
                 text = page.inner_text("body", timeout=2000)[:6000]
             except Exception:
@@ -215,7 +228,7 @@ class PlayChecker:
             if generic:
                 return {"play": "mismatch", "play_reason": "页面出现了视频地址，但 matchVideoUrl 认不出来",
                         "media": generic[0][:200], "media_urls": [u[:400] for u in generic[:20]]}
-            return {"play": "none", "play_reason": "等了 %d 秒没有出现视频地址" % (wait_ms // 1000)}
+            return {"play": "none", "play_reason": "等了 %d 秒没有出现视频地址" % (waited // 1000)}
         finally:
             ctx.close()
 
@@ -284,13 +297,24 @@ class PlayChecker:
                     return {"play": "ok", "play_reason": "scanDomMediaUrls 能从 <video> 取到地址", "media": src[:200]}
         return None
 
+    def _has_player(self, page):
+        """页面（含所有 iframe）上有没有播放器相关的元素。"""
+        for fr in page.frames:
+            try:
+                if fr.query_selector(PLAYER_PROBE):
+                    return True
+            except Exception:
+                continue
+        return False
+
     def _click_play(self, page):
+        """每个 frame 各点一次它里面最靠前的播放按钮 / 容器（嵌套 iframe 里的播放器也能点到）。"""
         for fr in page.frames:
             for sel in CLICK_SELECTORS:
                 try:
                     el = fr.query_selector(sel)
                     if el:
                         el.click(timeout=1500, force=True)
-                        return
+                        break
                 except Exception:
                     continue

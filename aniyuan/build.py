@@ -304,14 +304,15 @@ def run_playchecks(cands, config, pc):
     页面里出现了视频地址但 matchVideoUrl 认不出（mismatch）时，试着修 matchVideoUrl 并重新检测。"""
     from .convert.kazumi import MATCH_VIDEO_URL
     wait = config.get("play_wait_ms", 20000)
+    extra = config.get("play_extra_wait_ms", 0)   # 等满还没抓到、但页面上有播放器时再多等的毫秒数
     todo = [c for c in cands if (c.get("smoke") or {}).get("status") == "ok" and c["smoke"].get("episode_url")]
     for c in todo[: config.get("play_check_max", 80)]:
         try:
-            res = pc.check(c["source"], c["smoke"]["episode_url"], wait)
+            res = pc.check(c["source"], c["smoke"]["episode_url"], wait, extra)
             if res.get("play") == "mismatch" and config.get("repair", True) and config.get("repair_match_video", True):
                 new, why = repair_match_video(c["source"], res.get("media_urls") or [], MATCH_VIDEO_URL)
                 if new:
-                    res2 = pc.check(new, c["smoke"]["episode_url"], wait)   # 改完必须重新检测通过才采用
+                    res2 = pc.check(new, c["smoke"]["episode_url"], wait, extra)   # 改完必须重新检测通过才采用
                     if res2.get("play") == "ok":
                         c["source"] = new
                         c["notes"].append("已自动修复 matchVideoUrl：" + why)

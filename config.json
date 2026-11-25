@@ -20,6 +20,8 @@
   "follow_redirects": true,
   "play_check_max": 80,
   "play_wait_ms": 20000,
+  "play_extra_wait_ms": 15000,
+  "_说明19": "play_extra_wait_ms：播放检测等满 play_wait_ms 还没抓到视频地址、但页面（含 iframe）上确实有播放器时，再多等这么久，期间每 6 秒再点一轮播放按钮（广告、懒加载的播放器常常要更久）；页面上没有播放器的不加时。0 = 关闭。",
   "_说明3": "repair：选择器检测失败时，按真实页面自动重选；replace_brittle：位置式写法能用时，若更稳的写法也通过且剧集数不少于原来就替换；follow_redirects：搜索被跳转到新域名且检测通过时自动换域名；play_check_max/play_wait_ms：播放检测的数量上限、每个等待的毫秒数。",
   "_alias说明": "girigiri 的搜索走 m3u8.girigirilove.com 的接口，但和 ani.girigirilove.com 是同一个站；2kdm.com（AniBaka）和 mutedm.com（Kazumi 的 mutefun）也是同一个站（2kdm.com 会跳转到 mutedm.com）。",
   "browser_fallback": true,
