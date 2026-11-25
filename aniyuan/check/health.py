@@ -78,6 +78,15 @@ def confirmed_fail(c):
     return (c.get("smoke") or {}).get("status") == "fail" and not (c.get("health") or {}).get("grace") and not abroad_ok(c)
 
 
+def prunable(c, after):
+    """长期失效：检测明确失败（不在宽限期、海外直连也没通过），且已连续失败 after 次以上（每天跑一次 ≈ after 天）。
+    这种源订阅里只会白占位置、还会在搜索时拖慢 Animeko，所以直接不写进订阅；
+    它仍然每次被检测，哪天通过了 fails 清零，下一次构建会自动回到订阅里。after <= 0 = 关闭。"""
+    if not after or after <= 0 or not confirmed_fail(c):
+        return False
+    return int((c.get("health") or {}).get("fails", 0)) >= after
+
+
 def auto_tier(c):
     """按联网检测结果给 Animeko 的优先级分档（0 最高，4 最低）；没有检测结果返回 (None, "")。
     自动分档只用 1-4（0 不自动给）：

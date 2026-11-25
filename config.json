@@ -3,6 +3,8 @@
   "default_tier": 4,
   "smoke_keyword": "葬送的芙莉莲",
   "drop_failed": false,
+  "prune_failed_after": 7,
+  "_说明18": "prune_failed_after：明确检测失败（页面能打开但选不出结果 / 404，海外直连也没通过，且不在宽限期内）连续这么多次（每天一次 ≈ 天数）后，不再写进订阅，报告里列出「长期失效」一节；这些源仍每次检测，通过一次就自动回来。0 = 关闭，只给描述加警告。",
   "site_aliases": {
     "m3u8.girigirilove.com": "ani.girigirilove.com",
     "2kdm.com": "mutedm.com"

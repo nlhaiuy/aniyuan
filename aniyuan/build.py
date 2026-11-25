@@ -28,8 +28,8 @@ from .convert.kazumi import convert_rule
 from .convert.easybangumi import convert_extension
 from .check.domains import host_of
 from .check import network, ua as ua_mod
-from .check.health import (DEFAULT_CARRY_DAYS, abroad_ok, DEFAULT_THRESHOLD, auto_tier, blind_spots, confirmed_fail, smoke_tier,
-                           update_health)
+from .check.health import (DEFAULT_CARRY_DAYS, abroad_ok, DEFAULT_THRESHOLD, auto_tier, blind_spots, confirmed_fail, prunable,
+                           smoke_tier, update_health)
 from .normalize import normalize_source
 from .check.repair import (brittle, find_search_selector, mine_presets, repair_match_video, repair_source,
                            search_stats)
@@ -730,6 +730,7 @@ def main():
             print("官方重叠 %s ↔ %s：%s（%s）" % (r["name"], r["official"], r["action"], r["note"]))
 
     sources = []
+    pruned = []
     for c in sorted(chosen, key=lambda c: c["source"]["id"]):
         if c.get("dropped"):   # 官方已覆盖、按 official_dedupe=exclude 剔除
             continue
@@ -742,6 +743,11 @@ def main():
         if sm and confirmed_fail(c):
             if config.get("drop_failed"):
                 c["dropped"] = True
+                continue
+            if prunable(c, config.get("prune_failed_after", 0)):   # 长期失效：不进订阅，恢复后自动回来
+                c["dropped"] = True
+                c["pruned"] = True
+                pruned.append(c)
                 continue
             warn = sm["reason"]
         sources.append(normalize_source(c, s, config, warn))
@@ -790,6 +796,14 @@ def main():
         rep.append("| %s | %s | %s | %s | %s |" % (d["site"], d["id"], d["winner"], d["reason"], "<br>".join(d["members"])))
     if official_sites and official_mode != "off":
         rep += official_mod.report_section(official_rows, len(chosen), official_mode)
+    if pruned:
+        rep += ["", "## 长期失效、已自动移出订阅", "",
+                "这些站点连续 %d 次以上明确检测失败（页面能打开但选不出结果，或直接 404），已不写进订阅；它们仍会每次检测，通过一次就自动回到订阅里。" % config.get("prune_failed_after", 0), "",
+                "| 来源:规则 | 站点 | 连续失败 | 原因 |", "|---|---|---|---|"]
+        for c in pruned:
+            rep.append("| %s:%s | %s | %d | %s |" % (c["origin"], c["key"], c["source"].get("id", ""),
+                                                      int((c.get("health") or {}).get("fails", 0)),
+                                                      ((c.get("smoke") or {}).get("reason") or "").replace("|", "/")))
     rep += ["", "## 全部候选", "", "| 来源 | 规则 | 版本 | 修改日期（依据） | 转换 | 自动检测 | 播放 | 采用 | 备注 |", "|---|---|---|---|---|---|---|---|---|"]
     for c in cands:
         sm = c.get("smoke") or {}
