@@ -28,7 +28,7 @@ from .convert.kazumi import convert_rule
 from .convert.easybangumi import convert_extension
 from .check.domains import host_of
 from .check import network, ua as ua_mod
-from .check.health import (DEFAULT_CARRY_DAYS, abroad_ok, DEFAULT_THRESHOLD, auto_tier, blind_spots, confirmed_fail, prunable,
+from .check.health import (DEFAULT_CARRY_DAYS, DEFAULT_PLAY_GRACE, abroad_ok, DEFAULT_THRESHOLD, auto_tier, blind_spots, confirmed_fail, prunable,
                            smoke_tier, update_health)
 from .normalize import normalize_source
 from .check.repair import (brittle, find_search_selector, mine_presets, repair_match_video, repair_source,
@@ -709,7 +709,8 @@ def main():
     if args.smoke:   # 没联网检测时不动历史
         history = load_json(args.health) if os.path.exists(args.health) else {}
         new_health = update_health(cands, history, int(time.time()), config.get("fail_threshold", DEFAULT_THRESHOLD),
-                                   config.get("blind_carry_days", DEFAULT_CARRY_DAYS))
+                                   config.get("blind_carry_days", DEFAULT_CARRY_DAYS),
+                                   config.get("play_none_grace", DEFAULT_PLAY_GRACE))
         os.makedirs(os.path.dirname(os.path.abspath(args.health)), exist_ok=True)
         with open(args.health, "w", encoding="utf-8") as f:
             json.dump(new_health, f, ensure_ascii=False, indent=1, sort_keys=True)

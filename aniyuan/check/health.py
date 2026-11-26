@@ -4,6 +4,7 @@
   fails    连续“明确失败”（status=fail：页面能打开但选择器没选中）的次数，通过一次就清零
   last_ok  最近一次检测通过的时间
   play     最近一次检测通过时的播放检测结果（用来在宽限期内维持原来的排名）
+  play_none 播放检测连续“没抓到视频地址”的次数；以前能播的，不到 play_grace 次不降档（播放宽限）
 blocked / unreachable / skipped / 没检测 都不算失败，也不会清零，记录原样保留。
 
 海外盲区（carry）：检测跑在海外服务器上，国内站常常打不开（unreachable）或被 403 / 验证码拦住（blocked），
@@ -21,7 +22,8 @@ EXIT = "海外"   # 检测出口的叫法，进备注里；走国内代理时 bu
 DAY = 86400
 # 检测通过后按播放检测结果排名：能播 > 没检测 > 没抓到 > 认不出（和 build.merge 里一致）
 PLAY_TIER = {"ok": 3, "error": 2, "none": 1.8, "blocked": 1.6, "mismatch": 1.5}
-KEEP = ("fails", "last_ok", "last_fail", "play", "last", "blind")
+KEEP = ("fails", "last_ok", "last_fail", "play", "last", "blind", "play_none")
+DEFAULT_PLAY_GRACE = 3   # 播放检测：以前能播、这次只是没抓到视频，连续这么多次才真的降档
 BLIND = ("blocked", "unreachable")
 
 
@@ -29,7 +31,8 @@ def cand_key(c):
     return "%s:%s" % (c["origin"], c["key"])
 
 
-def update_health(cands, history, now, threshold=DEFAULT_THRESHOLD, carry_days=DEFAULT_CARRY_DAYS):
+def update_health(cands, history, now, threshold=DEFAULT_THRESHOLD, carry_days=DEFAULT_CARRY_DAYS,
+                  play_grace=DEFAULT_PLAY_GRACE):
     """按这次的检测结果更新历史，并给每个候选写上 c["health"]。返回新的历史（只保留这次出现的候选）。"""
     new = {}
     for c in cands:
@@ -39,8 +42,21 @@ def update_health(cands, history, now, threshold=DEFAULT_THRESHOLD, carry_days=D
         rec = {k: v for k, v in (history.get(key) or {}).items() if k in KEEP}
         sm = c.get("smoke") or {}
         st = sm.get("status")
+        play_note = None
         if st == "ok":
-            rec.update(fails=0, last_ok=now, play=sm.get("play"))
+            play = sm.get("play")
+            if play == "none" and rec.get("play") == "ok" and play_grace and play_grace > 0:
+                # 播放宽限：以前能播，这次只是等满时间没抓到视频地址（广告、CDN 抖动都会这样），
+                # 连续 play_grace 次才算真的不能播；宽限期内按“能播”排名。blocked / mismatch / error 不在此列。
+                n = int(rec.get("play_none", 0)) + 1
+                if n < play_grace:
+                    sm["play_raw"] = "none"
+                    sm["play"], play = "ok", "ok"
+                    play_note = "播放检测这次没抓到视频地址（连续 %d/%d 次），以前能播，暂按能播排名" % (n, play_grace)
+                rec["play_none"] = n
+            else:
+                rec["play_none"] = 0
+            rec.update(fails=0, last_ok=now, play=play)
         elif st == "fail":
             rec["fails"] = int(rec.get("fails", 0)) + 1
             rec["last_fail"] = now
@@ -57,6 +73,8 @@ def update_health(cands, history, now, threshold=DEFAULT_THRESHOLD, carry_days=D
         if carry:
             c["notes"].append("%s检测%s（连续 %d 次），%.0f 天前通过过，暂按上次的成绩排名" % (
                 EXIT, "被拦" if st == "blocked" else "打不开", rec["blind"], age))
+        if play_note:
+            c["notes"].append(play_note)
         if grace:
             c["notes"].append("自动检测未通过（连续 %d/%d 次），以前通过过，暂不降级、不加警告" % (rec["fails"], threshold))
         if rec:
