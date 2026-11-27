@@ -1,0 +1,90 @@
+{
+ "anibaka:7sefun": {
+  "config": {
+   "matchChannelName": "^(?<ch>.+)$",
+   "matchEpisodeSortFromName": "第\\s*(?<ep>.+)\\s*[话集]",
+   "selectChannelNames": ".chat-stream-bfqs > li",
+   "selectEpisodeLinksFromList": "",
+   "selectEpisodeLists": ".vod-play-list-container",
+   "selectEpisodesFromList": "a"
+  },
+  "for": "7sefun.top|.vod-play-list-container a"
+ },
+ "anibaka:lm6": {
+  "config": {
+   "matchChannelName": "^(?<ch>.+)$",
+   "matchEpisodeSortFromName": "第\\s*(?<ep>.+)\\s*[话集]",
+   "selectChannelNames": ".module-tab-item.tab-item span",
+   "selectEpisodeLinksFromList": "",
+   "selectEpisodeLists": ".module-player-list",
+   "selectEpisodesFromList": "a"
+  },
+  "for": "lm6.net|.module-player-list a"
+ },
+ "kazumi:7sefun": {
+  "config": {
+   "matchChannelName": "^(?<ch>.+)$",
+   "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)",
+   "selectChannelNames": ".chat-stream-bfqs > li",
+   "selectEpisodeLinksFromList": "",
+   "selectEpisodeLists": ".vod-play-list-container",
+   "selectEpisodesFromList": "a"
+  },
+  "for": "7sefun.top|div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) div a"
+ },
+ "kazumi:LMM": {
+  "config": {
+   "matchChannelName": "^(?<ch>.+)$",
+   "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)",
+   "selectChannelNames": ".module-tab-item.tab-item span",
+   "selectEpisodeLinksFromList": "",
+   "selectEpisodeLists": ".module-player-list",
+   "selectEpisodesFromList": "a"
+  },
+  "for": "lmm22.com|div[class*=\"module-player-list\"] a[href*=\"/play/\"]"
+ },
+ "kazumi:akianime": {
+  "config": {
+   "matchChannelName": "^(?<ch>.+?)\\s*\\d+$",
+   "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)",
+   "selectChannelNames": ".anthology-tab > .swiper-wrapper > a",
+   "selectEpisodeLinksFromList": "",
+   "selectEpisodeLists": ".anthology-list > .anthology-list-box",
+   "selectEpisodesFromList": "a"
+  },
+  "for": "akianime.cc|ul[class=\"anthology-list-play size\"] li > a"
+ },
+ "kazumi:dalvdm": {
+  "config": {
+   "matchChannelName": "^(?<ch>.+)$",
+   "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)",
+   "selectChannelNames": ".swiper-slide",
+   "selectEpisodeLinksFromList": "",
+   "selectEpisodeLists": "div[id^=\"playlist\"][class*=\"lists-box\"]",
+   "selectEpisodesFromList": "a"
+  },
+  "for": "sbdl.cc|div[id^=\"playlist\"][class*=\"lists-box\"] a[href*=\"/index.php/vod/play/\"]"
+ },
+ "kazumi:mgnacg": {
+  "config": {
+   "matchChannelName": "^(?<ch>.+?)\\s*\\d+$",
+   "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)",
+   "selectChannelNames": ".anthology-tab > .swiper-wrapper > a",
+   "selectEpisodeLinksFromList": "",
+   "selectEpisodeLists": ".anthology-list > .anthology-list-box",
+   "selectEpisodesFromList": "a"
+  },
+  "for": "mgnacg.com|ul[class=\"anthology-list-play size\"] li > a"
+ },
+ "kazumi:moonci": {
+  "config": {
+   "matchChannelName": "^(?<ch>.+)$",
+   "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)",
+   "selectChannelNames": ".hl-plays-from .hl-tabs-btn",
+   "selectEpisodeLinksFromList": "",
+   "selectEpisodeLists": "#playlist .hl-tabs-box",
+   "selectEpisodesFromList": "a"
+  },
+  "for": "moonci.com|div[class*=\"hl-play-source\"] ul[class*=\"hl-plays-list\"] a[href*=\"/play/\"]"
+ }
+}

@@ -16,8 +16,8 @@
       "reason": "更新（2026-11-01）",
       "members": [
         "anibaka:7sefun(2026-11-01)",
-        "kazumi:7sefun(2026-08-10)",
-        "easybangumi:kazumi-7sefun(2026-10-20)"
+        "easybangumi:kazumi-7sefun(2026-10-20)",
+        "kazumi:7sefun(2026-08-10)"
       ]
     },
     {
@@ -69,7 +69,7 @@
       ]
     },
     {
-      "site": "baimaodm.com",
+      "site": "bmddm.com",
       "winner": "easybangumi:kazumi-baimao",
       "id": "aniyuan-baimao",
       "reason": "更新（2026-10-20）",
@@ -85,15 +85,6 @@
       "reason": "只有这一个来源",
       "members": [
         "anibaka:agekkkk(2026-11-01)"
-      ]
-    },
-    {
-      "site": "cn1.xgcartoon.com",
-      "winner": "anibaka:xigua",
-      "id": "aniyuan-xigua",
-      "reason": "只有这一个来源",
-      "members": [
-        "anibaka:xigua(2026-11-15)"
       ]
     },
     {
@@ -208,12 +199,12 @@
     },
     {
       "site": "mgnacg.com",
-      "winner": "anibaka:mgnacg",
+      "winner": "kazumi:mgnacg",
       "id": "aniyuan-mgnacg",
-      "reason": "更新（2026-11-01）",
+      "reason": "最新的 anibaka:mgnacg 自动检测没有结论，改用检测结果更好的（ok）",
       "members": [
-        "anibaka:mgnacg(2026-11-01)",
-        "kazumi:mgnacg(2026-10-15)"
+        "kazumi:mgnacg(2026-10-15)",
+        "anibaka:mgnacg(2026-11-01)"
       ]
     },
     {
@@ -229,12 +220,12 @@
     },
     {
       "site": "mutedm.com",
-      "winner": "kazumi:mutefun",
+      "winner": "anibaka:2kdm",
       "id": "aniyuan-2kdm",
-      "reason": "最新的 anibaka:2kdm 自动检测未通过，改用检测结果更好的（blocked）",
+      "reason": "更新（2026-11-01）",
       "members": [
-        "kazumi:mutefun(2026-10-31)",
-        "anibaka:2kdm(2026-11-01)"
+        "anibaka:2kdm(2026-11-01)",
+        "kazumi:mutefun(2026-10-31)"
       ]
     },
     {
@@ -284,6 +275,15 @@
       ]
     },
     {
+      "site": "xgcartoon.com",
+      "winner": "anibaka:xigua",
+      "id": "aniyuan-xigua",
+      "reason": "只有这一个来源",
+      "members": [
+        "anibaka:xigua(2026-11-15)"
+      ]
+    },
+    {
       "site": "ylys.cc",
       "winner": "easybangumi:kazumi-ylsp",
       "id": "aniyuan-ylsp",
@@ -299,9 +299,9 @@
       "name": "七色番",
       "official": "七色番",
       "official_tier": 2,
-      "official_status": "unreachable",
+      "official_status": "ok",
       "action": "demote",
-      "note": "官方同站源检测没有结论（unreachable）"
+      "note": "官方同站源检测通过"
     },
     {
       "id": "anibaka-anime7",
@@ -335,15 +335,6 @@
       "name": "LMM",
       "official": "路漫漫",
       "official_tier": 2,
-      "official_status": "unreachable",
-      "action": "demote",
-      "note": "官方同站源检测没有结论（unreachable）"
-    },
-    {
-      "id": "anibaka-2kdm",
-      "name": "mutefun",
-      "official": "2k动漫",
-      "official_tier": 1,
       "official_status": "ok",
       "action": "demote",
       "note": "官方同站源检测通过"
@@ -366,7 +357,8 @@
       "status": "partial",
       "notes": [
         "末尾 text() 已改为取元素全部文本",
-        "播放检测这次没抓到视频地址（连续 1/3 次），以前能播，暂按能播排名"
+        "自动分线路（2 条：七色A线、七色B线）",
+        "逐线路播放检测：七色A线=ok、七色B线=none"
       ],
       "info": [
         "Kazumi 规则没有线路名，所有线路合并为一条"
@@ -386,21 +378,25 @@
         "episode_count": 20,
         "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
         "play": "ok",
-        "play_reason": "等了 21 秒没有出现视频地址",
-        "play_raw": "none"
+        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=89758e75f94e92b97f08e5c160ee375e&dis_t=1795749781"
       },
       "smoke_direct": {
         "status": "ok",
         "reason": "搜到 2 个条目，详情页选出 20 个剧集链接",
         "episode_count": 20
       },
+      "line_play": {
+        "七色A线": "ok",
+        "七色B线": "none"
+      },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
+        "last_ok": 1795754890,
         "play": "ok",
-        "play_none": 1,
+        "play_none": 0,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -413,8 +409,7 @@
       "version": "1.2",
       "status": "ok",
       "notes": [
-        "国内出口检测unreachable，但 GitHub 海外直连通过，照样采用（排名低一级）",
-        "国内出口检测打不开（连续 1 次），0 天前通过过，暂按上次的成绩排名"
+        "国内出口检测打不开（连续 2 次），1 天前通过过，暂按上次的成绩排名"
       ],
       "info": [
         "Kazumi 规则没有线路名，所有线路合并为一条"
@@ -430,22 +425,21 @@
       "orig_site": "moonci.com",
       "smoke": {
         "status": "unreachable",
-        "reason": "请求失败：SSLError"
+        "reason": "请求失败：ReadTimeout"
       },
       "smoke_direct": {
-        "status": "ok",
-        "reason": "搜到 4 个条目，详情页选出 10 个剧集链接",
-        "episode_count": 10
+        "status": "blocked",
+        "reason": "HTTP 403"
       },
       "health": {
-        "blind": 1,
+        "blind": 2,
         "fails": 0,
         "last": "unreachable",
         "last_ok": 1795686863,
         "play": "none",
         "grace": false,
         "carry": true,
-        "carry_age": 0.1
+        "carry_age": 0.8
       },
       "site": "moonci.com"
     },
@@ -476,7 +470,7 @@
         "reason": "HTTP 403"
       },
       "health": {
-        "blind": 43,
+        "blind": 44,
         "last": "unreachable",
         "grace": false,
         "carry": false,
@@ -490,8 +484,9 @@
       "version": "1.4",
       "status": "ok",
       "notes": [
-        "已自动修复选择器：搜索选择器改为 .vod-detail a[href]（命中 2/31）；剧集选择器改为 .anthology-list-box a（84 集）",
-        "优先级自动设为 2（检测通过，播放检测：none）"
+        "自动分线路（3 条： 超高画三线、 中画-不要相信视频里的广告、 【高画2】B站片源-App专享）",
+        "逐线路播放检测： 超高画三线=none、 中画-不要相信视频里的广告=ok、 【高画2】B站片源-App专享=none",
+        "优先级自动设为 1（检测通过，播放检测：ok）"
       ],
       "info": [
         "Kazumi 规则没有线路名，所有线路合并为一条"
@@ -507,24 +502,28 @@
       "orig_site": "akianime.cc",
       "smoke": {
         "status": "ok",
-        "reason": "搜到 32 个条目，详情页选出 84 个剧集链接",
+        "reason": "搜到 2 个条目，详情页选出 84 个剧集链接",
         "episode_count": 84,
         "episode_url": "https://www.akianime.cc/bgmplay/dPDDDE-5-1.html",
-        "repaired": "搜索选择器改为 .vod-detail a[href]（命中 2/31）；剧集选择器改为 .anthology-list-box a（84 集）",
-        "play": "none",
-        "play_reason": "等了 36 秒没有出现视频地址"
+        "play": "ok",
+        "play_reason": "线路「 中画-不要相信视频里的广告」能播"
       },
       "smoke_direct": {
         "status": "ok",
-        "reason": "搜到 32 个条目，详情页选出 84 个剧集链接",
+        "reason": "搜到 2 个条目，详情页选出 84 个剧集链接",
         "episode_count": 84
+      },
+      "line_play": {
+        " 超高画三线": "none",
+        " 中画-不要相信视频里的广告": "ok",
+        " 【高画2】B站片源-App专享": "none"
       },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
-        "play": "none",
+        "last_ok": 1795754890,
+        "play": "ok",
         "play_none": 0,
         "grace": false,
         "carry": false,
@@ -539,8 +538,8 @@
       "version": "1.0",
       "status": "ok",
       "notes": [
-        "国内出口检测unreachable，但 GitHub 海外直连通过，照样采用（排名低一级）",
-        "国内出口检测打不开（连续 1 次），0 天前通过过，暂按上次的成绩排名"
+        "域名已跳转，改用新域名 https://www.bmddm.com（原 https://www.baimaodm.com）",
+        "播放检测这次没抓到视频地址（连续 1/3 次），以前能播，暂按能播排名"
       ],
       "info": [
         "Kazumi 规则没有线路名，所有线路合并为一条"
@@ -555,8 +554,14 @@
       "date_basis": "内容未变",
       "orig_site": "baimaodm.com",
       "smoke": {
-        "status": "unreachable",
-        "reason": "请求失败：SSLError"
+        "status": "ok",
+        "reason": "搜到 3 个条目，详情页选出 168 个剧集链接",
+        "episode_count": 168,
+        "episode_url": "https://www.bmddm.com/play/400602-0-0.html",
+        "final_origin": "https://www.bmddm.com",
+        "play": "ok",
+        "play_reason": "等了 21 秒没有出现视频地址",
+        "play_raw": "none"
       },
       "smoke_direct": {
         "status": "ok",
@@ -564,16 +569,17 @@
         "episode_count": 168
       },
       "health": {
-        "blind": 1,
+        "blind": 0,
         "fails": 0,
-        "last": "unreachable",
-        "last_ok": 1795686863,
+        "last": "ok",
+        "last_ok": 1795754890,
         "play": "ok",
+        "play_none": 1,
         "grace": false,
-        "carry": true,
-        "carry_age": 0.1
+        "carry": false,
+        "carry_age": null
       },
-      "site": "baimaodm.com"
+      "site": "bmddm.com"
     },
     {
       "origin": "kazumi",
@@ -581,7 +587,9 @@
       "version": "1.2",
       "status": "ok",
       "notes": [
-        "优先级自动设为 2（检测通过，播放检测：none）"
+        "自动分线路（4 条：默认线路、高速线路、高速线路2、超清专线）",
+        "逐线路播放检测：默认线路=none、高速线路=ok、高速线路2=none、超清专线=none",
+        "优先级自动设为 1（检测通过，播放检测：ok）"
       ],
       "info": [
         "Kazumi 规则没有线路名，所有线路合并为一条"
@@ -599,19 +607,25 @@
         "reason": "搜到 2 个条目，详情页选出 112 个剧集链接",
         "episode_count": 112,
         "episode_url": "https://www.sbdl.cc/index.php/vod/play/id/32361/sid/1/nid/1.html",
-        "play": "none",
-        "play_reason": "等了 36 秒没有出现视频地址"
+        "play": "ok",
+        "play_reason": "线路「高速线路」能播"
       },
       "smoke_direct": {
         "status": "blocked",
         "reason": "HTTP 403"
       },
+      "line_play": {
+        "默认线路": "none",
+        "高速线路": "ok",
+        "高速线路2": "none",
+        "超清专线": "none"
+      },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
-        "play": "none",
+        "last_ok": 1795754890,
+        "play": "ok",
         "play_none": 0,
         "grace": false,
         "carry": false,
@@ -625,9 +639,7 @@
       "key": "DM84",
       "version": "1.4",
       "status": "ok",
-      "notes": [
-        "播放检测这次没抓到视频地址（连续 1/3 次），以前能播，暂按能播排名"
-      ],
+      "notes": [],
       "info": [
         "Kazumi 规则没有线路名，所有线路合并为一条"
       ],
@@ -646,8 +658,8 @@
         "episode_count": 30,
         "episode_url": "https://dmbus.cc/p/5963-2-1.html",
         "play": "ok",
-        "play_reason": "等了 36 秒没有出现视频地址",
-        "play_raw": "none"
+        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
+        "media": "https://hhjx.hhplayer.com/playlist/8298df34c8e87d6dc0af170f24ea0812cda7f688524f9df3.m3u8?expires=1795775093&sign=ac94b0dbb40e8df60d058d095ec57197b36d16899431ff122fa945011a2df288"
       },
       "smoke_direct": {
         "status": "ok",
@@ -659,9 +671,9 @@
         "fails": 0,
         "last": "ok",
         "last_fail": 1794630687,
-        "last_ok": 1795697162,
+        "last_ok": 1795754890,
         "play": "ok",
-        "play_none": 1,
+        "play_none": 0,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -711,8 +723,10 @@
       "version": "2.4",
       "status": "ok",
       "notes": [
+        "自动分线路（2 条：dev云播、聚合线路）",
+        "逐线路播放检测：dev云播=none、聚合线路=ok",
         "优先级自动设为 1（检测通过，播放检测：ok）",
-        "官方订阅里已有同一个站的源「路漫漫」，优先级降到 4（官方同站源检测没有结论（unreachable））"
+        "官方订阅里已有同一个站的源「路漫漫」，优先级降到 4（官方同站源检测通过）"
       ],
       "info": [
         "Kazumi 规则没有线路名，所有线路合并为一条"
@@ -731,19 +745,22 @@
         "episode_count": 20,
         "episode_url": "https://www.lmm22.com/play/7817_1_1.html",
         "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=92645174c1e931cb11a8d137b0a98c4a&dis_t=1795696596"
+        "play_reason": "线路「聚合线路」能播"
       },
       "smoke_direct": {
         "status": "ok",
         "reason": "搜到 2 个条目，详情页选出 20 个剧集链接",
         "episode_count": 20
       },
+      "line_play": {
+        "dev云播": "none",
+        "聚合线路": "ok"
+      },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
+        "last_ok": 1795754890,
         "play": "ok",
         "play_none": 0,
         "grace": false,
@@ -758,7 +775,11 @@
       "key": "mgnacg",
       "version": "1.2",
       "status": "ok",
-      "notes": [],
+      "notes": [
+        "自动分线路（5 条：云端线路、新番线路、Mahoo、存储线路、本地线路（已下线））",
+        "逐线路播放检测：云端线路=ok、新番线路=none、Mahoo=ok、存储线路=ok",
+        "优先级自动设为 1（检测通过，播放检测：ok）"
+      ],
       "info": [
         "规则没有 sourceTemplate，条目链接按 /media/{value}.html 猜测，冒烟测试会尝试其他写法",
         "Kazumi 规则没有线路名，所有线路合并为一条"
@@ -779,25 +800,32 @@
         "template": "/media/{value}.html",
         "play": "ok",
         "play_reason": "scanDomMediaUrls 能从 <video> 取到地址",
-        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=2NQmaWlMX0rte-mTmyODKgFOOBeA1lrLxi5-FqSOwtg=:1795700207"
+        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=X3xhcEosnpuqIaMQ-HqgKihqc0Z9zhE2Hljt0dG-HNo=:1795757549"
       },
       "smoke_direct": {
         "status": "ok",
         "reason": "搜到 2 个条目，详情页选出 50 个剧集链接",
         "episode_count": 50
       },
+      "line_play": {
+        "云端线路": "ok",
+        "新番线路": "none",
+        "Mahoo": "ok",
+        "存储线路": "ok"
+      },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
+        "last_ok": 1795754890,
         "play": "ok",
         "play_none": 0,
         "grace": false,
         "carry": false,
         "carry_age": null
       },
-      "site": "mgnacg.com"
+      "site": "mgnacg.com",
+      "chosen": true
     },
     {
       "origin": "kazumi",
@@ -805,7 +833,9 @@
       "version": "1.1",
       "status": "ok",
       "notes": [
-        "播放检测这次没抓到视频地址（连续 1/3 次），以前能播，暂按能播排名",
+        "自动分线路（2 条：X.3、X.4）",
+        "逐线路播放检测：X.3=none、X.4=none",
+        "播放检测这次没抓到视频地址（连续 2/3 次），以前能播，暂按能播排名",
         "优先级自动设为 1（检测通过，播放检测：ok）"
       ],
       "info": [
@@ -821,9 +851,9 @@
       "orig_site": "moonci.com",
       "smoke": {
         "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 30 个剧集链接",
-        "episode_count": 30,
-        "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
+        "reason": "搜到 2 个条目，详情页选出 56 个剧集链接",
+        "episode_count": 56,
+        "episode_url": "https://www.moonci.com/anime/228/play/2-1.html",
         "play": "ok",
         "play_reason": "等了 21 秒没有出现视频地址",
         "play_raw": "none"
@@ -833,13 +863,17 @@
         "reason": "搜到 2 个条目，详情页选出 30 个剧集链接",
         "episode_count": 30
       },
+      "line_play": {
+        "X.3": "none",
+        "X.4": "none"
+      },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
+        "last_ok": 1795754890,
         "play": "ok",
-        "play_none": 1,
+        "play_none": 2,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -852,10 +886,7 @@
       "key": "mutefun",
       "version": "1.6",
       "status": "ok",
-      "notes": [
-        "优先级自动设为 3（检测没有结论（blocked））",
-        "官方订阅里已有同一个站的源「2k动漫」，优先级降到 4（官方同站源检测通过）"
-      ],
+      "notes": [],
       "info": [
         "searchResult 是 \".\"：链接取列表项本身",
         "Kazumi 规则没有线路名，所有线路合并为一条"
@@ -878,14 +909,13 @@
         "reason": "HTTP 403"
       },
       "health": {
-        "blind": 25,
+        "blind": 26,
         "last": "blocked",
         "grace": false,
         "carry": false,
         "carry_age": null
       },
-      "site": "mutedm.com",
-      "chosen": true
+      "site": "mutedm.com"
     },
     {
       "origin": "kazumi",
@@ -923,7 +953,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
+        "last_ok": 1795754890,
         "play": "ok",
         "play_none": 0,
         "grace": false,
@@ -1006,11 +1036,11 @@
       "orig_site": "tvtfun.net",
       "smoke": {
         "status": "ok",
-        "reason": "搜到 3 个条目，详情页选出 10 个剧集链接",
-        "episode_count": 10,
-        "episode_url": "https://www.tvtfun.net/watch/515759/1?line=cmv50nu3r000crfl05aadnnll",
+        "reason": "搜到 3 个条目，详情页选出 28 个剧集链接",
+        "episode_count": 28,
+        "episode_url": "https://www.tvtfun.net/watch/400602/1?line=cmv50nu3r000crfl05aadnnll",
         "play": "none",
-        "play_reason": "等了 36 秒没有出现视频地址"
+        "play_reason": "等了 21 秒没有出现视频地址"
       },
       "smoke_direct": {
         "status": "ok",
@@ -1021,7 +1051,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
+        "last_ok": 1795754890,
         "play": "none",
         "play_none": 0,
         "grace": false,
@@ -1060,9 +1090,9 @@
       },
       "health": {
         "blind": 0,
-        "fails": 14,
+        "fails": 15,
         "last": "fail",
-        "last_fail": 1795697162,
+        "last_fail": 1795754890,
         "last_ok": 1795045566,
         "play": "ok",
         "grace": false,
@@ -1128,7 +1158,7 @@
           ]
         },
         "play": "ok",
-        "play_reason": "重放 play 取到视频地址：https://play.xfvod.pro:8088/Z/Z-%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2/S1/03.mp4?sign=a1767b258865fa1d26"
+        "play_reason": "重放 play 取到视频地址：https://play.xfvod.pro:8088/Z/Z-%E8%91%AC%E9%80%81%E7%9A%84%E8%8A%99%E8%8E%89%E8%8E%B2/S1/03.mp4?sign=a37cca8156ab414310"
       },
       "smoke_direct": {
         "status": "ok",
@@ -1139,7 +1169,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
+        "last_ok": 1795754890,
         "play": "ok",
         "play_none": 0,
         "grace": false,
@@ -1155,8 +1185,11 @@
       "version": "rev 9",
       "status": "ok",
       "notes": [
+        "自动分线路（2 条：七色A线、七色B线）",
+        "逐线路播放检测：七色A线=none、七色B线=none",
+        "播放检测这次没抓到视频地址（连续 1/3 次），以前能播，暂按能播排名",
         "优先级自动设为 1（检测通过，播放检测：ok）",
-        "官方订阅里已有同一个站的源「七色番」，优先级降到 4（官方同站源检测没有结论（unreachable））"
+        "官方订阅里已有同一个站的源「七色番」，优先级降到 4（官方同站源检测通过）"
       ],
       "info": [],
       "guess": false,
@@ -1175,21 +1208,25 @@
         "episode_count": 20,
         "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
         "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=f2c5f0ea0600f235ee1a1249c8c33a9f&dis_t=1795690543"
+        "play_reason": "等了 21 秒没有出现视频地址",
+        "play_raw": "none"
       },
       "smoke_direct": {
         "status": "ok",
         "reason": "搜到 2 个条目，详情页选出 20 个剧集链接",
         "episode_count": 20
       },
+      "line_play": {
+        "七色A线": "none",
+        "七色B线": "none"
+      },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
+        "last_ok": 1795754890,
         "play": "ok",
-        "play_none": 0,
+        "play_none": 1,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -1203,8 +1240,8 @@
       "version": "rev 9",
       "status": "ok",
       "notes": [
-        "国内出口检测打不开（连续 23 次），8 天前通过过，暂按上次的成绩排名",
-        "优先级自动设为 1（国内出口检测打不开，沿用 7.5 天前通过时的成绩，播放检测：ok）"
+        "国内出口检测打不开（连续 24 次），8 天前通过过，暂按上次的成绩排名",
+        "优先级自动设为 1（国内出口检测打不开，沿用 8.2 天前通过时的成绩，播放检测：ok）"
       ],
       "info": [],
       "guess": false,
@@ -1226,14 +1263,14 @@
         "reason": "HTTP 403"
       },
       "health": {
-        "blind": 23,
+        "blind": 24,
         "fails": 0,
         "last": "unreachable",
         "last_ok": 1795045566,
         "play": "ok",
         "grace": false,
         "carry": true,
-        "carry_age": 7.5
+        "carry_age": 8.2
       },
       "site": "cyfz.top",
       "chosen": true
@@ -1266,7 +1303,7 @@
         "reason": "HTTP 403"
       },
       "health": {
-        "blind": 43,
+        "blind": 44,
         "last": "blocked",
         "grace": false,
         "carry": false,
@@ -1307,7 +1344,7 @@
         "reason": "搜索页出现验证码/环境检查（验证码 / 环境检查，Animeko 会弹验证浏览器让用户通过）"
       },
       "health": {
-        "blind": 21,
+        "blind": 22,
         "last": "blocked",
         "grace": false,
         "carry": false,
@@ -1323,7 +1360,8 @@
       "status": "partial",
       "notes": [
         "AniBaka 播放步骤用了 crypto 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频",
-        "播放检测这次没抓到视频地址（连续 1/3 次），以前能播，暂按能播排名",
+        "自动分线路（2 条：deväºæ­、èåçº¿è·¯）",
+        "逐线路播放检测：deväºæ­=none、èåçº¿è·¯=ok",
         "优先级自动设为 1（检测通过，播放检测：ok）"
       ],
       "info": [],
@@ -1343,21 +1381,24 @@
         "episode_count": 20,
         "episode_url": "https://m.lm6.net/play/7817_1_1.html",
         "play": "ok",
-        "play_reason": "等了 21 秒没有出现视频地址",
-        "play_raw": "none"
+        "play_reason": "线路「èåçº¿è·¯」能播"
       },
       "smoke_direct": {
         "status": "ok",
         "reason": "搜到 2 个条目，详情页选出 20 个剧集链接",
         "episode_count": 20
       },
+      "line_play": {
+        "deväºæ­": "none",
+        "èåçº¿è·¯": "ok"
+      },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
+        "last_ok": 1795754890,
         "play": "ok",
-        "play_none": 1,
+        "play_none": 0,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -1415,9 +1456,9 @@
       },
       "health": {
         "blind": 0,
-        "fails": 5,
+        "fails": 6,
         "last": "fail",
-        "last_fail": 1795697162,
+        "last_fail": 1795754890,
         "last_ok": 1795519134,
         "play": "none",
         "grace": false,
@@ -1434,7 +1475,7 @@
       "status": "partial",
       "notes": [
         "AniBaka 播放步骤不是嗅探（playerAaaa/regex），已改成 WebView 嗅探，请在 Animeko 里试播确认",
-        "播放检测这次没抓到视频地址（连续 1/3 次），以前能播，暂按能播排名",
+        "逐线路播放检测：字幕组=ok、动画疯=none、BiliBili国际=ok、其他=ok",
         "优先级自动设为 1（检测通过，播放检测：ok）"
       ],
       "info": [],
@@ -1454,20 +1495,26 @@
         "episode_count": 100,
         "episode_url": "https://animoe.org/play/379-4-1.html",
         "play": "ok",
-        "play_reason": "等了 36 秒没有出现视频地址",
-        "play_raw": "none"
+        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
+        "media": "https://animoe.org/m3u8/video/54d6ad84e436e5ddca9752ea4b41f772.m3u8"
       },
       "smoke_direct": {
         "status": "blocked",
         "reason": "HTTP 403"
       },
+      "line_play": {
+        "字幕组": "ok",
+        "动画疯": "none",
+        "BiliBili国际": "ok",
+        "其他": "ok"
+      },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
+        "last_ok": 1795754890,
         "play": "ok",
-        "play_none": 1,
+        "play_none": 0,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -1502,6 +1549,7 @@
       "version": "rev 9",
       "status": "ok",
       "notes": [
+        "逐线路播放检测：快看云=ok、特快云=ok、非凡云=ok、柚子云=ok",
         "优先级自动设为 1（检测通过，播放检测：ok）"
       ],
       "info": [],
@@ -1529,11 +1577,17 @@
         "reason": "搜到 2 个条目，详情页选出 40 个剧集链接",
         "episode_count": 40
       },
+      "line_play": {
+        "快看云": "ok",
+        "特快云": "ok",
+        "非凡云": "ok",
+        "柚子云": "ok"
+      },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
+        "last_ok": 1795754890,
         "play": "ok",
         "play_none": 0,
         "grace": false,
@@ -1551,7 +1605,7 @@
       "notes": [
         "搜索用到 maccmsVerify（MacCMS 图片验证码），Animeko 有自动 solver，通常能自动通过，通不过时会弹验证浏览器",
         "searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）",
-        "优先级自动设为 3（检测没有结论（blocked））"
+        "优先级自动设为 3（检测没有结论（unreachable））"
       ],
       "info": [],
       "guess": false,
@@ -1565,16 +1619,16 @@
       "date_basis": "内容未变",
       "orig_site": "cn.agekkkk.com",
       "smoke": {
-        "status": "blocked",
-        "reason": "搜索页出现验证码/环境检查（网站防火墙的点击/滑块验证，Animeko 会弹验证浏览器让用户通过）"
+        "status": "unreachable",
+        "reason": "请求失败：SSLError"
       },
       "smoke_direct": {
         "status": "blocked",
         "reason": "搜索页出现验证码/环境检查（网站防火墙的点击/滑块验证，Animeko 会弹验证浏览器让用户通过）"
       },
       "health": {
-        "blind": 21,
-        "last": "blocked",
+        "blind": 22,
+        "last": "unreachable",
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -1612,9 +1666,9 @@
       },
       "health": {
         "blind": 0,
-        "fails": 31,
+        "fails": 32,
         "last": "fail",
-        "last_fail": 1795697162,
+        "last_fail": 1795754890,
         "last_ok": 1794642775,
         "play": "ok",
         "grace": false,
@@ -1633,7 +1687,6 @@
       "status": "partial",
       "notes": [
         "searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）",
-        "已自动修复选择器：搜索选择器改为 .hl-item-title a[href*='/vod-detail/']（命中 3/3）；剧集选择器改为 .hl-plays-list a（10 集）",
         "优先级自动设为 1（检测通过，播放检测：ok）",
         "官方订阅里已有同一个站的源「Anime7」，优先级降到 4（官方同站源检测通过）"
       ],
@@ -1650,24 +1703,23 @@
       "orig_site": "anime7.top",
       "smoke": {
         "status": "ok",
-        "reason": "搜到 3 个条目，详情页选出 10 个剧集链接",
+        "reason": "搜到 9 个条目，详情页选出 10 个剧集链接",
         "episode_count": 10,
         "episode_url": "https://anime7.top/vod-play/9467-1-1/",
-        "repaired": "搜索选择器改为 .hl-item-title a[href*='/vod-detail/']（命中 3/3）；剧集选择器改为 .hl-plays-list a（10 集）",
         "play": "ok",
         "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
         "media": "https://vip.dyttzyplay.com/?url=https://vip.dytt-cinema.com/20260116/45690_89409c42/index.m3u8"
       },
       "smoke_direct": {
         "status": "ok",
-        "reason": "搜到 3 个条目，详情页选出 10 个剧集链接",
+        "reason": "搜到 9 个条目，详情页选出 10 个剧集链接",
         "episode_count": 10
       },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
+        "last_ok": 1795754890,
         "play": "ok",
         "play_none": 0,
         "grace": false,
@@ -1794,7 +1846,7 @@
         "reason": "HTTP 403"
       },
       "health": {
-        "blind": 43,
+        "blind": 44,
         "last": "unreachable",
         "grace": false,
         "carry": false,
@@ -1811,8 +1863,9 @@
       "notes": [
         "searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）",
         "AniBaka 播放步骤不是嗅探（json/regex/template），已改成 WebView 嗅探，请在 Animeko 里试播确认",
-        "域名已跳转，改用新域名 https://cn1.xgcartoon.com（原 https://www.xgcartoon.com）",
-        "优先级自动设为 2（检测通过，播放检测：none）"
+        "国内出口检测unreachable，但 GitHub 海外直连通过，照样采用（排名低一级）",
+        "国内出口检测打不开（连续 1 次），1 天前通过过，暂按上次的成绩排名",
+        "优先级自动设为 2（国内出口unreachable，GitHub 海外直连通过，照样采用（排名低一级））"
       ],
       "info": [],
       "guess": false,
@@ -1826,13 +1879,8 @@
       "date_basis": "内容未变",
       "orig_site": "xgcartoon.com",
       "smoke": {
-        "status": "ok",
-        "reason": "搜到 100 个条目，详情页选出 38 个剧集链接",
-        "episode_count": 38,
-        "episode_url": "https://cn1.xgcartoon.com/user/page_direct?cartoon_id=zangsongdefulilianzangsongzhefulilianriyu-shantianzhongren&chapter_id=d6owTQ9Grd",
-        "final_origin": "https://cn1.xgcartoon.com",
-        "play": "none",
-        "play_reason": "等了 21 秒没有出现视频地址"
+        "status": "unreachable",
+        "reason": "请求失败：SSLError"
       },
       "smoke_direct": {
         "status": "ok",
@@ -1840,18 +1888,18 @@
         "episode_count": 38
       },
       "health": {
-        "blind": 0,
+        "blind": 1,
         "fails": 0,
-        "last": "ok",
+        "last": "unreachable",
         "last_fail": 1795335727,
         "last_ok": 1795697162,
         "play": "none",
         "play_none": 0,
         "grace": false,
-        "carry": false,
-        "carry_age": null
+        "carry": true,
+        "carry_age": 0.7
       },
-      "site": "cn1.xgcartoon.com",
+      "site": "xgcartoon.com",
       "chosen": true
     },
     {
@@ -1859,7 +1907,9 @@
       "key": "2kdm",
       "version": "rev 6",
       "status": "ok",
-      "notes": [],
+      "notes": [
+        "优先级自动设为 3（检测没有结论（unreachable））"
+      ],
       "info": [],
       "guess": false,
       "date": 1793543658,
@@ -1872,23 +1922,24 @@
       "date_basis": "内容未变",
       "orig_site": "2kdm.com",
       "smoke": {
-        "status": "fail",
-        "reason": "HTTP 404"
+        "status": "unreachable",
+        "reason": "请求失败：SSLError"
       },
       "smoke_direct": {
         "status": "fail",
         "reason": "HTTP 404"
       },
       "health": {
-        "blind": 0,
+        "blind": 1,
         "fails": 37,
-        "last": "fail",
+        "last": "unreachable",
         "last_fail": 1795697162,
         "grace": false,
         "carry": false,
         "carry_age": null
       },
-      "site": "mutedm.com"
+      "site": "mutedm.com",
+      "chosen": true
     },
     {
       "origin": "anibaka",
@@ -1917,9 +1968,9 @@
       },
       "health": {
         "blind": 0,
-        "fails": 56,
+        "fails": 57,
         "last": "fail",
-        "last_fail": 1795697162,
+        "last_fail": 1795754890,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -2001,7 +2052,6 @@
         "searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）",
         "AniBaka 播放步骤不是嗅探（fetch/json/regex/replace/select/setVar/template），已改成 WebView 嗅探，请在 Animeko 里试播确认",
         "同站其它来源提供了 1 个结果选择器，检测时一并比较",
-        "播放检测这次没抓到视频地址（连续 1/3 次），以前能播，暂按能播排名",
         "优先级自动设为 1（检测通过，播放检测：ok）"
       ],
       "info": [],
@@ -2024,8 +2074,8 @@
         "episode_count": 30,
         "episode_url": "https://dmbus.cc/p/5963-2-1.html",
         "play": "ok",
-        "play_reason": "等了 36 秒没有出现视频地址",
-        "play_raw": "none"
+        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
+        "media": "https://hhjx.hhplayer.com/playlist/8298df34c8e87d6dc0af170f24ea0812cda7f688524f9df3.m3u8?expires=1795775093&sign=ac94b0dbb40e8df60d058d095ec57197b36d16899431ff122fa945011a2df288"
       },
       "smoke_direct": {
         "status": "ok",
@@ -2036,9 +2086,9 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
+        "last_ok": 1795754890,
         "play": "ok",
-        "play_none": 1,
+        "play_none": 0,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -2074,7 +2124,8 @@
       "status": "partial",
       "notes": [
         "AniBaka 播放步骤用了 playerDecrypt 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频",
-        "优先级自动设为 1（检测通过，播放检测：ok）"
+        "国内出口检测unreachable，但 GitHub 海外直连通过，照样采用（排名低一级）",
+        "国内出口检测打不开（连续 1 次），1 天前通过过，暂按上次的成绩排名"
       ],
       "info": [],
       "guess": false,
@@ -2088,13 +2139,8 @@
       "date_basis": "内容未变",
       "orig_site": "mgnacg.com",
       "smoke": {
-        "status": "ok",
-        "reason": "搜到 2 个条目，详情页选出 50 个剧集链接",
-        "episode_count": 50,
-        "episode_url": "https://www.mgnacg.com/bangumi/1545-2-1/",
-        "play": "ok",
-        "play_reason": "scanDomMediaUrls 能从 <video> 取到地址",
-        "media": "https://play.mknacg.top:9009/d/LTP/2026/1/Sousou_no_Frieren_S2/1.mknvideo?sign=pqNFd7k3VwmTVyvB7nGqWYRs3-asfLi-6fMaCIXdz54=:1795700525"
+        "status": "unreachable",
+        "reason": "请求失败：SSLError"
       },
       "smoke_direct": {
         "status": "ok",
@@ -2102,18 +2148,17 @@
         "episode_count": 50
       },
       "health": {
-        "blind": 0,
+        "blind": 1,
         "fails": 0,
-        "last": "ok",
+        "last": "unreachable",
         "last_ok": 1795697162,
         "play": "ok",
         "play_none": 0,
         "grace": false,
-        "carry": false,
-        "carry_age": null
+        "carry": true,
+        "carry_age": 0.7
       },
-      "site": "mgnacg.com",
-      "chosen": true
+      "site": "mgnacg.com"
     },
     {
       "origin": "anibaka",
@@ -2123,9 +2168,7 @@
       "notes": [
         "searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）",
         "AniBaka 播放步骤用了 crypto 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频",
-        "同站其它来源提供了 1 个结果选择器，检测时一并比较",
-        "国内出口检测unreachable，但 GitHub 海外直连通过，照样采用（排名低一级）",
-        "国内出口检测打不开（连续 4 次），1 天前通过过，暂按上次的成绩排名"
+        "同站其它来源提供了 1 个结果选择器，检测时一并比较"
       ],
       "info": [],
       "guess": false,
@@ -2142,8 +2185,12 @@
       ],
       "orig_site": "moonci.com",
       "smoke": {
-        "status": "unreachable",
-        "reason": "请求失败：SSLError"
+        "status": "ok",
+        "reason": "搜到 6 个条目，详情页选出 30 个剧集链接",
+        "episode_count": 30,
+        "episode_url": "https://www.moonci.com/anime/272/play/1-1.html",
+        "play": "none",
+        "play_reason": "等了 36 秒没有出现视频地址"
       },
       "smoke_direct": {
         "status": "ok",
@@ -2151,14 +2198,15 @@
         "episode_count": 30
       },
       "health": {
-        "blind": 4,
+        "blind": 0,
         "fails": 0,
-        "last": "unreachable",
-        "last_ok": 1795601723,
+        "last": "ok",
+        "last_ok": 1795754890,
         "play": "none",
+        "play_none": 0,
         "grace": false,
-        "carry": true,
-        "carry_age": 1.1
+        "carry": false,
+        "carry_age": null
       },
       "site": "moonci.com"
     },
@@ -2193,9 +2241,9 @@
       },
       "health": {
         "blind": 0,
-        "fails": 53,
+        "fails": 54,
         "last": "fail",
-        "last_fail": 1795697162,
+        "last_fail": 1795754890,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -2214,7 +2262,9 @@
         "searchList 没有 detailPattern，条目里的所有链接都会被当作结果（已启用 preferShorterName）",
         "AniBaka 规则没有线路名，所有线路合并为一条",
         "AniBaka 播放步骤不是嗅探（fetch/query/regex/select/setMediaHeaders/videoUrl），已改成 WebView 嗅探，请在 Animeko 里试播确认",
-        "优先级自动设为 2（检测通过，播放检测：none）"
+        "国内出口检测unreachable，但 GitHub 海外直连通过，照样采用（排名低一级）",
+        "国内出口检测打不开（连续 1 次），1 天前通过过，暂按上次的成绩排名",
+        "优先级自动设为 2（国内出口unreachable，GitHub 海外直连通过，照样采用（排名低一级））"
       ],
       "info": [],
       "guess": false,
@@ -2228,12 +2278,8 @@
       "date_basis": "内容未变",
       "orig_site": "ezdmw.org",
       "smoke": {
-        "status": "ok",
-        "reason": "搜到 1 个条目，详情页选出 38 个剧集链接",
-        "episode_count": 38,
-        "episode_url": "https://www.ezdmw.org/Index/video/98397.html",
-        "play": "none",
-        "play_reason": "等了 36 秒没有出现视频地址"
+        "status": "unreachable",
+        "reason": "请求失败：ReadTimeout"
       },
       "smoke_direct": {
         "status": "ok",
@@ -2241,15 +2287,15 @@
         "episode_count": 38
       },
       "health": {
-        "blind": 0,
+        "blind": 1,
         "fails": 0,
-        "last": "ok",
+        "last": "unreachable",
         "last_ok": 1795697162,
         "play": "none",
         "play_none": 0,
         "grace": false,
-        "carry": false,
-        "carry_age": null
+        "carry": true,
+        "carry_age": 0.7
       },
       "site": "ezdmw.org",
       "chosen": true
@@ -2261,7 +2307,8 @@
       "status": "partial",
       "notes": [
         "搜索用 MacCMS 的 suggest 接口（https://www.sbdl.cc/index.php/ajax/suggest?mid=1&wd={keyword}&limit=30，路径是按 MacCMS 默认值推的，AniBaka 里没写）",
-        "AniBaka 播放步骤用了 crypto 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频"
+        "AniBaka 播放步骤用了 crypto 取直链；Animeko 只能靠 WebView 嗅探，可能拿不到视频",
+        "逐线路播放检测：默认线路=none、高速线路=ok、超清专线=none"
       ],
       "info": [],
       "guess": true,
@@ -2279,19 +2326,24 @@
         "reason": "搜到 2 个条目，详情页选出 112 个剧集链接",
         "episode_count": 112,
         "episode_url": "https://www.sbdl.cc/index.php/vod/play/id/32361/sid/1/nid/1.html",
-        "play": "none",
-        "play_reason": "等了 36 秒没有出现视频地址"
+        "play": "ok",
+        "play_reason": "线路「高速线路」能播"
       },
       "smoke_direct": {
         "status": "blocked",
         "reason": "HTTP 403"
       },
+      "line_play": {
+        "默认线路": "none",
+        "高速线路": "ok",
+        "超清专线": "none"
+      },
       "health": {
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
-        "play": "none",
+        "last_ok": 1795754890,
+        "play": "ok",
         "play_none": 0,
         "grace": false,
         "carry": false,
@@ -2417,9 +2469,7 @@
       "version": "1.2.1",
       "status": "partial",
       "notes": [
-        "末尾 text() 已改为取元素全部文本",
-        "国内出口检测unreachable，但 GitHub 海外直连通过，照样采用（排名低一级）",
-        "国内出口检测打不开（连续 2 次），1 天前通过过，暂按上次的成绩排名"
+        "末尾 text() 已改为取元素全部文本"
       ],
       "info": [
         "纯纯看番 release 通道",
@@ -2433,8 +2483,13 @@
       "date_basis": "内容未变",
       "orig_site": "7sefun.top",
       "smoke": {
-        "status": "unreachable",
-        "reason": "请求失败：SSLError"
+        "status": "ok",
+        "reason": "搜到 2 个条目，详情页选出 10 个剧集链接",
+        "episode_count": 10,
+        "episode_url": "https://www.7sefun.top/vodplay/26976-2-1.html",
+        "play": "ok",
+        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
+        "media": "https://groupvideo.photo.qq.com/1071_0bc33madsaaaaaafwptwarus7wyehhnqaoka.f0.mp4?dis_k=89758e75f94e92b97f08e5c160ee375e&dis_t=1795749781"
       },
       "smoke_direct": {
         "status": "ok",
@@ -2442,14 +2497,15 @@
         "episode_count": 10
       },
       "health": {
-        "blind": 2,
+        "blind": 0,
         "fails": 0,
-        "last": "unreachable",
-        "last_ok": 1795610156,
+        "last": "ok",
+        "last_ok": 1795754890,
         "play": "ok",
+        "play_none": 0,
         "grace": false,
-        "carry": true,
-        "carry_age": 1.0
+        "carry": false,
+        "carry_age": null
       },
       "site": "7sefun.top"
     },
@@ -2460,8 +2516,8 @@
       "version": "1.3.1",
       "status": "ok",
       "notes": [
-        "已自动修复选择器：搜索选择器改为 .module-card-item-title a[href*='/vod/']（命中 3/3）；剧集选择器改为 #panel1 a（30 集）",
-        "优先级自动设为 1（检测通过，播放检测：ok）"
+        "国内出口检测打不开（连续 1 次），1 天前通过过，暂按上次的成绩排名",
+        "优先级自动设为 1（国内出口检测打不开，沿用 0.7 天前通过时的成绩，播放检测：ok）"
       ],
       "info": [
         "纯纯看番 release 通道",
@@ -2475,30 +2531,24 @@
       "date_basis": "内容未变",
       "orig_site": "jcydm1.com",
       "smoke": {
-        "status": "ok",
-        "reason": "搜到 3 个条目，详情页选出 30 个剧集链接",
-        "episode_count": 30,
-        "episode_url": "https://www.jcydm1.com/index.php/vod/play/id/21491/sid/1/nid/1.html",
-        "repaired": "搜索选择器改为 .module-card-item-title a[href*='/vod/']（命中 3/3）；剧集选择器改为 #panel1 a（30 集）",
-        "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://www.jcydm1.com/static/js/player.html?url=https://vip.dytt-cinema.com/20260116/45690_89409c42/index.m3u8&next=//www.jcydm1.com/index.php/vod/play/id/21491/sid/1/nid/2.html"
+        "status": "unreachable",
+        "reason": "请求失败：SSLError"
       },
       "smoke_direct": {
         "status": "blocked",
         "reason": "HTTP 403"
       },
       "health": {
-        "blind": 0,
+        "blind": 1,
         "fails": 0,
-        "last": "ok",
+        "last": "unreachable",
         "last_fail": 1795610156,
         "last_ok": 1795697162,
         "play": "ok",
         "play_none": 0,
         "grace": false,
-        "carry": false,
-        "carry_age": null
+        "carry": true,
+        "carry_age": 0.7
       },
       "site": "jcydm1.com",
       "chosen": true
@@ -2510,7 +2560,7 @@
       "version": "1.0.1",
       "status": "ok",
       "notes": [
-        "已自动修复选择器：搜索选择器改为 .hl-item-title a[href*='/vod-detail/']（命中 3/3）；剧集选择器改为 .hl-plays-list a（10 集）"
+        "播放检测这次没抓到视频地址（连续 1/3 次），以前能播，暂按能播排名"
       ],
       "info": [
         "纯纯看番 release 通道",
@@ -2528,10 +2578,9 @@
         "reason": "搜到 3 个条目，详情页选出 10 个剧集链接",
         "episode_count": 10,
         "episode_url": "https://anime7.top/vod-play/9467-1-1/",
-        "repaired": "搜索选择器改为 .hl-item-title a[href*='/vod-detail/']（命中 3/3）；剧集选择器改为 .hl-plays-list a（10 集）",
         "play": "ok",
-        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
-        "media": "https://vip.dyttzyplay.com/?url=https://vip.dytt-cinema.com/20260116/45690_89409c42/index.m3u8"
+        "play_reason": "等了 36 秒没有出现视频地址",
+        "play_raw": "none"
       },
       "smoke_direct": {
         "status": "ok",
@@ -2542,9 +2591,9 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
+        "last_ok": 1795754890,
         "play": "ok",
-        "play_none": 0,
+        "play_none": 1,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -2558,8 +2607,7 @@
       "version": "0.0.3",
       "status": "ok",
       "notes": [
-        "已自动修复选择器：搜索选择器改为 h3 a[href*='/voddetail/']（命中 2/2）；剧集选择器改为 .playlist a（70 集）",
-        "优先级自动设为 2（检测通过，播放检测：none）"
+        "优先级自动设为 1（检测通过，播放检测：ok）"
       ],
       "info": [
         "纯纯看番 release 通道",
@@ -2577,9 +2625,9 @@
         "reason": "搜到 2 个条目，详情页选出 70 个剧集链接",
         "episode_count": 70,
         "episode_url": "https://www.mayi520.org/vodplay/251622-1-1.html",
-        "repaired": "搜索选择器改为 h3 a[href*='/voddetail/']（命中 2/2）；剧集选择器改为 .playlist a（70 集）",
-        "play": "none",
-        "play_reason": "等了 21 秒没有出现视频地址"
+        "play": "ok",
+        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
+        "media": "https://v16-vod.capcutvod.com/53af6711310c93272550fb563094653a/6b09115d/video/tos/alisg/tos-alisg-v-90231e-sg/oYfKdNAYYEW9tfsSIy0AIVIqfupRqCDgHDmr1F/"
       },
       "smoke_direct": {
         "status": "unreachable",
@@ -2589,8 +2637,8 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
-        "play": "none",
+        "last_ok": 1795754890,
+        "play": "ok",
         "play_none": 0,
         "grace": false,
         "carry": false,
@@ -2607,7 +2655,6 @@
       "status": "ok",
       "notes": [
         "域名已跳转，改用新域名 https://www.bmddm.com（原 https://www.baimaodm.com）",
-        "播放检测这次没抓到视频地址（连续 1/3 次），以前能播，暂按能播排名",
         "优先级自动设为 1（检测通过，播放检测：ok）"
       ],
       "info": [
@@ -2628,8 +2675,8 @@
         "episode_url": "https://www.bmddm.com/play/400602-0-0.html",
         "final_origin": "https://www.bmddm.com",
         "play": "ok",
-        "play_reason": "等了 21 秒没有出现视频地址",
-        "play_raw": "none"
+        "play_reason": "抓到视频地址并被 matchVideoUrl 认出",
+        "media": "https://www.bmddm.com/hdst/player/artplayer/index.html?url=https://v.cdnlz14.com/20230930/29887_2e6cf8c7/index.m3u8"
       },
       "smoke_direct": {
         "status": "ok",
@@ -2640,9 +2687,9 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
+        "last_ok": 1795754890,
         "play": "ok",
-        "play_none": 1,
+        "play_none": 0,
         "grace": false,
         "carry": false,
         "carry_age": null
@@ -2746,7 +2793,7 @@
         "blind": 0,
         "fails": 0,
         "last": "ok",
-        "last_ok": 1795697162,
+        "last_ok": 1795754890,
         "play": "ok",
         "play_none": 0,
         "grace": false,
@@ -2785,7 +2832,7 @@
         "reason": "请求失败：SSLError"
       },
       "health": {
-        "blind": 43,
+        "blind": 44,
         "last": "unreachable",
         "grace": false,
         "carry": false,
@@ -2863,7 +2910,7 @@
         "reason": "HTTP 523"
       },
       "health": {
-        "blind": 27,
+        "blind": 28,
         "fails": 26,
         "last": "unreachable",
         "last_fail": 1794816953,
