@@ -30,6 +30,7 @@ from .check.domains import host_of
 from .check import network, ua as ua_mod
 from .check.health import (DEFAULT_CARRY_DAYS, DEFAULT_PLAY_GRACE, abroad_ok, cand_key, DEFAULT_THRESHOLD, auto_tier, blind_spots, confirmed_fail, prunable,
                            smoke_tier, update_health)
+from . import report as reporting
 from .normalize import normalize_source
 from .check.repair import (brittle, find_search_selector, mine_presets, repair_match_video, repair_source,
                            search_stats)
@@ -387,11 +388,14 @@ def run_playchecks(cands, config, pc):
 def check_lines(todo, config, pc):
     """分线路的源：逐条线路试播第一集。结果进 c["line_play"]（之后生成 channelTiers）。
     默认那一集播不了、别的线路能播时，整个源按能播算。config：line_check（开关）、
-    line_check_per_source（每个源最多几条线路，默认 4）、line_check_max（一次构建最多试播几次，默认 30）。"""
+    line_check_per_source（每个源最多几条线路，默认 4）、line_check_max（一次构建最多试播几次，默认 30）、
+    line_check_budget_seconds（逐线路试播总时长上限，默认 900 秒，用完就跳过剩下的线路）。"""
     if not config.get("line_check", True):
         return
     per, left = config.get("line_check_per_source", 4), config.get("line_check_max", 30)
     wait, extra = config.get("play_wait_ms", 20000), config.get("play_extra_wait_ms", 0)
+    budget = config.get("line_check_budget_seconds", 900)
+    started, tried, skipped = time.monotonic(), 0, 0
     for c in todo:
         lines = c.get("lines") or []
         if len(lines) < 2:
@@ -401,9 +405,11 @@ def check_lines(todo, config, pc):
             if url == c["smoke"].get("episode_url"):   # 这一集刚测过
                 result[name] = c["smoke"].get("play", "error")
                 continue
-            if left <= 0:
-                break
+            if left <= 0 or (budget and time.monotonic() - started >= budget):
+                skipped += 1
+                continue
             left -= 1
+            tried += 1
             try:
                 result[name] = pc.check(c["source"], url, wait, extra).get("play", "error")
             except Exception:
@@ -415,6 +421,8 @@ def check_lines(todo, config, pc):
         c["notes"].append("逐线路播放检测：" + "、".join("%s=%s" % kv for kv in result.items()))
         if good and c["smoke"].get("play") != "ok":
             c["smoke"].update({"play": "ok", "play_reason": "线路「%s」能播" % good[0]})
+    print("逐线路试播：%d 次，用时 %.1f 分钟，超出次数 / 时间上限跳过 %d 条" % (
+        tried, (time.monotonic() - started) / 60, skipped), flush=True)
 
 
 def collect_kazumi(repo, config):
@@ -833,6 +841,7 @@ def main():
             print("官方重叠 %s ↔ %s：%s（%s）" % (r["name"], r["official"], r["action"], r["note"]))
 
     sources = []
+    entries = []   # 写进订阅的 (候选, 最终 source)，报告里的数字都以它为准
     pruned = []
     for c in sorted(chosen, key=lambda c: c["source"]["id"]):
         if c.get("dropped"):   # 官方已覆盖、按 official_dedupe=exclude 剔除
@@ -843,20 +852,21 @@ def main():
         # 只有“能打开页面但选择器没选中”（fail）、且已连续失败到阈值的才在描述里警告；
         # blocked / unreachable 多半是 GitHub 海外服务器被拦或访问不了，国内用户未必有问题，
         # 原因只写在报告里；宽限期内（以前通过过、这次才第一次失败）也不警告、不剔除
+        if sm and confirmed_fail(c) and config.get("drop_failed"):
+            c["dropped"] = True
+            continue
+        if sm and prunable(c, config.get("prune_failed_after", 0)):   # 长期失效：不进订阅，通过检测后自动回来
+            c["dropped"] = True
+            c["pruned"] = True
+            pruned.append(c)
+            continue
         if sm and confirmed_fail(c):
-            if config.get("drop_failed"):
-                c["dropped"] = True
-                continue
-            if prunable(c, config.get("prune_failed_after", 0)):   # 长期失效：不进订阅，恢复后自动回来
-                c["dropped"] = True
-                c["pruned"] = True
-                pruned.append(c)
-                continue
             warn = sm["reason"]
         bad_lines = channels_mod.channel_tiers(c.get("line_play"), s["arguments"].get("tier"))
         if bad_lines and not s["arguments"].get("channelTiers"):
             s["arguments"]["channelTiers"] = bad_lines
         sources.append(normalize_source(c, s, config, warn))
+        entries.append((c, sources[-1]))
     icon_results = []
     if args.icons_dir and args.smoke and config.get("icons", True):
         from . import icons as icons_mod
@@ -894,43 +904,56 @@ def main():
         both = bool(proxy and any(c.get("smoke_direct") for c in cands))
         rep += ["检测出口：%s。" % ("国内出口（代理 %s）%s" % (network.describe(proxy), "，并用 GitHub 海外服务器直连也测了一遍（国内没通过、海外通过的照样采用，排名低一级），见「国内外出口对比」" if both else "")
                                   if proxy else "GitHub 海外服务器（国内站可能打不开或被拦）"), ""]
+    live_ids = {x["id"] for x in sources}
+    from .normalize import normalize_id   # 重叠记录里是归一化之前的 id
+    live_overlap = [dict(r, id=normalize_id(r["id"])) for r in official_rows
+                    if normalize_id(r["id"]) in live_ids or r["action"] == "drop"]
+    rep += reporting.overview(entries, pruned, live_overlap, ua_audit, args.smoke)
+    rep += reporting.attention(entries, args.smoke)
     if changed is not None:
-        rep += changes.section(changed)[1:] + [""]
-    rep += [
-           "## 同站点取舍", "", "| 站点 | 最终 id | 采用 | 理由 | 候选（最后修改） |", "|---|---|---|---|---|"]
-    for d in decisions:
-        rep.append("| %s | %s | %s | %s | %s |" % (d["site"], d["id"], d["winner"], d["reason"], "<br>".join(d["members"])))
+        rep += changes.section(changed)
+    rep += reporting.source_table(entries, live_overlap, args.smoke)
     if official_sites and official_mode != "off":
-        rep += official_mod.report_section(official_rows, len(chosen), official_mode)
+        total = len(sources) + sum(1 for r in live_overlap if r["action"] == "drop")
+        rep += official_mod.report_section(live_overlap, total, official_mode)
+    details = []   # 排查问题时才看的明细，折叠后放在最后
+    multi = [d for d in decisions if len(d["members"]) > 1]
+    if multi:
+        sec = ["", "## 同站点取舍", "", "只列有多个来源、需要挑一个的站点。", "",
+               "| 站点 | 最终 id | 采用 | 理由 | 候选（最后修改） |", "|---|---|---|---|---|"]
+        sec += ["| %s | %s | %s | %s | %s |" % (d["site"], d["id"], d["winner"], d["reason"], "<br>".join(d["members"])) for d in multi]
+        details += reporting.fold(sec)
     if pruned:
         rep += ["", "## 长期失效、已自动移出订阅", "",
-                "这些站点连续 %d 次以上明确检测失败（页面能打开但选不出结果，或直接 404），已不写进订阅；它们仍会每次检测，通过一次就自动回到订阅里。" % config.get("prune_failed_after", 0), "",
+                "这些站点连续 %d 次以上明确检测失败（页面能打开但选不出结果，或直接 404）、之后一次都没通过过，已不写进订阅；它们仍会每次检测，通过一次就自动回到订阅里（只是变成打不开 / 被拦不算）。" % config.get("prune_failed_after", 0), "",
                 "| 来源:规则 | 站点 | 连续失败 | 原因 |", "|---|---|---|---|"]
         for c in pruned:
-            rep.append("| %s:%s | %s | %d | %s |" % (c["origin"], c["key"], c["source"].get("id", ""),
+            rep.append("| %s:%s | %s | %d | %s |" % (c["origin"], c["key"], site_host(c["source"]),
                                                       int((c.get("health") or {}).get("fails", 0)),
                                                       ((c.get("smoke") or {}).get("reason") or "").replace("|", "/")))
-    rep += ["", "## 全部候选", "", "| 来源 | 规则 | 版本 | 修改日期（依据） | 转换 | 自动检测 | 播放 | 采用 | 备注 |", "|---|---|---|---|---|---|---|---|---|"]
+    everything = ["", "## 全部候选", "", "| 来源 | 规则 | 版本 | 修改日期（依据） | 转换 | 自动检测 | 播放 | 采用 | 备注 |", "|---|---|---|---|---|---|---|---|---|"]
     for c in cands:
         sm = c.get("smoke") or {}
         remark = "；".join(c["notes"] + ([sm["reason"]] if sm.get("reason") and sm.get("status") != "ok" else [])
                            + ([sm["play_reason"]] if sm.get("play") not in (None, "ok") else []))
-        rep.append("| %s | %s | %s | %s | %s | %s | %s | %s | %s |" % (
+        everything.append("| %s | %s | %s | %s | %s | %s | %s | %s | %s |" % (
             c["origin"], c["key"], c["version"], fmt_date(c["date"]) + ("（%s）" % c["date_basis"] if c.get("date_basis") else ""), label.get(c["status"], c["status"]),
             sm.get("status", "-") + ("（海外：%s）" % c["smoke_direct"]["status"] if c.get("smoke_direct") else "") + ("（已剔除）" if c.get("dropped") else ""), sm.get("play", "-"),
             "是" if c.get("chosen") else "否", remark.replace("|", "/")))
+    details += reporting.fold(everything)
     if args.smoke:
         cats, diff = exit_compare(cands)
         if sum(cats.values()):
-            rep += ["", "## 国内外出口对比", "",
+            compare = ["", "## 国内外出口对比", "",
                     "同一批候选分别用国内出口（代理）和 GitHub 海外服务器直连各测了一遍；表中「自动检测」列括号里是海外直连的结果。国内出口通过的按国内成绩排名；国内没通过、只有海外直连通过的也照样采用，只是排名和分档低一级。", "",
                     "| 国内 / 海外 | 个数 |", "|---|---|",
                     "| 两边都通过 | %d |" % cats["both_ok"], "| 只有国内通过 | %d |" % cats["cn_only"],
                     "| 只有海外通过 | %d |" % cats["abroad_only"], "| 两边都没通过 | %d |" % cats["neither"]]
             if diff:
-                rep += ["", "| 候选 | 国内 | 海外 | 说明 | 入选 |", "|---|---|---|---|---|"]
-                rep += ["| %s | %s | %s | %s | %s |" % (k, a, b, note, "是" if ch else "否") for k, a, b, note, ch in diff]
-        blind = blind_spots([c for c in cands if c.get("chosen")])
+                compare += ["", "| 候选 | 国内 | 海外 | 说明 | 入选 |", "|---|---|---|---|---|"]
+                compare += ["| %s | %s | %s | %s | %s |" % (k, a, b, note, "是" if ch else "否") for k, a, b, note, ch in diff]
+            details += reporting.fold(compare)
+        blind = blind_spots([c for c, _ in entries])
         if blind:
             where = "国内出口" if proxy else "海外"
             rep += ["", "## %s盲区" % where,  "",
@@ -941,13 +964,17 @@ def main():
                 why = (os.environ.get("ANIYUAN_PROXY_NOTE") or "").strip()
                 rep += ["", ("出口代理没有启用：%s。" % why) if why else "想看到国内视角的结果：给工作流配置国内出口的代理（Secret `CLASH_NODE` 放 Clash 节点，或 `ANIYUAN_PROXY` 放 http / socks5 地址），见 README。"]
         if ua_audit:
-            rep += ["", "## UA 体检", "", "| 检查项 | 结果 | 说明 |", "|---|---|---|"]
-            rep += ["| %s | %s | %s |" % (n, "通过" if ok else "**未通过**", d.replace("|", "/")) for n, ok, d in ua_audit]
+            sec = ["", "## UA 体检", "", "| 检查项 | 结果 | 说明 |", "|---|---|---|"]
+            sec += ["| %s | %s | %s |" % (n, "通过" if ok else "**未通过**", d.replace("|", "/")) for n, ok, d in ua_audit]
+            details += reporting.fold(sec)
     if icon_results:
         names = {"new": "新存", "same": "没变", "cached": "沿用上次", "kept": "没取到（保留原地址）"}
-        rep += ["", "## 站点图标", "", "| 源 | 结果 | 说明 |", "|---|---|---|"]
-        for sid, st, why in sorted(icon_results, key=lambda r: (r[1] in ("new", "same"), r[0])):
-            rep.append("| %s | %s | %s |" % (sid, names.get(st, st), why.replace("|", "/")))
+        sec = ["", "## 站点图标", "", "%d 个没变；下面只列有变化或没取到的。" % sum(1 for r in icon_results if r[1] == "same"), "",
+               "| 源 | 结果 | 说明 |", "|---|---|---|"]
+        for sid, st, why in sorted((r for r in icon_results if r[1] != "same"), key=lambda r: (r[1] == "new", r[0])):
+            sec.append("| %s | %s | %s |" % (sid, names.get(st, st), why.replace("|", "/")))
+        details += reporting.fold(sec)
+    rep += details
     if changed is not None:   # 一句话摘要，给工作流写提交说明用
         with open(os.path.join(args.out, "summary.txt"), "w", encoding="utf-8") as f:
             f.write(changes.summary(changed, len(sources)) + "\n")

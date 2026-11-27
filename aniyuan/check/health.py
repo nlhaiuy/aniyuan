@@ -5,6 +5,7 @@
   last_ok  最近一次检测通过的时间
   play     最近一次检测通过时的播放检测结果（用来在宽限期内维持原来的排名）
   play_none 播放检测连续“没抓到视频地址”的次数；以前能播的，不到 play_grace 次不降档（播放宽限）
+  lines    逐条线路的同一套宽限：{线路名: 连续没抓到的次数}，只记能播过的线路
 blocked / unreachable / skipped / 没检测 都不算失败，也不会清零，记录原样保留。
 
 海外盲区（carry）：检测跑在海外服务器上，国内站常常打不开（unreachable）或被 403 / 验证码拦住（blocked），
@@ -22,13 +23,37 @@ EXIT = "海外"   # 检测出口的叫法，进备注里；走国内代理时 bu
 DAY = 86400
 # 检测通过后按播放检测结果排名：能播 > 没检测 > 没抓到 > 认不出（和 build.merge 里一致）
 PLAY_TIER = {"ok": 3, "error": 2, "none": 1.8, "blocked": 1.6, "mismatch": 1.5}
-KEEP = ("fails", "last_ok", "last_fail", "play", "last", "blind", "play_none")
+KEEP = ("fails", "last_ok", "last_fail", "play", "last", "blind", "play_none", "lines")
 DEFAULT_PLAY_GRACE = 3   # 播放检测：以前能播、这次只是没抓到视频，连续这么多次才真的降档
 BLIND = ("blocked", "unreachable")
 
 
 def cand_key(c):
     return "%s:%s" % (c["origin"], c["key"])
+
+
+def line_grace(c, past, play_grace):
+    """逐条线路的播放宽限，和整个源的 play_none 一个道理：能播过的线路偶尔没抓到视频，连续 play_grace 次才排到后面，
+    免得 channelTiers 每次构建都在变。直接改 c["line_play"]；返回新的记录。这次没测到的线路记录原样保留。"""
+    tested = c.get("line_play") or {}
+    names = {n for n, _ in c.get("lines") or []}
+    rec = {n: v for n, v in (past or {}).items() if not names or n in names}   # 页面上已经没有的线路不再记
+    held = []
+    for name, st in list(tested.items()):
+        if st == "ok":
+            rec[name] = 0
+        elif st == "none" and name in rec and play_grace and play_grace > 0:
+            rec[name] += 1
+            if rec[name] < play_grace:
+                tested[name] = "ok"
+                held.append("%s（%d/%d）" % (name, rec[name], play_grace))
+            else:
+                del rec[name]
+        else:   # 认不出 / 被拦 / 出错：不给宽限，也不清掉以前的记录
+            continue
+    if held:
+        c["notes"].append("这次没抓到视频、但以前能播的线路暂不降级：" + "、".join(held))
+    return rec
 
 
 def update_health(cands, history, now, threshold=DEFAULT_THRESHOLD, carry_days=DEFAULT_CARRY_DAYS,
@@ -60,6 +85,12 @@ def update_health(cands, history, now, threshold=DEFAULT_THRESHOLD, carry_days=D
         elif st == "fail":
             rec["fails"] = int(rec.get("fails", 0)) + 1
             rec["last_fail"] = now
+        if c.get("line_play"):
+            lines = line_grace(c, rec.get("lines"), play_grace)
+            if lines:
+                rec["lines"] = lines
+            else:
+                rec.pop("lines", None)
         if st in BLIND:
             rec["blind"] = int(rec.get("blind", 0)) + 1
         elif st:
@@ -68,7 +99,8 @@ def update_health(cands, history, now, threshold=DEFAULT_THRESHOLD, carry_days=D
             rec["last"] = st
         grace = bool(st == "fail" and rec.get("last_ok") and rec["fails"] < threshold)
         age = (now - rec["last_ok"]) / DAY if rec.get("last_ok") else None
-        carry = bool(st in BLIND and age is not None and age <= carry_days)
+        # 上次通过之后已经连续明确失败到阈值的，旧成绩作废，不能因为这次打不开就又沿用
+        carry = bool(st in BLIND and age is not None and age <= carry_days and int(rec.get("fails", 0)) < threshold)
         c["health"] = dict(rec, grace=grace, carry=carry, carry_age=round(age, 1) if carry else None)
         if carry:
             c["notes"].append("%s检测%s（连续 %d 次），%.0f 天前通过过，暂按上次的成绩排名" % (
@@ -97,10 +129,13 @@ def confirmed_fail(c):
 
 
 def prunable(c, after):
-    """长期失效：检测明确失败（不在宽限期、海外直连也没通过），且已连续失败 after 次以上（每天跑一次 ≈ after 天）。
-    这种源订阅里只会白占位置、还会在搜索时拖慢 Animeko，所以直接不写进订阅；
-    它仍然每次被检测，哪天通过了 fails 清零，下一次构建会自动回到订阅里。after <= 0 = 关闭。"""
-    if not after or after <= 0 or not confirmed_fail(c):
+    """长期失效：已连续明确失败 after 次以上（每天跑一次 ≈ after 天），之后一次都没通过过。
+    这种源订阅里只会白占位置、还会在搜索时拖慢 Animeko，所以直接不写进订阅。
+    移出后只有检测通过（或海外直连通过）才回来：这次变成打不开 / 被拦不算恢复，否则会进进出出。
+    它仍然每次被检测，通过一次 fails 清零，那次构建就回到订阅里。after <= 0 = 关闭。"""
+    if not after or after <= 0 or abroad_ok(c) or (c.get("health") or {}).get("grace"):
+        return False
+    if (c.get("smoke") or {}).get("status") not in ("fail",) + BLIND:
         return False
     return int((c.get("health") or {}).get("fails", 0)) >= after
 

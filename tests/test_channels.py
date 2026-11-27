@@ -151,5 +151,41 @@ c = dict(notes=[], lines=lines, source=source(), smoke={"status": "ok", "play": 
 check_lines([c], {"line_check_max": 1}, pc)
 check("总次数上限生效", pc.calls == ["u2"] and "C" not in c["line_play"])
 
+# 时间上限
+c = dict(notes=[], lines=lines, source=source(), smoke={"status": "ok", "play": "ok", "episode_url": "u1"})
+import aniyuan.build as B
+clock = iter(range(0, 10000, 100))
+real = B.time.monotonic
+B.time.monotonic = lambda: next(clock)
+pc = FakePC(set())
+check_lines([c], {"line_check_budget_seconds": 150}, pc)
+B.time.monotonic = real
+check("总时长上限：用完就跳过剩下的线路", pc.calls == ["u2"] and c["line_play"] == {"A": "ok", "B": "none"})
+
+# 逐线路宽限
+from aniyuan.check.health import update_health
+
+
+def run_lines(statuses, hist):
+    c = dict(origin="kazumi", key="x", source=source(), notes=[], lines=lines[:2],
+             smoke={"status": "ok", "play": "ok"}, line_play={"A": "ok", "B": statuses})
+    return c, update_health([c], hist, 100, 2, 14, 3)
+
+
+c, h = run_lines("ok", {})
+c, h = run_lines("none", h)
+check("能播过的线路第 1 次没抓到：暂按能播", c["line_play"]["B"] == "ok" and channels.channel_tiers(c["line_play"], 1) == {})
+c, h = run_lines("none", h)
+check("第 2 次仍宽限", c["line_play"]["B"] == "ok")
+c, h = run_lines("none", h)
+check("连续第 3 次：排到后面", c["line_play"]["B"] == "none" and channels.channel_tiers(c["line_play"], 1) == {"B": 5})
+c, h = run_lines("none", h)
+check("之后保持排后，直到再抓到", c["line_play"]["B"] == "none")
+c, _ = run_lines("none", {})
+check("从没播过的线路：没有宽限", c["line_play"]["B"] == "none")
+c, h = run_lines("ok", {})
+c, h = run_lines("blocked", h)
+check("被拦不给宽限", c["line_play"]["B"] == "blocked")
+
 print("\n全部通过" if not bad else "\n%d 项失败" % bad)
 sys.exit(1 if bad else 0)
