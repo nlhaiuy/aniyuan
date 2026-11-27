@@ -21,6 +21,17 @@
   },
   "for": "v2|lm6.net|.module-player-list a"
  },
+ "easybangumi:kazumi-9ciyuan": {
+  "config": {
+   "matchChannelName": "^(?<ch>.+)$",
+   "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)",
+   "selectChannelNames": ".module-tab-item.tab-item span",
+   "selectEpisodeLinksFromList": "",
+   "selectEpisodeLists": ".module-play-list-content",
+   "selectEpisodesFromList": "a"
+  },
+  "for": "v2|jcydm1.com|#panel1 a"
+ },
  "kazumi:7sefun": {
   "config": {
    "matchChannelName": "^(?<ch>.+)$",
