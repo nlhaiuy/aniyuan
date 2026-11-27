@@ -94,6 +94,21 @@ check("线路标签选不中：检测按 0 集算（以前会误报通过）", e
 check("没写 matchChannelName 时按 Animeko 默认值去掉末尾数字",
       [n for n, _ in channels.simulate({k: v for k, v in fl.items() if k != "matchChannelName"}, nums, BASE)] == ["线路", "线路"])
 
+# 只有搜索选择器坏了：自动修复要保留还能用的分线路写法
+from aniyuan.check.repair import repair_source
+SEARCH = '<html><body><ul class="res"><li><a href="/detail/1.html">葬送的芙莉莲</a></li></ul></body></html>'
+broken, _ = channels.upgrade(source(), two, BASE)
+presets = {"lists": [".anthology-list-box"], "results": [".res a"]}
+import aniyuan.check.repair as R
+R.find_search_selector = lambda *a, **k: (".res a", 1, 1, ("葬送的芙莉莲", "/detail/1.html"))
+ctx = {"search_html": SEARCH, "search_url": "https://x.com/s?wd=a"}
+fixed, why = repair_source(broken, ctx, "葬送的芙莉莲", presets, lambda u: two, "both")
+check("修复搜索时保留可用的分线路写法", fixed is not None
+      and fixed["arguments"]["searchConfig"]["channelFormatId"] == "index-grouped" and "保留" in why)
+fixed, why = repair_source(broken, dict(ctx), "葬送的芙莉莲", presets,
+                           lambda u: two.replace("anthology-tab", "gone"), "both")
+check("分线路写法也坏了：照常换成合并写法", fixed["arguments"]["searchConfig"]["channelFormatId"] == "no-channel")
+
 # 缓存与 build 接线
 def cand(status="ok"):
     return dict(origin="kazumi", key="x", source=source(), notes=[], smoke={"status": status, "episode_url": None})

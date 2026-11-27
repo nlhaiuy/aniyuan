@@ -132,6 +132,19 @@ def brittle(source):
     return json.dumps(source["arguments"].get("searchConfig", {}), ensure_ascii=False).count(":nth-of-type") >= 3
 
 
+def _working_lines(sc, html, base, at_least):
+    """现有的 index-grouped 写法在这个详情页上仍能取到不少于 at_least 集时返回集数，否则 0。位置式写法不保留。"""
+    fl = sc.get("selectorChannelFormatFlattened") or {}
+    if sc.get("channelFormatId") != "index-grouped" or ":nth-of-type" in json.dumps(fl):
+        return 0
+    from .smoke import extract_episodes
+    try:
+        n = len(extract_episodes(sc, html, base))
+    except Exception:
+        return 0
+    return n if n >= at_least else 0
+
+
 def repair_source(source, ctx, keyword, presets, fetch, which, hints=()):
     """which: "search" / "episodes" / "both"。fetch(url)->html|None。hints 见 find_search_selector。
     返回 (新 source, 说明) 或 (None, 原因)。"""
@@ -158,7 +171,10 @@ def repair_source(source, ctx, keyword, presets, fetch, which, hints=()):
         ep = find_episode_selector(detail_html, presets)
         if not ep and which != "search":
             return None, "在真实详情页上没找到合适的剧集列表选择器"
-        if ep:
+        kept = _working_lines(sc, detail_html, ctx.get("detail_url_repaired") or base, ep[1] if ep else 1)
+        if kept:   # 坏的只是搜索选择器：原来的分线路写法还能用就留着，别换成合并写法丢掉线路
+            notes.append("原分线路写法仍然可用，保留（%d 集）" % kept)
+        elif ep:
             sel, n, _first = ep
             sc["channelFormatId"] = "no-channel"
             sc["selectorChannelFormatNoChannel"] = {
