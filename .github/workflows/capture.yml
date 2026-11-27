@@ -32,11 +32,11 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: pip
@@ -69,7 +69,7 @@ jobs:
         # xvfb-run：给 chrome 一个虚拟显示器，它才会用有头模式（更不像自动化）；其它浏览器不受影响
         run: xvfb-run -a python -m aniyuan.capture --out captures ${SITES:+--only "$SITES"} ${BROWSERS:+--browsers "$BROWSERS"}
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: captures
           path: captures
@@ -84,12 +84,12 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: main
           fetch-depth: 20   # 推送被拒时要变基，需要一点历史
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: captures
           path: captures-out

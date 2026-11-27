@@ -31,11 +31,11 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: pip
@@ -94,7 +94,7 @@ jobs:
           for f in play learned browser channels; do [ -f "state/$f.json" ] && cp "state/$f.json" out/state/; done
           cp icons/* out/icons/ 2>/dev/null || true
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: subscription
           path: out
@@ -110,12 +110,12 @@ jobs:
       contents: write
     steps:
       # 构建要跑二十多分钟，期间主分支可能又有人推送；发布一律基于最新的主分支，而不是触发时的那个提交
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: main
           fetch-depth: 20   # 推送被拒时要变基，需要一点历史
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: subscription
           path: out
