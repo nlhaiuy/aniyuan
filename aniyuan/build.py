@@ -118,7 +118,7 @@ def rewrite_origin(source, old_origin, new_origin):
 def line_fingerprint(source):
     """分线路缓存的适用条件：合并写法的剧集选择器和站点都没变。"""
     sc = source["arguments"]["searchConfig"]
-    return "%s|%s" % (site_host(source), (sc.get("selectorChannelFormatNoChannel") or {}).get("selectEpisodes", ""))
+    return "v2|%s|%s" % (site_host(source), (sc.get("selectorChannelFormatNoChannel") or {}).get("selectEpisodes", ""))
 
 
 def keep_lines(cands, line_cache, config):
@@ -166,7 +166,7 @@ def regroup(c, ctx, line_cache, line_presets, config):
 def probe(c, keyword, session, presets, config, line_cache=None, line_presets=((), ())):
     """联网检测一个候选：必要时换备用关键词、自动修复选择器、跟随域名跳转。结果写进 c["smoke"]。"""
     import time
-    from .check.smoke import _blocked, check_source
+    from .check.smoke import _blocked, check_source, fix_encoding
     c.setdefault("orig_site", site_host(c["source"]))   # 域名跳转 / 跟随上游之前的站点，merge 分组时也要认它
     ctx = {}
     r = check_source(c["source"], keyword, session=session, ctx=ctx)
@@ -191,6 +191,7 @@ def probe(c, keyword, session, presets, config, line_cache=None, line_presets=((
         try:
             resp = session.get(url, headers=ua_mod.request_headers(c["source"]["arguments"]["searchConfig"].get("userAgent")),
                                timeout=15)
+            fix_encoding(resp)
             return resp.text if resp.status_code == 200 and not _blocked(resp.text) else None
         except Exception:
             return None
@@ -386,10 +387,10 @@ def run_playchecks(cands, config, pc):
 def check_lines(todo, config, pc):
     """分线路的源：逐条线路试播第一集。结果进 c["line_play"]（之后生成 channelTiers）。
     默认那一集播不了、别的线路能播时，整个源按能播算。config：line_check（开关）、
-    line_check_per_source（每个源最多几条线路，默认 4）、line_check_max（一次构建最多试播几次，默认 40）。"""
+    line_check_per_source（每个源最多几条线路，默认 4）、line_check_max（一次构建最多试播几次，默认 30）。"""
     if not config.get("line_check", True):
         return
-    per, left = config.get("line_check_per_source", 4), config.get("line_check_max", 40)
+    per, left = config.get("line_check_per_source", 4), config.get("line_check_max", 30)
     wait, extra = config.get("play_wait_ms", 20000), config.get("play_extra_wait_ms", 0)
     for c in todo:
         lines = c.get("lines") or []

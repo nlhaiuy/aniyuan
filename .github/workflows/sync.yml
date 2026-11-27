@@ -27,7 +27,7 @@ jobs:
   # 产物只有几个 JSON 文件，通过 artifact 交给 publish 任务。
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 120
     permissions:
       contents: read
     steps:

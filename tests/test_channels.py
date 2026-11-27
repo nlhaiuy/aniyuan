@@ -69,6 +69,21 @@ check("不认识的标签写法：没有官方写法时不升级", channels.upgr
 check("借官方订阅里的写法后能升级",
       channels.upgrade(source(), custom, BASE, presets=channels.official_presets(sites))[0] is not None)
 
+icons = page(["\ue679&nbsp;高画线", "\ue679&nbsp;中画线"], [box(1, 3), box(2, 3)])
+new, _ = channels.upgrade(source(), icons, BASE)
+check("标签前的图标字体字符不进线路名",
+      [n for n, _ in channels.lines_of(new["arguments"]["searchConfig"], icons, BASE)] == ["高画线", "中画线"])
+
+# 响应头没写 charset：不能按 ISO-8859-1 解出乱码
+import requests
+from aniyuan.check.smoke import fix_encoding
+def resp(body, ctype):
+    r = requests.Response()
+    r._content, r.headers["content-type"], r.encoding = body, ctype, "ISO-8859-1"
+    return r
+check("没写 charset 的 UTF-8 页面按 UTF-8 解", fix_encoding(resp("聚合线路".encode("utf-8"), "text/html")).text == "聚合线路")
+check("写了 charset 的照它的来", fix_encoding(resp(b"abc", "text/html; charset=ISO-8859-1")).encoding == "ISO-8859-1")
+
 # Animeko 的配对语义
 fl = {"selectChannelNames": ".anthology-tab a", "matchChannelName": channels.FULL_NAME, "selectEpisodeLists": ".anthology-list-box",
       "selectEpisodesFromList": "a"}

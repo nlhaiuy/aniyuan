@@ -74,6 +74,20 @@ def _with_retry(call):
             time.sleep(RETRY_WAIT)
 
 
+def fix_encoding(r):
+    """响应头没写 charset 时，requests 按 ISO-8859-1 解码，中文页面会变成乱码（线路名、条目名都会错，
+    而 Animeko 会按页面真实编码解）。这种情况按：能当 UTF-8 解就用 UTF-8，否则按内容猜。"""
+    headers, content = getattr(r, "headers", None), getattr(r, "content", None)
+    if not headers or not isinstance(content, bytes) or "charset" in (headers.get("content-type") or "").lower():
+        return r
+    try:
+        content.decode("utf-8")
+        r.encoding = "utf-8"
+    except UnicodeDecodeError:
+        r.encoding = r.apparent_encoding or r.encoding
+    return r
+
+
 def _get(url, session, timeout, ua=None):
     """ua：源自己在 searchConfig.userAgent 里指定的 UA（Animeko 就是用它请求的），空则用统一 UA（见 ua.py）。"""
     if FORCE_BROWSER and FETCHER:
@@ -92,7 +106,7 @@ def _get(url, session, timeout, ua=None):
             got = None
         if got and got[0] == 200 and not _blocked(got[1]):
             return _BrowserResp(got[0], got[1], got[2], _host(got[2]) != _host(url))
-    return r
+    return fix_encoding(r)
 
 
 def _blocked(text):

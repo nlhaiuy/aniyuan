@@ -33,6 +33,9 @@ TAB_SELECTORS = ["#y-playList .module-tab-item span", "#y-playList .module-tab-i
                  ".myui-panel__head .nav li a", ".play_source_tab a", ".vod-play-tab a", ".player-tab a",
                  ".module-tab-items .tab-item", ".play-tab li", ".tab_list li", ".tab-title a", "#tab a",
                  ".nav-tabs li a", ".nav-tabs li", ".module-tab-item", ".swiper-slide", ".tabs li"]
+# 标签开头的图标字体字符（私有区，Animeko 里显示成方框）和空白不算进线路名。写法同时兼容 Java 和 Python 正则
+ICON_PREFIX = r"^[\ue000-\uf8ff\s]*"
+ICON_RE = re.compile("^[\ue000-\uf8ff]")
 MAX_CHANNELS = 20
 MAX_LABEL = 24
 # 整个标签就是这些词的，是网站导航 / 详情页内容切换，不是线路
@@ -167,6 +170,8 @@ def _tabs_for(soup, tab_sel, boxes, sizes):
     if any(not t or len(t) > MAX_LABEL or NOT_CHANNEL.match(t) for t in labels):
         return None
     pattern = _label_pattern(labels, sizes)
+    if any(ICON_RE.match(t) for t in labels):
+        pattern = ICON_PREFIX + pattern[1:]
     rx = re.compile(to_py_regex(pattern))
     names = [rx.search(t).group("ch") for t in labels]
     return (pattern, names) if len(set(names)) == len(names) else None
