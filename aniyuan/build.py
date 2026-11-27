@@ -15,6 +15,7 @@
      id 不随“谁赢了”变化，Animeko 里用户的启用状态才不会丢。
 """
 import argparse
+import copy
 import hashlib
 import json
 import os
@@ -122,6 +123,12 @@ def line_fingerprint(source):
     return "v2|%s|%s" % (site_host(source), (sc.get("selectorChannelFormatNoChannel") or {}).get("selectEpisodes", ""))
 
 
+def config_digest(source):
+    """规则转换出来的原始配置的指纹（在自动修复 / 换域名之前算）。上游规则一改，指纹就变。"""
+    sc = source["arguments"].get("searchConfig") or {}
+    return hashlib.sha1(json.dumps(sc, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()[:16]
+
+
 def keep_lines(cands, line_cache, config):
     """这次没拿到页面（两个出口都打不开 / 被拦）的源沿用缓存的分线路写法，订阅不随站点能不能访问来回变。"""
     from .check import channels
@@ -133,7 +140,13 @@ def keep_lines(cands, line_cache, config):
                 or abroad_ok(c) or src["arguments"]["searchConfig"].get("channelFormatId") != "no-channel":
             continue
         rec = (line_cache or {}).get(cand_key(c))
-        if rec and rec.get("for") == line_fingerprint(src):
+        if rec and rec.get("search_config") and rec.get("origin") == config_digest(src):
+            # 上游规则没变：整套沿用上次验证过的配置（当时可能自动修过选择器 / 换过域名，这次没页面修不了）
+            src = copy.deepcopy(src)
+            src["arguments"]["searchConfig"] = copy.deepcopy(rec["search_config"])
+            c["source"] = src
+            c["notes"].append("这次没拿到页面，沿用上次验证过的分线路配置")
+        elif rec and rec.get("for") == line_fingerprint(src):
             c["source"] = channels.with_channels(src, rec["config"])
             c["notes"].append("这次没拿到页面，沿用上次验证过的分线路写法")
 
@@ -154,7 +167,8 @@ def regroup(c, ctx, line_cache, line_presets, config):
         if new:
             c["source"] = new
             if line_cache is not None:
-                line_cache[key] = {"for": fingerprint, "config": fl}
+                line_cache[key] = {"for": fingerprint, "config": fl, "origin": c.get("origin_digest"),
+                                   "search_config": copy.deepcopy(new["arguments"]["searchConfig"])}
         lines = channels.lines_of(c["source"]["arguments"]["searchConfig"], html, base)
     except Exception as e:   # 分线路只是增强，出任何问题都保持原样
         print("分线路出错，%s 保持原样：%s" % (key, e), file=sys.stderr)
@@ -166,6 +180,7 @@ def regroup(c, ctx, line_cache, line_presets, config):
 
 def probe(c, keyword, session, presets, config, line_cache=None, line_presets=((), ())):
     """联网检测一个候选：必要时换备用关键词、自动修复选择器、跟随域名跳转。结果写进 c["smoke"]。"""
+    c["origin_digest"] = config_digest(c["source"])   # 要在任何修复 / 改写之前
     import time
     from .check.smoke import _blocked, check_source, fix_encoding
     c.setdefault("orig_site", site_host(c["source"]))   # 域名跳转 / 跟随上游之前的站点，merge 分组时也要认它

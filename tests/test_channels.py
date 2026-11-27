@@ -120,6 +120,21 @@ check("regroup：写缓存、记下每条线路第一集", "kazumi:x" in cache a
 c2 = cand("unreachable")
 keep_lines([c2], cache, {})
 check("这次打不开：沿用缓存的分线路写法", c2["source"]["arguments"]["searchConfig"]["channelFormatId"] == "index-grouped")
+# 自动修复过选择器之后分的线路：这次打不开、没法修复，也要整套沿用
+from aniyuan.build import config_digest
+broken_src = source(".old-selector a")
+cache_r = {}
+fixed = cand()
+fixed["origin_digest"] = config_digest(broken_src)
+regroup(fixed, {"detail_html": two, "detail_url": BASE}, cache_r, ((), ()), {})
+down = cand("unreachable")
+down["source"] = source(".old-selector a")
+keep_lines([down], cache_r, {})
+check("修复过的源打不开：沿用修复后的分线路配置", down["source"]["arguments"]["searchConfig"] == fixed["source"]["arguments"]["searchConfig"])
+down = cand("unreachable")
+down["source"] = source(".upstream-changed a")
+keep_lines([down], cache_r, {})
+check("上游规则改过：不沿用", down["source"]["arguments"]["searchConfig"]["channelFormatId"] == "no-channel")
 c3 = cand("unreachable")
 c3["source"] = source(".changed a")
 keep_lines([c3], cache, {})

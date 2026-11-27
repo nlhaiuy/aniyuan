@@ -44,6 +44,8 @@ def line_state(c, source):
     if tested:
         good = sum(1 for v in tested.values() if v == "ok")
         return "%d/%d 能播%s" % (good, len(tested), "（共 %d 条）" % total if total > len(tested) else "")
+    if total == 1:
+        return "1 条"
     return "%d 条（未试播）" % total if total else "分线路"
 
 
