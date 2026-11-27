@@ -8,7 +8,7 @@
    "selectEpisodeLists": ".vod-play-list-container",
    "selectEpisodesFromList": "a"
   },
-  "for": "7sefun.top|.vod-play-list-container a"
+  "for": "v2|7sefun.top|.vod-play-list-container a"
  },
  "anibaka:lm6": {
   "config": {
@@ -19,7 +19,7 @@
    "selectEpisodeLists": ".module-player-list",
    "selectEpisodesFromList": "a"
   },
-  "for": "lm6.net|.module-player-list a"
+  "for": "v2|lm6.net|.module-player-list a"
  },
  "kazumi:7sefun": {
   "config": {
@@ -30,7 +30,7 @@
    "selectEpisodeLists": ".vod-play-list-container",
    "selectEpisodesFromList": "a"
   },
-  "for": "7sefun.top|div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) div a"
+  "for": "v2|7sefun.top|div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(1) div a"
  },
  "kazumi:LMM": {
   "config": {
@@ -41,7 +41,7 @@
    "selectEpisodeLists": ".module-player-list",
    "selectEpisodesFromList": "a"
   },
-  "for": "lmm22.com|div[class*=\"module-player-list\"] a[href*=\"/play/\"]"
+  "for": "v2|lmm22.com|div[class*=\"module-player-list\"] a[href*=\"/play/\"]"
  },
  "kazumi:akianime": {
   "config": {
@@ -52,7 +52,7 @@
    "selectEpisodeLists": ".anthology-list > .anthology-list-box",
    "selectEpisodesFromList": "a"
   },
-  "for": "akianime.cc|ul[class=\"anthology-list-play size\"] li > a"
+  "for": "v2|akianime.cc|.anthology-list-box a"
  },
  "kazumi:dalvdm": {
   "config": {
@@ -63,7 +63,7 @@
    "selectEpisodeLists": "div[id^=\"playlist\"][class*=\"lists-box\"]",
    "selectEpisodesFromList": "a"
   },
-  "for": "sbdl.cc|div[id^=\"playlist\"][class*=\"lists-box\"] a[href*=\"/index.php/vod/play/\"]"
+  "for": "v2|sbdl.cc|div[id^=\"playlist\"][class*=\"lists-box\"] a[href*=\"/index.php/vod/play/\"]"
  },
  "kazumi:mgnacg": {
   "config": {
@@ -74,7 +74,7 @@
    "selectEpisodeLists": ".anthology-list > .anthology-list-box",
    "selectEpisodesFromList": "a"
   },
-  "for": "mgnacg.com|ul[class=\"anthology-list-play size\"] li > a"
+  "for": "v2|mgnacg.com|ul[class=\"anthology-list-play size\"] li > a"
  },
  "kazumi:moonci": {
   "config": {
@@ -85,6 +85,6 @@
    "selectEpisodeLists": "#playlist .hl-tabs-box",
    "selectEpisodesFromList": "a"
   },
-  "for": "moonci.com|div[class*=\"hl-play-source\"] ul[class*=\"hl-plays-list\"] a[href*=\"/play/\"]"
+  "for": "v2|moonci.com|div[class*=\"hl-play-source\"] ul[class*=\"hl-plays-list\"] a[href*=\"/play/\"]"
  }
 }
