@@ -28,7 +28,7 @@ from .convert.kazumi import convert_rule
 from .convert.easybangumi import convert_extension
 from .check.domains import host_of
 from .check import network, ua as ua_mod
-from .check.health import (DEFAULT_CARRY_DAYS, DEFAULT_PLAY_GRACE, abroad_ok, DEFAULT_THRESHOLD, auto_tier, blind_spots, confirmed_fail, prunable,
+from .check.health import (DEFAULT_CARRY_DAYS, DEFAULT_PLAY_GRACE, abroad_ok, cand_key, DEFAULT_THRESHOLD, auto_tier, blind_spots, confirmed_fail, prunable,
                            smoke_tier, update_health)
 from .normalize import normalize_source
 from .check.repair import (brittle, find_search_selector, mine_presets, repair_match_video, repair_source,
@@ -115,7 +115,55 @@ def rewrite_origin(source, old_origin, new_origin):
     return json.loads(text)
 
 
-def probe(c, keyword, session, presets, config):
+def line_fingerprint(source):
+    """分线路缓存的适用条件：合并写法的剧集选择器和站点都没变。"""
+    sc = source["arguments"]["searchConfig"]
+    return "%s|%s" % (site_host(source), (sc.get("selectorChannelFormatNoChannel") or {}).get("selectEpisodes", ""))
+
+
+def keep_lines(cands, line_cache, config):
+    """这次没拿到页面（两个出口都打不开 / 被拦）的源沿用缓存的分线路写法，订阅不随站点能不能访问来回变。"""
+    from .check import channels
+    if not config.get("auto_channels", True):
+        return
+    for c in cands:
+        src = c.get("source")
+        if not src or src.get("factoryId") != "web-selector" or (c.get("smoke") or {}).get("status") not in ("blocked", "unreachable") \
+                or abroad_ok(c) or src["arguments"]["searchConfig"].get("channelFormatId") != "no-channel":
+            continue
+        rec = (line_cache or {}).get(cand_key(c))
+        if rec and rec.get("for") == line_fingerprint(src):
+            c["source"] = channels.with_channels(src, rec["config"])
+            c["notes"].append("这次没拿到页面，沿用上次验证过的分线路写法")
+
+
+def regroup(c, ctx, line_cache, line_presets, config):
+    """检测通过的源：能分线路就升级成 index-grouped（见 check/channels.py），并记下每条线路的第一集供播放检测。"""
+    from .check import channels
+    html = ctx.get("detail_html")
+    base = ctx.get("detail_final_url") or ctx.get("detail_url") or ""
+    if not config.get("auto_channels", True) or not html or c["source"].get("factoryId") != "web-selector":
+        return
+    key = cand_key(c)
+    rec = (line_cache or {}).get(key) or {}
+    try:
+        fingerprint = line_fingerprint(c["source"])
+        cached = rec.get("config") if rec.get("for") == fingerprint else None
+        new, fl = channels.upgrade(c["source"], html, base, cached, line_presets)
+        if new:
+            c["source"] = new
+            if line_cache is not None:
+                line_cache[key] = {"for": fingerprint, "config": fl}
+        lines = channels.lines_of(c["source"]["arguments"]["searchConfig"], html, base)
+    except Exception as e:   # 分线路只是增强，出任何问题都保持原样
+        print("分线路出错，%s 保持原样：%s" % (key, e), file=sys.stderr)
+        return
+    c["lines"] = lines
+    if new:
+        c["notes"].append("自动分线路（%d 条：%s）" % (len(lines), "、".join(n for n, _ in lines)))
+
+
+def probe(c, keyword, session, presets, config, line_cache=None, line_presets=((), ())):
     """联网检测一个候选：必要时换备用关键词、自动修复选择器、跟随域名跳转。结果写进 c["smoke"]。"""
     import time
     from .check.smoke import _blocked, check_source
@@ -198,9 +246,11 @@ def probe(c, keyword, session, presets, config):
         c["source"] = rewrite_origin(c["source"], old, fo)
         c["notes"].append("域名已跳转，改用新域名 %s（原 %s）" % (fo, old))
     c["smoke"] = r
+    if r["status"] == "ok":
+        regroup(c, ctx, line_cache, line_presets, config)
 
 
-def direct_pass(cands, config, session=None):
+def direct_pass(cands, config, session=None, line_cache=None, line_presets=((), ())):
     """海外直连：用不经代理的 GitHub 海外出口，把每个候选再测一遍，结果写进 c["smoke_direct"]。
     只做搜索 + 详情这两步（不修复、不改源）。结果既用来在报告里对比两个出口，也真正参与排名：国内没通过、海外通过的照样采用（health.abroad_ok）。
     浏览器 403 回退走的是代理，必须关掉，否则会把国内视角混进“海外直连”的结果里。"""
@@ -215,14 +265,16 @@ def direct_pass(cands, config, session=None):
             if c.get("source") is None:
                 continue
             try:
-                r = check_source(c["source"], keyword, session=session)
+                ctx = {}
+                r = check_source(c["source"], keyword, session=session, ctx=ctx)
                 for alt in config.get("smoke_fallback_keywords", DEFAULT_FALLBACK_KEYWORDS):   # 和主检测同样的备用关键词规则
                     if not (r["status"] == "fail" and r.get("stage") == "search"):
                         break
                     if alt != keyword:
-                        r2 = check_source(c["source"], alt, session=session)
+                        ctx2 = {}
+                        r2 = check_source(c["source"], alt, session=session, ctx=ctx2)
                         if r2["status"] == "ok":
-                            r = r2
+                            r, ctx = r2, ctx2
                             break
             except Exception as e:   # 对照检测出任何问题都不能拖垮主流程
                 r = {"status": "skipped", "reason": "对照检测出错：%s" % type(e).__name__}
@@ -231,6 +283,8 @@ def direct_pass(cands, config, session=None):
                 c["smoke_direct"]["sample"] = r["sample"]
             if abroad_ok(c):
                 c["notes"].append("国内出口检测%s，但 GitHub 海外直连通过，照样采用（排名低一级）" % c["smoke"]["status"])
+            if abroad_ok(c):   # 主出口没拿到页面时，用海外拿到的页面分线路
+                regroup(c, ctx, line_cache, line_presets, config)
             time.sleep(config.get("smoke_direct_wait", 0.5))
     finally:
         smoke_mod.set_browser_fetcher(prev)
@@ -326,6 +380,40 @@ def run_playchecks(cands, config, pc):
             c["smoke"].update(res)
         except Exception as e:
             c["smoke"].update({"play": "error", "play_reason": "检测出错：%s" % type(e).__name__})
+    check_lines(todo[: config.get("play_check_max", 80)], config, pc)
+
+
+def check_lines(todo, config, pc):
+    """分线路的源：逐条线路试播第一集。结果进 c["line_play"]（之后生成 channelTiers）。
+    默认那一集播不了、别的线路能播时，整个源按能播算。config：line_check（开关）、
+    line_check_per_source（每个源最多几条线路，默认 4）、line_check_max（一次构建最多试播几次，默认 40）。"""
+    if not config.get("line_check", True):
+        return
+    per, left = config.get("line_check_per_source", 4), config.get("line_check_max", 40)
+    wait, extra = config.get("play_wait_ms", 20000), config.get("play_extra_wait_ms", 0)
+    for c in todo:
+        lines = c.get("lines") or []
+        if len(lines) < 2:
+            continue
+        result = {}
+        for name, url in lines[:per]:
+            if url == c["smoke"].get("episode_url"):   # 这一集刚测过
+                result[name] = c["smoke"].get("play", "error")
+                continue
+            if left <= 0:
+                break
+            left -= 1
+            try:
+                result[name] = pc.check(c["source"], url, wait, extra).get("play", "error")
+            except Exception:
+                result[name] = "error"
+        if not result:
+            continue
+        c["line_play"] = result
+        good = [n for n, st in result.items() if st == "ok"]
+        c["notes"].append("逐线路播放检测：" + "、".join("%s=%s" % kv for kv in result.items()))
+        if good and c["smoke"].get("play") != "ok":
+            c["smoke"].update({"play": "ok", "play_reason": "线路「%s」能播" % good[0]})
 
 
 def collect_kazumi(repo, config):
@@ -562,6 +650,8 @@ def main():
                                        "并和你的源去重互补，见 config.official_dedupe）")
     ap.add_argument("--learned-cache", default=os.path.join(ROOT, "state", "learned.json"),
                     help="自动学习出来的规则缓存（7 天内沿用；学不出来的站点 3 天内不重试）")
+    ap.add_argument("--channel-cache", default=os.path.join(ROOT, "state", "channels.json"),
+                    help="自动分线路用过的写法（页面上仍然对得上就沿用）")
     ap.add_argument("--play-cache", default=os.path.join(ROOT, "state", "play.json"),
                     help="从播放页学到的 play 的缓存（接口指纹没变就直接沿用）")
     ap.add_argument("--out", default="dist")
@@ -610,6 +700,9 @@ def main():
 
     pc = None
     learned_made, learned_cache = [], {}
+    from .check import channels as channels_mod
+    line_presets = channels_mod.official_presets(official_sites)
+    line_cache = load_json(args.channel_cache) if os.path.exists(args.channel_cache) else {}
 
     def cleanup():   # 浏览器要一直开到图标步骤结束（图标下载也会用它回退），所以不在这个块里关
         pass
@@ -661,7 +754,7 @@ def main():
             for c in cands:
                 if c["source"] is None:
                     continue
-                probe(c, config.get("smoke_keyword", "葬送的芙莉莲"), session, presets, config)
+                probe(c, config.get("smoke_keyword", "葬送的芙莉莲"), session, presets, config, line_cache, line_presets)
                 r = c["smoke"]
                 if r.get("template"):
                     c["source"]["arguments"]["searchConfig"]["selectorSubjectFormatJsonPathIndexed"]["linkTemplate"] = r["template"]
@@ -671,7 +764,8 @@ def main():
                 time.sleep(1)
             if proxy and config.get("smoke_both_exits", True):
                 print("海外直连对照检测（不经代理）……")
-                direct_pass(cands, config)
+                direct_pass(cands, config, line_cache=line_cache, line_presets=line_presets)
+            keep_lines(cands, line_cache, config)
             if pc:
                 run_playchecks(cands, config, pc)
             run_browser_compare(cands, config, proxy, session, args.browser_state)
@@ -686,6 +780,12 @@ def main():
         os.makedirs(os.path.dirname(os.path.abspath(args.learned_cache)), exist_ok=True)
         with open(args.learned_cache, "w", encoding="utf-8") as f:
             json.dump(learned_cache, f, ensure_ascii=False, indent=1, sort_keys=True)
+            f.write("\n")
+
+    if args.smoke and line_cache:
+        os.makedirs(os.path.dirname(os.path.abspath(args.channel_cache)), exist_ok=True)
+        with open(args.channel_cache, "w", encoding="utf-8") as f:
+            json.dump(line_cache, f, ensure_ascii=False, indent=1, sort_keys=True)
             f.write("\n")
 
     if any(c.get("needs_play") for c in cands):   # 从播放页学 play（或沿用缓存），仍然没有的不输出
@@ -752,6 +852,9 @@ def main():
                 pruned.append(c)
                 continue
             warn = sm["reason"]
+        bad_lines = channels_mod.channel_tiers(c.get("line_play"), s["arguments"].get("tier"))
+        if bad_lines and not s["arguments"].get("channelTiers"):
+            s["arguments"]["channelTiers"] = bad_lines
         sources.append(normalize_source(c, s, config, warn))
     icon_results = []
     if args.icons_dir and args.smoke and config.get("icons", True):
@@ -851,7 +954,7 @@ def main():
         f.write("\n".join(rep) + "\n")
     with open(os.path.join(args.out, "report.json"), "w", encoding="utf-8") as f:
         json.dump({"decisions": decisions, "official_overlap": official_rows,
-                   "candidates": [{k: v for k, v in c.items() if k != "source"} for c in cands]},
+                   "candidates": [{k: v for k, v in c.items() if k not in ("source", "lines")} for c in cands]},
                   f, ensure_ascii=False, indent=2)
     print("\n".join(rep))
     skipped = [c["key"] for c in cands if c["source"] is None]

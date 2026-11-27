@@ -165,10 +165,14 @@ try:
 <div class="module-play-list-content"><a href="/vodplay/101-1-1.html">第1集</a><a href="/vodplay/101-1-2.html">第2集</a></div>
 <div class="module-play-list-content"><a href="/vodplay/101-2-1.html">第1集</a><a href="/vodplay/101-2-2.html">第2集</a></div>
 </body></html>"""
-    ch = AL.find_channels(MULTI, ".module-play-list-content a")
-    check("线路标签数量和线路列表对得上 -> 多线路", ch == (".module-tab-item", ".module-play-list-content"))
-    check("只有一条线路 -> 不分线路", AL.find_channels(DETAIL, ".module-play-list-content a") is None)
-    check("标签数量对不上 -> 不分线路", AL.find_channels(MULTI.replace('<div class="module-tab-item"><span>线路二</span></div>', ""), ".module-play-list-content a") is None)
+    def infer(html):
+        return AL.channels_mod.infer({"selectorChannelFormatNoChannel": {"selectEpisodes": ".module-play-list-content a"}},
+                                     html, "https://x.com/vod/1")
+    ch = infer(MULTI)
+    check("线路标签数量和线路列表对得上 -> 多线路", ch is not None and ch["selectChannelNames"] == ".module-tab-item"
+          and ch["selectEpisodeLists"] == ".module-play-list-content")
+    check("只有一条线路 -> 不分线路", infer(DETAIL) is None)
+    check("标签数量对不上 -> 不分线路", infer(MULTI.replace('<div class="module-tab-item"><span>线路二</span></div>', "")) is None)
     eps = AL._episodes(MULTI, "https://x.com/vod/1", PRESETS, "https://x.com")
     check("多线路：按线路取到 4 集（线路 URL 不同）", eps is not None and eps[1] == 4 and eps[2] is not None)
     src2 = AL.build_source("k", "K", "https://x.com", "x.com", "/s?wd={keyword}", "a.x", ".module-play-list-content a", channels=eps[2])

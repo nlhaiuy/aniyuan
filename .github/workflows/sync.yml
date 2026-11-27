@@ -91,7 +91,7 @@ jobs:
           cp dist.new/all.json dist.new/report.json dist.new/report.md out/dist/
           cp dist.new/summary.txt out/dist/ 2>/dev/null || true
           cp state/seen.json state/health.json out/state/
-          cp state/play.json state/learned.json state/browser.json out/state/ 2>/dev/null || true
+          for f in play learned browser channels; do [ -f "state/$f.json" ] && cp "state/$f.json" out/state/; done
           cp icons/* out/icons/ 2>/dev/null || true
 
       - uses: actions/upload-artifact@v4
@@ -144,7 +144,7 @@ jobs:
         run: |
           cp out/dist/all.json out/dist/report.json out/dist/report.md dist/
           cp out/state/seen.json out/state/health.json state/
-          cp out/state/play.json out/state/learned.json out/state/browser.json state/ 2>/dev/null || true
+          for f in play learned browser channels; do [ -f "out/state/$f.json" ] && cp "out/state/$f.json" state/; done; true
           mkdir -p icons && find icons -type f ! -name '.gitkeep' -delete && cp out/icons/* icons/ 2>/dev/null || true
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

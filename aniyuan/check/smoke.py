@@ -211,6 +211,15 @@ def extract_episodes(sc, html, base_url):
 
     if sc.get("channelFormatId") == "index-grouped":
         fl = sc.get("selectorChannelFormatFlattened") or {}
+        if fl.get("selectChannelNames") and fl.get("selectEpisodeLists"):
+            # 按 Animeko 的算法：线路标签和剧集列表按位置配对，配不上标签的列表在 App 里是看不到的
+            from .channels import simulate
+            for _name, eps in simulate(fl, soup, base_url):
+                for name, url in eps:
+                    if url not in seen:
+                        seen.add(url)
+                        out.append((name, url))
+            return out
         if not fl.get("selectEpisodeLists"):
             return out
         for lst in soup.select(fl["selectEpisodeLists"]):
@@ -281,7 +290,7 @@ def check_source(source, keyword="葬送的芙莉莲", timeout=15, session=None,
             loaded = True
             if _blocked(r.text):
                 return {"status": "blocked", "reason": blocked_reason(r.text, "详情页"), "captcha": captcha_kind(r.text)}
-            ctx["detail_html"] = r.text
+            ctx["detail_html"], ctx["detail_final_url"] = r.text, r.url
             eps = extract_episodes(sc, r.text, r.url)
             if eps:
                 res = {"status": "ok", "reason": "搜到 %d 个条目，详情页选出 %d 个剧集链接" % (len(subs), len(eps)),

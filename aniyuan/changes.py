@@ -20,7 +20,7 @@ def _name(s):
 
 def diff(old, new):
     o, n = {s["id"]: s for s in old}, {s["id"]: s for s in new}
-    out = {"added": [], "removed": [], "tier": [], "host": [], "kind": []}
+    out = {"added": [], "removed": [], "tier": [], "host": [], "kind": [], "lines": []}
     for i, s in n.items():
         if i not in o:
             out["added"].append((i, _name(s), host_of(s)))
@@ -34,6 +34,9 @@ def diff(old, new):
             out["host"].append((i, _name(s), ha, hb))
         if p.get("factoryId") != s.get("factoryId"):
             out["kind"].append((i, _name(s), p.get("factoryId"), s.get("factoryId")))
+        ga, gb = _sc(p).get("channelFormatId") == "index-grouped", _sc(s).get("channelFormatId") == "index-grouped"
+        if ga != gb:
+            out["lines"].append((i, _name(s), "分线路" if ga else "合并", "分线路" if gb else "合并"))
     for i, s in o.items():
         if i not in n:
             out["removed"].append((i, _name(s), host_of(s)))
@@ -47,7 +50,7 @@ def is_empty(d):
 def summary(d, total):
     if is_empty(d):
         return "订阅没有变化，共 %d 个源" % total
-    parts = [("新增", "added"), ("移除", "removed"), ("档位变化", "tier"), ("换域名", "host"), ("换类型", "kind")]
+    parts = [("新增", "added"), ("移除", "removed"), ("档位变化", "tier"), ("换域名", "host"), ("换类型", "kind"), ("线路写法变化", "lines")]
     return "、".join("%s %d" % (label, len(d[k])) for label, k in parts if d[k]) + "；共 %d 个源" % total
 
 
@@ -72,6 +75,7 @@ def section(d):
     block("档位变化", d["tier"], lambda r: "%s：%s → %s" % (r[1], r[2], r[3]))
     block("换域名", d["host"], lambda r: "%s：%s → %s" % (r[1], r[2], r[3]))
     block("换类型", d["kind"], lambda r: "%s：%s → %s" % (r[1], r[2], r[3]))
+    block("线路写法变化", d["lines"], lambda r: "%s：%s → %s" % (r[1], r[2], r[3]))
     while rep and rep[-1] == "":
         rep.pop()
     return rep

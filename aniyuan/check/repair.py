@@ -165,6 +165,8 @@ def repair_source(source, ctx, keyword, presets, fetch, which, hints=()):
                 "selectEpisodes": sel, "selectEpisodeLinks": "",
                 "matchEpisodeSortFromName": r"(第\s*(?<ep>.+?)\s*[话集])|(\d+)"}
             sc.pop("selectorChannelFormatFlattened", None)
+            if "selectMedia" in sc:   # 修复后先合并成一条；能分线路的话之后由 check/channels.py 重新分
+                sc["selectMedia"]["distinguishChannelName"] = False
             notes.append("剧集选择器改为 %s（%d 集）" % (sel, n))
     return new, "；".join(notes)
 

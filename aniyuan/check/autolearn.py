@@ -33,6 +33,7 @@ from ..convert.kazumi import EPISODE_SORT, MATCH_VIDEO_URL
 from . import smoke as smoke_mod
 from . import ua as ua_mod
 from .domains import host_of, registrable
+from . import channels as channels_mod
 from .repair import EP_TEXT, find_episode_selector, find_search_selector
 
 # 常见的 GET 搜索地址（{keyword} 会被 URL 编码）。前面是 MacCMS 各版本的写法，后面是别的建站程序
@@ -69,10 +70,6 @@ DETAIL_TEMPLATES = ["/index.php/vod/detail/id/{value}.html", "/voddetail/{value}
 ID_KEYS = ("id", "vod_id", "vodId", "slug", "vid")
 NAME_KEYS = ("name", "title", "vod_name", "vodName")
 # 线路标签的常见选择器（数量要和线路列表对得上才用）
-TAB_SELECTORS = [".module-tab-item", ".anthology-tab a", ".hl-tabs a", ".hl-plays-from a", ".stui-pannel__head .nav li a",
-                 ".myui-panel__head .nav li a", ".nav-tabs li a", ".nav-tabs li", ".play_source_tab a", ".tab-title a",
-                 "#tab a", ".swiper-slide", ".tabs li", ".module-tab-items .tab-item", ".vod-play-tab a", ".player-tab a",
-                 ".tab_list li", ".play-tab li"]
 # MacCMS 验证码站的猜测写法（搜索页看不到、学不了时才用）：覆盖 MacCMS 三种常见详情 / 播放页链接
 GUESS_SEARCH = "/index.php/vod/search.html?wd={keyword}"
 GUESS_RESULT = "a[href*='/voddetail/'], a[href*='/vod/detail/'], a[href*='/vod-detail/']"
@@ -162,28 +159,6 @@ def _fetch(url, sessions, timeout=15):
     return last or (None, url, "", "unreachable", "")
 
 
-def find_channels(html, ep_sel):
-    """详情页上有多条线路、且线路标签数量对得上：返回 (标签选择器, 线路列表选择器)，否则 None。"""
-    lst = re.sub(r"\s+a$", "", ep_sel)
-    soup = BeautifulSoup(html, "lxml")
-    try:
-        conts = soup.select(lst)
-    except Exception:
-        return None
-    good = [c for c in conts if any(a.get("href") and EP_TEXT.search(a.get_text(" ", strip=True)) for a in c.select("a"))]
-    if len(good) < 2:
-        return None
-    for tsel in TAB_SELECTORS:
-        try:
-            tabs = [t.get_text(" ", strip=True) for t in soup.select(tsel)]
-        except Exception:
-            continue
-        tabs = [t for t in tabs if t]
-        if len(tabs) == len(good):
-            return tsel, lst
-    return None
-
-
 def find_json_results(text, keyword):
     """JSON 搜索结果：找到「名称里含关键词、有 id」的对象列表。返回 (selectLinks, selectNames, 第一个 id) 或 None。"""
     try:
@@ -222,7 +197,7 @@ def find_json_results(text, keyword):
 
 def build_source(key, name, origin, host, search_path, search_sel, ep_sel, channels=None, json_search=None,
                  guess=False):
-    """channels: (标签选择器, 线路列表选择器) 或 None；json_search: (selectLinks, selectNames, linkTemplate) 或 None。"""
+    """channels: selectorChannelFormatFlattened 的内容（见 channels.infer）或 None；json_search: (selectLinks, selectNames, linkTemplate) 或 None。"""
     sc = {
         "searchUrl": origin + search_path,
         "searchUseOnlyFirstWord": True,
@@ -240,8 +215,7 @@ def build_source(key, name, origin, host, search_path, search_sel, ep_sel, chann
         sc["selectorSubjectFormatA"] = {"selectLists": search_sel, "preferShorterName": True}
     if channels:
         sc["channelFormatId"] = "index-grouped"
-        sc["selectorChannelFormatFlattened"] = {"selectChannelNames": channels[0], "selectEpisodeLists": channels[1],
-                                                "selectEpisodesFromList": "a"}
+        sc["selectorChannelFormatFlattened"] = dict(channels)
     else:
         sc["channelFormatId"] = "no-channel"
         sc["selectorChannelFormatNoChannel"] = {"selectEpisodes": ep_sel, "selectEpisodeLinks": "",
@@ -280,13 +254,11 @@ def _episodes(detail_html, final, presets, base):
     if not ep:
         return None
     ep_sel, n, _first = ep
-    ch = find_channels(detail_html, ep_sel)
-    if ch:
-        probe_sc = {"channelFormatId": "index-grouped", "selectorChannelFormatFlattened": {
-            "selectEpisodeLists": ch[1], "selectEpisodesFromList": "a"}}
-        got = len(smoke_mod.extract_episodes(probe_sc, detail_html, final))
-        if got >= n:   # 按线路取不比合并取少，才用
-            return ep_sel, got, ch, "多线路（标签 %s）" % ch[0]
+    fl = channels_mod.infer({"selectorChannelFormatNoChannel": {"selectEpisodes": ep_sel,
+                                                                "matchEpisodeSortFromName": EPISODE_SORT}},
+                            detail_html, final)
+    if fl:
+        return ep_sel, n, fl, "多线路（标签 %s）" % fl["selectChannelNames"]
     return ep_sel, n, None, ""
 
 
