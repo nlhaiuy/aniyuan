@@ -870,28 +870,29 @@
       "factoryId": "web-selector",
       "version": 2,
       "arguments": {
-        "name": "Moonci",
-        "description": "[选择器已自动修复] Moonci 动漫视频源。（来源：AniBaka 规则 moonci rev 5，自动转换）",
+        "name": "moonci",
+        "description": "站点 moonci.com。（来源：Kazumi 规则 moonci v1.1，自动转换）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-moonci.png",
         "searchConfig": {
-          "searchUrl": "https://www.moonci.com/search/-------------.html?wd={keyword}",
           "searchUseOnlyFirstWord": true,
           "searchRemoveSpecial": true,
           "searchUseSubjectNamesCount": 1,
-          "rawBaseUrl": "https://www.moonci.com",
+          "rawBaseUrl": "",
           "requestInterval": 3000,
-          "subjectFormatId": "a",
-          "selectorSubjectFormatA": {
-            "selectLists": "div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li div > div > div:nth-of-type(2) > div > a",
+          "searchUrl": "https://www.moonci.com/index.php/ajax/suggest?mid=1&wd={keyword}",
+          "subjectFormatId": "json-path-indexed",
+          "selectorSubjectFormatJsonPathIndexed": {
+            "selectLinks": "$.list[*]['id']",
+            "selectNames": "$.list[*]['name']",
+            "linkTemplate": "/anime/{value}.html",
             "preferShorterName": true
           },
           "channelFormatId": "index-grouped",
-          "selectorChannelFormatFlattened": {
-            "selectChannelNames": ".hl-plays-from a",
-            "selectEpisodeLists": "ul.hl-plays-list",
-            "selectEpisodesFromList": "a"
+          "selectorChannelFormatNoChannel": {
+            "selectEpisodes": "div[class*=\"hl-play-source\"] ul[class*=\"hl-plays-list\"] a[href*=\"/play/\"]",
+            "selectEpisodeLinks": "",
+            "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
           },
-          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
           "defaultResolution": "1080P",
           "defaultSubtitleLanguage": "CHS",
           "onlySupportsPlayers": [],
@@ -907,14 +908,26 @@
             "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
             "cookies": "quality=1080",
             "addHeadersToVideo": {
-              "referer": "https://www.moonci.com/"
+              "referer": ""
             },
             "scanDomMediaUrls": true
+          },
+          "selectorChannelFormatFlattened": {
+            "matchChannelName": "^(?<ch>.+)$",
+            "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)",
+            "selectChannelNames": ".hl-plays-from .hl-tabs-btn",
+            "selectEpisodeLinksFromList": "",
+            "selectEpisodeLists": "#playlist .hl-tabs-box",
+            "selectEpisodesFromList": "a"
           }
         },
         "tier": 1,
-        "channelTiers": {}
-      }
+        "channelTiers": {
+          "X.2": 5,
+          "X.3": 5
+        }
+      },
+      "clientVersions": ">=6.3.0"
     },
     {
       "id": "aniyuan-xigua",
@@ -971,49 +984,34 @@
       "version": 2,
       "arguments": {
         "name": "9ciyuan (jcydm1.com)",
-        "description": "[选择器已自动修复] 站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
+        "description": "站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
         "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-9ciyuan.png",
         "searchConfig": {
-          "searchUseOnlyFirstWord": true,
-          "searchRemoveSpecial": true,
-          "searchUseSubjectNamesCount": 1,
-          "rawBaseUrl": "",
-          "requestInterval": 3000,
-          "searchUrl": "https://www.jcydm1.com/index.php/vod/search.html?wd={keyword}",
-          "subjectFormatId": "a",
-          "selectorSubjectFormatIndexed": {
-            "selectNames": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(2) > div:nth-of-type(1) > a > strong",
-            "selectLinks": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(3) > a:nth-of-type(2)",
-            "preferShorterName": true
-          },
           "channelFormatId": "index-grouped",
-          "selectorChannelFormatNoChannel": {
-            "selectEpisodes": "#panel1 a",
-            "selectEpisodeLinks": "",
-            "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
-          },
           "defaultResolution": "1080P",
           "defaultSubtitleLanguage": "CHS",
-          "onlySupportsPlayers": [],
           "filterByEpisodeSort": true,
           "filterBySubjectName": true,
-          "selectMedia": {
-            "distinguishSubjectName": true,
-            "distinguishChannelName": true
-          },
           "matchVideo": {
-            "enableNestedUrl": false,
-            "matchNestedUrl": "$^",
-            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
-            "cookies": "quality=1080",
             "addHeadersToVideo": {
               "referer": ""
             },
+            "cookies": "quality=1080",
+            "enableNestedUrl": false,
+            "matchNestedUrl": "$^",
+            "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
             "scanDomMediaUrls": true
           },
-          "selectorSubjectFormatA": {
-            "selectLists": ".module-card-item-title a[href*='/vod/']",
-            "preferShorterName": true
+          "onlySupportsPlayers": [],
+          "rawBaseUrl": "",
+          "requestInterval": 3000,
+          "searchRemoveSpecial": true,
+          "searchUrl": "https://www.jcydm1.com/index.php/vod/search.html?wd={keyword}",
+          "searchUseOnlyFirstWord": true,
+          "searchUseSubjectNamesCount": 1,
+          "selectMedia": {
+            "distinguishChannelName": true,
+            "distinguishSubjectName": true
           },
           "selectorChannelFormatFlattened": {
             "matchChannelName": "^(?<ch>.+)$",
@@ -1022,13 +1020,25 @@
             "selectEpisodeLinksFromList": "",
             "selectEpisodeLists": ".module-play-list-content",
             "selectEpisodesFromList": "a"
-          }
+          },
+          "selectorChannelFormatNoChannel": {
+            "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)",
+            "selectEpisodeLinks": "",
+            "selectEpisodes": "#panel1 a"
+          },
+          "selectorSubjectFormatA": {
+            "preferShorterName": true,
+            "selectLists": ".module-card-item-title a[href*='/vod/']"
+          },
+          "selectorSubjectFormatIndexed": {
+            "preferShorterName": true,
+            "selectLinks": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(3) > a:nth-of-type(2)",
+            "selectNames": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(2) > div:nth-of-type(1) > a > strong"
+          },
+          "subjectFormatId": "a"
         },
         "tier": 1,
-        "channelTiers": {
-          "线路4": 5,
-          "线路3": 5
-        }
+        "channelTiers": {}
       }
     },
     {
@@ -2291,28 +2301,29 @@
         "factoryId": "web-selector",
         "version": 2,
         "arguments": {
-          "name": "Moonci",
-          "description": "[选择器已自动修复] Moonci 动漫视频源。（来源：AniBaka 规则 moonci rev 5，自动转换）",
+          "name": "moonci",
+          "description": "站点 moonci.com。（来源：Kazumi 规则 moonci v1.1，自动转换）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-moonci.png",
           "searchConfig": {
-            "searchUrl": "https://www.moonci.com/search/-------------.html?wd={keyword}",
             "searchUseOnlyFirstWord": true,
             "searchRemoveSpecial": true,
             "searchUseSubjectNamesCount": 1,
-            "rawBaseUrl": "https://www.moonci.com",
+            "rawBaseUrl": "",
             "requestInterval": 3000,
-            "subjectFormatId": "a",
-            "selectorSubjectFormatA": {
-              "selectLists": "div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li div > div > div:nth-of-type(2) > div > a",
+            "searchUrl": "https://www.moonci.com/index.php/ajax/suggest?mid=1&wd={keyword}",
+            "subjectFormatId": "json-path-indexed",
+            "selectorSubjectFormatJsonPathIndexed": {
+              "selectLinks": "$.list[*]['id']",
+              "selectNames": "$.list[*]['name']",
+              "linkTemplate": "/anime/{value}.html",
               "preferShorterName": true
             },
             "channelFormatId": "index-grouped",
-            "selectorChannelFormatFlattened": {
-              "selectChannelNames": ".hl-plays-from a",
-              "selectEpisodeLists": "ul.hl-plays-list",
-              "selectEpisodesFromList": "a"
+            "selectorChannelFormatNoChannel": {
+              "selectEpisodes": "div[class*=\"hl-play-source\"] ul[class*=\"hl-plays-list\"] a[href*=\"/play/\"]",
+              "selectEpisodeLinks": "",
+              "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
             },
-            "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
             "defaultResolution": "1080P",
             "defaultSubtitleLanguage": "CHS",
             "onlySupportsPlayers": [],
@@ -2328,14 +2339,26 @@
               "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
               "cookies": "quality=1080",
               "addHeadersToVideo": {
-                "referer": "https://www.moonci.com/"
+                "referer": ""
               },
               "scanDomMediaUrls": true
+            },
+            "selectorChannelFormatFlattened": {
+              "matchChannelName": "^(?<ch>.+)$",
+              "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)",
+              "selectChannelNames": ".hl-plays-from .hl-tabs-btn",
+              "selectEpisodeLinksFromList": "",
+              "selectEpisodeLists": "#playlist .hl-tabs-box",
+              "selectEpisodesFromList": "a"
             }
           },
           "tier": 1,
-          "channelTiers": {}
-        }
+          "channelTiers": {
+            "X.2": 5,
+            "X.3": 5
+          }
+        },
+        "clientVersions": ">=6.3.0"
       },
       {
         "id": "aniyuan-xigua",
@@ -2392,49 +2415,34 @@
         "version": 2,
         "arguments": {
           "name": "9ciyuan (jcydm1.com)",
-          "description": "[选择器已自动修复] 站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
+          "description": "站点 jcydm1.com。（来源：纯纯看番社区源 kazumi-9ciyuan v1.3.1，自动转换）",
           "iconUrl": "https://raw.githubusercontent.com/nlhaiuy/aniyuan/main/icons/aniyuan-9ciyuan.png",
           "searchConfig": {
-            "searchUseOnlyFirstWord": true,
-            "searchRemoveSpecial": true,
-            "searchUseSubjectNamesCount": 1,
-            "rawBaseUrl": "",
-            "requestInterval": 3000,
-            "searchUrl": "https://www.jcydm1.com/index.php/vod/search.html?wd={keyword}",
-            "subjectFormatId": "a",
-            "selectorSubjectFormatIndexed": {
-              "selectNames": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(2) > div:nth-of-type(1) > a > strong",
-              "selectLinks": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(3) > a:nth-of-type(2)",
-              "preferShorterName": true
-            },
             "channelFormatId": "index-grouped",
-            "selectorChannelFormatNoChannel": {
-              "selectEpisodes": "#panel1 a",
-              "selectEpisodeLinks": "",
-              "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)"
-            },
             "defaultResolution": "1080P",
             "defaultSubtitleLanguage": "CHS",
-            "onlySupportsPlayers": [],
             "filterByEpisodeSort": true,
             "filterBySubjectName": true,
-            "selectMedia": {
-              "distinguishSubjectName": true,
-              "distinguishChannelName": true
-            },
             "matchVideo": {
-              "enableNestedUrl": false,
-              "matchNestedUrl": "$^",
-              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
-              "cookies": "quality=1080",
               "addHeadersToVideo": {
                 "referer": ""
               },
+              "cookies": "quality=1080",
+              "enableNestedUrl": false,
+              "matchNestedUrl": "$^",
+              "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
               "scanDomMediaUrls": true
             },
-            "selectorSubjectFormatA": {
-              "selectLists": ".module-card-item-title a[href*='/vod/']",
-              "preferShorterName": true
+            "onlySupportsPlayers": [],
+            "rawBaseUrl": "",
+            "requestInterval": 3000,
+            "searchRemoveSpecial": true,
+            "searchUrl": "https://www.jcydm1.com/index.php/vod/search.html?wd={keyword}",
+            "searchUseOnlyFirstWord": true,
+            "searchUseSubjectNamesCount": 1,
+            "selectMedia": {
+              "distinguishChannelName": true,
+              "distinguishSubjectName": true
             },
             "selectorChannelFormatFlattened": {
               "matchChannelName": "^(?<ch>.+)$",
@@ -2443,13 +2451,25 @@
               "selectEpisodeLinksFromList": "",
               "selectEpisodeLists": ".module-play-list-content",
               "selectEpisodesFromList": "a"
-            }
+            },
+            "selectorChannelFormatNoChannel": {
+              "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)",
+              "selectEpisodeLinks": "",
+              "selectEpisodes": "#panel1 a"
+            },
+            "selectorSubjectFormatA": {
+              "preferShorterName": true,
+              "selectLists": ".module-card-item-title a[href*='/vod/']"
+            },
+            "selectorSubjectFormatIndexed": {
+              "preferShorterName": true,
+              "selectLinks": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(3) > a:nth-of-type(2)",
+              "selectNames": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div:nth-of-type(1) div div:nth-of-type(2) > div:nth-of-type(1) > a > strong"
+            },
+            "subjectFormatId": "a"
           },
           "tier": 1,
-          "channelTiers": {
-            "线路4": 5,
-            "线路3": 5
-          }
+          "channelTiers": {}
         }
       },
       {

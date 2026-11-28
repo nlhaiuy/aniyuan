@@ -299,6 +299,64 @@
    "subjectFormatId": "json-path-indexed"
   }
  },
+ "kazumi:aafun": {
+  "config": {
+   "matchChannelName": "^(?<ch>.+)$",
+   "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)",
+   "selectChannelNames": ".hl-plays-from .hl-tabs-btn",
+   "selectEpisodeLinksFromList": "",
+   "selectEpisodeLists": "#playlist .hl-tabs-box",
+   "selectEpisodesFromList": "a"
+  },
+  "for": "v2|moonci.com|.hl-plays-list a",
+  "origin": "be81f5f28c469099",
+  "search_config": {
+   "channelFormatId": "index-grouped",
+   "defaultResolution": "1080P",
+   "defaultSubtitleLanguage": "CHS",
+   "filterByEpisodeSort": true,
+   "filterBySubjectName": true,
+   "matchVideo": {
+    "addHeadersToVideo": {
+     "referer": ""
+    },
+    "cookies": "quality=1080",
+    "enableNestedUrl": false,
+    "matchNestedUrl": "$^",
+    "matchVideoUrl": "(^http(s)?:\\/\\/(?!.*http).+\\.(mp4|m3u8|flv|mkv))|(url=(?<v>http(s)?:\\/\\/.+\\.(mp4|m3u8|flv|mkv)))|(^http(s)?:\\/\\/(?!.*http).+(sign\\.bytetos|sign\\.byteimg|mcloud\\.139|cloudflarestorage|tos-cn)\\.com(?!.*\\.ts).+(-expires|-signature))|((bilivideo|akamaized|szbdyd)\\.com(?!.*\\.ts))|(\\/video\\/tos\\/alisg\\/)|(\\/video\\/.*mime_type=video)",
+    "scanDomMediaUrls": true
+   },
+   "onlySupportsPlayers": [],
+   "rawBaseUrl": "",
+   "requestInterval": 3000,
+   "searchRemoveSpecial": true,
+   "searchUrl": "https://www.moonci.com/search/-------------.html?wd={keyword}&submit=",
+   "searchUseOnlyFirstWord": true,
+   "searchUseSubjectNamesCount": 1,
+   "selectMedia": {
+    "distinguishChannelName": true,
+    "distinguishSubjectName": true
+   },
+   "selectorChannelFormatFlattened": {
+    "matchChannelName": "^(?<ch>.+)$",
+    "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)",
+    "selectChannelNames": ".hl-plays-from .hl-tabs-btn",
+    "selectEpisodeLinksFromList": "",
+    "selectEpisodeLists": "#playlist .hl-tabs-box",
+    "selectEpisodesFromList": "a"
+   },
+   "selectorChannelFormatNoChannel": {
+    "matchEpisodeSortFromName": "(第\\s*(?<ep>.+?)\\s*[话集])|(\\d+)",
+    "selectEpisodeLinks": "",
+    "selectEpisodes": ".hl-plays-list a"
+   },
+   "selectorSubjectFormatA": {
+    "preferShorterName": true,
+    "selectLists": ".hl-item-title a[href*='/anime/']"
+   },
+   "subjectFormatId": "a"
+  }
+ },
  "kazumi:akianime": {
   "config": {
    "matchChannelName": "^(?<ch>.+?)\\s*\\d+$",

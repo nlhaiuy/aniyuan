@@ -1,40 +1,40 @@
 {
  "anibaka:2kdm": {
   "blind": 0,
-  "fails": 41,
+  "fails": 42,
   "last": "fail",
-  "last_fail": 1795819147
+  "last_fail": 1795858063
  },
  "anibaka:5dm": {
-  "blind": 49,
+  "blind": 50,
   "last": "blocked"
  },
  "anibaka:7sefun": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "lines": {
-   "七色A线": 1,
-   "七色B线": 0
+   "七色A线": 0,
+   "七色B线": 1
   },
   "play": "ok",
   "play_none": 0
  },
  "anibaka:age": {
-  "blind": 49,
+  "blind": 50,
   "last": "unreachable"
  },
  "anibaka:agekkkk": {
-  "blind": 27,
-  "last": "blocked"
+  "blind": 28,
+  "last": "unreachable"
  },
  "anibaka:akianime": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
   "last_fail": 1795774367,
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "lines": {
    "中画-不要相信视频里的广告": 0
   },
@@ -42,14 +42,14 @@
   "play_none": 0
  },
  "anibaka:ani_pekolove": {
-  "blind": 27,
+  "blind": 28,
   "last": "blocked"
  },
  "anibaka:anime7": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "play": "ok",
   "play_none": 0
  },
@@ -57,7 +57,7 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "lines": {
    "BiliBili国际": 0,
    "其他": 0,
@@ -68,7 +68,7 @@
   "play_none": 0
  },
  "anibaka:cyfz": {
-  "blind": 29,
+  "blind": 30,
   "fails": 0,
   "last": "unreachable",
   "last_ok": 1795045566,
@@ -78,7 +78,7 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "lines": {
    "高速线路": 0
   },
@@ -87,9 +87,9 @@
  },
  "anibaka:didahd": {
   "blind": 0,
-  "fails": 37,
+  "fails": 38,
   "last": "fail",
-  "last_fail": 1795819147,
+  "last_fail": 1795858063,
   "last_ok": 1794642775,
   "play": "ok"
  },
@@ -97,7 +97,7 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "play": "ok",
   "play_none": 0
  },
@@ -105,21 +105,21 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "play": "none",
   "play_none": 0
  },
  "anibaka:gugu": {
   "blind": 0,
-  "fails": 62,
+  "fails": 63,
   "last": "fail",
-  "last_fail": 1795819147
+  "last_fail": 1795858063
  },
  "anibaka:ios_mifun": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "lines": {
    "快看云": 0,
    "柚子云": 0,
@@ -133,10 +133,10 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "lines": {
    "dev云播": 0,
-   "聚合线路": 1
+   "聚合线路": 0
   },
   "play": "ok",
   "play_none": 0
@@ -145,35 +145,35 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "lines": {
    "Mahoo": 0,
    "云端线路": 0,
-   "存储线路": 1
+   "存储线路": 0
   },
   "play": "ok",
   "play_none": 0
  },
  "anibaka:moonci": {
-  "blind": 0,
+  "blind": 1,
   "fails": 0,
-  "last": "ok",
+  "last": "unreachable",
   "last_ok": 1795819147,
   "play": "ok",
   "play_none": 0
  },
  "anibaka:silisili": {
   "blind": 0,
-  "fails": 59,
+  "fails": 60,
   "last": "fail",
-  "last_fail": 1795819147
+  "last_fail": 1795858063
  },
  "anibaka:xigua": {
   "blind": 0,
   "fails": 0,
   "last": "ok",
   "last_fail": 1795335727,
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "play": "ok",
   "play_none": 0
  },
@@ -181,14 +181,14 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "play": "ok",
   "play_none": 0
  },
  "easybangumi:kazumi-9ciyuan": {
-  "blind": 0,
+  "blind": 1,
   "fails": 0,
-  "last": "ok",
+  "last": "unreachable",
   "last_fail": 1795761266,
   "last_ok": 1795819147,
   "lines": {
@@ -201,7 +201,7 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "play": "ok",
   "play_none": 0
  },
@@ -209,7 +209,7 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "play": "ok",
   "play_none": 0
  },
@@ -217,7 +217,7 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "play": "ok",
   "play_none": 0
  },
@@ -225,16 +225,16 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "play": "ok",
   "play_none": 0
  },
  "easybangumi:kazumi-omofun03": {
-  "blind": 49,
+  "blind": 50,
   "last": "unreachable"
  },
  "easybangumi:kazumi-ylsp": {
-  "blind": 33,
+  "blind": 34,
   "fails": 26,
   "last": "unreachable",
   "last_fail": 1794816953
@@ -243,7 +243,7 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "lines": {
    "七色A线": 0,
    "七色B线": 0
@@ -252,7 +252,7 @@
   "play_none": 0
  },
  "kazumi:AGE": {
-  "blind": 49,
+  "blind": 50,
   "last": "unreachable"
  },
  "kazumi:DM84": {
@@ -260,7 +260,7 @@
   "fails": 0,
   "last": "ok",
   "last_fail": 1794630687,
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "play": "ok",
   "play_none": 0
  },
@@ -268,7 +268,7 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "lines": {
    "dev云播": 0,
    "聚合线路": 0
@@ -280,14 +280,14 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "play": "ok",
   "play_none": 0
  },
  "kazumi:TvTFun": {
-  "blind": 0,
+  "blind": 1,
   "fails": 0,
-  "last": "ok",
+  "last": "unreachable",
   "last_ok": 1795819147,
   "play": "none",
   "play_none": 0
@@ -296,7 +296,10 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
+  "lines": {
+   "X.1": 0
+  },
   "play": "ok",
   "play_none": 0
  },
@@ -304,7 +307,7 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "lines": {
    "中画-不要相信视频里的广告": 0
   },
@@ -312,9 +315,9 @@
   "play_none": 0
  },
  "kazumi:baimao": {
-  "blind": 0,
+  "blind": 1,
   "fails": 0,
-  "last": "ok",
+  "last": "unreachable",
   "last_ok": 1795819147,
   "play": "ok",
   "play_none": 0
@@ -323,7 +326,7 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "lines": {
    "高速线路": 0
   },
@@ -334,7 +337,7 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "lines": {
    "Mahoo": 0,
    "云端线路": 0,
@@ -347,7 +350,7 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "lines": {
    "X.1": 0
   },
@@ -355,13 +358,13 @@
   "play_none": 0
  },
  "kazumi:mutefun": {
-  "blind": 31,
+  "blind": 32,
   "last": "blocked"
  },
  "kazumi:xfdmneo": {
-  "blind": 0,
+  "blind": 1,
   "fails": 19,
-  "last": "fail",
+  "last": "unreachable",
   "last_fail": 1795819147,
   "last_ok": 1795045566,
   "play": "ok"
@@ -370,7 +373,7 @@
   "blind": 0,
   "fails": 0,
   "last": "ok",
-  "last_ok": 1795819147,
+  "last_ok": 1795858063,
   "play": "ok",
   "play_none": 0
  }
